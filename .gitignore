@@ -7,6 +7,12 @@
 *.zip
 *.cmd
 *.bat
+*.sh
+*.py
+*.txt
+*.pyc
+*.properties
+CHANGELOG
 
 client/*
 common/*
@@ -24,3 +30,13 @@ mcp/modsrc/*
 mcp/reobf/*
 mcp/runtime/*
 mcp/temp/*
+
+mcp/src/minecraft/net/*
+mcp/src/minecraft/cpw/*
+mcp/src/minecraft/ibxm/*
+mcp/src/minecraft/paulscode/*
+mcp/src/minecraft/*.cfg
+
+mcp/src/minecraft/Start.java
+mcp/src/minecraft/mcpmod.info
+*.png
