@@ -4,7 +4,7 @@ import java.util.Random;
 
 import mods.elysium.Elysium;
 import mods.elysium.api.Plants;
-import mods.elysium.blocks.FostimberSaplingBlock;
+import mods.elysium.block.FostimberSaplingBlock;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.Event.Result;
 import net.minecraftforge.event.ForgeSubscribe;

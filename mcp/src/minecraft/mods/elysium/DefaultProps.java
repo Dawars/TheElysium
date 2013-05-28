@@ -18,6 +18,8 @@ public class DefaultProps {
 //	public static int idWaterBlock = 205;
 //	public static int idWaterBlock = 205;
 	
+	public static int idPortalCoreBlock = 210;
+	
 	
 	public static int idFostimberSaplingBlock = 2000;
 	public static int idFostimberLogBlock = 2001;

@@ -3,7 +3,7 @@ package mods.elysium.gen;
 import java.util.Random;
 
 import mods.elysium.Elysium;
-import mods.elysium.blocks.ElysiumFlower;
+import mods.elysium.block.ElysiumFlower;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.util.Direction;

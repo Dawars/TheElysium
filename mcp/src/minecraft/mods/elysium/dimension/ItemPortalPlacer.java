@@ -31,6 +31,7 @@ public class ItemPortalPlacer extends Item {
 						}
 					}
 				}
+				
 				par3World.setBlock(X, Y + 1, Z, Block.oreDiamond.blockID);
 				par3World.setBlock(X + 1, Y + 1, Z, Block.oreDiamond.blockID);
 				par3World.setBlock(X, Y + 2, Z, Block.blockDiamond.blockID);

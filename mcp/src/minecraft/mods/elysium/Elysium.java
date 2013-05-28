@@ -5,35 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mods.elysium.api.Plants;
-import mods.elysium.blocks.CurlgrassBlock;
-import mods.elysium.blocks.ElysianBlockFluid;
-import mods.elysium.blocks.ElysiumBlockFlowing;
-import mods.elysium.blocks.ElysiumBlockStationary;
-import mods.elysium.blocks.ElysiumFlowerBlock;
-import mods.elysium.blocks.ElysianBlock;
-import mods.elysium.blocks.FostimberLogBlock;
-import mods.elysium.blocks.FostimberLeavesBlock;
-import mods.elysium.blocks.FostimberSaplingBlock;
-import mods.elysium.blocks.GastroShellBlock;
-import mods.elysium.blocks.GrassBlock;
-import mods.elysium.blocks.LeucosandBlock;
-import mods.elysium.blocks.PalestoneBlock;
-import mods.elysium.blocks.RiltBlock;
-import mods.elysium.blocks.SoilBlock;
-import mods.elysium.blocks.SulphurOreBlock;
-import mods.elysium.dimension.BiomeGenElysium;
-import mods.elysium.dimension.BlockTutorialFire;
-import mods.elysium.dimension.BlockTutorialPortal;
-import mods.elysium.dimension.ItemPortalPlacer;
-import mods.elysium.dimension.WorldProviderElysium;
+import mods.elysium.block.*;
+import mods.elysium.dimension.*;
+import mods.elysium.dimension.portal.ElysiumBlockPortalCore;
+import mods.elysium.dimension.portal.ElysiumTileEntityPortal;
+import mods.elysium.dimension.portal.ElysiumTileEntityPortalRenderer;
 import mods.elysium.gen.ElysiumWorldGen;
 import mods.elysium.handlers.BonemealHandler;
-import mods.elysium.items.ElysianItem;
+import mods.elysium.items.*;
 import mods.elysium.proxy.ClientProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeHooks;
@@ -84,12 +69,14 @@ public class Elysium {
 	public static Block TourmalineOreBlock;
 	public static Block BerylOreBlock;
 	public static Block waterStill;
-	public static ElysianBlockFluid waterMoving;
+	public static ElysiumBlockFluid waterMoving;
 //	public static Block LeucosandBlock;
 //	public static Block LeucosandBlock;
 //	public static Block LeucosandBlock;
 //	public static Block LeucosandBlock;
 //	public static Block LeucosandBlock;
+	
+	public static Block portalCore;
 	
 
 	//Items
@@ -175,7 +162,7 @@ public class Elysium {
 			LanguageRegistry.addName(FostimberLeavesBlock, "Fostimber Leaves");
 
 			Property idWoodBlock = Elysium.mainConfiguration.getBlock("idWoodBlock.id", DefaultProps.idWoodBlock);
-			WoodBlock = (new ElysianBlock(idWoodBlock.getInt(), Material.wood)).setHardness(0.2F).setStepSound(Block.soundGrassFootstep).setUnlocalizedName("fostimber_planks");
+			WoodBlock = (new ElysiumBlock(idWoodBlock.getInt(), Material.wood)).setHardness(0.2F).setStepSound(Block.soundGrassFootstep).setUnlocalizedName("fostimber_planks");
 			ClientProxy.proxy.registerBlock(WoodBlock);
 			LanguageRegistry.addName(WoodBlock, "Wooden Planks");
 			
@@ -237,12 +224,14 @@ public class Elysium {
 			LanguageRegistry.addName(waterStill, "Elysium Water Still");
 			
 			Property idWaterFlowingBlock = Elysium.mainConfiguration.getTerrainBlock("terrainGen", "idWaterFlowingBlock.id", DefaultProps.idWaterFlowingBlock, null);
-			waterMoving = (ElysianBlockFluid) new ElysiumBlockFlowing(idWaterFlowingBlock.getInt(), Material.water).setHardness(100.0F).setLightOpacity(3).setUnlocalizedName("elysian_water_flow");
+			waterMoving = (ElysiumBlockFluid) new ElysiumBlockFlowing(idWaterFlowingBlock.getInt(), Material.water).setHardness(100.0F).setLightOpacity(3).setUnlocalizedName("elysian_water_flow");
 			ClientProxy.proxy.registerBlock(waterMoving);
 			LanguageRegistry.addName(waterMoving, "Elysium Water Flowing");
 			
-		
-			 
+			Property idPortalCoreBlock = Elysium.mainConfiguration.getBlock("idPortalCoreBlock.id", DefaultProps.idPortalCoreBlock);
+			portalCore = new ElysiumBlockPortalCore(idPortalCoreBlock.getInt(), Material.glass).setHardness(5F).setStepSound(Block.soundGlassFootstep).setUnlocalizedName("portalCore");
+			ClientProxy.proxy.registerBlock(portalCore);
+			LanguageRegistry.addName(portalCore, "Elysian Portal Block");
 			
 			//dim
 			TutorialPortalPlacer = new ItemPortalPlacer(3048)
@@ -257,14 +246,19 @@ public class Elysium {
 
 	 		// Item Registry
 			Property idGracePrismItem = Elysium.mainConfiguration.getItem("idGracePrismItem.id", DefaultProps.idGracePrismItem);
-			GracePrismItem = new ElysianItem(idGracePrismItem.getInt()).setUnlocalizedName("gracecrystal");
+			GracePrismItem = new ItemGracePrism(idGracePrismItem.getInt()).setUnlocalizedName("gracecrystal");
 			LanguageRegistry.addName(GracePrismItem, "Grace Prism");
 			
+			// Crafting Registry
+			GameRegistry.addRecipe(new ItemStack(GracePrismItem), new Object[] {"SMS","MDM","SMS", Character.valueOf('S'), Block.whiteStone, Character.valueOf('M'), Item.bucketMilk, Character.valueOf('D'), Item.diamond});
 			
-			
+			// Entity Registry
+			GameRegistry.registerTileEntity(ElysiumTileEntityPortal.class, "ElysiumTileEntityPortal");
 			
 //			MinecraftForge.setBlockHarvestLevel(ash, "shovel", 0);
 //		 	MinecraftForge.setBlockHarvestLevel(blockAsh, "shovel", 0);
+			
+			ClientProxy.proxy.RegisterRenders();
 		}
 		finally
 		{
