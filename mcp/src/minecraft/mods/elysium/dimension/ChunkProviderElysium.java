@@ -201,11 +201,11 @@ public class ChunkProviderElysium implements IChunkProvider {
 
 									/** change to custom dirt **/
 									var15 = (byte) Elysium.soilBlock.blockID;//
-								} /*else if ((k >= seeLevel - 4)
+								} else if ((k >= seeLevel - 4)
 										&& (k <= seeLevel + 1)) {
 									var14 = var10.topBlock;
 									var15 = var10.fillerBlock;
-								}*/
+								}
 								if ((k < seeLevel) && (var14 == 0)) {
 									if (var11 < 0.15F) {
 										var14 = (byte) Block.ice.blockID;
