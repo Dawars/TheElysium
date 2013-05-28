@@ -45,18 +45,24 @@ public class WorldGenFostimber extends WorldGenerator
 
     public boolean generate(World world, Random rand, int i, int j, int k)
     { 
-    	if (!((ElysiumFlower)Elysium.FostimberSaplingBlock).canThisPlantGrowOnThisBlockID(world.getBlockId(i, j-1, k)))
-    		return false;
+    	
+    	
+    	
     	
     	int cap = rand.nextInt(2) + 2;
     	int trunk = rand.nextInt(3) + 3;
     	int minTreeHeight = 8;
 
         int treeHeight = trunk + minTreeHeight;
-
-        //place check return false;
         
-        //soil check
+        if (!((ElysiumFlower)Elysium.FostimberSaplingBlock).canThisPlantGrowOnThisBlockID(world.getBlockId(i, j-1, k)))
+    		return false;
+
+        for(int i2 = j + 1; i2 < j + treeHeight; i2++){
+    		if(world.getBlockId(i, i2, k) != 0)
+    			return false;
+    			
+        }
         
         
         int h1 = treeHeight - rand.nextInt(2);//leaves end

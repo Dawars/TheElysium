@@ -39,7 +39,7 @@ public class ElysiumSkyRenderer extends IRenderHandler {
 //            GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
             GL11.glRotatef(world.getCelestialAngle(partialTicks) * 360.0F, 1.0F, 0.0F, 0.0F);
             float f10 = 30.0F;
-            FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/" + DefaultProps.modId + "/textures/blocks/sun.png");
+            FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/" + DefaultProps.modId + "/textures/blocks/elysiansun.png");
 
             tessellator.startDrawingQuads();
             tessellator.addVertexWithUV((double)(-f10), 100.0D, (double)(-f10), 0.0D, 0.0D);
@@ -52,6 +52,60 @@ public class ElysiumSkyRenderer extends IRenderHandler {
             GL11.glPopMatrix();
             GL11.glEnable(GL11.GL_TEXTURE_2D);
             GL11.glDepthMask(true);
+        	
+        	
+        	//night
+//        	GL11.glDisable(GL11.GL_FOG);
+//            GL11.glDisable(GL11.GL_ALPHA_TEST);
+//            GL11.glEnable(GL11.GL_BLEND);
+//            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+//            RenderHelper.disableStandardItemLighting();
+//            GL11.glDepthMask(false);
+//            FMLClientHandler.instance().getClient().renderEngine.bindTexture("/misc/tunnel.png");
+//            Tessellator tessellator = Tessellator.instance;
+//
+//            for (int i = 0; i < 6; ++i)
+//            {
+//                GL11.glPushMatrix();
+//
+//                if (i == 1)
+//                {
+//                    GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
+//                }
+//
+//                if (i == 2)
+//                {
+//                    GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
+//                }
+//
+//                if (i == 3)
+//                {
+//                    GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F);
+//                }
+//
+//                if (i == 4)
+//                {
+//                    GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
+//                }
+//
+//                if (i == 5)
+//                {
+//                    GL11.glRotatef(-90.0F, 0.0F, 0.0F, 1.0F);
+//                }
+//
+//                tessellator.startDrawingQuads();
+//                tessellator.setColorOpaque_I(2631720);
+//                tessellator.addVertexWithUV(-100.0D, -100.0D, -100.0D, 0.0D, 0.0D);
+//                tessellator.addVertexWithUV(-100.0D, -100.0D, 100.0D, 0.0D, 16.0D);
+//                tessellator.addVertexWithUV(100.0D, -100.0D, 100.0D, 16.0D, 16.0D);
+//                tessellator.addVertexWithUV(100.0D, -100.0D, -100.0D, 16.0D, 0.0D);
+//                tessellator.draw();
+//                GL11.glPopMatrix();
+//            }
+//
+//            GL11.glDepthMask(true);
+//            GL11.glEnable(GL11.GL_TEXTURE_2D);
+//            GL11.glEnable(GL11.GL_ALPHA_TEST);
         }
 	}
 }

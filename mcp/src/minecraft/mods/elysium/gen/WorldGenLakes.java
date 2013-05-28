@@ -154,21 +154,21 @@ public class WorldGenLakes extends WorldGenerator
                 }
             }
 
-//            if (Block.blocksList[this.blockIndex].blockMaterial == Material.water)
-//            {
-//                for (i1 = 0; i1 < 16; ++i1)
-//                {
-//                    for (j2 = 0; j2 < 16; ++j2)
-//                    {
-//                        byte b0 = 4;
-//
-//                        if (par1World.isBlockFreezable(par3 + i1, par4 + b0, par5 + j2))
-//                        {
-//                            par1World.setBlock(par3 + i1, par4 + b0, par5 + j2, Block.ice.blockID, 0, 2);
-//                        }
-//                    }
-//                }
-//            }
+            if (Block.blocksList[this.blockIndex].blockMaterial == Material.water)
+            {
+                for (i1 = 0; i1 < 16; ++i1)
+                {
+                    for (j2 = 0; j2 < 16; ++j2)
+                    {
+                        byte b0 = 4;
+
+                        if (par1World.isBlockFreezable(par3 + i1, par4 + b0, par5 + j2))
+                        {
+                            par1World.setBlock(par3 + i1, par4 + b0, par5 + j2, Block.ice.blockID, 0, 2);
+                        }
+                    }
+                }
+            }
 
             return true;
         }
