@@ -31,6 +31,10 @@ mcp/reobf/*
 mcp/runtime/*
 mcp/temp/*
 
+mcp/
+mcp/src/
+mcp/src/minecraft/
+
 mcp/src/minecraft/net/*
 mcp/src/minecraft/cpw/*
 mcp/src/minecraft/ibxm/*

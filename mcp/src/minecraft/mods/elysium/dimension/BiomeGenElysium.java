@@ -17,14 +17,13 @@ import net.minecraft.world.gen.feature.WorldGenDesertWells;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeGenElysium extends BiomeGenBase {
-	private WorldGenerator UnDeadworldGeneratorBigTree;
 	public final Material blockMaterial;
 
 	public BiomeGenElysium(int par1) {
 		super(par1);
 		this.blockMaterial = Material.water;
 		this.minHeight = 0.1F;
-		this.maxHeight = 2.0F;
+		this.maxHeight = 1.8F;
 		this.spawnableMonsterList.clear();
 		this.spawnableCreatureList.clear();
 		this.topBlock = ((byte) Elysium.grassBlock.blockID);
@@ -32,7 +31,7 @@ public class BiomeGenElysium extends BiomeGenBase {
 //		this.waterColorMultiplier = 0x78FFF6;
 
 		
-		this.setBiomeName("Elysium Plain");
+		this.setBiomeName("Elysium");
 		
 		
         this.theBiomeDecorator = new BiomeElysiumPlainDecorator(this);
