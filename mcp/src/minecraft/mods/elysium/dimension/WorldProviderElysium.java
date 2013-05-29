@@ -18,10 +18,12 @@ import net.minecraft.world.biome.WorldChunkManagerHell;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.client.IRenderHandler;
 
-public class WorldProviderElysium extends WorldProvider {
+public class WorldProviderElysium extends WorldProvider
+{
 	private float[] colorsSunriseSunset = new float[4];
 
-	public void registerWorldChunkManager() {
+	public void registerWorldChunkManager()
+	{
 		this.worldChunkMgr = new WorldChunkManagerHell(Elysium.ElysiumPlainBiome, this.dimensionId, this.dimensionId);
 		this.dimensionId = Elysium.DimensionID;
 		this.hasNoSky = false;
@@ -29,6 +31,7 @@ public class WorldProviderElysium extends WorldProvider {
 		this.setSkyRenderer(new ElysiumSkyRenderer());
 		
 	}
+	
 //	@SideOnly(Side.CLIENT)
 //    public Vec3 getSkyColor(Entity cameraEntity, float partialTicks)
 //    {//86C7FF
@@ -104,43 +107,52 @@ public class WorldProviderElysium extends WorldProvider {
         return world.getWorldVec3Pool().getVecFromPool((double)f4, (double)f5, (double)f6);
     }
 	
-	public IChunkProvider createChunkGenerator() {
+	public IChunkProvider createChunkGenerator()
+	{
 		return new ChunkProviderElysium(this.worldObj,
 				this.worldObj.getSeed(), false);
 	}
 
-	public int getAverageGroundLevel() {
+	public int getAverageGroundLevel()
+	{
 		return 64;
 	}
 
 
-	public String getDimensionName() {
+	public String getDimensionName()
+	{
 		return "The Elysium";
 	}
 
 	@SideOnly(Side.CLIENT)
-	public boolean isSkyColored() {
+	public boolean isSkyColored()
+	{
 		return true;
 	}
 
-	public boolean canRespawnHere() {
+	public boolean canRespawnHere()
+	{
 		return true;
 	}
 
-	public boolean isSurfaceWorld() {
+	public boolean isSurfaceWorld()
+	{
 		return true;
 	}
 	
 	
-	public boolean canCoordinateBeSpawn(int par1, int par2) {
+	public boolean canCoordinateBeSpawn(int par1, int par2)
+	{
 		return false;
 	}
 
-	public ChunkCoordinates getEntrancePortalLocation() {
+	public ChunkCoordinates getEntrancePortalLocation()
+	{
 		return new ChunkCoordinates(50, 5, 0);
 	}
 
-	protected void generateLightBrightnessTable() {
+	protected void generateLightBrightnessTable()
+	{
 		float f = 5.0F;
 
         for (int i = 0; i <= 15; ++i)
@@ -151,26 +163,24 @@ public class WorldProviderElysium extends WorldProvider {
     }
 
 	@SideOnly(Side.CLIENT)
-	public String getWelcomeMessage() {
-		if ((this instanceof WorldProviderElysium)) {
-			return "Entering The Elysium";
-		}
-		return null;
+	public String getWelcomeMessage()
+	{
+		return "Entering The Elysium";
 	}
-	 /**
-     * A Message to display to the user when they transfer out of this dismension.
-     *
-     * @return The message to be displayed
-     */
-    public String getDepartMessage()
+	
+	/**
+    * A Message to display to the user when they transfer out of this dismension.
+    *
+    * @return The message to be displayed
+    */
+	public String getDepartMessage()
     {
-    	if ((this instanceof WorldProviderElysium)) {
-			return "Leaving The Elysium";
-		}
-		return null;
+		return "Leaving The Elysium";
     }
+    
 	@SideOnly(Side.CLIENT)
-	public Vec3 getFogColor(float par1, float par2) {
+	public Vec3 getFogColor(float par1, float par2)
+	{
 		int i = 10518688;
 		float f2 = MathHelper.cos(par1 * 3.141593F * 2.0F) * 2.0F + 0.5F;
 		if (f2 < 0.0F) {

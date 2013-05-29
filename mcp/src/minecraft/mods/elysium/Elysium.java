@@ -36,7 +36,8 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 
 @Mod(name="The Elysium", version="1.0", useMetadata = false, modid = "TheElysium", dependencies="required-after:Forge@[7.8.0,)")
 //@NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandler.class, clientSideRequired = true, serverSideRequired = true)
-public class Elysium {
+public class Elysium
+{
 	@Instance
 	public static Elysium instance;
 	
@@ -50,7 +51,9 @@ public class Elysium {
 	//Blocks
 	
 	public static Block paleStone;
+	/** It means elysian dirt. **/
 	public static Block soilBlock;
+	/** It means elysian grass. **/
 	public static Block grassBlock;
 	public static Block LeucosandBlock;
 	public static Block RiltBlock;
@@ -60,6 +63,7 @@ public class Elysium {
 	public static Block FostimberSaplingBlock;
 	public static Block WoodBlock;
 	public static Block FlowerBlock;
+	/** It means elysian grass overlay. **/
 	public static Block CurlgrassBlock;
 	public static Block SulphurOreBlock;
 	public static Block CobaltOreBlock;

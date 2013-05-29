@@ -15,7 +15,8 @@ import net.minecraftforge.liquids.LiquidDictionary;
 import net.minecraftforge.liquids.LiquidStack;
 import cpw.mods.fml.common.IWorldGenerator;
 
-public class ElysiumWorldGen implements IWorldGenerator {
+public class ElysiumWorldGen implements IWorldGenerator
+{
 
 	@Override
 	public void generate(Random rand, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
@@ -44,7 +45,8 @@ public class ElysiumWorldGen implements IWorldGenerator {
 //	}
 	private void generateSurface(){}
 	
-	private void generateElysium(World world, Random rand, int chunkX, int chunkZ) {
+	private void generateElysium(World world, Random rand, int chunkX, int chunkZ)
+	{
 		int i = chunkX + rand.nextInt(16);
 		int k = chunkZ + rand.nextInt(16);
 		int j = world.getTopSolidOrLiquidBlock(i, k);
@@ -53,7 +55,8 @@ public class ElysiumWorldGen implements IWorldGenerator {
         
 		int num = rand.nextInt(3)+1;
 		
-		for (int x = 0; x < num; x++) {
+		for (int x = 0; x < num; x++)
+		{
 			int num2 = rand.nextInt(3)+1;//in a group
 
 

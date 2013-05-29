@@ -189,11 +189,11 @@ public class ChunkProviderElysium implements IChunkProvider
                             {
                                 if ((d16 += d15) > 0.0D)
                                 {
-                                    par3ArrayOfByte[j2 += short1] = (byte)Elysium.paleStone.blockID;
+                                    //par3ArrayOfByte[j2 += short1] = (byte)Elysium.paleStone.blockID;
                                 }
                                 else if (k1 * 8 + l1 < seeLevel)
                                 {
-                                    par3ArrayOfByte[j2 += short1] = (byte)Elysium.waterStill.blockID;
+                                    //par3ArrayOfByte[j2 += short1] = (byte)Elysium.waterStill.blockID;
                                 }
                                 else
                                 {
@@ -228,37 +228,36 @@ public class ChunkProviderElysium implements IChunkProvider
         double d0 = 0.03125D;
         this.stoneNoise = this.noiseGen4.generateNoiseOctaves(this.stoneNoise, par1 * 16, par2 * 16, 0, 16, 16, 1, d0 * 2.0D, d0 * 2.0D, d0 * 2.0D);
 
-        for (int k = 0; k < 16; ++k)
+        for (int z = 0; z < 16; ++z)
         {
-            for (int l = 0; l < 16; ++l)
+            for (int x = 0; x < 16; ++x)
             {
-                BiomeGenBase biomegenbase = paramBiomeGenBase[l + k * 16];
+                BiomeGenBase biomegenbase = paramBiomeGenBase[x + z * 16];
                 float f = biomegenbase.getFloatTemperature();
-                int i1 = (int)(this.stoneNoise[k + l * 16] / 3.0D + 3.0D + this.rand.nextDouble() * 0.25D);
+                int i1 = (int)(this.stoneNoise[z + x * 16] / 3.0D + 3.0D + this.rand.nextDouble() * 0.25D);
                 int j1 = -1;
                 byte top = biomegenbase.topBlock;
                 byte filler = biomegenbase.fillerBlock;
 
                 for (int height = 127; height >= 0; --height)
-//                for (int k1 = 0; k1 >= 127; ++k1)
                 {
-                    int byteId = (l * 16 + k) * 128 + height;
+                    int currentPos = (x * 16 + z) * 128 + height;
 
-                    if (height <= 0 + this.rand.nextInt(5))
+                    if (height <= 0 /*3 + Math.sin(x*Math.PI*2/32)*3 + Math.sin(z*Math.PI*2/32)*3*/)
                     {
-                        mapArray[byteId] = (byte)Block.bedrock.blockID;
+                        mapArray[currentPos] = (byte)Block.bedrock.blockID;
                     }
                     else
                     {
-                        byte blockByteId = mapArray[byteId];
+                        byte currentId = mapArray[currentPos];
 
-                        if (blockByteId == 0)//air
+                        if (currentId == 0)//air
                         {
                             j1 = -1;
                         }
-                        else if (blockByteId == (byte)Elysium.paleStone.blockID)
+                        else if (currentId == (byte)Elysium.paleStone.blockID)
                         {
-                            if (j1 == -1)
+                            if (j1 == -1)//if the top block is air
                             {
                                 if (i1 <= 0)
                                 {
@@ -287,17 +286,17 @@ public class ChunkProviderElysium implements IChunkProvider
 
                                 if (height >= seeLevel - 1)
                                 {
-                                    mapArray[byteId] = top;
+                                    mapArray[currentPos] = top;
                                 }
                                 else
                                 {
-                                    mapArray[byteId] = filler;
+                                    mapArray[currentPos] = filler;
                                 }
                             }
                             else if (j1 > 0)
                             {
                                 --j1;
-                                mapArray[byteId] = filler;
+                                mapArray[currentPos] = filler;
 
                                 if (j1 == 0 && filler == Block.sand.blockID)
                                 {
@@ -540,6 +539,7 @@ public class ChunkProviderElysium implements IChunkProvider
 //            flag = this.villageGenerator.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
 //            this.strongholdGenerator.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
 //            this.scatteredFeatureGenerator.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
+        	
         }
 
         int k1;
