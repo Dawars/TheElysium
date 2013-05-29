@@ -35,8 +35,8 @@ public class DefaultProps {
 	public static int idOreJadeBlock = 2011;
 	public static int idOreTourmalineBlock = 2012;
 	public static int idOreBerylBlock = 2013;
-//	public static int idOreBerylBlock = 2013;
-//	public static int idOreBerylBlock = 2013;
+	public static int idShellsBlock = 2014;
+//	public static int idOreBerylBlock = 2015;
 //	public static int idOreBerylBlock = 2013;
 //	public static int idOreBerylBlock = 2013;
 	

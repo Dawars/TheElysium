@@ -70,7 +70,7 @@ public class Elysium {
 	public static Block BerylOreBlock;
 	public static Block waterStill;
 	public static ElysiumBlockFluid waterMoving;
-//	public static Block LeucosandBlock;
+	public static Block shellFloatingBlock;
 //	public static Block LeucosandBlock;
 //	public static Block LeucosandBlock;
 //	public static Block LeucosandBlock;
@@ -233,6 +233,11 @@ public class Elysium {
 			portalCore = new ElysiumBlockPortalCore(idPortalCoreBlock.getInt(), Material.glass).setHardness(5F).setStepSound(Block.soundGlassFootstep).setUnlocalizedName("portalCore");
 			ClientProxy.proxy.registerBlock(portalCore);
 			LanguageRegistry.addName(portalCore, "Elysian Portal Block");
+
+			Property idShellsBlock = Elysium.mainConfiguration.getBlock("idShellsBlock.id", DefaultProps.idShellsBlock);
+			shellFloatingBlock = new BlockShells(idShellsBlock.getInt()).setHardness(0.0F).setStepSound(Block.soundGlassFootstep).setUnlocalizedName("shell");
+			ClientProxy.proxy.registerBlock(shellFloatingBlock);
+			LanguageRegistry.addName(shellFloatingBlock, "Shell...");
 			
 			Block.dragonEgg.setCreativeTab(tabElysium);
 			
