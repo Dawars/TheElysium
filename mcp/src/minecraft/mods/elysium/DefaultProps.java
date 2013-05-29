@@ -55,4 +55,5 @@ public class DefaultProps {
 	//Settings
 	public static int maxportaldistance = 64;
 	public static byte ticksbeforeportalcheck = 10;
+	public static byte ticksbeforeportalteleport = 100;
 }

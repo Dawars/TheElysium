@@ -5,6 +5,7 @@ import java.util.Random;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import mods.elysium.block.ElysiumBlockContainer;
 import net.minecraft.block.Block;
@@ -70,7 +71,7 @@ public class ElysiumBlockPortalCore extends ElysiumBlockContainer
 				else if(player.prevPosY == player.posY)
 				{
 					tile.wasCollided = true;
-					if(tile.timebeforetp == -1) tile.timebeforetp = 200;
+					if(tile.timebeforetp == -1) tile.timebeforetp = DefaultProps.ticksbeforeportalteleport;
 				}
 			}
 			else

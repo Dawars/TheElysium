@@ -27,7 +27,7 @@ public class ElysiumTileEntityPortal extends TileEntity
 		if(timebeforetp > 0)
 		{
 			timebeforetp--;
-			System.out.println(timebeforetp);
+			//System.out.println(timebeforetp);
 		}
 		wasCollided = false;
 		
