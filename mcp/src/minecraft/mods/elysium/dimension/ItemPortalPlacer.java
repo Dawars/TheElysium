@@ -15,86 +15,43 @@ public class ItemPortalPlacer extends Item {
 		setCreativeTab(CreativeTabs.tabTools);
 	}
 
-	public boolean onItemUse(ItemStack par1ItemStack,
-			EntityPlayer par2EntityPlayer, World par3World, int X, int Y,
-			int Z, int par7, float par8, float par9, float par10) {
-		if (!par3World.isRemote) {
-			int direction = MathHelper
-					.floor_double(par2EntityPlayer.rotationYaw * 4.0F / 360.0F + 0.5D) & 0x3;
-			if ((direction == 1) || (direction == 3)) {
-				for (int y = 1; y < 5; y++) {
-					for (int z = -1; z < 2; z++) {
-						if (par3World.getBlockId(X, Y + y, Z + z) != 0) {
-							par2EntityPlayer
-									.addChatMessage("No room for a portal.");
-							return false;
-						}
-					}
-				}
+	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer entity, World world, int X, int Y, int Z, int par7, float par8, float par9, float par10) {
+		int x = MathHelper.floor_double(entity.posX);
+		int z = MathHelper.floor_double(entity.posZ);
+		int y;
+		for(y = world.getActualHeight()-1; (y >= 0) && (world.isAirBlock(x, y, z)); y--);
+		
+		world.setBlock(x, y+9, z, Elysium.portalCore.blockID);
+		world.setBlockMetadataWithNotify(x, y+9, z, 1, 2);
+		for(int i=-1; i <= 1; i++)
+		{
+			for(int j=-1; j <= 1; j++)
+			{
+				world.setBlock(x+i, y+8, z+j, Block.blockNetherQuartz.blockID);
+				world.setBlockMetadataWithNotify(x+i, y+8, z+j, 1, 0);
 				
-				par3World.setBlock(X, Y + 1, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X + 1, Y + 1, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X, Y + 2, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X + 1, Y + 2, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X + 2, Y + 2, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X - 1, Y + 2, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X + 3, Y + 3, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X - 2, Y + 3, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X + 2, Y + 3, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X - 1, Y + 3, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X + 3, Y + 4, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X - 2, Y + 4, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X + 2, Y + 4, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X - 1, Y + 4, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X + 3, Y + 5, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X - 2, Y + 5, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X + 2, Y + 5, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X - 1, Y + 5, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X + 2, Y + 6, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X - 1, Y + 6, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X, Y + 7, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X + 1, Y + 7, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X, Y + 6, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X + 1, Y + 6, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X, Y + 3, Z, Elysium.TutorialFire.blockID);
-			} else {
-				for (int y = 1; y < 5; y++) {
-					for (int x = -1; x < 2; x++) {
-						if (par3World.getBlockId(X + x, Y + y, Z) != 0) {
-							par2EntityPlayer
-									.addChatMessage("No room for a portal.");
-							return false;
-						}
-					}
-				}
-				par3World.setBlock(X, Y + 1, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X + 1, Y + 1, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X, Y + 2, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X + 1, Y + 2, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X + 2, Y + 2, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X - 1, Y + 2, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X + 3, Y + 3, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X - 2, Y + 3, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X + 2, Y + 3, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X - 1, Y + 3, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X + 3, Y + 4, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X - 2, Y + 4, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X + 2, Y + 4, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X - 1, Y + 4, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X + 3, Y + 5, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X - 2, Y + 5, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X + 2, Y + 5, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X - 1, Y + 5, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X + 2, Y + 6, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X - 1, Y + 6, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X, Y + 7, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X + 1, Y + 7, Z, Block.oreDiamond.blockID);
-				par3World.setBlock(X, Y + 6, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X + 1, Y + 6, Z, Block.blockDiamond.blockID);
-				par3World.setBlock(X, Y + 3, Z, Elysium.TutorialFire.blockID);
+				world.setBlock(x+i, y+6, z+j, Block.blockNetherQuartz.blockID);
+				world.setBlockMetadataWithNotify(x+i, y+6, z+j, 2, 0);
+				world.setBlock(x+i, y+5, z+j, Block.blockNetherQuartz.blockID);
+				world.setBlockMetadataWithNotify(x+i, y+5, z+j, 2, 0);
+				
+				world.setBlock(x+i, y+4, z+j, Block.blockGold.blockID);
+				
+				world.setBlock(x+i, y+3, z+j, Block.blockNetherQuartz.blockID);
+				world.setBlockMetadataWithNotify(x+i, y+3, z+j, 2, 0);
+				world.setBlock(x+i, y+2, z+j, Block.blockNetherQuartz.blockID);
+				world.setBlockMetadataWithNotify(x+i, y+2, z+j, 2, 0);
 			}
-			return true;
 		}
+		for(int i=-2; i <= 2; i++)
+		{
+			for(int j=-2; j <= 2; j++)
+			{
+				world.setBlock(x+i, y+7, z+j, Block.blockNetherQuartz.blockID);
+				world.setBlock(x+i, y+1, z+j, Block.blockNetherQuartz.blockID);
+			}
+		}
+		
 		return true;
 	}
 }

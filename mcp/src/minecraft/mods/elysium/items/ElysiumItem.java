@@ -29,8 +29,6 @@ public class ElysiumItem extends Item
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
-		//player.sendChatToPlayer("Id: "+world.getBlockId(x, y, z));
-		player.sendChatToPlayer("Metadata: "+world.getBlockMetadata(x, y, z));
         return false;
     }
 }

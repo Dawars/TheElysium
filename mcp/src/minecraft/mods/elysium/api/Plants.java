@@ -75,4 +75,15 @@ public class Plants {
         if (grass.block.canBlockStay(world, x, y, z))
         	world.setBlock(x, y, z, grass.block.blockID, grass.metadata, 3);
     }
+	
+	
+	 public static ItemStack getGrassSeed(World world)
+	    {
+	        SeedEntry entry = (SeedEntry)WeightedRandom.getRandomItem(world.rand, seedList);
+	        if (entry == null || entry.seed == null)
+	        {
+	            return null;
+	        }
+	        return entry.seed.copy();
+	    }
 }

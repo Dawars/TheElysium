@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 import mods.elysium.Elysium;
-import mods.elysium.dimension.TutorialPortalPosition;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Direction;
@@ -21,6 +20,14 @@ public class ElysiumTeleporter extends Teleporter
 {
 	private final WorldServer worldServer;
     private final Random random;
+	
+    /** Stores successful portal placement locations for rapid lookup. */
+	private final LongHashMap destinationCoordinateCache = new LongHashMap();
+	/**
+	 * A list of valid keys for the destinationCoordainteCache. These are based
+	 * on the X & Z of the players initial location.
+	 */
+	private final List destinationCoordinateKeys = new ArrayList();
 	
 	public ElysiumTeleporter(WorldServer worldServer)
 	{
@@ -42,16 +49,35 @@ public class ElysiumTeleporter extends Teleporter
 	@Override
 	public boolean placeInExistingPortal(Entity entity, double par2, double par4, double par6, float par8)
 	{
-		int x = MathHelper.floor_double(entity.posX);
-		int z = MathHelper.floor_double(entity.posZ);
-		int y;
-		for(y = worldServer.getActualHeight()-1; (y >= 0) && (worldServer.isAirBlock(x, y, z)); y--);
-		if(worldServer.getBlockId(x, y, z) != Elysium.portalCore.blockID)
+		int i = MathHelper.floor_double(entity.posX);
+		int k = MathHelper.floor_double(entity.posZ);
+		int j = 0;
+		
+		long chunkPair = ChunkCoordIntPair.chunkXZ2Int(i, k);
+		boolean flag = true;
+		
+		if (this.destinationCoordinateCache.containsItem(chunkPair)) {
+			ElysiumPortalPosition portalposition = (ElysiumPortalPosition) this.destinationCoordinateCache.getValueByKey(chunkPair);
+
+			i = portalposition.posX;
+			j = portalposition.posY;
+			k = portalposition.posZ;
+			portalposition.lastUpdateTime = this.worldServer.getTotalWorldTime();
+			flag = false;
+		} else {
+			if (flag) {
+				this.destinationCoordinateCache.add(chunkPair, new ElysiumPortalPosition(this, i, j, k, this.worldServer.getTotalWorldTime()));
+				this.destinationCoordinateKeys.add(Long.valueOf(chunkPair));
+			}
+		}
+		
+		for(j = worldServer.getActualHeight()-1; (j >= 0) && (worldServer.isAirBlock(i, j, k)); j--);
+		if(worldServer.getBlockId(i, j, k) != Elysium.portalCore.blockID)
 		{
 			return false;
 		}
 		entity.motionX = entity.motionY = entity.motionZ = 0.0D;
-		entity.setPosition(x+0.5D, y+1, z+0.5D);
+		entity.setPosition(i+0.5D, j+1, k+0.5D);
 		return true;
 	}
 	

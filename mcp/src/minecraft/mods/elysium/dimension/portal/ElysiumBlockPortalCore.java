@@ -8,7 +8,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import mods.elysium.block.ElysiumBlockContainer;
-import mods.elysium.dimension.TutorialTeleporter;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -75,7 +74,8 @@ public class ElysiumBlockPortalCore extends ElysiumBlockContainer
 	@Override
 	public void onEntityWalking(World world, int x, int y, int z, Entity entity)
 	{
-		if((world.getBlockMetadata(x, y, z) == 1) && (canStayPortal(world, x, y, z)) && (entity.riddenByEntity == null) && (entity.ridingEntity == null) && (entity instanceof EntityPlayerMP))
+		if((world.getBlockMetadata(x, y, z) == 1) && (canStayPortal(world, x, y, z)) &&
+				(entity.riddenByEntity == null) && (entity.ridingEntity == null) && (entity instanceof EntityPlayerMP))
 		{
 			EntityPlayerMP player = (EntityPlayerMP) entity;
 			
@@ -91,7 +91,8 @@ public class ElysiumBlockPortalCore extends ElysiumBlockContainer
 			else
 			{
 				player.timeUntilPortal = 10;
-				player.mcServer.getConfigurationManager().transferPlayerToDimension(player, Elysium.DimensionID, new ElysiumTeleporter(player.mcServer.worldServerForDimension(Elysium.DimensionID)));
+				player.mcServer.getConfigurationManager()
+				.transferPlayerToDimension(player, Elysium.DimensionID, new ElysiumTeleporter(player.mcServer.worldServerForDimension(Elysium.DimensionID)));
 			}
 		}
 	}

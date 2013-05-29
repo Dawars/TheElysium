@@ -121,7 +121,7 @@ public class ElysiumFlower extends ElysiumBlock implements IPlantable
     public EnumPlantType getPlantType(World world, int x, int y, int z)
     {
 //        if (blockID == Elysium.FostimberSaplingBlock.blockID) return EnumPlantType.Plains;
-        return EnumPlantType.Plains;
+        return null;
     }
 
     @Override

@@ -42,6 +42,14 @@ public class DefaultProps {
 	
 	//Items
 	public static int idGracePrismItem = 5000;
-
+	public static int idWhistleItem = 5001;
+	public static int idPepperSeedItem = 5002;
+	public static int idAsphodelPetalsItem = 5003;
+//	public static int idGracePrismItem = 5000;
+//	public static int idGracePrismItem = 5000;
+	
+	
+	public static int idOverkillItem = 5006;
+	
 	
 }
