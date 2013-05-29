@@ -52,20 +52,25 @@ public class ElysiumBlockPortalCore extends ElysiumBlockContainer
 			if(entity instanceof EntityPlayerMP)
 			{
 				EntityPlayerMP player = (EntityPlayerMP) entity;
+				ElysiumTileEntityPortal tile = (ElysiumTileEntityPortal)world.getBlockTileEntity(x, y, z);
 				
-				if(player.timeUntilPortal > 0)
+				if(tile.timebeforetp == 0)
 				{
-					player.timeUntilPortal = 10;
-				}
-				else if(player.dimension == Elysium.DimensionID)
-				{
-					player.timeUntilPortal = 10;
-					player.mcServer.getConfigurationManager().transferPlayerToDimension(player, 0, new ElysiumTeleporter(player.mcServer.worldServerForDimension(0)));
+					tile.timebeforetp = -1;
+					
+					if(player.dimension == Elysium.DimensionID)
+					{
+						player.mcServer.getConfigurationManager().transferPlayerToDimension(player, 0, new ElysiumTeleporter(player.mcServer.worldServerForDimension(0)));
+					}
+					else
+					{
+						player.mcServer.getConfigurationManager().transferPlayerToDimension(player, Elysium.DimensionID, new ElysiumTeleporter(player.mcServer.worldServerForDimension(Elysium.DimensionID)));
+					}
 				}
 				else
 				{
-					player.timeUntilPortal = 10;
-					player.mcServer.getConfigurationManager().transferPlayerToDimension(player, Elysium.DimensionID, new ElysiumTeleporter(player.mcServer.worldServerForDimension(Elysium.DimensionID)));
+					tile.wasCollided = true;
+					if(tile.timebeforetp == -1) tile.timebeforetp = 200;
 				}
 			}
 			else

@@ -1,5 +1,7 @@
 package mods.elysium;
 
+import org.lwjgl.input.Keyboard;
+
 public class DefaultProps {
 	
 	public static final String modId = "Elysium";
@@ -46,4 +48,6 @@ public class DefaultProps {
 
 	public static int idOverkillItem = 5006;
 	public static int idDebugItem = 5007;
+	
+	public static int key_tp = Keyboard.KEY_LSHIFT;
 }

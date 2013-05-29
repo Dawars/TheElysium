@@ -10,10 +10,19 @@ public class ElysiumTileEntityPortal extends TileEntity
 	public boolean canstay = false;
 	public ElysiumPortalPosition coords;
 	byte tick;
+	public int timebeforetp = -1;
+	public boolean wasCollided = false;
 	
 	@Override
 	public void updateEntity()
 	{
+		if(!wasCollided) timebeforetp = -1;
+		if(timebeforetp > 0)
+		{
+			timebeforetp--;
+			//System.out.println(timebeforetp);
+		}
+		
 		if(coords == null)
 		{
 			coords = new ElysiumPortalPosition(worldObj.provider.dimensionId, xCoord, yCoord, zCoord);

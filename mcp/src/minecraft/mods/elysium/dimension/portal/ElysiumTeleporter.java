@@ -33,6 +33,7 @@ public class ElysiumTeleporter extends Teleporter
 	@Override
 	public void placeInPortal(Entity entity, double par2, double par4, double par6, float par8)
 	{
+		worldServer.updateEntities();
 		if(!this.placeInExistingPortal(entity, par2, par4, par6, par8))
 		{
 			this.makePortal(entity);
@@ -50,7 +51,11 @@ public class ElysiumTeleporter extends Teleporter
 			if((portals.get(i).dim == entity.dimension) && (Math.abs(portals.get(i).posX-x) < 32) && (Math.abs(portals.get(i).posZ-z) < 32))
 			{
 				entity.motionX = entity.motionY = entity.motionZ = 0.0D;
-				entity.setPosition(portals.get(i).posX+0.5D, portals.get(i).posY+1, portals.get(i).posZ+0.5D);
+				int dx = random.nextInt(2);
+				if(dx == 0) dx = -1;
+				int dz = random.nextInt(2);
+				if(dz == 0) dz = -1;
+				entity.setPosition(portals.get(i).posX+0.5D+dx, portals.get(i).posY, portals.get(i).posZ+0.5D+dz);
 				return true;
 			}
 		}
@@ -97,7 +102,11 @@ public class ElysiumTeleporter extends Teleporter
 		}
 		
 		entity.motionX = entity.motionY = entity.motionZ = 0.0D;
-		entity.setPosition(x+0.5D, y+10, z+0.5D);
+		int dx = random.nextInt(2);
+		if(dx == 0) dx = -1;
+		int dz = random.nextInt(2);
+		if(dz == 0) dz = -1;
+		entity.setPosition(x+0.5D+dx, y+9, z+0.5D+dz);
 		
 		return true;
 	}
