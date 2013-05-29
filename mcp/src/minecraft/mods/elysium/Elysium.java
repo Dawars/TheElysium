@@ -87,12 +87,15 @@ public class Elysium {
 //	public static Item GracePrismItem;
 //	public static Item GracePrismItem;
 
-	
+
+	public static Item WhistleItem;
+	public static Item PepperSeedItem;
+	public static Item AsphodelPetalsItem;
+	public static Item OverKillItem;
+//  public static Item GracePrismItem;
 	
 	
 	public static Item TutorialPortalPlacer;
-	public static BlockTutorialFire TutorialFire;
-	public static BlockTutorialPortal TutorialPortal;
 	
 	/** Biome's **/
 	public static BiomeGenBase ElysiumPlainBiome = null;
@@ -236,13 +239,7 @@ public class Elysium {
 			Block.dragonEgg.setCreativeTab(tabElysium);
 			
 			//dim
-			TutorialPortalPlacer = new ItemPortalPlacer(3048)
-			.setUnlocalizedName("Tutorial:TutorialPortalPlacer");
-			
-			TutorialFire = (BlockTutorialFire) new BlockTutorialFire(
-					2028).setUnlocalizedName("Tuturial:Tutorialfire_0");
-			TutorialPortal = (BlockTutorialPortal) new BlockTutorialPortal(
-					2029).setUnlocalizedName("Tutorial:TutorialPortal");
+			TutorialPortalPlacer = new ItemPortalPlacer(3048).setUnlocalizedName("Tutorial:TutorialPortalPlacer");
 			
 //	        MinecraftForge.setToolClass(Item.pickaxeWood,    "pickaxe", 0);
 
@@ -250,10 +247,25 @@ public class Elysium {
 			Property idGracePrismItem = Elysium.mainConfiguration.getItem("idGracePrismItem.id", DefaultProps.idGracePrismItem);
 			GracePrismItem = new ItemGracePrism(idGracePrismItem.getInt()).setUnlocalizedName("gracecrystal");
 			LanguageRegistry.addName(GracePrismItem, "Grace Prism");
-			
-			// Crafting Registry
+
+			Property idWhistleItem = Elysium.mainConfiguration.getItem("idWhistleItem.id", DefaultProps.idWhistleItem);
+			WhistleItem = new ItemWhistle(idWhistleItem.getInt()).setUnlocalizedName("enderwhistle");
+			LanguageRegistry.addName(WhistleItem, "Ender Whistle");
+		
+			Property idPepperSeedItem = Elysium.mainConfiguration.getItem("idPepperSeedItem.id", DefaultProps.idPepperSeedItem);
+			PepperSeedItem = new ElysiumItem(idPepperSeedItem.getInt()).setUnlocalizedName("seeds_pepper");
+		
+			Property idOverkillItem = Elysium.mainConfiguration.getItem("idOverkillItem.id", DefaultProps.idOverkillItem);
+			OverKillItem = new OverkillItem(idOverkillItem.getInt()).setUnlocalizedName("asd");
+			LanguageRegistry.addName(OverKillItem, "Overkill Item");
+		
+			Property idAsphodelPetalsItem = Elysium.mainConfiguration.getItem("idAsphodelPetalsItem.id", DefaultProps.idAsphodelPetalsItem);
+			AsphodelPetalsItem = new ElysiumItem(idAsphodelPetalsItem.getInt()).setUnlocalizedName("asphodelpetal");
+			LanguageRegistry.addName(AsphodelPetalsItem, "Asphodel Petals");
+					// Crafting Registry
 			GameRegistry.addRecipe(new ItemStack(GracePrismItem), new Object[] {"SMS","MDM","SMS", Character.valueOf('S'), Block.whiteStone, Character.valueOf('M'), Item.bucketMilk, Character.valueOf('D'), Item.diamond});
-			
+			GameRegistry.addShapelessRecipe(new ItemStack(AsphodelPetalsItem, 2), new Object[] {FlowerBlock});
+
 			// Entity Registry
 			GameRegistry.registerTileEntity(ElysiumTileEntityPortal.class, "ElysiumTileEntityPortal");
 			
@@ -274,6 +286,7 @@ public class Elysium {
 		
 		Plants.addGrassPlant(CurlgrassBlock, 0, 30);
 		Plants.addGrassPlant(FlowerBlock, 0, 10);
+		Plants.addGrassSeed(new ItemStack(PepperSeedItem), 10);
 		
 //		new LiquidStacks();
 //		CoreProxy.proxy.addAnimation();
@@ -282,14 +295,10 @@ public class Elysium {
 
 //		CoreProxy.proxy.initializeRendering();
 //		CoreProxy.proxy.initializeEntityRendering();
-		/** Register Blocks **/
-		GameRegistry.registerBlock(TutorialFire, "TutorialFire");
-		GameRegistry.registerBlock(TutorialPortal, "TutorialPortal");
+		
 		/** Register Items **/
 		GameRegistry.registerItem(TutorialPortalPlacer, "TutorialPortalPlacer");
 		/** Add In-Game Names **/
-		LanguageRegistry.addName(TutorialFire, "Tutorial Fire");
-		LanguageRegistry.addName(TutorialPortal, "Tutorial Portal");
 		LanguageRegistry.addName(TutorialPortalPlacer, "Portal Placer");
 		/** Register WorldProvider for Dimension **/
 		DimensionManager.registerProviderType(DimensionID, WorldProviderElysium.class, true);
