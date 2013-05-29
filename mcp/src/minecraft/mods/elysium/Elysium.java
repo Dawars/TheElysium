@@ -170,12 +170,12 @@ public class Elysium {
 			LanguageRegistry.addName(GastroShellBlock, "Gastro Shell");
 
 			Property idAsphodelFlowerBlock = Elysium.mainConfiguration.getBlock("idAsphodelFlowerBlock.id", DefaultProps.idAsphodelFlowerBlock);
-			FlowerBlock = (new ElysiumFlowerBlock(idAsphodelFlowerBlock.getInt())).setHardness(0.2F).setStepSound(Block.soundGrassFootstep).setUnlocalizedName("asphodel_flower");
+			FlowerBlock = (new ElysiumFlowerBlock(idAsphodelFlowerBlock.getInt())).setHardness(0.0F).setStepSound(Block.soundGrassFootstep).setUnlocalizedName("asphodel_flower");
 			ClientProxy.proxy.registerBlock(FlowerBlock);
 			LanguageRegistry.addName(FlowerBlock, "Asphodel Flower");
 
 			Property idCurlgrassBlock = Elysium.mainConfiguration.getBlock("idCurlgrassBlock.id", DefaultProps.idCurlgrassBlock);
-			CurlgrassBlock = new CurlgrassBlock(idCurlgrassBlock.getInt()).setHardness(0.2F).setStepSound(Block.soundGrassFootstep).setUnlocalizedName("Curlgrass");
+			CurlgrassBlock = new CurlgrassBlock(idCurlgrassBlock.getInt()).setHardness(0.0F).setStepSound(Block.soundGrassFootstep).setUnlocalizedName("Curlgrass");
 			ClientProxy.proxy.registerBlock(CurlgrassBlock);
 			LanguageRegistry.addName(CurlgrassBlock, "Curlgrass");
 
