@@ -189,11 +189,11 @@ public class ChunkProviderElysium implements IChunkProvider
                             {
                                 if ((d16 += d15) > 0.0D)
                                 {
-                                    //par3ArrayOfByte[j2 += short1] = (byte)Elysium.paleStone.blockID;
+                                    par3ArrayOfByte[j2 += short1] = (byte)Elysium.paleStone.blockID;
                                 }
                                 else if (k1 * 8 + l1 < seeLevel)
                                 {
-                                    //par3ArrayOfByte[j2 += short1] = (byte)Elysium.waterStill.blockID;
+                                    par3ArrayOfByte[j2 += short1] = (byte)Elysium.waterStill.blockID;
                                 }
                                 else
                                 {
