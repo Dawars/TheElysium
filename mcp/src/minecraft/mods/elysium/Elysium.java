@@ -94,9 +94,7 @@ public class Elysium {
 	public static Item OverKillItem;
 //  public static Item GracePrismItem;
 	
-	
-	public static Item TutorialPortalPlacer;
-	
+		
 	/** Biome's **/
 	public static BiomeGenBase ElysiumPlainBiome = null;
 
@@ -293,10 +291,7 @@ public class Elysium {
 //		CoreProxy.proxy.initializeRendering();
 //		CoreProxy.proxy.initializeEntityRendering();
 		
-		/** Register Items **/
-		GameRegistry.registerItem(TutorialPortalPlacer, "TutorialPortalPlacer");
-		/** Add In-Game Names **/
-		LanguageRegistry.addName(TutorialPortalPlacer, "Portal Placer");
+	
 		/** Register WorldProvider for Dimension **/
 		DimensionManager.registerProviderType(DimensionID, WorldProviderElysium.class, true);
 		DimensionManager.registerDimension(DimensionID, DimensionID);
