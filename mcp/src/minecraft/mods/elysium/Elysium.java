@@ -262,7 +262,7 @@ public class Elysium {
 			
 			Property idDebugItem = Elysium.mainConfiguration.getItem("idDebugItem.id", DefaultProps.idDebugItem);
 			DebugItem = new ItemDebug(idDebugItem.getInt()).setUnlocalizedName("debug");
-			LanguageRegistry.addName(DebugItem, "Modders Item");
+			LanguageRegistry.addName(DebugItem, "Modder Item");
 			
 			// Crafting Registry
 			GameRegistry.addRecipe(new ItemStack(GracePrismItem), new Object[] {"SMS","MDM","SMS", Character.valueOf('S'), Block.whiteStone, Character.valueOf('M'), Item.bucketMilk, Character.valueOf('D'), Item.diamond});

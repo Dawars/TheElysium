@@ -21,9 +21,12 @@ public class ItemDebug extends ElysiumItem
 	@Override
 	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
-		player.sendChatToPlayer("Id: "+world.getBlockId(x, y, z));
-		player.sendChatToPlayer("Metadata: "+world.getBlockMetadata(x, y, z));
-		player.sendChatToPlayer("TileEntity: "+world.getBlockTileEntity(x, y, z));
+		if(!world.isRemote){
+			player.sendChatToPlayer("Id: "+world.getBlockId(x, y, z));
+			player.sendChatToPlayer("Metadata: "+world.getBlockMetadata(x, y, z));
+			player.sendChatToPlayer("TileEntity: "+world.getBlockTileEntity(x, y, z));
+		}
+		
         return false;
     }
 	
