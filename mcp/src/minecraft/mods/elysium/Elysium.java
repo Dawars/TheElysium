@@ -233,6 +233,8 @@ public class Elysium {
 			ClientProxy.proxy.registerBlock(portalCore);
 			LanguageRegistry.addName(portalCore, "Elysian Portal Block");
 			
+			Block.dragonEgg.setCreativeTab(tabElysium);
+			
 			//dim
 			TutorialPortalPlacer = new ItemPortalPlacer(3048)
 			.setUnlocalizedName("Tutorial:TutorialPortalPlacer");

@@ -127,7 +127,7 @@ public class ElysiumTileEntityPortalRenderer extends TileEntitySpecialRenderer
 
     public void renderTileEntityAt(TileEntity tile, double d1, double d2, double d3, float par8)
     {
-        if((tile.worldObj.getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) == 1) && /*(ElysiumBlockPortalCore.canStayPortal(tile.worldObj, tile.xCoord, tile.yCoord, tile.zCoord))*/ ((ElysiumTileEntityPortal)tile).canstay)
+        if(((ElysiumTileEntityPortal)tile).canstay)
         {
         	this.renderTileEntityPortalAt((ElysiumTileEntityPortal)tile, d1, d2, d3, par8);
         }

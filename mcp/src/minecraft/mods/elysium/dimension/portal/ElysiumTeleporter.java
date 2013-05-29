@@ -9,6 +9,7 @@ import mods.elysium.Elysium;
 import mods.elysium.dimension.TutorialPortalPosition;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Direction;
 import net.minecraft.util.LongHashMap;
 import net.minecraft.util.MathHelper;
@@ -21,6 +22,7 @@ public class ElysiumTeleporter extends Teleporter
 {
 	private final WorldServer worldServer;
     private final Random random;
+    public static ArrayList<ElysiumPortalPosition> portals = new ArrayList<ElysiumPortalPosition>();
 	
 	public ElysiumTeleporter(WorldServer worldServer)
 	{
@@ -44,22 +46,24 @@ public class ElysiumTeleporter extends Teleporter
 	{
 		int x = MathHelper.floor_double(entity.posX);
 		int z = MathHelper.floor_double(entity.posZ);
-		int y;
-		for(y = worldServer.getActualHeight()-1; (y >= 0) && (worldServer.isAirBlock(x, y, z)); y--);
-		if(worldServer.getBlockId(x, y, z) != Elysium.portalCore.blockID)
+		int i;
+		for(i=0; i<portals.size(); i++)
 		{
-			return false;
+			if((portals.get(i).dim == entity.dimension) && (Math.abs(portals.get(i).posX-x) < 32) && (Math.abs(portals.get(i).posZ-z) < 32))
+			{
+				entity.motionX = entity.motionY = entity.motionZ = 0.0D;
+				entity.setPosition(portals.get(i).posX+0.5D, portals.get(i).posY+1, portals.get(i).posZ+0.5D);
+				return true;
+			}
 		}
-		entity.motionX = entity.motionY = entity.motionZ = 0.0D;
-		entity.setPosition(x+0.5D, y+1, z+0.5D);
-		return true;
+		return false;
 	}
 	
 	@Override
 	public boolean makePortal(Entity entity)
 	{
-		int x = MathHelper.floor_double(entity.posX);
-		int z = MathHelper.floor_double(entity.posZ);
+		int x = MathHelper.floor_double(entity.posX) + random.nextInt(33) - 16;
+		int z = MathHelper.floor_double(entity.posZ) + random.nextInt(33) - 16;
 		int y;
 		for(y = worldServer.getActualHeight()-1; (y >= 0) && (worldServer.isAirBlock(x, y, z)); y--);
 		
@@ -93,6 +97,9 @@ public class ElysiumTeleporter extends Teleporter
 				worldServer.setBlock(x+i, y+1, z+j, Block.blockNetherQuartz.blockID);
 			}
 		}
+		
+		entity.motionX = entity.motionY = entity.motionZ = 0.0D;
+		entity.setPosition(x+0.5D, y+1, z+0.5D);
 		
 		return true;
 	}
