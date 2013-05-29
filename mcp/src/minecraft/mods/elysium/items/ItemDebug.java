@@ -33,7 +33,7 @@ public class ItemDebug extends ElysiumItem
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-		if((Keyboard.isKeyDown(DefaultProps.key_tp)) && (player instanceof EntityPlayerMP))
+		if(player.isSneaking() && (player instanceof EntityPlayerMP))
 		{
 			EntityPlayerMP playermp = (EntityPlayerMP)player;
 			if(playermp.dimension == Elysium.DimensionID)

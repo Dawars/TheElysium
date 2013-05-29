@@ -76,8 +76,6 @@ public class ItemWhistle extends ElysiumItem{
      */
     public int getMaxItemUseDuration(ItemStack item)
     {
-
-//    	if(ForgeHooks.get)
         return 20;
     }
     

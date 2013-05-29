@@ -238,7 +238,11 @@ public class Elysium
 			Property idShellsBlock = Elysium.mainConfiguration.getBlock("idShellsBlock.id", DefaultProps.idShellsBlock);
 			shellFloatingBlock = new BlockShells(idShellsBlock.getInt()).setHardness(0.0F).setStepSound(Block.soundGlassFootstep).setUnlocalizedName("shell");
 			ClientProxy.proxy.registerBlock(shellFloatingBlock);
-			LanguageRegistry.addName(shellFloatingBlock, "Shell...");
+			LanguageRegistry.addName(new ItemStack(shellFloatingBlock, 1, 0), "Shell");
+			LanguageRegistry.addName(new ItemStack(shellFloatingBlock, 1, 1), "Conch");
+			GameRegistry.registerBlock(shellFloatingBlock, ShellItemBlock.class, DefaultProps.modId + "-shell");
+
+			
 			
 			Block.dragonEgg.setCreativeTab(tabElysium);
 			

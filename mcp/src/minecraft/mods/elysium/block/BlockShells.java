@@ -4,17 +4,25 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
 
+import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockShells extends ElysiumFlowerBlock
-{
+{ 
+	@SideOnly(Side.CLIENT)
+	private Icon iconConch;
+	
     public BlockShells(int par1)
     {
         super(par1);
@@ -30,16 +38,15 @@ public class BlockShells extends ElysiumFlowerBlock
     {
         return 23;
     }
-
     /**
      * Adds all intersecting collision boxes to a list. (Be sure to only add boxes to the list if they intersect the
      * mask.) Parameters: World, X, Y, Z, mask, list, colliding entity
      */
-    public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity)
+    public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity entity)
     {
-        if (par7Entity == null || !(par7Entity instanceof EntityBoat))
+        if (entity == null || !(entity instanceof EntityBoat))
         {
-            super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, par7Entity);
+            super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, entity);
         }
     }
 
@@ -68,5 +75,46 @@ public class BlockShells extends ElysiumFlowerBlock
     public boolean canBlockStay(World par1World, int par2, int par3, int par4)
     {
         return true;
+    }
+    
+    @SideOnly(Side.CLIENT)
+    @Override
+    public Icon getIcon(int id, int meta)
+    {
+    	Icon icon = null;
+    	if(meta == 0)
+    		return this.iconConch;
+    	else
+    		return this.blockIcon;
+    }
+    
+    /**
+     * Determines the damage on the item the block drops. Used in cloth and wood.
+     */
+    public int damageDropped(int damage)
+    {
+        return damage;
+    }
+
+    @SideOnly(Side.CLIENT)
+
+    /**
+     * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
+     */
+    public void getSubBlocks(int id, CreativeTabs tab, List list)
+    {
+        list.add(new ItemStack(id, 1, 0));        
+        list.add(new ItemStack(id, 1, 1));
+    }
+    @SideOnly(Side.CLIENT)
+
+    /**
+     * When this method is called, your block should register all the icons it needs with the given IconRegister. This
+     * is the only chance you get to register icons.
+     */
+    public void registerIcons(IconRegister IconRegister)
+    {
+    	this.iconConch = IconRegister.registerIcon(DefaultProps.modId + ":conch");
+    	this.blockIcon = IconRegister.registerIcon(DefaultProps.modId + ":shell");
     }
 }
