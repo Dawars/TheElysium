@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -48,7 +49,7 @@ public class ElysiumTeleporter extends Teleporter
 		int i;
 		for(i=0; i<portals.size(); i++)
 		{
-			if((portals.get(i).dim == entity.dimension) && (Math.abs(portals.get(i).posX-x) < 32) && (Math.abs(portals.get(i).posZ-z) < 32))
+			if((portals.get(i).dim == entity.dimension) && (Math.abs(portals.get(i).posX-x) < DefaultProps.maxportaldistance) && (Math.abs(portals.get(i).posZ-z) < DefaultProps.maxportaldistance))
 			{
 				entity.motionX = entity.motionY = entity.motionZ = 0.0D;
 				int dx = random.nextInt(2);
@@ -65,8 +66,8 @@ public class ElysiumTeleporter extends Teleporter
 	@Override
 	public boolean makePortal(Entity entity)
 	{
-		int x = MathHelper.floor_double(entity.posX) + random.nextInt(33) - 16;
-		int z = MathHelper.floor_double(entity.posZ) + random.nextInt(33) - 16;
+		int x = MathHelper.floor_double(entity.posX) + random.nextInt(DefaultProps.maxportaldistance+1) - DefaultProps.maxportaldistance/2;
+		int z = MathHelper.floor_double(entity.posZ) + random.nextInt(DefaultProps.maxportaldistance+1) - DefaultProps.maxportaldistance/2;
 		int y;
 		for(y = worldServer.getActualHeight()-1; (y >= 0) && (worldServer.isAirBlock(x, y, z)); y--);
 		

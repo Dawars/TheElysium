@@ -49,5 +49,10 @@ public class DefaultProps {
 	public static int idOverkillItem = 5006;
 	public static int idDebugItem = 5007;
 	
+	//Controls
 	public static int key_tp = Keyboard.KEY_LSHIFT;
+	
+	//Settings
+	public static int maxportaldistance = 64;
+	public static byte ticksbeforeportalcheck = 10;
 }

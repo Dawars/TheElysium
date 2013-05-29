@@ -67,7 +67,7 @@ public class ElysiumBlockPortalCore extends ElysiumBlockContainer
 						player.mcServer.getConfigurationManager().transferPlayerToDimension(player, Elysium.DimensionID, new ElysiumTeleporter(player.mcServer.worldServerForDimension(Elysium.DimensionID)));
 					}
 				}
-				else
+				else if(player.prevPosY == player.posY)
 				{
 					tile.wasCollided = true;
 					if(tile.timebeforetp == -1) tile.timebeforetp = 200;

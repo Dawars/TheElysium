@@ -1,5 +1,6 @@
 package mods.elysium.dimension.portal;
 
+import mods.elysium.DefaultProps;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -12,16 +13,23 @@ public class ElysiumTileEntityPortal extends TileEntity
 	byte tick;
 	public int timebeforetp = -1;
 	public boolean wasCollided = false;
+	public int ticksWithoutColliding = 0;
 	
 	@Override
 	public void updateEntity()
 	{
-		if(!wasCollided) timebeforetp = -1;
+		if(!wasCollided) ticksWithoutColliding++;
+		if(wasCollided) ticksWithoutColliding = 0;
+		if(ticksWithoutColliding > 5)
+		{
+			timebeforetp = -1;
+		}
 		if(timebeforetp > 0)
 		{
 			timebeforetp--;
-			//System.out.println(timebeforetp);
+			System.out.println(timebeforetp);
 		}
+		wasCollided = false;
 		
 		if(coords == null)
 		{
@@ -29,7 +37,7 @@ public class ElysiumTileEntityPortal extends TileEntity
 		}
 		
 		tick++;
-		if(tick >= 20)
+		if(tick >= DefaultProps.ticksbeforeportalcheck)
 		{
 			tick = 0;
 			canstay = canStayPortal();
