@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 import mods.elysium.Elysium;
-import mods.elysium.dimension.TutorialPortalPosition;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ChunkCoordinates;

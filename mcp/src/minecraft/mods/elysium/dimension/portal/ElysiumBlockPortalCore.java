@@ -8,7 +8,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import mods.elysium.block.ElysiumBlockContainer;
-import mods.elysium.dimension.TutorialTeleporter;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -51,7 +50,6 @@ public class ElysiumBlockPortalCore extends ElysiumBlockContainer
 	@Override
 	public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity)
 	{
-		System.out.println(world.getBlockMetadata(x, y, z));
 		if((world.getBlockMetadata(x, y, z) == 1) && (entity.riddenByEntity == null) && (entity.ridingEntity == null) && (entity instanceof EntityPlayerMP))
 		{
 			System.out.println("teleporting");

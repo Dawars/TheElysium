@@ -238,9 +238,6 @@ public class Elysium {
 			
 			Block.dragonEgg.setCreativeTab(tabElysium);
 			
-			//dim
-			TutorialPortalPlacer = new ItemPortalPlacer(3048).setUnlocalizedName("Tutorial:TutorialPortalPlacer");
-			
 //	        MinecraftForge.setToolClass(Item.pickaxeWood,    "pickaxe", 0);
 
 	 		// Item Registry
