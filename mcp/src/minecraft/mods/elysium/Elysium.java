@@ -82,17 +82,14 @@ public class Elysium {
 	//Items
 	
 	public static Item GracePrismItem;
-//	public static Item GracePrismItem;
-//	public static Item GracePrismItem;
-//	public static Item GracePrismItem;
-//	public static Item GracePrismItem;
 
 
 	public static Item WhistleItem;
 	public static Item PepperSeedItem;
 	public static Item AsphodelPetalsItem;
+	
 	public static Item OverKillItem;
-//  public static Item GracePrismItem;
+	public static Item DebugItem;
 	
 		
 	/** Biome's **/
@@ -262,7 +259,12 @@ public class Elysium {
 			Property idAsphodelPetalsItem = Elysium.mainConfiguration.getItem("idAsphodelPetalsItem.id", DefaultProps.idAsphodelPetalsItem);
 			AsphodelPetalsItem = new ElysiumItem(idAsphodelPetalsItem.getInt()).setUnlocalizedName("asphodelpetal");
 			LanguageRegistry.addName(AsphodelPetalsItem, "Asphodel Petals");
-					// Crafting Registry
+			
+			Property idDebugItem = Elysium.mainConfiguration.getItem("idDebugItem.id", DefaultProps.idDebugItem);
+			DebugItem = new ItemDebug(idDebugItem.getInt()).setUnlocalizedName("debug");
+			LanguageRegistry.addName(DebugItem, "Modders Item");
+			
+			// Crafting Registry
 			GameRegistry.addRecipe(new ItemStack(GracePrismItem), new Object[] {"SMS","MDM","SMS", Character.valueOf('S'), Block.whiteStone, Character.valueOf('M'), Item.bucketMilk, Character.valueOf('D'), Item.diamond});
 			GameRegistry.addShapelessRecipe(new ItemStack(AsphodelPetalsItem, 2), new Object[] {FlowerBlock});
 

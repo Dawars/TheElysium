@@ -36,9 +36,6 @@ public class DefaultProps {
 	public static int idOreTourmalineBlock = 2012;
 	public static int idOreBerylBlock = 2013;
 	public static int idShellsBlock = 2014;
-//	public static int idOreBerylBlock = 2015;
-//	public static int idOreBerylBlock = 2013;
-//	public static int idOreBerylBlock = 2013;
 	
 	//Items
 	public static int idGracePrismItem = 5000;
@@ -46,10 +43,7 @@ public class DefaultProps {
 	public static int idWhistleItem = 5001;
 	public static int idPepperSeedItem = 5002;
 	public static int idAsphodelPetalsItem = 5003;
-//  public static int idGracePrismItem = 5000;
-//  public static int idGracePrismItem = 5000;
-
 
 	public static int idOverkillItem = 5006;
-	
+	public static int idDebugItem = 5007;
 }
