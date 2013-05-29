@@ -55,10 +55,12 @@ public class ElysiumWorldGen implements IWorldGenerator
         
 		int num = rand.nextInt(3)+1;
 		
+		ElysiumGenLakes lakes = new ElysiumGenLakes(/*Elysium.waterStill.blockID*/);
+		lakes.generate(world, rand, i, j, k);
+		
 		for (int x = 0; x < num; x++)
 		{
 			int num2 = rand.nextInt(3)+1;//in a group
-
 
 			WorldGenFostimber fostimber = new WorldGenFostimber(false);
 			fostimber.generate(world, rand, i, j, k);
