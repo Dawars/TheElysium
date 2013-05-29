@@ -6,6 +6,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import mods.elysium.api.Plants;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -151,7 +153,7 @@ public class CurlgrassBlock extends ElysiumFlower implements IShearable
             return ret;
         }
 
-        ItemStack item = ForgeHooks.getGrassSeed(world);
+        ItemStack item = Plants.getGrassSeed(world);
         if (item != null)
         {
             ret.add(item);
