@@ -2,6 +2,9 @@ package mods.elysium.dimension.portal;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockDragonEgg;
+import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -13,6 +16,7 @@ public class ElysiumTileEntityPortalRenderer extends TileEntitySpecialRenderer
 {
 	float bright;
 	long ptime;
+	//RenderBlocks blockRender = new RenderBlocks();
 	
     public void renderTileEntityPortalAt(ElysiumTileEntityPortal tile, double par2, double par4, double par6, float par8)
     {
@@ -127,6 +131,8 @@ public class ElysiumTileEntityPortalRenderer extends TileEntitySpecialRenderer
 
     public void renderTileEntityAt(TileEntity tile, double d1, double d2, double d3, float par8)
     {
+    	//blockRender.renderBlockDragonEgg((BlockDragonEgg)Block.dragonEgg, tile.xCoord, tile.yCoord, tile.zCoord);
+    	
         if(((ElysiumTileEntityPortal)tile).canstay)
         {
         	this.renderTileEntityPortalAt((ElysiumTileEntityPortal)tile, d1, d2, d3, par8);

@@ -20,7 +20,7 @@ public class ItemGracePrism extends ElysiumItem
 		{
 			world.setBlock(x, y, z, Elysium.portalCore.blockID);
 			stack.damageItem(1, player);
-			return true;
+			//return true;
 		}
         return false;
     }

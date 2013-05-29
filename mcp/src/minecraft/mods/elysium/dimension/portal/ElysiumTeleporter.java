@@ -36,7 +36,6 @@ public class ElysiumTeleporter extends Teleporter
 		if(!this.placeInExistingPortal(entity, par2, par4, par6, par8))
 		{
 			this.makePortal(entity);
-			this.placeInExistingPortal(entity, par2, par4, par6, par8);
 		}
 	}
 	
@@ -98,7 +97,7 @@ public class ElysiumTeleporter extends Teleporter
 		}
 		
 		entity.motionX = entity.motionY = entity.motionZ = 0.0D;
-		entity.setPosition(x+0.5D, y+1, z+0.5D);
+		entity.setPosition(x+0.5D, y+10, z+0.5D);
 		
 		return true;
 	}

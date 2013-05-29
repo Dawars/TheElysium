@@ -5,19 +5,16 @@ import java.util.Random;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import mods.elysium.block.ElysiumBlockContainer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
 public class ElysiumBlockPortalCore extends ElysiumBlockContainer
@@ -41,9 +38,9 @@ public class ElysiumBlockPortalCore extends ElysiumBlockContainer
 	}
 	
 	@Override
-	public void breakBlock(World world, int x, int y, int z, int par5, int par6)
+	public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player)
     {
-        super.breakBlock(world, x, y, z, par5, par6);
+        dropBlockAsItem(world, x, y, z, 0, 0);
         world.setBlock(x, y, z, Block.dragonEgg.blockID);
     }
 	
@@ -70,6 +67,10 @@ public class ElysiumBlockPortalCore extends ElysiumBlockContainer
 					player.timeUntilPortal = 10;
 					player.mcServer.getConfigurationManager().transferPlayerToDimension(player, Elysium.DimensionID, new ElysiumTeleporter(player.mcServer.worldServerForDimension(Elysium.DimensionID)));
 				}
+			}
+			else
+			{
+				//System.err.println("error");
 			}
 		}
 	}
