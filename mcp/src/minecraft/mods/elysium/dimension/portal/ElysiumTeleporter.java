@@ -66,13 +66,15 @@ public class ElysiumTeleporter extends Teleporter
 	@Override
 	public boolean makePortal(Entity entity)
 	{
+		boolean flag = true;//can build portal
+		
 		int x = MathHelper.floor_double(entity.posX) + random.nextInt(DefaultProps.maxportaldistance+1) - DefaultProps.maxportaldistance/2;
 		int z = MathHelper.floor_double(entity.posZ) + random.nextInt(DefaultProps.maxportaldistance+1) - DefaultProps.maxportaldistance/2;
-		int y;
-		for(y = worldServer.getActualHeight()-1; (y >= 0) && (worldServer.isAirBlock(x, y, z)); y--);
+		int y = worldServer.getTopSolidOrLiquidBlock(x, z);
 		
 		worldServer.setBlock(x, y+9, z, Elysium.portalCore.blockID);
 		worldServer.setBlockMetadataWithNotify(x, y+9, z, 1, 0);
+		
 		for(int i=-1; i <= 1; i++)
 		{
 			for(int j=-1; j <= 1; j++)
