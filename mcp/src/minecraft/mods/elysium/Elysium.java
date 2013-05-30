@@ -75,7 +75,7 @@ public class Elysium
 	public static Block waterStill;
 	public static ElysiumBlockFluid waterMoving;
 	public static Block shellFloatingBlock;
-//	public static Block LeucosandBlock;
+	public static Block conchFloatingBlock;
 //	public static Block LeucosandBlock;
 //	public static Block LeucosandBlock;
 //	public static Block LeucosandBlock;
@@ -238,9 +238,12 @@ public class Elysium
 			Property idShellsBlock = Elysium.mainConfiguration.getBlock("idShellsBlock.id", DefaultProps.idShellsBlock);
 			shellFloatingBlock = new BlockShells(idShellsBlock.getInt()).setHardness(0.0F).setStepSound(Block.soundGlassFootstep).setUnlocalizedName("shell");
 			ClientProxy.proxy.registerBlock(shellFloatingBlock);
-			LanguageRegistry.addName(new ItemStack(shellFloatingBlock, 1, 0), "Shell");
-			LanguageRegistry.addName(new ItemStack(shellFloatingBlock, 1, 1), "Conch");
-			GameRegistry.registerBlock(shellFloatingBlock, ShellItemBlock.class, DefaultProps.modId + "-shell");
+			LanguageRegistry.addName(shellFloatingBlock, "Shell");
+
+			Property idConchBlock = Elysium.mainConfiguration.getBlock("idConchBlock.id", DefaultProps.idConchBlock);
+			conchFloatingBlock = new BlockShells(idConchBlock.getInt()).setHardness(0.0F).setStepSound(Block.soundGlassFootstep).setUnlocalizedName("conch");
+			ClientProxy.proxy.registerBlock(conchFloatingBlock);
+			LanguageRegistry.addName(conchFloatingBlock, "Conch");
 
 			
 			
@@ -254,8 +257,8 @@ public class Elysium
 			LanguageRegistry.addName(GracePrismItem, "Grace Prism");
 
 			Property idWhistleItem = Elysium.mainConfiguration.getItem("idWhistleItem.id", DefaultProps.idWhistleItem);
-			WhistleItem = new ItemWhistle(idWhistleItem.getInt()).setUnlocalizedName("enderwhistle");
-			LanguageRegistry.addName(WhistleItem, "Ender Whistle");
+			WhistleItem = new ItemWhistle(idWhistleItem.getInt()).setUnlocalizedName("enderdrum");
+			LanguageRegistry.addName(WhistleItem, "Sin titulo");
 		
 			Property idPepperSeedItem = Elysium.mainConfiguration.getItem("idPepperSeedItem.id", DefaultProps.idPepperSeedItem);
 			PepperSeedItem = new ElysiumItem(idPepperSeedItem.getInt()).setUnlocalizedName("seeds_pepper");

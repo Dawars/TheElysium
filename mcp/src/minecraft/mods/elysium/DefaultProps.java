@@ -4,7 +4,7 @@ import org.lwjgl.input.Keyboard;
 
 public class DefaultProps {
 	
-	public static final String modId = "Elysium";
+	public static final String modId = "elysium";
 	
 	public static int DimensionID = 8;
 	
@@ -38,6 +38,7 @@ public class DefaultProps {
 	public static int idOreTourmalineBlock = 2012;
 	public static int idOreBerylBlock = 2013;
 	public static int idShellsBlock = 2014;
+	public static int idConchBlock = 2015;
 	
 	//Items
 	public static int idGracePrismItem = 5000;

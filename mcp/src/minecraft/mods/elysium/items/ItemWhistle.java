@@ -1,4 +1,4 @@
-package mods.elysium.items;
+﻿package mods.elysium.items;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,6 +38,7 @@ public class ItemWhistle extends ElysiumItem{
     	tips.add("Hmm... looks like a musical instrument");
     	tips.add("Its sound could be heared from a long distance...");
     	tips.add("Sorry, I can use it now!");
+    	tips.add("There is an Ender Pearls on the top...");
 
 	}
 	

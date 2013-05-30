@@ -22,6 +22,8 @@ public class BlockShells extends ElysiumFlowerBlock
 { 
 	@SideOnly(Side.CLIENT)
 	private Icon iconConch;
+	@SideOnly(Side.CLIENT)
+	private Icon iconShell;
 	
     public BlockShells(int par1)
     {
@@ -72,20 +74,9 @@ public class BlockShells extends ElysiumFlowerBlock
     /**
      * Can this block stay at this position.  Similar to canPlaceBlockAt except gets checked often with plants.
      */
-    public boolean canBlockStay(World par1World, int par2, int par3, int par4)
+    public boolean canBlockStay(World world, int i, int j, int k)
     {
-        return true;
-    }
-    
-    @SideOnly(Side.CLIENT)
-    @Override
-    public Icon getIcon(int id, int meta)
-    {
-    	Icon icon = null;
-    	if(meta == 0)
-    		return this.iconConch;
-    	else
-    		return this.blockIcon;
+        return world.getBlockId(i, j - 1, k) == Elysium.LeucosandBlock.blockID ? true : false;
     }
     
     /**
@@ -94,27 +85,5 @@ public class BlockShells extends ElysiumFlowerBlock
     public int damageDropped(int damage)
     {
         return damage;
-    }
-
-    @SideOnly(Side.CLIENT)
-
-    /**
-     * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
-     */
-    public void getSubBlocks(int id, CreativeTabs tab, List list)
-    {
-        list.add(new ItemStack(id, 1, 0));        
-        list.add(new ItemStack(id, 1, 1));
-    }
-    @SideOnly(Side.CLIENT)
-
-    /**
-     * When this method is called, your block should register all the icons it needs with the given IconRegister. This
-     * is the only chance you get to register icons.
-     */
-    public void registerIcons(IconRegister IconRegister)
-    {
-    	this.iconConch = IconRegister.registerIcon(DefaultProps.modId + ":conch");
-    	this.blockIcon = IconRegister.registerIcon(DefaultProps.modId + ":shell");
     }
 }
