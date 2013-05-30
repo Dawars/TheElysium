@@ -1,5 +1,6 @@
 package mods.elysium.gen;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import mods.elysium.Elysium;
@@ -12,33 +13,46 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class ElysiumGenLakes extends WorldGenerator
 {
-    private int blockIndex;
-
-    public ElysiumGenLakes()
+	int liquidId,sideId;
+	int lake[] = new int[2048];
+	World world;
+	Random random;
+	BiomeGenBase biome;
+	int x,y,z;
+	
+	public ElysiumGenLakes(int liquid, int sideid)
+	{
+		this.liquidId = Elysium.waterStill.blockID;
+		this.sideId = sideid;
+	}
+	
+	public boolean generate(World world, Random random, int x, int y, int z)
     {
-        this.blockIndex = Elysium.waterStill.blockID;
-    }
+		this.world = world;
+		this.random = random;
+		
+        this.x = x -= 8;
+        this.z = z -= 8;
+        this.y = y = world.getTopSolidOrLiquidBlock(x, z);
+        this.biome = world.getBiomeGenForCoords(x, z);
 
-    public boolean generate(World world, Random random, int x, int y, int z)
-    {
-        x -= 8;
-        z -= 8;
-        
-        //Search for ground
-        y = world.getTopSolidOrLiquidBlock(x, z);
-        
-        if (y <= 4)
+        if((y <= 4) || (world.getBlockMaterial(x, y, z).isLiquid()))
         {
             return false;
         }
         else
         {
             y -= 4;
-            boolean lake[][][] = new boolean[16][8][16];
-            int depth = random.nextInt(4) + 4;
-            int i1;
-
-            for (i1 = 0; i1 < depth; ++i1)
+            int l = random.nextInt(4) + 4;
+            
+            int cx;
+            int cy;
+            int cz;
+            
+            int i;
+            for(i=0; i<2048; i++) lake[i] = -1;
+            
+            for (i = 0; i < l; ++i)
             {
                 double d0 = random.nextDouble() * 6.0D + 3.0D;
                 double d1 = random.nextDouble() * 4.0D + 2.0D;
@@ -47,49 +61,46 @@ public class ElysiumGenLakes extends WorldGenerator
                 double d4 = random.nextDouble() * (8.0D - d1 - 4.0D) + 2.0D + d1 / 2.0D;
                 double d5 = random.nextDouble() * (16.0D - d2 - 2.0D) + 1.0D + d2 / 2.0D;
 
-                for (int px = 1; px < 15; ++px)
+                for (cx = 1; cx < 15; ++cx)
                 {
-                    for (int pz = 1; pz < 15; ++pz)
+                    for (cz = 1; cz < 15; ++cz)
                     {
-                        for (int py = 1; py < 7; ++py)
+                        for (cy = 1; cy < 7; ++cy)
                         {
-                            double d6 = ((double)px - d3) / (d0 / 2.0D);
-                            double d7 = ((double)pz - d4) / (d1 / 2.0D);
-                            double d8 = ((double)py - d5) / (d2 / 2.0D);
+                            double d6 = ((double)cx - d3) / (d0 / 2.0D);
+                            double d7 = ((double)cy - d4) / (d1 / 2.0D);
+                            double d8 = ((double)cz - d5) / (d2 / 2.0D);
                             double d9 = d6 * d6 + d7 * d7 + d8 * d8;
 
                             if (d9 < 1.0D)
                             {
-                                lake[px][py][pz] = true;
+                                lake[(cx * 16 + cz) * 8 + cy] = this.liquidId;
                             }
                         }
                     }
                 }
             }
             
-            int px;
-            int py;
-            int pz;
             boolean flag;
-            
-            for (px = 0; px < 16; ++px)
+
+            for (cx = 0; cx < 16; ++cx)
             {
-                for (pz = 0; pz < 16; ++pz)
+                for (cz = 0; cz < 16; ++cz)
                 {
-                    for (py = 0; py < 8; ++py)
+                    for (cy = 0; cy < 8; ++cy)
                     {
-                    	flag = !lake[px][py][pz] && (px < 15 && lake[px+1][py][pz] || px > 0 && lake[px-1][py][pz] || pz < 15 && lake[px][py][pz+1] || pz > 0 && lake[px][py][pz-1] || py < 7 && lake[px][py+1][pz] || py > 0 && lake[px][py-1][pz]);
+                        flag = !(lake[(cx * 16 + cz) * 8 + cy] == this.liquidId) && (cx < 15 && (lake[((cx + 1) * 16 + cz) * 8 + cy] == this.liquidId) || cx > 0 && (lake[((cx - 1) * 16 + cz) * 8 + cy] == this.liquidId) || cz < 15 && (lake[(cx * 16 + cz + 1) * 8 + cy] == this.liquidId) || cz > 0 && (lake[(cx * 16 + (cz - 1)) * 8 + cy] == this.liquidId) || cy < 7 && (lake[(cx * 16 + cz) * 8 + cy + 1] == this.liquidId) || cy > 0 && (lake[(cx * 16 + cz) * 8 + (cy - 1)] == this.liquidId));
 
                         if (flag)
                         {
-                            Material material = world.getBlockMaterial(x + px, y + py, z + pz);
+                            Material material = world.getBlockMaterial(x + cx, y + cy, z + cz);
 
-                            if (py >= 4 && material.isLiquid())
+                            if (cy >= 4 && material.isLiquid())
                             {
                                 return false;
                             }
 
-                            if (py < 4 && !material.isSolid() && world.getBlockId(x + px, y + py, z + pz) != this.blockIndex)
+                            if (cy < 4 && !material.isSolid() && world.getBlockId(x + cx, y + cy, z + cz) != this.liquidId)
                             {
                                 return false;
                             }
@@ -98,87 +109,99 @@ public class ElysiumGenLakes extends WorldGenerator
                 }
             }
 
-            for (px = 0; px < 16; ++px)
+            for (cx = 0; cx < 16; ++cx)
             {
-                for (pz = 0; pz < 16; ++pz)
+                for (cz = 0; cz < 16; ++cz)
                 {
-                    for (py = 0; py < 8; ++py)
+                    for (cy = 0; cy < 8; ++cy)
                     {
-                        if (lake[px][py][pz])
+                        if (lake[(cx * 16 + cz) * 8 + cy] == this.liquidId)
                         {
-                            world.setBlock(x + px, y + py, z + pz, py >= 4 ? 0 : this.blockIndex, 0, 2);
-                        }
-                    }
-                }
-            }
-
-            for (px = 0; px < 16; ++px)
-            {
-                for (pz = 0; pz < 16; ++pz)
-                {
-                    for (py = 4; py < 8; ++py)
-                    {
-                    	BiomeGenBase biomegenbase = world.getBiomeGenForCoords(x + px, z + pz);
-                        if (lake[px][py][pz] && world.getBlockId(x + px, y + py - 1, z + pz) == biomegenbase.fillerBlock && world.getSavedLightValue(EnumSkyBlock.Sky, x + px, y + py, z + pz) > 0)
-                        {
-                            world.setBlock(x + px, y + py - 1, z + pz, /*biomegenbase.topBlock*/Block.wood.blockID, 0, 2);
+                        	if(cy >= 4)
+                        	{
+                        		lake[(cx * 16 + cz) * 8 + cy] = 0;
+                        	}
                         }
                     }
                 }
             }
             
-            /*for (px = 0; px < 16; ++px)
+            for (cy = 0; cy < 8; ++cy)
             {
-                for (pz = 0; pz < 16; ++pz)
-                {
-                    for (py = 0; py < 8; ++py)
-                    {
-                    	flag = !lake[px][py][pz] && (px < 15 && lake[px+1][py][pz] || px > 0 && lake[px-1][py][pz] || pz < 15 && lake[px][py][pz+1] || pz > 0 && lake[px][py][pz-1] || py < 7 && lake[px][py+1][pz] || py > 0 && lake[px][py-1][pz]);
-
-                        if (flag && (py < 4 || random.nextInt(2) != 0) && world.getBlockMaterial(x + px, y + py, z + pz).isSolid())
+		        for (cx = 0; cx < 16; ++cx)
+		        {
+		            for (cz = 0; cz < 16; ++cz)
+		            {
+                        if (lake[(cx * 16 + cz) * 8 + cy] == this.liquidId)
                         {
-                            world.setBlock(x + px, y + py, z + pz, Elysium.RiltBlock.blockID, 0, 2);
-                        }
-                    }
-                }
-            }*/
-
-            /*if (Block.blocksList[this.blockIndex].blockMaterial == Material.lava)
-            {
-                for (px = 0; px < 16; ++px)
-                {
-                    for (pz = 0; pz < 16; ++pz)
-                    {
-                        for (py = 0; py < 8; ++py)
-                        {
-                        	flag = !lake[px][py][pz] && (px < 15 && lake[px+1][py][pz] || px > 0 && lake[px-1][py][pz] || pz < 15 && lake[px][py][pz+1] || pz > 0 && lake[px][py][pz-1] || py < 7 && lake[px][py+1][pz] || py > 0 && lake[px][py-1][pz]);
-
-                            if (flag && (py < 4 || random.nextInt(2) != 0) && world.getBlockMaterial(x + px, y + py, z + pz).isSolid())
+                        	if(canPlaceSideAt(cx+1, cy, cz))
                             {
-                                world.setBlock(x + px, y + py, z + pz, Block.stone.blockID, 0, 2);
+                            	System.out.println("yay :)");
+                            	lake[((cx+1)*16 + cz)*8 + cy] = this.sideId;
+                            }
+                            if(canPlaceSideAt(cx-1, cy, cz))
+                            {
+                            	System.out.println("yay :)");
+                            	lake[((cx-1)*16 + cz)*8 + cy] = this.sideId;
+                            }
+                            if(canPlaceSideAt(cx, cy, cz+1))
+                            {
+                            	System.out.println("yay :)");
+                            	lake[(cx*16 + cz+1)*8 + cy] = this.sideId;
+                            }
+                            if(canPlaceSideAt(cx, cy, cz-1))
+                            {
+                            	System.out.println("yay :)");
+                            	lake[(cx*16 + cz-1)*8 + cy] = this.sideId;
+                            }
+                            if(canPlaceSideAt(cx, cy-1, cz))
+                            {
+                            	System.out.println("yay :)");
+                            	lake[(cx*16 + cz)*8 + cy-1] = this.sideId;
                             }
                         }
                     }
                 }
-            }*/
-
-            /*if (Block.blocksList[this.blockIndex].blockMaterial == Material.water)
+            }
+            
+            for (cx = 0; cx < 16; ++cx)
             {
-                for (px = 0; px < 16; ++px)
+                for (cz = 0; cz < 16; ++cz)
                 {
-                    for (pz = 0; pz < 16; ++pz)
+                    for (cy = 0; cy < 8; ++cy)
                     {
-                        byte b0 = 4;
-
-                        if (world.isBlockFreezable(x + px, y + b0, z + pz))
-                        {
-                            world.setBlock(x + px, y + b0, z + pz, Block.ice.blockID, 0, 2);
-                        }
+                    	if(lake[(cx * 16 + cz) * 8 + cy] != -1)
+                    	{
+                    		world.setBlock(x+cx, y+cy, z+cz, lake[(cx * 16 + cz) * 8 + cy]);
+                    	}
                     }
                 }
-            }*/
+            }
+            
+            //System.out.println(x+" "+y+" "+z);
 
             return true;
         }
     }
+	
+	boolean canPlaceSideAt(int cx, int cy, int cz)
+	{
+		if((lake[(cx*16 + cz)*8 + cy] == -1) && (!world.isAirBlock(x+cx, y+cy, z+cz)))
+		{
+			if(((cx<15) && (lake[((cx+1)*16 + cz)*8 + cy] == this.liquidId)) || ((cx>0) && (lake[((cx-1)*16 + cz)*8 + cy] == this.liquidId)) || ((cz<15) && (lake[(cx*16 + cz+1)*8 + cy] == this.liquidId)) || ((cz>0) && (lake[(cx*16 + cz-1)*8 + cy] == this.liquidId)) || ((cy<7) && (lake[(cx*16 + cz)*8 + cy+1] == this.liquidId)))
+			{
+				if(((cx<15) && (lake[((cx+1)*16 + cz)*8 + cy] == this.sideId)) || ((cx>0) && (lake[((cx-1)*16 + cz)*8 + cy] == this.sideId)) || ((cz<15) && (lake[(cx*16 + cz+1)*8 + cy] == this.sideId)) || ((cz>0) && (lake[(cx*16 + cz-1)*8 + cy] == this.sideId)) || ((cy<7) && (lake[(cx*16 + cz)*8 + cy+1] == this.sideId)))
+				{
+					//System.out.println("yay1 :)");
+					return true;
+				}
+				else if(world.canBlockSeeTheSky(x+cx, y+cy, z+cz) && (random.nextInt(10) == 0))
+				{
+					//System.out.println("yay2 :)");
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }

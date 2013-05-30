@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import mods.elysium.Elysium;
+import mods.elysium.gen.ElysiumGenLakes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
 import net.minecraft.entity.EnumCreatureType;
@@ -552,7 +553,7 @@ public class ChunkProviderElysium implements IChunkProvider
             k1 = k + this.rand.nextInt(16) + 8;
             l1 = this.rand.nextInt(128);
             i2 = l + this.rand.nextInt(16) + 8;
-            (new WorldGenLakes(Block.waterStill.blockID)).generate(this.worldObj, this.rand, k1, l1, i2);
+            (new ElysiumGenLakes(Elysium.waterStill.blockID, Elysium.LeucosandBlock.blockID)).generate(this.worldObj, this.rand, k1, l1, i2);
         }
 
         if (TerrainGen.populate(par1IChunkProvider, worldObj, rand, par2, par3, flag, LAVA) &&
@@ -564,7 +565,7 @@ public class ChunkProviderElysium implements IChunkProvider
 
             if (l1 < 63 || this.rand.nextInt(10) == 0)
             {
-                (new WorldGenLakes(Block.lavaStill.blockID)).generate(this.worldObj, this.rand, k1, l1, i2);
+                //(new WorldGenLakes(Block.lavaStill.blockID)).generate(this.worldObj, this.rand, k1, l1, i2);
             }
         }
 
