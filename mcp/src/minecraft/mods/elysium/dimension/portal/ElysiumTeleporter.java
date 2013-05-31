@@ -1,5 +1,6 @@
 package mods.elysium.dimension.portal;
 
+import java.awt.Label;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -9,6 +10,7 @@ import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.server.management.LowerStringMap;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Direction;
 import net.minecraft.util.LongHashMap;
@@ -66,44 +68,90 @@ public class ElysiumTeleporter extends Teleporter
 	@Override
 	public boolean makePortal(Entity entity)
 	{
-		boolean flag = true;//can build portal
+		int x, y, z;
 		
-		int x = MathHelper.floor_double(entity.posX) + random.nextInt(DefaultProps.maxportaldistance+1) - DefaultProps.maxportaldistance/2;
-		int z = MathHelper.floor_double(entity.posZ) + random.nextInt(DefaultProps.maxportaldistance+1) - DefaultProps.maxportaldistance/2;
-		int y = worldServer.getTopSolidOrLiquidBlock(x, z);
+		boolean canBuild = false;
 		
-		worldServer.setBlock(x, y+9, z, Elysium.portalCore.blockID);
-		worldServer.setBlockMetadataWithNotify(x, y+9, z, 1, 0);
-		
-		for(int i=-1; i <= 1; i++)
-		{
-			for(int j=-1; j <= 1; j++)
+		while(true){
+			x = MathHelper.floor_double(entity.posX) + random.nextInt(DefaultProps.maxportaldistance+1) - DefaultProps.maxportaldistance/2;
+			z = MathHelper.floor_double(entity.posZ) + random.nextInt(DefaultProps.maxportaldistance+1) - DefaultProps.maxportaldistance/2;
+			y = worldServer.getTopSolidOrLiquidBlock(x, z)-1;
+			
+			//check if can build
+			int waterBellow = 0;
+			for(int a=-2; a <= 2; a++)
 			{
-				worldServer.setBlock(x+i, y+8, z+j, Block.blockNetherQuartz.blockID);
-				worldServer.setBlockMetadataWithNotify(x+i, y+8, z+j, 1, 0);
-				
-				worldServer.setBlock(x+i, y+6, z+j, Block.blockNetherQuartz.blockID);
-				worldServer.setBlockMetadataWithNotify(x+i, y+6, z+j, 2, 0);
-				worldServer.setBlock(x+i, y+5, z+j, Block.blockNetherQuartz.blockID);
-				worldServer.setBlockMetadataWithNotify(x+i, y+5, z+j, 2, 0);
-				
-				worldServer.setBlock(x+i, y+4, z+j, Block.blockGold.blockID);
-				
-				worldServer.setBlock(x+i, y+3, z+j, Block.blockNetherQuartz.blockID);
-				worldServer.setBlockMetadataWithNotify(x+i, y+3, z+j, 2, 0);
-				worldServer.setBlock(x+i, y+2, z+j, Block.blockNetherQuartz.blockID);
-				worldServer.setBlockMetadataWithNotify(x+i, y+2, z+j, 2, 0);
+				for(int b=-2; b <= 2; b++)
+				{
+					int id = worldServer.getBlockId(x+a, y, z+b);
+					if(id == 0 || id == Block.waterStill.blockID || id == Block.waterMoving.blockID || id == Elysium.waterStill.blockID || id == Elysium.waterMoving.blockID || id == Block.blockNetherQuartz.blockID)
+						waterBellow++;
+			
+				}
 			}
-		}
-		for(int i=-2; i <= 2; i++)
-		{
-			for(int j=-2; j <= 2; j++)
+			System.out.println(waterBellow);
+			if(waterBellow > 25/2)//More then the half is water bellow
+				continue;
+			else
+				canBuild = true;
+			//check end
+			
+			worldServer.setBlock(x, y+9, z, Elysium.portalCore.blockID);
+			worldServer.setBlockMetadataWithNotify(x, y+9, z, 1, 0);
+			
+			//get lowest air block underneath
+			int lowest = -1;
+			for (int i = -2; i <= 2; i++) {
+				for (int j = -2; j <= 2; j++) {
+					if(lowest == -1 || worldServer.getTopSolidOrLiquidBlock(x+i, z+j) < lowest)
+						lowest = worldServer.getTopSolidOrLiquidBlock(x+i, z+j);
+				}
+			}
+			for (int j = y; j >= lowest; j--) {
+				for (int i = -2; i <= 2; i++) {
+					for (int k = -2; k <= 2; k++) {
+						int block = worldServer.getBlockId(i, j, k);
+						if(block == 0 || Block.blocksList[block].canBeReplacedByLeaves(worldServer, i, j, k)){
+							worldServer.setBlock(x+i, y+j, z+k, Elysium.soilBlock.blockID);
+						}
+					}
+				}
+			}
+			
+			for(int i=-1; i <= 1; i++)
 			{
-				worldServer.setBlock(x+i, y+7, z+j, Block.blockNetherQuartz.blockID);
-				worldServer.setBlock(x+i, y+1, z+j, Block.blockNetherQuartz.blockID);
+				for(int j=-1; j <= 1; j++)
+				{
+					worldServer.setBlock(x+i, y+8, z+j, Block.blockNetherQuartz.blockID);
+					worldServer.setBlockMetadataWithNotify(x+i, y+8, z+j, 1, 0);
+					
+					worldServer.setBlock(x+i, y+6, z+j, Block.blockNetherQuartz.blockID);
+					worldServer.setBlockMetadataWithNotify(x+i, y+6, z+j, 2, 0);
+					worldServer.setBlock(x+i, y+5, z+j, Block.blockNetherQuartz.blockID);
+					worldServer.setBlockMetadataWithNotify(x+i, y+5, z+j, 2, 0);
+					
+					worldServer.setBlock(x+i, y+4, z+j, Block.blockGold.blockID);
+					
+					worldServer.setBlock(x+i, y+3, z+j, Block.blockNetherQuartz.blockID);
+					worldServer.setBlockMetadataWithNotify(x+i, y+3, z+j, 2, 0);
+					worldServer.setBlock(x+i, y+2, z+j, Block.blockNetherQuartz.blockID);
+					worldServer.setBlockMetadataWithNotify(x+i, y+2, z+j, 2, 0);
+				}
 			}
+			for(int i=-2; i <= 2; i++)
+			{
+				for(int j=-2; j <= 2; j++)
+				{
+					worldServer.setBlock(x+i, y+7, z+j, Block.blockNetherQuartz.blockID);
+					worldServer.setBlock(x+i, y+1, z+j, Block.blockNetherQuartz.blockID);
+				}
+			}
+			
+			
+
+			if(canBuild)
+				break;
 		}
-		
 		entity.motionX = entity.motionY = entity.motionZ = 0.0D;
 		int dx = random.nextInt(2);
 		if(dx == 0) dx = -1;

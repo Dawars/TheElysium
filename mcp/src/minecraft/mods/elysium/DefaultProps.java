@@ -46,12 +46,18 @@ public class DefaultProps {
 	public static int idWhistleItem = 5001;
 	public static int idPepperSeedItem = 5002;
 	public static int idAsphodelPetalsItem = 5003;
-	
+
 	public static int idWoodSwordItem = 5004;
 	public static int idWoodPickaxeItem = 5005;
 	public static int idWoodAxeItem = 5006;
 	public static int idWoodShovelItem = 5007;
 	public static int idWoodHoeItem = 5008;
+	
+	public static int idStoneSwordItem = 5009;
+	public static int idStonePickaxeItem = 5010;
+	public static int idStoneAxeItem = 5011;
+	public static int idStoneShovelItem = 5012;
+	public static int idStoneHoeItem = 5013;
 
 	public static int idOverkillItem = 5106;
 	public static int idDebugItem = 5107;

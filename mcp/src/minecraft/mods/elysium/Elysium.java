@@ -93,12 +93,18 @@ public class Elysium
 	public static Item WhistleItem;
 	public static Item PepperSeedItem;
 	public static Item AsphodelPetalsItem;
-	
+
 	public static Item SwordFostimberItem;
 	public static Item PickaxeFostimberItem;
 	public static Item AxeFostimberItem;
 	public static Item ShovelFostimberItem;
 	public static Item HoeFostimberItem;
+	
+	public static Item SwordStoneItem;
+	public static Item PickaxeStoneItem;
+	public static Item AxeStoneItem;
+	public static Item ShovelStoneItem;
+	public static Item HoeStoneItem;
 
 	public static Item OverKillItem;
 	public static Item DebugItem;
@@ -256,10 +262,13 @@ public class Elysium
 			
 			
 			Block.dragonEgg.setCreativeTab(tabElysium);
-			
+
 	        MinecraftForge.setToolClass(PickaxeFostimberItem, "pickaxe", 0);
 	        MinecraftForge.setToolClass(AxeFostimberItem, "axe", 0);
 	        MinecraftForge.setToolClass(ShovelFostimberItem, "shovel", 0);
+	        MinecraftForge.setToolClass(PickaxeStoneItem, "pickaxe", 1);
+	        MinecraftForge.setToolClass(AxeStoneItem, "axe", 1);
+	        MinecraftForge.setToolClass(ShovelStoneItem, "shovel", 1);
 
 	 		// Item Registry
 			Property idGracePrismItem = Elysium.mainConfiguration.getItem("idGracePrismItem.id", DefaultProps.idGracePrismItem);
@@ -307,6 +316,28 @@ public class Elysium
 			Property idWoodHoeItem = Elysium.mainConfiguration.getItem("idWoodHoeItem.id", DefaultProps.idWoodHoeItem);
 			HoeFostimberItem = new ElysiumHoe(idWoodHoeItem.getInt(), FOSTIMBER_MAT).setUnlocalizedName("hoeFostimber");
 			LanguageRegistry.addName(HoeFostimberItem, "Fostimber Hoe");
+
+			EnumToolMaterial STONE_MAT = EnumHelper.addToolMaterial("PALESTONE", 1, 131, 4.0F, 1, 5);
+
+			Property idStoneSwordItem = Elysium.mainConfiguration.getItem("idStoneSwordItem.id", DefaultProps.idStoneSwordItem);
+			SwordStoneItem = new ElysiumSword(idStoneSwordItem.getInt(), STONE_MAT).setUnlocalizedName("swordPalestone");
+			LanguageRegistry.addName(SwordStoneItem, "Palestone Sword");
+
+			Property idStonePickaxeItem = Elysium.mainConfiguration.getItem("idStonePickaxeItem.id", DefaultProps.idStonePickaxeItem);
+			PickaxeStoneItem = new ElysiumPickaxe(idStonePickaxeItem.getInt(), STONE_MAT).setUnlocalizedName("pickaxePalestone");
+			LanguageRegistry.addName(PickaxeStoneItem, "Palestone Pickaxe");
+
+			Property idStoneAxeItem = Elysium.mainConfiguration.getItem("idStoneAxeItem.id", DefaultProps.idStoneAxeItem);
+			AxeStoneItem = new ElysiumAxe(idStoneAxeItem.getInt(), STONE_MAT).setUnlocalizedName("axePalestone");
+			LanguageRegistry.addName(AxeStoneItem, "Palestone Axe");
+
+			Property idStoneShovelItem = Elysium.mainConfiguration.getItem("idStoneShovelItem.id", DefaultProps.idStoneShovelItem);
+			ShovelStoneItem = new ElysiumShovel(idStoneShovelItem.getInt(), STONE_MAT).setUnlocalizedName("shovelPalestone");
+			LanguageRegistry.addName(ShovelStoneItem, "Palestone Shovel");
+			
+			Property idStoneHoeItem = Elysium.mainConfiguration.getItem("idStoneHoeItem.id", DefaultProps.idStoneHoeItem);
+			HoeStoneItem = new ElysiumHoe(idStoneHoeItem.getInt(), STONE_MAT).setUnlocalizedName("hoePalestone");
+			LanguageRegistry.addName(HoeStoneItem, "Palestone Hoe");
 			
 			
 			
