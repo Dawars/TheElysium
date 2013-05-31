@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import mods.elysium.ShuffleBag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,17 +29,21 @@ import net.minecraftforge.transformers.ForgeAccessTransformer;
 public class ItemWhistle extends ElysiumItem{
 	
 	//Add API support
-	public static ArrayList<String> tips = new ArrayList<String>();
-	
+//	public static ArrayList<String> tips = new ArrayList<String>();
+   public static ShuffleBag shuffleBag = new ShuffleBag();
+
 	public ItemWhistle(int id) {
 		super(id);
         this.maxStackSize = 1;
         this.setMaxDamage(0);
         
-    	tips.add("Hmm... looks like a musical instrument");
-    	tips.add("Its sound could be heared from a long distance...");
-    	tips.add("Sorry, I can use it now!");
-    	tips.add("There is an Ender Pearls on the top...");
+        
+        int amount = 0;
+
+        shuffleBag.Add("Hmm... looks like a musical instrument");
+        shuffleBag.Add("Its sound could be heared from a long distance...");
+        shuffleBag.Add("Sorry, I can use it now!");
+        shuffleBag.Add("There is an Ender Pearls on the top...");
 
 	}
 	
@@ -56,7 +61,7 @@ public class ItemWhistle extends ElysiumItem{
                	world.spawnEntityInWorld(entitydragon);
     	} else {
     		if(!world.isRemote)
-    			entity.sendChatToPlayer(tips.get(new Random().nextInt(tips.size())));
+    			entity.sendChatToPlayer(shuffleBag.Next());
     	}
     	itemStack.damageItem(1, entity);
         entity.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));

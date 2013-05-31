@@ -26,7 +26,7 @@ public class ElysiumSkyRenderer extends IRenderHandler {
         if (mc.theWorld.provider.dimensionId == Elysium.DimensionID)
         {        	
         	
-        	renderNightSky();
+//        	renderNightSky();
         	
         	GL11.glDisable(GL11.GL_TEXTURE_2D);
             Vec3 vec3 = mc.theWorld.getSkyColor(mc.renderViewEntity, partialTicks);
@@ -48,10 +48,10 @@ public class ElysiumSkyRenderer extends IRenderHandler {
             GL11.glColor3f(f1, f2, f3);
             Tessellator tessellator = Tessellator.instance;
             GL11.glDepthMask(false);
-            GL11.glEnable(GL11.GL_FOG);
-            GL11.glColor3f(f1, f2, f3);
+//            GL11.glEnable(GL11.GL_FOG);
+//            GL11.glColor3f(f1, f2, f3);
 //            GL11.glCallList(this.glSkyList);
-            GL11.glDisable(GL11.GL_FOG);
+//            GL11.glDisable(GL11.GL_FOG);
             GL11.glDisable(GL11.GL_ALPHA_TEST);
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -61,7 +61,7 @@ public class ElysiumSkyRenderer extends IRenderHandler {
             float f8;
             float f9;
             float f10;
-if(world.getWorldTime() < 0 || world.getWorldTime() > 12500){
+/*if(world.getWorldTime() < 0 || world.getWorldTime() > 12500){
 	            
             	//night
 	        	GL11.glDisable(GL11.GL_FOG);
@@ -110,7 +110,7 @@ if(world.getWorldTime() < 0 || world.getWorldTime() > 12500){
 	                tessellator.draw();
 	                GL11.glPopMatrix();
             	}
-            }
+            }*/
             if (afloat != null)
             {
                 GL11.glDisable(GL11.GL_TEXTURE_2D);

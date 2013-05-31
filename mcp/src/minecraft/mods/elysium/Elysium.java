@@ -17,10 +17,12 @@ import mods.elysium.proxy.ClientProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Property;
@@ -92,10 +94,16 @@ public class Elysium
 	public static Item PepperSeedItem;
 	public static Item AsphodelPetalsItem;
 	
+	public static Item SwordFostimberItem;
+	public static Item PickaxeFostimberItem;
+	public static Item AxeFostimberItem;
+	public static Item ShovelFostimberItem;
+	public static Item HoeFostimberItem;
+
 	public static Item OverKillItem;
 	public static Item DebugItem;
 	
-		
+	
 	/** Biome's **/
 	public static BiomeGenBase ElysiumPlainBiome = null;
 
@@ -249,7 +257,9 @@ public class Elysium
 			
 			Block.dragonEgg.setCreativeTab(tabElysium);
 			
-//	        MinecraftForge.setToolClass(Item.pickaxeWood,    "pickaxe", 0);
+	        MinecraftForge.setToolClass(PickaxeFostimberItem, "pickaxe", 0);
+	        MinecraftForge.setToolClass(AxeFostimberItem, "axe", 0);
+	        MinecraftForge.setToolClass(ShovelFostimberItem, "shovel", 0);
 
 	 		// Item Registry
 			Property idGracePrismItem = Elysium.mainConfiguration.getItem("idGracePrismItem.id", DefaultProps.idGracePrismItem);
@@ -274,6 +284,31 @@ public class Elysium
 			Property idDebugItem = Elysium.mainConfiguration.getItem("idDebugItem.id", DefaultProps.idDebugItem);
 			DebugItem = new ItemDebug(idDebugItem.getInt()).setUnlocalizedName("debug");
 			LanguageRegistry.addName(DebugItem, "Modder Item");
+			
+			//Tools
+			EnumToolMaterial FOSTIMBER_MAT = EnumHelper.addToolMaterial("FOSTIMBER", 0, 59, 2.0F, 0, 15);
+
+			Property idWoodSwordItem = Elysium.mainConfiguration.getItem("idWoodSwordItem.id", DefaultProps.idWoodSwordItem);
+			SwordFostimberItem = new ElysiumSword(idWoodSwordItem.getInt(), FOSTIMBER_MAT).setUnlocalizedName("swordFostimber");
+			LanguageRegistry.addName(SwordFostimberItem, "Fostimber Sword");
+
+			Property idWoodPickaxeItem = Elysium.mainConfiguration.getItem("idWoodPickaxeItem.id", DefaultProps.idWoodPickaxeItem);
+			PickaxeFostimberItem = new ElysiumPickaxe(idWoodPickaxeItem.getInt(), FOSTIMBER_MAT).setUnlocalizedName("pickaxeFostimber");
+			LanguageRegistry.addName(PickaxeFostimberItem, "Fostimber Pickaxe");
+
+			Property idWoodAxeItem = Elysium.mainConfiguration.getItem("idWoodAxeItem.id", DefaultProps.idWoodAxeItem);
+			AxeFostimberItem = new ElysiumAxe(idWoodAxeItem.getInt(), FOSTIMBER_MAT).setUnlocalizedName("axeFostimber");
+			LanguageRegistry.addName(AxeFostimberItem, "Fostimber Axe");
+
+			Property idWoodShovelItem = Elysium.mainConfiguration.getItem("idWoodShovelItem.id", DefaultProps.idWoodShovelItem);
+			ShovelFostimberItem = new ElysiumShovel(idWoodShovelItem.getInt(), FOSTIMBER_MAT).setUnlocalizedName("shovelFostimber");
+			LanguageRegistry.addName(ShovelFostimberItem, "Fostimber Shovel");
+			
+			Property idWoodHoeItem = Elysium.mainConfiguration.getItem("idWoodHoeItem.id", DefaultProps.idWoodHoeItem);
+			HoeFostimberItem = new ElysiumHoe(idWoodHoeItem.getInt(), FOSTIMBER_MAT).setUnlocalizedName("hoeFostimber");
+			LanguageRegistry.addName(HoeFostimberItem, "Fostimber Hoe");
+			
+			
 			
 			// Crafting Registry
 			GameRegistry.addRecipe(new ItemStack(GracePrismItem), new Object[] {"SMS","MDM","SMS", Character.valueOf('S'), Block.whiteStone, Character.valueOf('M'), Item.bucketMilk, Character.valueOf('D'), Item.diamond});
