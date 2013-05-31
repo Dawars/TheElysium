@@ -1,4 +1,4 @@
-﻿package mods.elysium.items;
+package mods.elysium.items;
 
 import java.io.IOException;
 import java.util.ArrayList;

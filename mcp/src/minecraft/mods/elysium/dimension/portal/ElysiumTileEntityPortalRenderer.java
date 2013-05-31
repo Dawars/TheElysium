@@ -1,7 +1,10 @@
 package mods.elysium.dimension.portal;
 
+import java.util.Random;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mods.elysium.DefaultProps;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDragonEgg;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -14,6 +17,10 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class ElysiumTileEntityPortalRenderer extends TileEntitySpecialRenderer
 {
+	
+    public static int alpha2 = 1;
+
+	
 	float bright;
 	long ptime;
 	//RenderBlocks blockRender = new RenderBlocks();
@@ -43,21 +50,29 @@ public class ElysiumTileEntityPortalRenderer extends TileEntitySpecialRenderer
         if (bright > 0.0F)
         {
             Tessellator tessellator = Tessellator.instance;
-            this.bindTextureByName("/misc/beam.png");
+            this.bindTextureByName("/mods/" + DefaultProps.modId + "/textures/misc/beam.png");
             GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, 10497.0F);
             GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, 10497.0F);
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glDisable(GL11.GL_CULL_FACE);
             GL11.glDisable(GL11.GL_BLEND);
             GL11.glDepthMask(true);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+            GL11.glEnable (GL11.GL_BLEND);
+            GL11.glBlendFunc (GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             float f2 = (float)tile.getWorldObj().getTotalWorldTime() + par8;
             float f3 = -f2 * 0.2F - (float)MathHelper.floor_float(-f2 * 0.1F);
-            byte b0 = 1;
-            double d3 = (double)f2 * 0.025D * (1.0D - (double)(b0 & 1) * 2.5D);
+            int radius = (int)(Math.sin(System.currentTimeMillis()/180) + 6);//radius
+            double d3 = (double)f2 * 0.025D * (1.0D - (double)((byte)radius & 1) * 2.5D);
             tessellator.startDrawingQuads();
-            tessellator.setColorRGBA(255, 255, 255, 32);
-            double d4 = (double)b0 * 0.2D;
+//			tessellator.setColorRGBA(255, 255, 255, 1000);
+            int alpha = (int)(Math.sin(System.currentTimeMillis()/250)*80 + 175);
+            if(alpha2<255)
+            	alpha2++;
+            else
+            	alpha2 = 1;
+//            System.out.println(alpha);
+			tessellator.setColorRGBA(255, 255, 255, alpha);
+            double d4 = (double)radius * 0.2D;
             double d5 = 0.5D + Math.cos(d3 + 2.356194490192345D) * d4;
             double d6 = 0.5D + Math.sin(d3 + 2.356194490192345D) * d4;
             double d7 = 0.5D + Math.cos(d3 + (Math.PI / 4D)) * d4;

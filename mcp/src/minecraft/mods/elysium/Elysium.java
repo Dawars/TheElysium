@@ -178,7 +178,7 @@ public class Elysium
 			LanguageRegistry.addName(FostimberLeavesBlock, "Fostimber Leaves");
 
 			Property idWoodBlock = Elysium.mainConfiguration.getBlock("idWoodBlock.id", DefaultProps.idWoodBlock);
-			WoodBlock = (new ElysiumBlock(idWoodBlock.getInt(), Material.wood)).setHardness(0.2F).setStepSound(Block.soundGrassFootstep).setUnlocalizedName("fostimber_planks");
+			WoodBlock = (new ElysiumBlock(idWoodBlock.getInt(), Material.wood)).setHardness(0.2F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("fostimber_planks");
 			ClientProxy.proxy.registerBlock(WoodBlock);
 			LanguageRegistry.addName(WoodBlock, "Wooden Planks");
 			
