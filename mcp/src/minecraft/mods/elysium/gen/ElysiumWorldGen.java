@@ -24,6 +24,19 @@ public class ElysiumWorldGen implements IWorldGenerator
 		{
 			generateElysium(world, rand, chunkX * 16, chunkZ * 16);
 		}
+		if(world.provider.dimensionId == 0)
+		{
+			//generateOverworld(world, rand, chunkX * 16, chunkZ * 16);
+		}
+	}
+	
+	private void generateOverworld(World world, Random rand, int chunkX, int chunkZ)
+	{
+		int x = chunkX + rand.nextInt(16);
+		int z = chunkZ + rand.nextInt(16);
+		int y = world.getTopSolidOrLiquidBlock(x, z);
+		
+		new ElysiumGenLakes(Elysium.waterStill.blockID, Elysium.LeucosandBlock.blockID).generate(world, rand, x, y, z);
 	}
 	
 	private void generateElysium(World world, Random rand, int chunkX, int chunkZ)
