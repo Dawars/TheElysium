@@ -554,13 +554,14 @@ public class ChunkProviderElysium implements IChunkProvider
         this.lakegenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), 0, l+this.rand.nextInt(16));
         this.sandgenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), 0, l+this.rand.nextInt(16));
         //this.riltgenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), 0, l+this.rand.nextInt(16));
-    	if(this.rand.nextInt(6) == 0)
+    	if(this.rand.nextInt(4) == 0)
 		{
 			int x = k + this.rand.nextInt(16);
 			int z =	l + this.rand.nextInt(16);
 			
 			int generatedTrees = 0;
-			for(int j = 0; (j < 64) && (generatedTrees < 3); j++)
+			int treeAmount = rand.nextInt(4)+1;
+			for(int j = 0; (j < treeAmount*5) && (generatedTrees < treeAmount); j++)
 			{
 				int cx = x+this.rand.nextInt(9)-4;
 				int cz = z+this.rand.nextInt(9)-4;
