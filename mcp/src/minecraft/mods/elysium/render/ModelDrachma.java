@@ -230,8 +230,7 @@ public class ModelDrachma extends ModelBase
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
 	{
-		GL11.glPushMatrix();
-        GL11.glTranslatef((float)f, (float)f1, (float)f2);
+		GL11.glScalef(0.25f, 0.25f, 0.25f);
 		FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/elysium/textures/misc/Drachma.png");
 		
 		super.render(entity, f, f1, f2, f3, f4, f5);
@@ -266,8 +265,6 @@ public class ModelDrachma extends ModelBase
 		Part28.render(f5);
 		Part29.render(f5);
 		Part30.render(f5);
-		GL11.glPopMatrix();
-
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z)

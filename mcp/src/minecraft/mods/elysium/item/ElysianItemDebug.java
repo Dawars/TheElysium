@@ -5,6 +5,7 @@ import org.lwjgl.input.Keyboard;
 import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import mods.elysium.dimension.portal.ElysianTeleporter;
+import mods.elysium.entity.ElysianEntityDrachma;
 import mods.elysium.entity.ElysianEntityDrachma2;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,7 +24,7 @@ public class ElysianItemDebug extends ElysianItem
 	@Override
 	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
-		world.spawnEntityInWorld(new ElysianEntityDrachma2(world, x+hitX, y+hitY, z+hitZ, 10));
+		world.spawnEntityInWorld(new ElysianEntityDrachma(world, x+hitX, y+hitY, z+hitZ, 10));
 		
 		if(!world.isRemote)
 		{

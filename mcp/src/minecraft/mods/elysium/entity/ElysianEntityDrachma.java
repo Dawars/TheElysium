@@ -13,6 +13,11 @@ import net.minecraft.world.World;
 
 public class ElysianEntityDrachma extends Entity
 {
+    /**
+     * A constantly increasing value that RenderXPOrb uses to control the colour shifting (Green / yellow)
+     */
+    public int xpColor;
+
     /** The age of the XP orb in ticks. */
     public int xpOrbAge = 0;
     public int field_70532_c;
@@ -26,10 +31,13 @@ public class ElysianEntityDrachma extends Entity
     /** The closest EntityPlayer to this orb. */
     private EntityPlayer closestPlayer;
 
+    /** Threshold color for tracking players */
+    private int xpTargetColor;
+
     public ElysianEntityDrachma(World par1World, double par2, double par4, double par6, int par8)
     {
         super(par1World);
-        this.setSize(0.5F, 0.5F);
+        this.setSize(1F, 1F);
         this.yOffset = this.height / 2.0F;
         this.setPosition(par2, par4, par6);
         this.rotationYaw = (float)(Math.random() * 360.0D);
@@ -48,9 +56,9 @@ public class ElysianEntityDrachma extends Entity
         return false;
     }
 
-    public ElysianEntityDrachma(World world)
+    public ElysianEntityDrachma(World par1World)
     {
-        super(world);
+        super(par1World);
         this.setSize(0.25F, 0.25F);
         this.yOffset = this.height / 2.0F;
     }
@@ -94,7 +102,7 @@ public class ElysianEntityDrachma extends Entity
 
         if (this.field_70532_c > 0)
         {
-            this.field_70532_c--;
+            --this.field_70532_c;
         }
 
         this.prevPosX = this.posX;
@@ -113,15 +121,15 @@ public class ElysianEntityDrachma extends Entity
         this.pushOutOfBlocks(this.posX, (this.boundingBox.minY + this.boundingBox.maxY) / 2.0D, this.posZ);
         double d0 = 8.0D;
 
-//        if (this.xpTargetColor < this.xpColor - 20 + this.entityId % 100)
-//        {
+        if (this.xpTargetColor < this.xpColor - 20 + this.entityId % 100)
+        {
             if (this.closestPlayer == null || this.closestPlayer.getDistanceSqToEntity(this) > d0 * d0)
             {
                 this.closestPlayer = this.worldObj.getClosestPlayerToEntity(this, d0);
             }
 
-//            this.xpTargetColor = this.xpColor;
-//        }
+            this.xpTargetColor = this.xpColor;
+        }
 
         if (this.closestPlayer != null)
         {
@@ -163,8 +171,8 @@ public class ElysianEntityDrachma extends Entity
             this.motionY *= -0.8999999761581421D;
         }
 
-//        ++this.xpColor;
-        this.xpOrbAge++;
+        ++this.xpColor;
+        ++this.xpOrbAge;
 
         if (this.xpOrbAge >= 6000)
         {
@@ -237,6 +245,9 @@ public class ElysianEntityDrachma extends Entity
      */
     public void onCollideWithPlayer(EntityPlayer player)
     {
+    	
+        this.setDead();
+
         if (!this.worldObj.isRemote)
         {
             if (this.field_70532_c == 0 && player.xpCooldown == 0)
