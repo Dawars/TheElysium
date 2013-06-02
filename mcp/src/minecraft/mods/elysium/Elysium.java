@@ -40,7 +40,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 //@NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandler.class, clientSideRequired = true, serverSideRequired = true)
 public class Elysium
 {
-	@Instance
+	@Instance("The Elysium")
 	public static Elysium instance;
 	
 	public static ElysiumConfiguration mainConfiguration;
