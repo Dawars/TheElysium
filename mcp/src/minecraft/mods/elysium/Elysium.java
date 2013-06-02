@@ -10,7 +10,7 @@ import mods.elysium.dimension.*;
 import mods.elysium.dimension.portal.ElysiumBlockPortalCore;
 import mods.elysium.dimension.portal.ElysiumTileEntityPortal;
 import mods.elysium.dimension.portal.ElysiumTileEntityPortalRenderer;
-import mods.elysium.gen.ElysiumWorldGen;
+import mods.elysium.gen.WorldGenElysium;
 import mods.elysium.handlers.BonemealHandler;
 import mods.elysium.items.*;
 import mods.elysium.proxy.ClientProxy;
@@ -384,7 +384,7 @@ public class Elysium
 		ElysiumPlainBiome = new BiomeGenElysium(25);
 		
 		
-		GameRegistry.registerWorldGenerator(new ElysiumWorldGen());
+		GameRegistry.registerWorldGenerator(new WorldGenElysium());
 
 	}
 

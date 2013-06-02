@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Random;
 
 import mods.elysium.Elysium;
+import mods.elysium.gen.ElysiumGenFostimber;
 import mods.elysium.gen.ElysiumGenLakes;
+import mods.elysium.gen.ElysiumGenSand;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
 import net.minecraft.entity.EnumCreatureType;
@@ -146,7 +148,7 @@ public class ChunkProviderElysium implements IChunkProvider
     {
         byte b0 = 4;
         byte b1 = 16;
-        byte seeLevel = 67;
+        byte seeLevel = 65;
         int k = b0 + 1;
         byte b3 = 17;
         int l = b0 + 1;
@@ -225,7 +227,7 @@ public class ChunkProviderElysium implements IChunkProvider
         MinecraftForge.EVENT_BUS.post(event);
         if (event.getResult() == Result.DENY) return;
 
-        byte seeLevel = 67;//63
+        byte seeLevel = 65;
         double d0 = 0.03125D;
         this.stoneNoise = this.noiseGen4.generateNoiseOctaves(this.stoneNoise, par1 * 16, par2 * 16, 0, 16, 16, 1, d0 * 2.0D, d0 * 2.0D, d0 * 2.0D);
 
@@ -516,7 +518,13 @@ public class ChunkProviderElysium implements IChunkProvider
     {
         return true;
     }
-
+    
+    
+    ElysiumGenLakes lakegenerator = new ElysiumGenLakes(Elysium.waterStill.blockID);
+    ElysiumGenSand sandgenerator = new ElysiumGenSand(Elysium.LeucosandBlock.blockID, 7);
+    //ElysiumGenSand riltgenerator = new ElysiumGenSand(Elysium.RiltBlock.blockID, 3);
+    ElysiumGenFostimber treegenerator = new ElysiumGenFostimber(Elysium.FostimberLeavesBlock.blockID, Elysium.FostimberLogBlock.blockID, false);
+    
     /**
      * Populates chunk with ores etc etc
      */
@@ -542,19 +550,26 @@ public class ChunkProviderElysium implements IChunkProvider
 //            this.scatteredFeatureGenerator.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
         	
         }
-
-        int k1;
-        int l1;
-        int i2;
-
-        if (TerrainGen.populate(par1IChunkProvider, worldObj, rand, par2, par3, flag, LAKE) && 
-                !flag && this.rand.nextInt(4) == 0)
-        {
-            k1 = k + this.rand.nextInt(16) + 8;
-            l1 = this.rand.nextInt(60)+68;
-            i2 = l + this.rand.nextInt(16) + 8;
-            (new ElysiumGenLakes(Elysium.waterStill.blockID, Elysium.LeucosandBlock.blockID)).generate(this.worldObj, this.rand, k1, l1, i2);
-        }
+        
+        this.lakegenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), 0, l+this.rand.nextInt(16));
+        this.sandgenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), 0, l+this.rand.nextInt(16));
+        //this.riltgenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), 0, l+this.rand.nextInt(16));
+    	if(this.rand.nextInt(6) == 0)
+		{
+			int x = k + this.rand.nextInt(16);
+			int z =	l + this.rand.nextInt(16);
+			
+			int generatedTrees = 0;
+			for(int j = 0; (j < 64) && (generatedTrees < 3); j++)
+			{
+				int cx = x+this.rand.nextInt(9)-4;
+				int cz = z+this.rand.nextInt(9)-4;
+				int y = this.worldObj.getTopSolidOrLiquidBlock(cx, cz);
+				
+				if(this.treegenerator.generate(this.worldObj, this.rand, cx, y, cz))
+					generatedTrees++;
+			}
+		}
         
         biomegenbase.decorate(this.worldObj, this.rand, k, l);
         SpawnerAnimals.performWorldGenSpawning(this.worldObj, biomegenbase, k + 8, l + 8, 16, 16, this.rand);

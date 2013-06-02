@@ -5,7 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.Random;
 
-import mods.elysium.gen.WorldGenFostimber;
+import mods.elysium.gen.ElysiumGenFostimber;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -84,7 +84,7 @@ public class FostimberSaplingBlock extends ElysiumFlower
     {
         if (!TerrainGen.saplingGrowTree(world, rand, i, j, k)) return;
 
-        WorldGenFostimber fostimber = new WorldGenFostimber(true);
+        ElyisumGenFostimber fostimber = new ElysiumGenFostimber(true);
 		
 		fostimber.generate(world, rand, i, j, k);
     }

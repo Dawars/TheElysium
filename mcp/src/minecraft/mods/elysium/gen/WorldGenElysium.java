@@ -15,7 +15,7 @@ import net.minecraftforge.liquids.LiquidDictionary;
 import net.minecraftforge.liquids.LiquidStack;
 import cpw.mods.fml.common.IWorldGenerator;
 
-public class ElysiumWorldGen implements IWorldGenerator
+public class WorldGenElysium implements IWorldGenerator
 {
 	@Override
 	public void generate(Random rand, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
@@ -30,29 +30,17 @@ public class ElysiumWorldGen implements IWorldGenerator
 		}
 	}
 	
-	private void generateOverworld(World world, Random rand, int chunkX, int chunkZ)
+	private void generateOverworld(World world, Random random, int blockX, int blockZ)
 	{
-		int x = chunkX + rand.nextInt(16);
-		int z = chunkZ + rand.nextInt(16);
+		int x = blockX + random.nextInt(16);
+		int z = blockX + random.nextInt(16);
 		int y = world.getTopSolidOrLiquidBlock(x, z);
 		
-		new ElysiumGenLakes(Elysium.waterStill.blockID, Elysium.LeucosandBlock.blockID).generate(world, rand, x, y, z);
+		new ElysiumGenLakes(Elysium.waterStill.blockID).generate(world, random, x, y, z);
 	}
 	
-	private void generateElysium(World world, Random rand, int chunkX, int chunkZ)
+	private void generateElysium(World world, Random random, int blockX, int blockZ)
 	{
-		int x = chunkX + rand.nextInt(16);
-		int z = chunkZ + rand.nextInt(16);
-		int y = world.getTopSolidOrLiquidBlock(x, z);
 		
-		int num = rand.nextInt(3)+1;
-		
-		for (int i = 0; i < num; i++)
-		{
-			int num2 = rand.nextInt(3)+1;//in a group
-
-			WorldGenFostimber fostimber = new WorldGenFostimber(false);
-			fostimber.generate(world, rand, x, y, z);
-		}
 	}
 }

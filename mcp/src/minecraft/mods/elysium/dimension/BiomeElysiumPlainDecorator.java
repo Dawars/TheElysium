@@ -3,7 +3,6 @@ package mods.elysium.dimension;
 import static net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.FLOWERS;
 import static net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.GRASS;
 import mods.elysium.Elysium;
-import mods.elysium.gen.WorldGenFostimber;
 import net.minecraft.block.Block;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.world.biome.BiomeDecorator;
