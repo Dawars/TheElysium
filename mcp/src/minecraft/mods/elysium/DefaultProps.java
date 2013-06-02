@@ -1,5 +1,7 @@
 package mods.elysium;
 
+import net.minecraft.item.Item;
+
 import org.lwjgl.input.Keyboard;
 
 public class DefaultProps {
@@ -39,6 +41,7 @@ public class DefaultProps {
 	public static int idOreBerylBlock = 2013;
 	public static int idShellsBlock = 2014;
 	public static int idConchBlock = 2015;
+	public static int idPaleCobblestoneBlock = 2016;
 	
 	//Items
 	public static int idGracePrismItem = 5000;
@@ -46,18 +49,29 @@ public class DefaultProps {
 	public static int idWhistleItem = 5001;
 	public static int idPepperSeedItem = 5002;
 	public static int idAsphodelPetalsItem = 5003;
+	public static int idBerylItem = 5004;
+	public static int idCobaltIngotItem = 5005;
+	public static int idIridiumIngotItem = 5006;
+	public static int idJadeItem = 5007;
+	public static int idSiliconChunk = 5008;
+	public static int idSulphurItem = 5009;
+	public static int idTourmalineItem = 5010;
+	public static int idSturdyHideItem = 5011;
 
-	public static int idWoodSwordItem = 5004;
-	public static int idWoodPickaxeItem = 5005;
-	public static int idWoodAxeItem = 5006;
-	public static int idWoodShovelItem = 5007;
-	public static int idWoodHoeItem = 5008;
 	
-	public static int idStoneSwordItem = 5009;
-	public static int idStonePickaxeItem = 5010;
-	public static int idStoneAxeItem = 5011;
-	public static int idStoneShovelItem = 5012;
-	public static int idStoneHoeItem = 5013;
+	
+	
+	public static int idWoodSwordItem = 5051;
+	public static int idWoodPickaxeItem = 5052;
+	public static int idWoodAxeItem = 5053;
+	public static int idWoodShovelItem = 5054;
+	public static int idWoodHoeItem = 5055;
+	
+	public static int idStoneSwordItem = 5056;
+	public static int idStonePickaxeItem = 5057;
+	public static int idStoneAxeItem = 5058;
+	public static int idStoneShovelItem = 5059;
+	public static int idStoneHoeItem = 5060;
 
 	public static int idOverkillItem = 5106;
 	public static int idDebugItem = 5107;
