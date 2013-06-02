@@ -5,6 +5,8 @@ import org.lwjgl.input.Keyboard;
 import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import mods.elysium.dimension.portal.ElysianTeleporter;
+import mods.elysium.entity.EntityDrachma;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -34,6 +36,11 @@ public class ElysianItemDebug extends ElysianItem
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
+		
+//		if (!world.isRemote)
+//        {
+			world.spawnEntityInWorld(new EntityDrachma(world, player.posX, player.posY-5, player.posZ, 10));	
+//        }
 		if(player.isSneaking() && (player instanceof EntityPlayerMP))
 		{
 			EntityPlayerMP playermp = (EntityPlayerMP)player;

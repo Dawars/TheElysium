@@ -11,7 +11,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class ElysianEntityDrachma extends Entity
+public class EntityDrachma extends Entity
 {
    
 
@@ -28,10 +28,7 @@ public class ElysianEntityDrachma extends Entity
     /** The closest EntityPlayer to this orb. */
     private EntityPlayer closestPlayer;
 
-    /** Threshold color for tracking players */
-    private int xpTargetColor;
-
-    public ElysianEntityDrachma(World par1World, double par2, double par4, double par6, int par8)
+    public EntityDrachma(World par1World, double par2, double par4, double par6, int par8)
     {
         super(par1World);
         this.setSize(0.5F, 0.5F);
@@ -53,7 +50,7 @@ public class ElysianEntityDrachma extends Entity
         return false;
     }
 
-    public ElysianEntityDrachma(World par1World)
+    public EntityDrachma(World par1World)
     {
         super(par1World);
         this.setSize(0.25F, 0.25F);

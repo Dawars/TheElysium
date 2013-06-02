@@ -17,6 +17,7 @@ import mods.elysium.handlers.ElysianFuelHandler;
 import mods.elysium.handlers.ElysianSoundHandler;
 import mods.elysium.item.*;
 import mods.elysium.proxy.ClientProxy;
+import mods.elysium.proxy.CommonProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -149,7 +150,7 @@ public class Elysium
 			
 			//Handlers
 			MinecraftForge.EVENT_BUS.register(new ElysianBonemealHandler());
-			MinecraftForge.EVENT_BUS.register(new ElysianSoundHandler());
+			CommonProxy.proxy.addSoundHandler(new ElysianSoundHandler());
 			GameRegistry.registerFuelHandler(new ElysianFuelHandler());
 
 			// Block Registry
