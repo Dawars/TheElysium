@@ -3,7 +3,7 @@ package mods.elysium.dimension.gen.feature;
 import java.util.Random;
 
 import mods.elysium.Elysium;
-import mods.elysium.block.ElysiumFlower;
+import mods.elysium.block.ElysianBlockFlower;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.util.Direction;
@@ -32,7 +32,7 @@ public class ElysiumGenFostimber extends WorldGenerator
 		
 		int treeHeight = trunk + minTreeHeight;
 		
-		if (!((ElysiumFlower)Elysium.FostimberSaplingBlock).canThisPlantGrowOnThisBlockID(world.getBlockId(x, y-1, z)))
+		if (!((ElysianBlockFlower)Elysium.FostimberSaplingBlock).canThisPlantGrowOnThisBlockID(world.getBlockId(x, y-1, z)))
 			return false;
 		
 		if(fromSapling)

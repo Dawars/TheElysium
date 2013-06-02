@@ -29,7 +29,7 @@ public class WorldProviderElysium extends WorldProvider
 		this.dimensionId = Elysium.DimensionID;
 		this.hasNoSky = false;
 		if(worldObj.isRemote)
-		this.setSkyRenderer(new ElysiumSkyRenderer());
+		this.setSkyRenderer(new SkyRendererElysium());
 		
 	}
 	
