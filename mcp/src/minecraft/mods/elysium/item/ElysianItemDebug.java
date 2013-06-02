@@ -5,7 +5,7 @@ import org.lwjgl.input.Keyboard;
 import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import mods.elysium.dimension.portal.ElysianTeleporter;
-import mods.elysium.entity.EntityDrachma;
+import mods.elysium.entity.ElysianEntityDrachma2;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -23,6 +23,8 @@ public class ElysianItemDebug extends ElysianItem
 	@Override
 	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
+		world.spawnEntityInWorld(new ElysianEntityDrachma2(world, x+hitX, y+hitY, z+hitZ, 10));
+		
 		if(!world.isRemote)
 		{
 			player.sendChatToPlayer("Id: "+world.getBlockId(x, y, z));
@@ -36,12 +38,7 @@ public class ElysianItemDebug extends ElysianItem
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-		
-//		if (!world.isRemote)
-//        {
-			world.spawnEntityInWorld(new EntityDrachma(world, player.posX, player.posY-5, player.posZ, 10));	
-//        }
-		if(player.isSneaking() && (player instanceof EntityPlayerMP))
+		if(/*player.isSneaking()*/ Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && (player instanceof EntityPlayerMP))
 		{
 			EntityPlayerMP playermp = (EntityPlayerMP)player;
 			if(playermp.dimension == Elysium.DimensionID)

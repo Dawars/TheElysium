@@ -11,10 +11,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityDrachma extends Entity
+public class ElysianEntityDrachma extends Entity
 {
-   
-
     /** The age of the XP orb in ticks. */
     public int xpOrbAge = 0;
     public int field_70532_c;
@@ -28,7 +26,7 @@ public class EntityDrachma extends Entity
     /** The closest EntityPlayer to this orb. */
     private EntityPlayer closestPlayer;
 
-    public EntityDrachma(World par1World, double par2, double par4, double par6, int par8)
+    public ElysianEntityDrachma(World par1World, double par2, double par4, double par6, int par8)
     {
         super(par1World);
         this.setSize(0.5F, 0.5F);
@@ -50,9 +48,9 @@ public class EntityDrachma extends Entity
         return false;
     }
 
-    public EntityDrachma(World par1World)
+    public ElysianEntityDrachma(World world)
     {
-        super(par1World);
+        super(world);
         this.setSize(0.25F, 0.25F);
         this.yOffset = this.height / 2.0F;
     }
@@ -96,7 +94,7 @@ public class EntityDrachma extends Entity
 
         if (this.field_70532_c > 0)
         {
-            --this.field_70532_c;
+            this.field_70532_c--;
         }
 
         this.prevPosX = this.posX;
@@ -166,7 +164,7 @@ public class EntityDrachma extends Entity
         }
 
 //        ++this.xpColor;
-        ++this.xpOrbAge;
+        this.xpOrbAge++;
 
         if (this.xpOrbAge >= 6000)
         {
@@ -237,16 +235,16 @@ public class EntityDrachma extends Entity
     /**
      * Called by a player entity when they collide with an entity
      */
-    public void onCollideWithPlayer(EntityPlayer par1EntityPlayer)
+    public void onCollideWithPlayer(EntityPlayer player)
     {
         if (!this.worldObj.isRemote)
         {
-            if (this.field_70532_c == 0 && par1EntityPlayer.xpCooldown == 0)
+            if (this.field_70532_c == 0 && player.xpCooldown == 0)
             {
-                par1EntityPlayer.xpCooldown = 2;
+                player.xpCooldown = 2;
                 this.playSound("random.orb", 0.1F, 0.5F * ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.8F));
-                par1EntityPlayer.onItemPickup(this, 1);
-                par1EntityPlayer.addExperience(this.xpValue);
+                player.onItemPickup(this, 1);
+                player.addExperience(this.xpValue);
                 this.setDead();
             }
         }

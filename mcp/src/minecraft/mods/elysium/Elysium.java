@@ -51,7 +51,7 @@ public class Elysium
 	public static ElysianConfiguration mainConfiguration;
 	
 	public static final CreativeTabs tabElysium = new ElysianTab(12, "The Elysium");
-		
+	
 	/** Dimension ID **/
 	public static int DimensionID;
 	
