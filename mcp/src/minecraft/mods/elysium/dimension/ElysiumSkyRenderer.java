@@ -25,8 +25,10 @@ public class ElysiumSkyRenderer extends IRenderHandler {
 	public void render(float partialTicks, WorldClient world, Minecraft mc) {
         if (mc.theWorld.provider.dimensionId == Elysium.DimensionID)
         {        	
+        	if(world.getWorldTime() < 0 || world.getWorldTime() > 12500){
+        		renderNightSky();
+        	}
         	
-//        	renderNightSky();
         	
         	GL11.glDisable(GL11.GL_TEXTURE_2D);
             Vec3 vec3 = mc.theWorld.getSkyColor(mc.renderViewEntity, partialTicks);
@@ -165,7 +167,7 @@ public class ElysiumSkyRenderer extends IRenderHandler {
             GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
             GL11.glRotatef(mc.theWorld.getCelestialAngle(partialTicks) * 360.0F, 1.0F, 0.0F, 0.0F);
             f10 = 30.0F;
-            FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/" + DefaultProps.modId + "/textures/blocks/elysiansun.png");
+            FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/" + DefaultProps.modId + "/textures/misc/sun.png");
             tessellator.startDrawingQuads();
             tessellator.addVertexWithUV((double)(-f10), 100.0D, (double)(-f10), 0.0D, 0.0D);
             tessellator.addVertexWithUV((double)f10, 100.0D, (double)(-f10), 1.0D, 0.0D);

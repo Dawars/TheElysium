@@ -87,7 +87,7 @@ public class WorldProviderElysium extends WorldProvider
 
 	protected void generateLightBrightnessTable()
 	{
-		float f = 5.0F;
+		float f = 3.0F;
 
         for (int i = 0; i <= 15; ++i)
         {

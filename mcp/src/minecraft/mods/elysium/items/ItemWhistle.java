@@ -34,16 +34,12 @@ public class ItemWhistle extends ElysiumItem{
 
 	public ItemWhistle(int id) {
 		super(id);
-        this.maxStackSize = 1;
-        this.setMaxDamage(0);
+        this.maxStackSize = 9;
+        this.setMaxDamage(9*20);
         
-        
-        int amount = 0;
-
         shuffleBag.Add("Hmm... looks like a musical instrument");
         shuffleBag.Add("Its sound could be heared from a long distance...");
         shuffleBag.Add("Sorry, I can use it now!");
-        shuffleBag.Add("There is an Ender Pearls on the top...");
 
 	}
 	
@@ -54,19 +50,40 @@ public class ItemWhistle extends ElysiumItem{
      */
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entity)
     {
+		entity.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
+
+        return itemStack;
+    }
+    /**
+     * Called each tick as long the item is on a player inventory. Uses by maps to check if is on a player hand and
+     * update it's contents.
+     */
+    public void onUpdate(ItemStack item, World world, Entity entity, int par4, boolean flag) {
+    	if(entity instanceof EntityPlayer && ((EntityPlayer) entity).getItemInUse() == item)
+    		item.damageItem(2, (EntityPlayer)entity);
+    }
+
+    /**
+     * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
+     * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
+     */
+    public boolean onItemUse(ItemStack itemStack, EntityPlayer entity, World world, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    {
+    	world.playSoundEffect(entity.posX, entity.posY, entity.posZ, "mods.elysium.sound.FluteTrack", 3.0F, itemRand.nextFloat() * 0.1F + 0.9F);
+    	
     	if(world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd){
 
                 EntityDragon entitydragon = new EntityDragon(world);
                 entitydragon.setLocationAndAngles(0.0D, 128.0D, 0.0D, new Random().nextFloat() * 360.0F, 0.0F);
                	world.spawnEntityInWorld(entitydragon);
+               	
+                
     	} else {
-    		if(!world.isRemote)
+    		if(!world.isRemote){
     			entity.sendChatToPlayer(shuffleBag.Next());
+    		}
     	}
-    	itemStack.damageItem(1, entity);
-        entity.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
-
-        return itemStack;
+        return false;
     }
     
     /**
@@ -82,7 +99,7 @@ public class ItemWhistle extends ElysiumItem{
      */
     public int getMaxItemUseDuration(ItemStack item)
     {
-        return 20;
+        return 9*20;
     }
     
     /**

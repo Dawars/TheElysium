@@ -13,10 +13,13 @@ import mods.elysium.dimension.portal.ElysiumBlockPortalCore;
 import mods.elysium.dimension.portal.ElysiumTileEntityPortal;
 import mods.elysium.dimension.portal.ElysiumTileEntityPortalRenderer;
 import mods.elysium.handlers.BonemealHandler;
+import mods.elysium.handlers.ElysiumFuelHandler;
+import mods.elysium.handlers.SoundHandler;
 import mods.elysium.items.*;
 import mods.elysium.proxy.ClientProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
@@ -79,7 +82,7 @@ public class Elysium
 	public static ElysiumBlockFluid waterMoving;
 	public static Block shellFloatingBlock;
 	public static Block conchFloatingBlock;
-//	public static Block LeucosandBlock;
+	public static Block paleCobbletone;
 //	public static Block LeucosandBlock;
 //	public static Block LeucosandBlock;
 	
@@ -94,7 +97,15 @@ public class Elysium
 	public static Item WhistleItem;
 	public static Item PepperSeedItem;
 	public static Item AsphodelPetalsItem;
-
+	public static Item BerlyItem;
+	public static Item ingotCobaltItem;
+	public static Item ingotIridiumItem;
+	public static Item jadeItem;
+	public static Item siliconChunk;
+	public static Item sturdyHideItem;
+	public static Item SulphurItem;
+	public static Item TourmalineItem;
+	
 	public static Item SwordFostimberItem;
 	public static Item PickaxeFostimberItem;
 	public static Item AxeFostimberItem;
@@ -136,6 +147,11 @@ public class Elysium
 			Property idDim = Elysium.mainConfiguration.get("dimensionID", "dim", DefaultProps.DimensionID, "This is the id of the dimension change if needed!");
 			DimensionID = idDim.getInt();
 			
+			//Handlers
+			MinecraftForge.EVENT_BUS.register(new BonemealHandler());
+			MinecraftForge.EVENT_BUS.register(new SoundHandler());
+			GameRegistry.registerFuelHandler(new ElysiumFuelHandler());
+
 			// Block Registry
 			
 			Property idPalestoneBlock = Elysium.mainConfiguration.getTerrainBlock("terrainGen", "palestone.id", DefaultProps.idPalestoneBlock, null);
@@ -184,7 +200,7 @@ public class Elysium
 			LanguageRegistry.addName(WoodBlock, "Wooden Planks");
 			
 			Property idGastroShellBlock = Elysium.mainConfiguration.getBlock("idGastroShellBlock.id", DefaultProps.idGastroShellBlock);
-			GastroShellBlock = (new GastroShellBlock(idGastroShellBlock.getInt(), Material.leaves)).setHardness(0.2F).setStepSound(Block.soundGrassFootstep).setUnlocalizedName("gastroshellTop");
+			GastroShellBlock = (new GastroShellBlock(idGastroShellBlock.getInt(), Material.rock)).setHardness(0.2F).setStepSound(Block.soundGrassFootstep).setUnlocalizedName("gastroshellTop");
 			ClientProxy.proxy.registerBlock(GastroShellBlock);
 			LanguageRegistry.addName(GastroShellBlock, "Gastro Shell");
 
@@ -199,40 +215,41 @@ public class Elysium
 			LanguageRegistry.addName(CurlgrassBlock, "Curlgrass");
 
 			Property idOreSulphurBlock = Elysium.mainConfiguration.getBlock("idOreSulphurBlock.id", DefaultProps.idOreSulphurBlock);
-			SulphurOreBlock = new SulphurOreBlock(idOreSulphurBlock.getInt(), Material.rock).setHardness(0.2F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreSulphur");
+			SulphurOreBlock = new ElysiumOreBlock(idOreSulphurBlock.getInt()).setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreSulphur");
 			ClientProxy.proxy.registerBlock(SulphurOreBlock);
 			LanguageRegistry.addName(SulphurOreBlock, "Sulphur Ore");
 			
 
+			Property idOreBerylBlock = Elysium.mainConfiguration.getBlock("idOreBerylBlock.id", DefaultProps.idOreBerylBlock);
+			BerylOreBlock = new ElysiumOreBlock(idOreBerylBlock.getInt()).setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreBeryl");
+			ClientProxy.proxy.registerBlock(BerylOreBlock);
+			LanguageRegistry.addName(BerylOreBlock, "Beryl Ore");
+			
 			Property idOreCobaltBlock = Elysium.mainConfiguration.getBlock("idOreCobaltBlock.id", DefaultProps.idOreCobaltBlock);
-	/**/	CobaltOreBlock = new SulphurOreBlock(idOreCobaltBlock.getInt(), Material.rock).setHardness(0.2F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreCobalt");
+			CobaltOreBlock = new ElysiumOreBlock(idOreCobaltBlock.getInt()).setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreCobalt");
 			ClientProxy.proxy.registerBlock(CobaltOreBlock);
 			LanguageRegistry.addName(CobaltOreBlock, "Cobalt Ore");
 
 			Property idOreIridiumBlock = Elysium.mainConfiguration.getBlock("idOreIridiumBlock.id", DefaultProps.idOreIridiumBlock);
-			IridiumOreBlock = new SulphurOreBlock(idOreIridiumBlock.getInt(), Material.rock).setHardness(0.2F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreIridium");
+			IridiumOreBlock = new ElysiumOreBlock(idOreIridiumBlock.getInt()).setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreIridium");
 			ClientProxy.proxy.registerBlock(IridiumOreBlock);
 			LanguageRegistry.addName(IridiumOreBlock, "Iridium Ore");
 			
 			Property idOreSiliconBlock = Elysium.mainConfiguration.getBlock("idOreSiliconBlock.id", DefaultProps.idOreSiliconBlock);
-			SiliconOreBlock = new SulphurOreBlock(idOreSiliconBlock.getInt(), Material.rock).setHardness(0.2F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreSilicon");
+			SiliconOreBlock = new ElysiumOreBlock(idOreSiliconBlock.getInt()).setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreSilicon");
 			ClientProxy.proxy.registerBlock(SiliconOreBlock);
 			LanguageRegistry.addName(SiliconOreBlock, "Silicon Ore");
 			
 			Property idOreJadeBlock = Elysium.mainConfiguration.getBlock("idOreJadeBlock.id", DefaultProps.idOreJadeBlock);
-			JadeOreBlock = new SulphurOreBlock(idOreJadeBlock.getInt(), Material.rock).setHardness(0.2F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreJade");
+			JadeOreBlock = new ElysiumOreBlock(idOreJadeBlock.getInt()).setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreJade");
 			ClientProxy.proxy.registerBlock(JadeOreBlock);
 			LanguageRegistry.addName(JadeOreBlock, "Jade Ore");
 
 			Property idOreTourmalineBlock = Elysium.mainConfiguration.getBlock("idOreTourmalineBlock.id", DefaultProps.idOreTourmalineBlock);
-			TourmalineOreBlock = new SulphurOreBlock(idOreTourmalineBlock.getInt(), Material.rock).setHardness(0.2F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreTourmaline");
+			TourmalineOreBlock = new ElysiumOreBlock(idOreTourmalineBlock.getInt()).setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreTourmaline");
 			ClientProxy.proxy.registerBlock(TourmalineOreBlock);
 			LanguageRegistry.addName(TourmalineOreBlock, "Tourmaline Ore");
 
-			Property idOreBerylBlock = Elysium.mainConfiguration.getBlock("idOreBerylBlock.id", DefaultProps.idOreBerylBlock);
-			BerylOreBlock = new SulphurOreBlock(idOreBerylBlock.getInt(), Material.rock).setHardness(0.2F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreBeryl");
-			ClientProxy.proxy.registerBlock(BerylOreBlock);
-			LanguageRegistry.addName(BerylOreBlock, "Beryl Ore");
 			
 
 			Property idWaterBlock = Elysium.mainConfiguration.getTerrainBlock("terrainGen", "idWaterBlock.id", DefaultProps.idWaterBlock, null);
@@ -260,29 +277,28 @@ public class Elysium
 			ClientProxy.proxy.registerBlock(conchFloatingBlock);
 			LanguageRegistry.addName(conchFloatingBlock, "Conch");
 
+			Property idPaleCobblestoneBlock = Elysium.mainConfiguration.getBlock("idPaleCobblestoneBlock.id", DefaultProps.idPaleCobblestoneBlock);
+			paleCobbletone = (new ElysiumBlock(idPaleCobblestoneBlock.getInt(), Material.rock)).setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("palecobblestone");
+			ClientProxy.proxy.registerBlock(paleCobbletone);
+			LanguageRegistry.addName(paleCobbletone, "Cobble Palestone");
 			
 			
 			Block.dragonEgg.setCreativeTab(tabElysium);
 
-	        MinecraftForge.setToolClass(PickaxeFostimberItem, "pickaxe", 0);
-	        MinecraftForge.setToolClass(AxeFostimberItem, "axe", 0);
-	        MinecraftForge.setToolClass(ShovelFostimberItem, "shovel", 0);
-	        MinecraftForge.setToolClass(PickaxeStoneItem, "pickaxe", 1);
-	        MinecraftForge.setToolClass(AxeStoneItem, "axe", 1);
-	        MinecraftForge.setToolClass(ShovelStoneItem, "shovel", 1);
 
-	 		// Item Registry
+			// Item Registry
 			Property idGracePrismItem = Elysium.mainConfiguration.getItem("idGracePrismItem.id", DefaultProps.idGracePrismItem);
 			GracePrismItem = new ItemGracePrism(idGracePrismItem.getInt()).setUnlocalizedName("gracecrystal");
 			LanguageRegistry.addName(GracePrismItem, "Grace Prism");
 
 			Property idWhistleItem = Elysium.mainConfiguration.getItem("idWhistleItem.id", DefaultProps.idWhistleItem);
-			WhistleItem = new ItemWhistle(idWhistleItem.getInt()).setUnlocalizedName("enderdrum");
-			LanguageRegistry.addName(WhistleItem, "Sin titulo");
+			WhistleItem = new ItemWhistle(idWhistleItem.getInt()).setUnlocalizedName("enderflute");
+			LanguageRegistry.addName(WhistleItem, "Ender Flute");
 		
 			Property idPepperSeedItem = Elysium.mainConfiguration.getItem("idPepperSeedItem.id", DefaultProps.idPepperSeedItem);
 			PepperSeedItem = new ElysiumItem(idPepperSeedItem.getInt()).setUnlocalizedName("seeds_pepper");
-		
+			LanguageRegistry.addName(PepperSeedItem, "Pepper Seed");
+
 			Property idOverkillItem = Elysium.mainConfiguration.getItem("idOverkillItem.id", DefaultProps.idOverkillItem);
 			OverKillItem = new OverkillItem(idOverkillItem.getInt()).setUnlocalizedName("asd");
 			LanguageRegistry.addName(OverKillItem, "Overkill Item");
@@ -294,6 +310,40 @@ public class Elysium
 			Property idDebugItem = Elysium.mainConfiguration.getItem("idDebugItem.id", DefaultProps.idDebugItem);
 			DebugItem = new ItemDebug(idDebugItem.getInt()).setUnlocalizedName("debug");
 			LanguageRegistry.addName(DebugItem, "Modder Item");
+			
+			Property idBerylItem = Elysium.mainConfiguration.getItem("idBerylItem.id", DefaultProps.idBerylItem);
+			BerlyItem = new ElysiumItem(idBerylItem.getInt()).setUnlocalizedName("Beryl");
+			LanguageRegistry.addName(BerlyItem, "Beryl");
+			
+			Property idCobaltIngotItem = Elysium.mainConfiguration.getItem("idCobaltIngotItem.id", DefaultProps.idCobaltIngotItem);
+			ingotCobaltItem = new ElysiumItem(idCobaltIngotItem.getInt()).setUnlocalizedName("ingotCobalt");
+			LanguageRegistry.addName(ingotCobaltItem, "Cobalt Ingot");
+			
+			Property idIridiumIngotItem = Elysium.mainConfiguration.getItem("idIridiumIngotItem.id", DefaultProps.idIridiumIngotItem);
+			ingotIridiumItem = new ElysiumItem(idIridiumIngotItem.getInt()).setUnlocalizedName("ingotIridium");
+			LanguageRegistry.addName(ingotIridiumItem, "Iridium Ingot");
+			
+			Property idJadeItem = Elysium.mainConfiguration.getItem("idJadeItem.id", DefaultProps.idJadeItem);
+			jadeItem = new ElysiumItem(idJadeItem.getInt()).setUnlocalizedName("Jade");
+			LanguageRegistry.addName(jadeItem, "Jade");
+			
+			Property idSiliconChunk = Elysium.mainConfiguration.getItem("idSiliconChunk.id", DefaultProps.idSiliconChunk);
+			siliconChunk = new ElysiumItem(idSiliconChunk.getInt()).setUnlocalizedName("siliconchunk");
+			LanguageRegistry.addName(siliconChunk, "Berly");
+
+			Property idSulphurItem = Elysium.mainConfiguration.getItem("idSulphurItem.id", DefaultProps.idSulphurItem);
+			SulphurItem = new ElysiumItem(idSulphurItem.getInt()).setUnlocalizedName("Sulphur");
+			LanguageRegistry.addName(SulphurItem, "Sulphur");
+
+			Property idTourmalineItem = Elysium.mainConfiguration.getItem("idTourmalineItem.id", DefaultProps.idTourmalineItem);
+			TourmalineItem = new ElysiumItem(idTourmalineItem.getInt()).setUnlocalizedName("Tourmaline");
+			LanguageRegistry.addName(TourmalineItem, "Tourmaline");
+			
+			Property idSturdyHideItem = Elysium.mainConfiguration.getItem("idSturdyHideItem.id", DefaultProps.idSturdyHideItem);
+			sturdyHideItem = new ElysiumItem(idSturdyHideItem.getInt()).setUnlocalizedName("SturdyHide");
+			LanguageRegistry.addName(sturdyHideItem, "Sturdy Hide");
+			
+			
 			
 			//Tools
 			EnumToolMaterial FOSTIMBER_MAT = EnumHelper.addToolMaterial("FOSTIMBER", 0, 59, 2.0F, 0, 15);
@@ -340,17 +390,46 @@ public class Elysium
 			HoeStoneItem = new ElysiumHoe(idStoneHoeItem.getInt(), STONE_MAT).setUnlocalizedName("hoePalestone");
 			LanguageRegistry.addName(HoeStoneItem, "Palestone Hoe");
 			
+			MinecraftForge.setToolClass(PickaxeFostimberItem, "pickaxe", 0);
+	        MinecraftForge.setToolClass(AxeFostimberItem, "axe", 0);
+	        MinecraftForge.setToolClass(ShovelFostimberItem, "shovel", 0);
+	        MinecraftForge.setToolClass(PickaxeStoneItem, "pickaxe", 1);
+	        MinecraftForge.setToolClass(AxeStoneItem, "axe", 1);
+	        MinecraftForge.setToolClass(ShovelStoneItem, "shovel", 1);
+
+			MinecraftForge.setBlockHarvestLevel(SulphurOreBlock, "pickaxe", 0);
+			MinecraftForge.setBlockHarvestLevel(CobaltOreBlock, "pickaxe", 1);
+			MinecraftForge.setBlockHarvestLevel(SiliconOreBlock, "pickaxe", 2);
+			MinecraftForge.setBlockHarvestLevel(IridiumOreBlock, "pickaxe", 2);
+			MinecraftForge.setBlockHarvestLevel(JadeOreBlock, "pickaxe", 2);
+			MinecraftForge.setBlockHarvestLevel(BerylOreBlock, "pickaxe", 2);
+			MinecraftForge.setBlockHarvestLevel(TourmalineOreBlock, "pickaxe", 3);
 			
 			
 			// Crafting Registry
 			GameRegistry.addRecipe(new ItemStack(GracePrismItem), new Object[] {"SMS","MDM","SMS", Character.valueOf('S'), Block.whiteStone, Character.valueOf('M'), Item.bucketMilk, Character.valueOf('D'), Item.diamond});
+			GameRegistry.addRecipe(new ItemStack(this.PickaxeFostimberItem), new Object[] {"WW "," SW","S W", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.WoodBlock});
+			GameRegistry.addRecipe(new ItemStack(this.PickaxeStoneItem), new Object[] {"WW "," SW","S W", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.paleCobbletone});
+			GameRegistry.addRecipe(new ItemStack(this.ShovelFostimberItem), new Object[] {" WW"," SW","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.WoodBlock});
+			GameRegistry.addRecipe(new ItemStack(this.ShovelStoneItem), new Object[] {" WW"," SW","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.paleCobbletone});
+			GameRegistry.addRecipe(new ItemStack(this.HoeFostimberItem), new Object[] {"WWW"," S ","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.WoodBlock});
+			GameRegistry.addRecipe(new ItemStack(this.HoeStoneItem), new Object[] {"WWW"," S ","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.paleCobbletone});
+			GameRegistry.addRecipe(new ItemStack(this.AxeFostimberItem), new Object[] {"WW ","WS ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.WoodBlock});
+			GameRegistry.addRecipe(new ItemStack(this.AxeStoneItem), new Object[] {"WW ","WS ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.paleCobbletone});
+			GameRegistry.addRecipe(new ItemStack(this.SwordFostimberItem), new Object[] {"  W"," W ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.WoodBlock});
+			GameRegistry.addRecipe(new ItemStack(this.SwordStoneItem), new Object[] {"  W"," W ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.paleCobbletone});
+			GameRegistry.addRecipe(new ItemStack(this.WhistleItem), new Object[] {" OO","O O", "EO ", Character.valueOf('O'), Block.obsidian, Character.valueOf('E'), Item.eyeOfEnder});
+			
 			GameRegistry.addShapelessRecipe(new ItemStack(AsphodelPetalsItem, 2), new Object[] {FlowerBlock});
 
+			//Smelting Regostry
+			GameRegistry.addSmelting(this.CobaltOreBlock.blockID, new ItemStack(this.ingotCobaltItem), 0.7F);
+			GameRegistry.addSmelting(this.IridiumOreBlock.blockID, new ItemStack(this.ingotIridiumItem), 1.0F);
+			
+
+			
 			// Entity Registry
 			GameRegistry.registerTileEntity(ElysiumTileEntityPortal.class, "ElysiumTileEntityPortal");
-			
-//			MinecraftForge.setBlockHarvestLevel(ash, "shovel", 0);
-//		 	MinecraftForge.setBlockHarvestLevel(blockAsh, "shovel", 0);
 			
 			ClientProxy.proxy.RegisterRenders();
 		}
@@ -362,7 +441,6 @@ public class Elysium
 	@Init
 	public void initialize(FMLInitializationEvent evt) {
 		
-		MinecraftForge.EVENT_BUS.register(new BonemealHandler());
 		
 		Plants.addGrassPlant(CurlgrassBlock, 0, 30);
 		Plants.addGrassPlant(FlowerBlock, 0, 10);
