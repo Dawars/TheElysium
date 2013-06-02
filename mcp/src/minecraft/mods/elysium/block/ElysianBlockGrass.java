@@ -35,7 +35,7 @@ public class ElysianBlockGrass extends ElysianBlock{
      */
     public Icon getIcon(int side, int meta)
     {
-        return side == 1 ? this.iconGrassTop : (side == 0 ? Elysium.soilBlock.getBlockTextureFromSide(side) : this.blockIcon);
+        return side == 1 ? this.iconGrassTop : (side == 0 ? Elysium.blockDirt.getBlockTextureFromSide(side) : this.blockIcon);
     }
 	
 	/**
@@ -77,7 +77,7 @@ public class ElysianBlockGrass extends ElysianBlock{
         {
             if (par1World.getBlockLightValue(par2, par3 + 1, par4) < 4 && par1World.getBlockLightOpacity(par2, par3 + 1, par4) > 2)
             {
-                par1World.setBlock(par2, par3, par4, Elysium.soilBlock.blockID);
+                par1World.setBlock(par2, par3, par4, Elysium.blockDirt.blockID);
             }
             else if (par1World.getBlockLightValue(par2, par3 + 1, par4) >= 9)
             {
@@ -88,9 +88,9 @@ public class ElysianBlockGrass extends ElysianBlock{
                     int k1 = par4 + par5Random.nextInt(3) - 1;
                     int l1 = par1World.getBlockId(i1, j1 + 1, k1);
 
-                    if (par1World.getBlockId(i1, j1, k1) == Elysium.soilBlock.blockID && par1World.getBlockLightValue(i1, j1 + 1, k1) >= 4 && par1World.getBlockLightOpacity(i1, j1 + 1, k1) <= 2)
+                    if (par1World.getBlockId(i1, j1, k1) == Elysium.blockDirt.blockID && par1World.getBlockLightValue(i1, j1 + 1, k1) >= 4 && par1World.getBlockLightOpacity(i1, j1 + 1, k1) <= 2)
                     {
-                        par1World.setBlock(i1, j1, k1, Elysium.grassBlock.blockID);
+                        par1World.setBlock(i1, j1, k1, Elysium.blockGrass.blockID);
                     }
                 }
             }
@@ -102,7 +102,7 @@ public class ElysianBlockGrass extends ElysianBlock{
      */
     public int idDropped(int par1, Random par2Random, int par3)
     {
-        return Elysium.soilBlock.blockID;
+        return Elysium.blockDirt.blockID;
     }
 	@SideOnly(Side.CLIENT)
 

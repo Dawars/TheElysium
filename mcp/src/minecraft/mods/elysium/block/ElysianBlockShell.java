@@ -68,7 +68,7 @@ public class ElysianBlockShell extends ElysianBlockFlower
     @Override
 	public boolean canThisPlantGrowOnThisBlockID(int par1)
     {
-        return par1 == Elysium.LeucosandBlock.blockID;
+        return par1 == Elysium.blockLeucosand.blockID;
     }
 
     /**
@@ -76,7 +76,7 @@ public class ElysianBlockShell extends ElysianBlockFlower
      */
     public boolean canBlockStay(World world, int i, int j, int k)
     {
-        return world.getBlockId(i, j - 1, k) == Elysium.LeucosandBlock.blockID ? true : false;
+        return world.getBlockId(i, j - 1, k) == Elysium.blockLeucosand.blockID ? true : false;
     }
     
     /**

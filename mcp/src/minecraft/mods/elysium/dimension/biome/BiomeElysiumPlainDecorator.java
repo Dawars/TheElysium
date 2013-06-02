@@ -22,7 +22,7 @@ public class BiomeElysiumPlainDecorator extends BiomeDecorator {
 	public BiomeElysiumPlainDecorator(BiomeGenBase biomeGenBase) {
 		super(biomeGenBase);
 		
-        this.plantAsphodelGen = new WorldGenFlowers(Elysium.FlowerBlock.blockID);//meatada
+        this.plantAsphodelGen = new WorldGenFlowers(Elysium.blockFlowerAsphodel.blockID);//meatada
 
 	}
 
@@ -42,7 +42,7 @@ public class BiomeElysiumPlainDecorator extends BiomeDecorator {
 			j = this.randomGenerator.nextInt(128);
 			k = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
 			
-			WorldGenerator curlGrass = new WorldGenTallGrass(Elysium.CurlgrassBlock.blockID, 0);
+			WorldGenerator curlGrass = new WorldGenTallGrass(Elysium.blockTallGrass.blockID, 0);
 			curlGrass.generate(this.currentWorld, this.randomGenerator, i, j, k);
 		}
 		

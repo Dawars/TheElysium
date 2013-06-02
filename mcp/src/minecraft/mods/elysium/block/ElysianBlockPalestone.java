@@ -22,6 +22,6 @@ public class ElysianBlockPalestone extends ElysianBlock  {
      */
     public int idDropped(int par1, Random par2Random, int par3)
     {
-        return Elysium.paleCobbletone.blockID;
+        return Elysium.blockCobblePalestone.blockID;
     }
 }

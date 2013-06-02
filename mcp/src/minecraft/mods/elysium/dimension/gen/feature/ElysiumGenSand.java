@@ -47,21 +47,21 @@ public class ElysiumGenSand extends WorldGenerator
                         {
                             int id = world.getBlockId(cx, cy, cz);
 
-                            if (id == Elysium.soilBlock.blockID || id == Elysium.grassBlock.blockID)
+                            if (id == Elysium.blockDirt.blockID || id == Elysium.blockGrass.blockID)
                             {
                                 world.setBlock(cx, cy, cz, this.sandId, 0, 2);
                                 placedSand = true;
                             }
                             
-                            if((id == Elysium.grassBlock.blockID) && (this.sandId == Elysium.LeucosandBlock.blockID) && (world.getBlockId(cx, cy+1, cz) == 0) && (world.getBlockId(cx+1, cy+1, cz) == 0) && (world.getBlockId(cx-1, cy+1, cz) == 0) && (world.getBlockId(cx, cy+1, cz+1) == 0) && (world.getBlockId(cx, cy+1, cz-1) == 0) && (random.nextInt(8) == 0))
+                            if((id == Elysium.blockGrass.blockID) && (this.sandId == Elysium.blockLeucosand.blockID) && (world.getBlockId(cx, cy+1, cz) == 0) && (world.getBlockId(cx+1, cy+1, cz) == 0) && (world.getBlockId(cx-1, cy+1, cz) == 0) && (world.getBlockId(cx, cy+1, cz+1) == 0) && (world.getBlockId(cx, cy+1, cz-1) == 0) && (random.nextInt(8) == 0))
                             {
                             	if(random.nextInt(2) == 0)
                             	{
-                            		world.setBlock(cx, cy+1, cz, Elysium.conchFloatingBlock.blockID);
+                            		world.setBlock(cx, cy+1, cz, Elysium.blockFloatingConch.blockID);
                             	}
                             	else
                             	{
-                            		world.setBlock(cx, cy+1, cz, Elysium.shellFloatingBlock.blockID);
+                            		world.setBlock(cx, cy+1, cz, Elysium.blockFloatingShell.blockID);
                             	}
                             }
                         }

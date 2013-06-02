@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
-public class ElysianBlockFostimberLog extends ElysianBlock{
+public class ElysianBlockLogFostimber extends ElysianBlock{
 	/** The type of tree this log came from. */
 //    public static final String[] woodType = new String[] {"fostimber"};
 //    public static final String[] treeTextureTypes = new String[] {"fostimber_log_side"};
@@ -21,7 +21,7 @@ public class ElysianBlockFostimberLog extends ElysianBlock{
     @SideOnly(Side.CLIENT)
     private Icon tree_side;
     
-	public ElysianBlockFostimberLog(int id, Material mat) {
+	public ElysianBlockLogFostimber(int id, Material mat) {
 		super(id, mat);
 	}
 	

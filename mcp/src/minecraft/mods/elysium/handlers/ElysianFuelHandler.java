@@ -8,7 +8,7 @@ public class ElysianFuelHandler implements IFuelHandler {
 
 	@Override
 	public int getBurnTime(ItemStack fuel) {
-		if (fuel.itemID == Elysium.SulphurItem.itemID)
+		if (fuel.itemID == Elysium.itemSulphur.itemID)
 			return 1000;
 		else
 			return 0;

@@ -27,8 +27,8 @@ public class BiomeGenElysium extends BiomeGenBase {
 		this.maxHeight = 0.6F;
 		this.spawnableMonsterList.clear();
 		this.spawnableCreatureList.clear();
-		this.topBlock = ((byte) Elysium.grassBlock.blockID);
-		this.fillerBlock = ((byte) Elysium.soilBlock.blockID);
+		this.topBlock = ((byte) Elysium.blockGrass.blockID);
+		this.fillerBlock = ((byte) Elysium.blockDirt.blockID);
 //		this.waterColorMultiplier = 0x78FFF6;
 
 		this.setBiomeName("Elysium Plain");

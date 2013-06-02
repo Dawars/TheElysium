@@ -43,7 +43,7 @@ public class ElysianBlockFlower extends ElysianBlock implements IPlantable
      */
     public boolean canThisPlantGrowOnThisBlockID(int id)
     {
-        return id == Elysium.grassBlock.blockID || id == Elysium.soilBlock.blockID;
+        return id == Elysium.blockGrass.blockID || id == Elysium.blockDirt.blockID;
     }
 
     /**

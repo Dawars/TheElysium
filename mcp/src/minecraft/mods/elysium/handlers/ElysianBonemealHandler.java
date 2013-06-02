@@ -13,7 +13,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 
 import mods.elysium.Elysium;
 import mods.elysium.api.Plants;
-import mods.elysium.block.ElysianBlockFostimberSapling;
+import mods.elysium.block.ElysianBlockSaplingFostimber;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.sound.PlayBackgroundMusicEvent;
 import net.minecraftforge.client.event.sound.SoundLoadEvent;
@@ -33,15 +33,15 @@ public class ElysianBonemealHandler {
     
 	@ForgeSubscribe
 	public void onUseBonemeal(BonemealEvent event) {
-		if (event.ID == Elysium.FostimberSaplingBlock.blockID) {
+		if (event.ID == Elysium.blockSaplingFostimber.blockID) {
 			if (!event.world.isRemote) {
-				((ElysianBlockFostimberSapling) Elysium.FostimberSaplingBlock).markOrGrowMarked(event.world, event.X, event.Y, event.Z, new Random());
+				((ElysianBlockSaplingFostimber) Elysium.blockSaplingFostimber).markOrGrowMarked(event.world, event.X, event.Y, event.Z, new Random());
 				event.setResult(Result.ALLOW);
 
                
 			}
 		}
-		if(event.ID == Elysium.grassBlock.blockID || event.ID == Elysium.soilBlock.blockID){
+		if(event.ID == Elysium.blockGrass.blockID || event.ID == Elysium.blockDirt.blockID){
 			if(!event.world.isRemote){
 				label102:
 				for (int i1 = 0; i1 < 128; ++i1)
@@ -56,7 +56,7 @@ public class ElysianBonemealHandler {
                         k1 += (itemRand.nextInt(3) - 1) * itemRand.nextInt(3) / 2;
                         l1 += itemRand.nextInt(3) - 1;
 
-                        if (event.world.getBlockId(j1, k1 - 1, l1) != Elysium.grassBlock.blockID || event.world.isBlockNormalCube(j1, k1, l1))
+                        if (event.world.getBlockId(j1, k1 - 1, l1) != Elysium.blockGrass.blockID || event.world.isBlockNormalCube(j1, k1, l1))
                         {
                             continue label102;
                         }

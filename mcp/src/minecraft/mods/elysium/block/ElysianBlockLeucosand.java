@@ -8,18 +8,18 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityFallingSand;
 import net.minecraft.world.World;
 
-public class ElysianBlockSand extends ElysianBlock
+public class ElysianBlockLeucosand extends ElysianBlock
 {
     /** Do blocks fall instantly to where they stop or do they fall over time */
     public static boolean fallInstantly = false;
 
-    public ElysianBlockSand(int par1)
+    public ElysianBlockLeucosand(int par1)
     {
         super(par1, Material.sand);
         this.setCreativeTab(CreativeTabs.tabBlock);
     }
 
-    public ElysianBlockSand(int par1, Material par2Material)
+    public ElysianBlockLeucosand(int par1, Material par2Material)
     {
         super(par1, par2Material);
     }

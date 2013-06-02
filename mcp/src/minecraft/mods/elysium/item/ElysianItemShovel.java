@@ -7,7 +7,7 @@ import net.minecraft.item.EnumToolMaterial;
 public class ElysianItemShovel extends ElysianItemTool
 {
     /** an array of the blocks this spade is effective against */
-    public static final Block[] blocksEffectiveAgainst = new Block[] {Elysium.grassBlock, Elysium.soilBlock, Elysium.LeucosandBlock, Elysium.RiltBlock};
+    public static final Block[] blocksEffectiveAgainst = new Block[] {Elysium.blockGrass, Elysium.blockDirt, Elysium.blockLeucosand, Elysium.blockRilt};
 
     public ElysianItemShovel(int par1, EnumToolMaterial par2EnumToolMaterial)
     {

@@ -18,7 +18,7 @@ public class ElysianItemGracePrism extends ElysianItem
     {
 		if(world.getBlockId(x, y, z) == Block.dragonEgg.blockID)
 		{
-			world.setBlock(x, y, z, Elysium.portalCore.blockID);
+			world.setBlock(x, y, z, Elysium.blockPortalCore.blockID);
 			stack.damageItem(1, player);
 			//return true;
 		}

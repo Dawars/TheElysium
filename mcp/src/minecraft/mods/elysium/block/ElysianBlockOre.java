@@ -21,7 +21,7 @@ public class ElysianBlockOre extends ElysianBlock
      */
     public int idDropped(int par1, Random par2Random, int par3)
     {
-        return this.blockID == Elysium.SulphurOreBlock.blockID ? Elysium.SulphurItem.itemID : (this.blockID == Elysium.TourmalineOreBlock.blockID ? Elysium.TourmalineItem.itemID : (this.blockID == Elysium.JadeOreBlock.blockID ? Elysium.jadeItem.itemID : (this.blockID == Elysium.BerylOreBlock.blockID ? Elysium.BerlyItem.itemID : this.blockID)));
+        return this.blockID == Elysium.oreSulphure.blockID ? Elysium.itemSulphur.itemID : (this.blockID == Elysium.oreTourmaline.blockID ? Elysium.itemTourmaline.itemID : (this.blockID == Elysium.oreJade.blockID ? Elysium.itemJade.itemID : (this.blockID == Elysium.oreBeryl.blockID ? Elysium.itemBerly.itemID : this.blockID)));
     }
 
     /**
@@ -29,7 +29,7 @@ public class ElysianBlockOre extends ElysianBlock
      */
     public int quantityDropped(Random par1Random)
     {
-        return this.blockID == Elysium.BerylOreBlock.blockID ? 4 + par1Random.nextInt(5) : 1;
+        return this.blockID == Elysium.oreBeryl.blockID ? 4 + par1Random.nextInt(5) : 1;
     }
 
     /**
@@ -65,19 +65,19 @@ public class ElysianBlockOre extends ElysianBlock
         {
             int j1 = 0;
 
-            if (this.blockID == Elysium.SulphurOreBlock.blockID)
+            if (this.blockID == Elysium.oreSulphure.blockID)
             {
                 j1 = MathHelper.getRandomIntegerInRange(par1World.rand, 0, 2);
             }
-            else if (this.blockID == Elysium.TourmalineOreBlock.blockID)
+            else if (this.blockID == Elysium.oreTourmaline.blockID)
             {
                 j1 = MathHelper.getRandomIntegerInRange(par1World.rand, 3, 7);
             }
-            else if (this.blockID == Elysium.BerylOreBlock.blockID)
+            else if (this.blockID == Elysium.oreBeryl.blockID)
             {
                 j1 = MathHelper.getRandomIntegerInRange(par1World.rand, 3, 7);
             }
-            else if (this.blockID == Elysium.JadeOreBlock.blockID)
+            else if (this.blockID == Elysium.oreJade.blockID)
             {
                 j1 = MathHelper.getRandomIntegerInRange(par1World.rand, 2, 5);
             }

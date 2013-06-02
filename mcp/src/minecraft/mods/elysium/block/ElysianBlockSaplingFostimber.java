@@ -23,14 +23,14 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
-public class ElysianBlockFostimberSapling extends ElysianBlockFlower
+public class ElysianBlockSaplingFostimber extends ElysianBlockFlower
 {
 //    public static final String[] WOOD_TYPES = new String[] {"oak", "spruce", "birch", "jungle"};
 //    private static final String[] field_94370_b = new String[] {"sapling", "sapling_spruce", "sapling_birch", "sapling_jungle"};
 //    @SideOnly(Side.CLIENT)
 //    private Icon[] saplingIcon;
 
-    public ElysianBlockFostimberSapling(int par1)
+    public ElysianBlockSaplingFostimber(int par1)
     {
         super(par1);
         float f = 0.4F;
@@ -85,7 +85,7 @@ public class ElysianBlockFostimberSapling extends ElysianBlockFlower
     {
         if (!TerrainGen.saplingGrowTree(world, rand, i, j, k)) return;
 
-        ElysiumGenFostimber fostimber = new ElysiumGenFostimber(Elysium.FostimberLeavesBlock.blockID, Elysium.FostimberLogBlock.blockID, true);
+        ElysiumGenFostimber fostimber = new ElysiumGenFostimber(Elysium.blockLeavesFostimber.blockID, Elysium.blockLogFostimber.blockID, true);
 		
 		fostimber.generate(world, rand, i, j, k);
     }

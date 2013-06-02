@@ -13,7 +13,7 @@ public class ElysianTab extends CreativeTabs
 	@SideOnly(Side.CLIENT)
 	public int getTabIconItemIndex()
 	{
-		return Elysium.paleStone.blockID;
+		return Elysium.blockPalestone.blockID;
 	}
 
 	public String getTranslatedTabLabel()

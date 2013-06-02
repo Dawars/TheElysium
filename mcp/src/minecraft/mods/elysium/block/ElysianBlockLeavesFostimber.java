@@ -20,7 +20,7 @@ import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import mods.elysium.block.ElysianBlock;
 
-public class ElysianBlockFostimberLeaves extends ElysianBlock implements IShearable{
+public class ElysianBlockLeavesFostimber extends ElysianBlock implements IShearable{
 
     @SideOnly(Side.CLIENT)
     private Icon leaves_fast;
@@ -30,7 +30,7 @@ public class ElysianBlockFostimberLeaves extends ElysianBlock implements ISheara
     
     int[] adjacentTreeBlocks;
 
-	public ElysianBlockFostimberLeaves(int id, Material mat) {
+	public ElysianBlockLeavesFostimber(int id, Material mat) {
 		super(id, mat);
         this.setTickRandomly(true);
 	}
@@ -224,7 +224,7 @@ public class ElysianBlockFostimberLeaves extends ElysianBlock implements ISheara
      */
     public int idDropped(int par1, Random par2Random, int par3)
     {
-        return Elysium.FostimberSaplingBlock.blockID;
+        return Elysium.blockSaplingFostimber.blockID;
     }
 
     /**

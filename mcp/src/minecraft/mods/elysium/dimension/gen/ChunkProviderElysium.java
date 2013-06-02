@@ -192,7 +192,7 @@ public class ChunkProviderElysium implements IChunkProvider
                             {
                                 if ((d16 += d15) > 0.0D)
                                 {
-                                    par3ArrayOfByte[j2 += short1] = (byte)Elysium.paleStone.blockID;
+                                    par3ArrayOfByte[j2 += short1] = (byte)Elysium.blockPalestone.blockID;
                                 }
                                 else if (k1 * 8 + l1 < seeLevel)
                                 {
@@ -258,14 +258,14 @@ public class ChunkProviderElysium implements IChunkProvider
                         {
                             j1 = -1;
                         }
-                        else if (currentId == (byte)Elysium.paleStone.blockID)
+                        else if (currentId == (byte)Elysium.blockPalestone.blockID)
                         {
                             if (j1 == -1)//if the top block is air
                             {
                                 if (i1 <= 0)
                                 {
                                     top = 0;
-                                    filler = (byte)Elysium.paleStone.blockID;
+                                    filler = (byte)Elysium.blockPalestone.blockID;
                                 }
                                 else if (height >= seeLevel - 4 && height <= seeLevel + 1)
                                 {
@@ -521,9 +521,9 @@ public class ChunkProviderElysium implements IChunkProvider
     
     
     ElysiumGenLakes lakegenerator = new ElysiumGenLakes(Elysium.waterStill.blockID);
-    ElysiumGenSand sandgenerator = new ElysiumGenSand(Elysium.LeucosandBlock.blockID, 7);
+    ElysiumGenSand sandgenerator = new ElysiumGenSand(Elysium.blockLeucosand.blockID, 7);
     //ElysiumGenSand riltgenerator = new ElysiumGenSand(Elysium.RiltBlock.blockID, 3);
-    ElysiumGenFostimber treegenerator = new ElysiumGenFostimber(Elysium.FostimberLeavesBlock.blockID, Elysium.FostimberLogBlock.blockID, false);
+    ElysiumGenFostimber treegenerator = new ElysiumGenFostimber(Elysium.blockLeavesFostimber.blockID, Elysium.blockLogFostimber.blockID, false);
     
     /**
      * Populates chunk with ores etc etc

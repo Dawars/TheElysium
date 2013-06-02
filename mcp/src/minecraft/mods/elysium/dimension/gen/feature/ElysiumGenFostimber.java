@@ -32,7 +32,7 @@ public class ElysiumGenFostimber extends WorldGenerator
 		
 		int treeHeight = trunk + minTreeHeight;
 		
-		if (!((ElysianBlockFlower)Elysium.FostimberSaplingBlock).canThisPlantGrowOnThisBlockID(world.getBlockId(x, y-1, z)))
+		if (!((ElysianBlockFlower)Elysium.blockSaplingFostimber).canThisPlantGrowOnThisBlockID(world.getBlockId(x, y-1, z)))
 			return false;
 		
 		if(fromSapling)
