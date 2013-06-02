@@ -13,6 +13,10 @@
 *.pyc
 *.properties
 CHANGELOG
+*.tcn
+*.rar
+*.zip
+*.psd
 
 client/*
 common/*
