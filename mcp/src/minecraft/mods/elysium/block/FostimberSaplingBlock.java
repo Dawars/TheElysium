@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import mods.elysium.Elysium;
-import mods.elysium.gen.ElysiumGenFostimber;
+import mods.elysium.dimension.gen.feature.ElysiumGenFostimber;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
