@@ -59,7 +59,7 @@ public class ElysianItemWhistle extends ElysianItem{
      * update it's contents.
      */
     public void onUpdate(ItemStack item, World world, Entity entity, int par4, boolean flag) {
-    	if(entity instanceof EntityPlayer && ((EntityPlayer) entity).getItemInUse() == item)
+    	if(world.isRemote && entity instanceof EntityPlayer && ((EntityPlayer) entity).getItemInUse() == item)
     		item.damageItem(2, (EntityPlayer)entity);
     }
 
