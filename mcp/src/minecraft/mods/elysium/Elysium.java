@@ -112,18 +112,18 @@ public class Elysium
 	public static Item itemShovelFostimber;
 	public static Item itemHoeFostimber;
 	
-	public static Item SwordStoneItem;
-	public static Item PickaxeStoneItem;
-	public static Item AxeStoneItem;
-	public static Item ShovelStoneItem;
-	public static Item HoeStoneItem;
+	public static Item itemSwordPalestone;
+	public static Item itemPickaxePalestone;
+	public static Item itemAxePalestone;
+	public static Item itemSpadePalestone;
+	public static Item itemHoePalestone;
 
-	public static Item OverKillItem;
-	public static Item DebugItem;
+	public static Item itemOverKill;
+	public static Item itemDebug;
 	
 	
 	/** Biome's **/
-	public static BiomeGenBase ElysiumPlainBiome = null;
+	public static BiomeGenBase ElysianPlainBiome = null;
 
 	
 	@PreInit
@@ -218,7 +218,6 @@ public class Elysium
 			oreSulphure = new ElysianBlockOre(idOreSulphurBlock.getInt()).setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreSulphur");
 			ClientProxy.proxy.registerBlock(oreSulphure);
 			LanguageRegistry.addName(oreSulphure, "Sulphur Ore");
-			
 
 			Property idOreBerylBlock = Elysium.mainConfiguration.getBlock("idOreBerylBlock.id", DefaultProps.idOreBerylBlock);
 			oreBeryl = new ElysianBlockOre(idOreBerylBlock.getInt()).setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreBeryl");
@@ -249,8 +248,6 @@ public class Elysium
 			oreTourmaline = new ElysianBlockOre(idOreTourmalineBlock.getInt()).setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreTourmaline");
 			ClientProxy.proxy.registerBlock(oreTourmaline);
 			LanguageRegistry.addName(oreTourmaline, "Tourmaline Ore");
-
-			
 
 			Property idWaterBlock = Elysium.mainConfiguration.getTerrainBlock("terrainGen", "idWaterBlock.id", DefaultProps.idWaterBlock, null);
 			waterStill = new ElysianBlockLiquidStationary(idWaterBlock.getInt(), Material.water).setHardness(100.0F).setLightOpacity(3).setUnlocalizedName("elysian_water");
@@ -300,16 +297,16 @@ public class Elysium
 			LanguageRegistry.addName(itemSeedsPepper, "Pepper Seed");
 
 			Property idOverkillItem = Elysium.mainConfiguration.getItem("idOverkillItem.id", DefaultProps.idOverkillItem);
-			OverKillItem = new ElysianItemOverkill(idOverkillItem.getInt()).setUnlocalizedName("asd");
-			LanguageRegistry.addName(OverKillItem, "Overkill Item");
+			itemOverKill = new ElysianItemOverkill(idOverkillItem.getInt()).setUnlocalizedName("asd");
+			LanguageRegistry.addName(itemOverKill, "Overkill Item");
 		
 			Property idAsphodelPetalsItem = Elysium.mainConfiguration.getItem("idAsphodelPetalsItem.id", DefaultProps.idAsphodelPetalsItem);
 			itemAsphodelPetals = new ElysianItem(idAsphodelPetalsItem.getInt()).setUnlocalizedName("asphodelpetal");
 			LanguageRegistry.addName(itemAsphodelPetals, "Asphodel Petals");
 			
 			Property idDebugItem = Elysium.mainConfiguration.getItem("idDebugItem.id", DefaultProps.idDebugItem);
-			DebugItem = new ElysianItemDebug(idDebugItem.getInt()).setUnlocalizedName("debug");
-			LanguageRegistry.addName(DebugItem, "Modder Item");
+			itemDebug = new ElysianItemDebug(idDebugItem.getInt()).setUnlocalizedName("debug");
+			LanguageRegistry.addName(itemDebug, "Modder Item");
 			
 			Property idBerylItem = Elysium.mainConfiguration.getItem("idBerylItem.id", DefaultProps.idBerylItem);
 			itemBerly = new ElysianItem(idBerylItem.getInt()).setUnlocalizedName("Beryl");
@@ -371,31 +368,31 @@ public class Elysium
 			EnumToolMaterial STONE_MAT = EnumHelper.addToolMaterial("PALESTONE", 1, 131, 4.0F, 1, 5);
 
 			Property idStoneSwordItem = Elysium.mainConfiguration.getItem("idStoneSwordItem.id", DefaultProps.idStoneSwordItem);
-			SwordStoneItem = new ElysianItemSword(idStoneSwordItem.getInt(), STONE_MAT).setUnlocalizedName("swordPalestone");
-			LanguageRegistry.addName(SwordStoneItem, "Palestone Sword");
+			itemSwordPalestone = new ElysianItemSword(idStoneSwordItem.getInt(), STONE_MAT).setUnlocalizedName("swordPalestone");
+			LanguageRegistry.addName(itemSwordPalestone, "Palestone Sword");
 
 			Property idStonePickaxeItem = Elysium.mainConfiguration.getItem("idStonePickaxeItem.id", DefaultProps.idStonePickaxeItem);
-			PickaxeStoneItem = new ElysianItemPickaxe(idStonePickaxeItem.getInt(), STONE_MAT).setUnlocalizedName("pickaxePalestone");
-			LanguageRegistry.addName(PickaxeStoneItem, "Palestone Pickaxe");
+			itemPickaxePalestone = new ElysianItemPickaxe(idStonePickaxeItem.getInt(), STONE_MAT).setUnlocalizedName("pickaxePalestone");
+			LanguageRegistry.addName(itemPickaxePalestone, "Palestone Pickaxe");
 
 			Property idStoneAxeItem = Elysium.mainConfiguration.getItem("idStoneAxeItem.id", DefaultProps.idStoneAxeItem);
-			AxeStoneItem = new ElysianItemAxe(idStoneAxeItem.getInt(), STONE_MAT).setUnlocalizedName("axePalestone");
-			LanguageRegistry.addName(AxeStoneItem, "Palestone Axe");
+			itemAxePalestone = new ElysianItemAxe(idStoneAxeItem.getInt(), STONE_MAT).setUnlocalizedName("axePalestone");
+			LanguageRegistry.addName(itemAxePalestone, "Palestone Axe");
 
 			Property idStoneShovelItem = Elysium.mainConfiguration.getItem("idStoneShovelItem.id", DefaultProps.idStoneShovelItem);
-			ShovelStoneItem = new ElysianItemShovel(idStoneShovelItem.getInt(), STONE_MAT).setUnlocalizedName("shovelPalestone");
-			LanguageRegistry.addName(ShovelStoneItem, "Palestone Shovel");
+			itemSpadePalestone = new ElysianItemShovel(idStoneShovelItem.getInt(), STONE_MAT).setUnlocalizedName("shovelPalestone");
+			LanguageRegistry.addName(itemSpadePalestone, "Palestone Shovel");
 			
 			Property idStoneHoeItem = Elysium.mainConfiguration.getItem("idStoneHoeItem.id", DefaultProps.idStoneHoeItem);
-			HoeStoneItem = new ElysianItemHoe(idStoneHoeItem.getInt(), STONE_MAT).setUnlocalizedName("hoePalestone");
-			LanguageRegistry.addName(HoeStoneItem, "Palestone Hoe");
+			itemHoePalestone = new ElysianItemHoe(idStoneHoeItem.getInt(), STONE_MAT).setUnlocalizedName("hoePalestone");
+			LanguageRegistry.addName(itemHoePalestone, "Palestone Hoe");
 			
 			MinecraftForge.setToolClass(itemPickaxeFostimber, "pickaxe", 0);
 	        MinecraftForge.setToolClass(itemAxeFostimber, "axe", 0);
 	        MinecraftForge.setToolClass(itemShovelFostimber, "shovel", 0);
-	        MinecraftForge.setToolClass(PickaxeStoneItem, "pickaxe", 1);
-	        MinecraftForge.setToolClass(AxeStoneItem, "axe", 1);
-	        MinecraftForge.setToolClass(ShovelStoneItem, "shovel", 1);
+	        MinecraftForge.setToolClass(itemPickaxePalestone, "pickaxe", 1);
+	        MinecraftForge.setToolClass(itemAxePalestone, "axe", 1);
+	        MinecraftForge.setToolClass(itemSpadePalestone, "shovel", 1);
 
 			MinecraftForge.setBlockHarvestLevel(oreSulphure, "pickaxe", 0);
 			MinecraftForge.setBlockHarvestLevel(oreCobalt, "pickaxe", 1);
@@ -409,15 +406,15 @@ public class Elysium
 			// Crafting Registry
 			GameRegistry.addRecipe(new ItemStack(itemGracePrism), new Object[] {"SMS","MDM","SMS", Character.valueOf('S'), Block.whiteStone, Character.valueOf('M'), Item.bucketMilk, Character.valueOf('D'), Item.diamond});
 			GameRegistry.addRecipe(new ItemStack(this.itemPickaxeFostimber), new Object[] {"WW "," SW","S W", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockFostimberPlanks});
-			GameRegistry.addRecipe(new ItemStack(this.PickaxeStoneItem), new Object[] {"WW "," SW","S W", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockCobblePalestone});
+			GameRegistry.addRecipe(new ItemStack(this.itemPickaxePalestone), new Object[] {"WW "," SW","S W", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockCobblePalestone});
 			GameRegistry.addRecipe(new ItemStack(this.itemShovelFostimber), new Object[] {" WW"," SW","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockFostimberPlanks});
-			GameRegistry.addRecipe(new ItemStack(this.ShovelStoneItem), new Object[] {" WW"," SW","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockCobblePalestone});
+			GameRegistry.addRecipe(new ItemStack(this.itemSpadePalestone), new Object[] {" WW"," SW","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockCobblePalestone});
 			GameRegistry.addRecipe(new ItemStack(this.itemHoeFostimber), new Object[] {"WWW"," S ","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockFostimberPlanks});
-			GameRegistry.addRecipe(new ItemStack(this.HoeStoneItem), new Object[] {"WWW"," S ","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockCobblePalestone});
+			GameRegistry.addRecipe(new ItemStack(this.itemHoePalestone), new Object[] {"WWW"," S ","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockCobblePalestone});
 			GameRegistry.addRecipe(new ItemStack(this.itemAxeFostimber), new Object[] {"WW ","WS ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockFostimberPlanks});
-			GameRegistry.addRecipe(new ItemStack(this.AxeStoneItem), new Object[] {"WW ","WS ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockCobblePalestone});
+			GameRegistry.addRecipe(new ItemStack(this.itemAxePalestone), new Object[] {"WW ","WS ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockCobblePalestone});
 			GameRegistry.addRecipe(new ItemStack(this.itemSwordFostimber), new Object[] {"  W"," W ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockFostimberPlanks});
-			GameRegistry.addRecipe(new ItemStack(this.SwordStoneItem), new Object[] {"  W"," W ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockCobblePalestone});
+			GameRegistry.addRecipe(new ItemStack(this.itemSwordPalestone), new Object[] {"  W"," W ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockCobblePalestone});
 			GameRegistry.addRecipe(new ItemStack(this.itemWhistle), new Object[] {" OO","O O", "EO ", Character.valueOf('O'), Block.obsidian, Character.valueOf('E'), Item.eyeOfEnder});
 			
 			GameRegistry.addShapelessRecipe(new ItemStack(itemAsphodelPetals, 2), new Object[] {blockFlowerAsphodel});
@@ -460,7 +457,7 @@ public class Elysium
 		DimensionManager.registerDimension(DimensionID, DimensionID);
 
 		
-		ElysiumPlainBiome = new BiomeGenElysium(25);
+		ElysianPlainBiome = new BiomeGenElysium(25);
 		
 		
 		GameRegistry.registerWorldGenerator(new WorldGenElysium());

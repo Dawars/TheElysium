@@ -25,7 +25,7 @@ public class WorldProviderElysium extends WorldProvider
 
 	public void registerWorldChunkManager()
 	{
-		this.worldChunkMgr = new WorldChunkManagerHell(Elysium.ElysiumPlainBiome, this.dimensionId, this.dimensionId);
+		this.worldChunkMgr = new WorldChunkManagerHell(Elysium.ElysianPlainBiome, this.dimensionId, this.dimensionId);
 		this.dimensionId = Elysium.DimensionID;
 		this.hasNoSky = false;
 		if(worldObj.isRemote)
