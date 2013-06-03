@@ -6,7 +6,6 @@ import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import mods.elysium.dimension.portal.ElysianTeleporter;
 import mods.elysium.entity.ElysianEntityDrachma;
-import mods.elysium.entity.ElysianEntityDrachma2;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
