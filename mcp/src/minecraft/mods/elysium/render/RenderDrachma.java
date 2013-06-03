@@ -16,7 +16,9 @@ import net.minecraft.util.MathHelper;
 
 public class RenderDrachma extends Render
 {
-	public static ModelBase model = new ModelBase() {
+	public static ModelBase model = new ModelBase()
+	{
+		
 	};
 	private ModelRenderer Part1;
 	private ModelRenderer Part2;
@@ -242,15 +244,18 @@ public class RenderDrachma extends Render
 	}
 
 	float factor = (float) (1.0 / 16.0);
-	
+	int rotation = 0;
 	private void renderDrachma(ElysianEntityDrachma entity, double x, double y, double z, float f, float f1)
 	{
+		rotation++;
+		if(rotation >= 360) rotation = 0;
 		GL11.glPushMatrix();
 		GL11.glDisable(GL11.GL_LIGHTING);
 
 		GL11.glTranslated(x, y, z);
 		GL11.glScalef(.225F, .25F, .25F);
 		GL11.glRotatef(180F, 1F, 0F, 0F);
+		GL11.glRotatef(rotation, 0F, 1F, 0F);
 		FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/elysium/textures/misc/Drachma.png");
 		
 		Part1.render(factor);
