@@ -17,11 +17,6 @@ public class ElysianBlockRilt extends ElysianBlock
 	@Override
 	public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity)
 	{
-		if(entity instanceof EntityPlayerMP)
-		{
-			EntityPlayerMP player = (EntityPlayerMP) entity;
-			player.openGui(Elysium.instance, 0, world, x, y, z);
-		}
 		entity.motionX *= 0.025;
 		entity.motionY *= 0.025;
 		entity.motionZ *= 0.025;
