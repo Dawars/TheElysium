@@ -164,9 +164,9 @@ public class Elysium
 			DimensionID = idDim.getInt();
 			
 			//Handlers
-			MinecraftForge.EVENT_BUS.register(new ElysianBonemealHandler());
+			/*MinecraftForge.EVENT_BUS.register(new ElysianBonemealHandler());
 			CommonProxy.proxy.addSoundHandler(new ElysianSoundHandler());
-			GameRegistry.registerFuelHandler(new ElysianFuelHandler());
+			GameRegistry.registerFuelHandler(new ElysianFuelHandler());*/
 
 			// Block Registry
 			

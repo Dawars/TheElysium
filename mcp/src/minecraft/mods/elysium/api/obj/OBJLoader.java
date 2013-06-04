@@ -35,9 +35,9 @@ public class OBJLoader
 				Vector3f vertexIndices = new Vector3f(Float.valueOf(cline.split(" ")[1].split("/")[0]),
 						Float.valueOf(cline.split(" ")[2].split("/")[0]),
 						Float.valueOf(cline.split(" ")[3].split("/")[0]));
-				Vector3f normalIndices = new Vector3f(Float.valueOf(cline.split(" ")[1].split("/")[2]),
-						Float.valueOf(cline.split(" ")[2].split("/")[2]),
-						Float.valueOf(cline.split(" ")[3].split("/")[2]));
+				Vector3f normalIndices = new Vector3f(Float.valueOf(cline.split(" ")[1].split("/")[1]),
+						Float.valueOf(cline.split(" ")[2].split("/")[1]),
+						Float.valueOf(cline.split(" ")[3].split("/")[1]));
 				retModel.faces.add(new OBJFace(vertexIndices, normalIndices));
 			}
 			cline = modelReader.readLine();

@@ -24,7 +24,7 @@ public class RenderDrachmaOBJ extends Render
 	{
 		try
 		{
-			this.model = OBJLoader.loadModel(Minecraft.getMinecraftDir()+"/mods/square.obj");
+			this.model = OBJLoader.loadModel(Minecraft.getMinecraftDir()+"/mods/drachma2.obj");
 		}
 		catch (FileNotFoundException e)
 		{
@@ -52,7 +52,7 @@ public class RenderDrachmaOBJ extends Render
 		GL11.glRotatef(180F, 1F, 0F, 0F);
 		GL11.glRotatef(entity.rotationYaw, 0F, 1F, 0F);
 		
-		//FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/elysium/textures/misc/Drachma.png");
+		FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/elysium/textures/misc/drachma_diffuse.png");
 		this.model.render();
 
 		//GL11.glEnable(GL11.GL_LIGHTING);
