@@ -50,8 +50,9 @@ public class RenderDrachma extends Render
 	private ModelRenderer Part28;
 	private ModelRenderer Part29;
 	private ModelRenderer Part30;
-
-	public RenderDrachma(){
+	
+	public RenderDrachma()
+	{
 		model.textureWidth = 64;
 		model.textureHeight = 64;
 		

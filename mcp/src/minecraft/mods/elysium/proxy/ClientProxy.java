@@ -5,7 +5,7 @@ import mods.elysium.dimension.portal.ElysianTileEntityPortal;
 import mods.elysium.dimension.portal.ElysianTileEntityPortalRenderer;
 import mods.elysium.entity.ElysianEntityDrachma;
 import mods.elysium.handlers.ElysianSoundHandler;
-import mods.elysium.render.RenderDrachma;
+import mods.elysium.render.*;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -32,7 +32,7 @@ public class ClientProxy extends CommonProxy{
 //		Suggestions.SlimeBlockRenderId = RenderingRegistry.getNextAvailableRenderId();
 //
 //		RenderingRegistry.registerBlockHandler(new RenderSlimeBlock());
-		RenderingRegistry.registerEntityRenderingHandler(ElysianEntityDrachma.class, new RenderDrachma());
+		RenderingRegistry.registerEntityRenderingHandler(ElysianEntityDrachma.class, new RenderDrachmaOBJ());
 		ClientRegistry.bindTileEntitySpecialRenderer(ElysianTileEntityPortal.class, new ElysianTileEntityPortalRenderer());
 	}
 	
