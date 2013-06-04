@@ -17,13 +17,8 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class ElysianTileEntityPortalRenderer extends TileEntitySpecialRenderer
 {
-	
-    public static int alpha2 = 1;
-
-	
 	float bright;
 	long ptime;
-	//RenderBlocks blockRender = new RenderBlocks();
 	
     public void renderTileEntityPortalAt(ElysianTileEntityPortal tile, double par2, double par4, double par6, float par8)
     {
@@ -61,16 +56,10 @@ public class ElysianTileEntityPortalRenderer extends TileEntitySpecialRenderer
             GL11.glBlendFunc (GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             float f2 = (float)tile.getWorldObj().getTotalWorldTime() + par8;
             float f3 = -f2 * 0.2F - (float)MathHelper.floor_float(-f2 * 0.1F);
-            int radius = (int)(Math.sin(System.currentTimeMillis()/180) + 6);//radius
+            float radius = (float)(Math.sin(System.currentTimeMillis()/180) + 6);//radius
             double d3 = (double)f2 * 0.025D * (1.0D - (double)((byte)radius & 1) * 2.5D);
             tessellator.startDrawingQuads();
-//			tessellator.setColorRGBA(255, 255, 255, 1000);
             int alpha = (int)(Math.sin(System.currentTimeMillis()/250)*80 + 175);
-            if(alpha2<255)
-            	alpha2++;
-            else
-            	alpha2 = 1;
-//            System.out.println(alpha);
 			tessellator.setColorRGBA(255, 255, 255, alpha);
             double d4 = (double)radius * 0.2D;
             double d5 = 0.5D + Math.cos(d3 + 2.356194490192345D) * d4;
