@@ -9,6 +9,7 @@ public class DefaultProps {
 	public static final String modId = "elysium";
 	public static final String NET_CHANNEL_NAME = "elysium";
 	public static int DimensionID = 8;
+	public static int MAX_DRAGON_IN_END = 1;
 	
 	public static int idPalestoneBlock = 200;
 	public static int idSoilBlock = 201;

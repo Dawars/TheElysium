@@ -60,6 +60,7 @@ public class Elysium
 	
 	/** Dimension ID **/
 	public static int DimensionID;
+	public static int MaxDragon;
 	
 	//Blocks
 	
@@ -159,9 +160,11 @@ public class Elysium
 		{
 			mainConfiguration.load();
 
-
+			
 			Property idDim = Elysium.mainConfiguration.get("dimensionID", "dim", DefaultProps.DimensionID, "This is the id of the dimension change if needed!");
 			DimensionID = idDim.getInt();
+			Property MAX_DRAGON_IN_END = Elysium.mainConfiguration.get("MAX_DRAGON_IN_END", "dim", DefaultProps.MAX_DRAGON_IN_END, "How many dragons can be spawned to the End at the same time!");
+			MaxDragon = MAX_DRAGON_IN_END.getInt();
 			
 			//Handlers
 			/*MinecraftForge.EVENT_BUS.register(new ElysianBonemealHandler());
@@ -342,7 +345,7 @@ public class Elysium
 			
 			Property idSiliconChunk = Elysium.mainConfiguration.getItem("idSiliconChunk.id", DefaultProps.idSiliconChunk);
 			itemSiliconChunk = new ElysianItem(idSiliconChunk.getInt()).setUnlocalizedName("siliconchunk");
-			LanguageRegistry.addName(itemSiliconChunk, "Berly");
+			LanguageRegistry.addName(itemSiliconChunk, "Silicon Chunk");
 
 			Property idSulphurItem = Elysium.mainConfiguration.getItem("idSulphurItem.id", DefaultProps.idSulphurItem);
 			itemSulphur = new ElysianItem(idSulphurItem.getInt()).setUnlocalizedName("Sulphur");

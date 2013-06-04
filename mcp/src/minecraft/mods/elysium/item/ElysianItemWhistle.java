@@ -2,11 +2,14 @@ package mods.elysium.item;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import mods.elysium.Elysium;
 import mods.elysium.ShuffleBag;
+import mods.elysium.proxy.CommonProxy;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -29,9 +32,12 @@ import net.minecraftforge.transformers.ForgeAccessTransformer;
 
 public class ElysianItemWhistle extends ElysianItem
 {
+	
+	private static Random rand = new Random();
+	
 	//Add API support
-//	public static ArrayList<String> tips = new ArrayList<String>();
-   public static ShuffleBag shuffleBag = new ShuffleBag();
+	public static ArrayList<String> dragonExist = new ArrayList<String>();
+	public static ShuffleBag shuffleBag = new ShuffleBag();
 
 	public ElysianItemWhistle(int id)
 	{
@@ -42,6 +48,11 @@ public class ElysianItemWhistle extends ElysianItem
         shuffleBag.Add("Hmm... looks like a musical instrument");
         shuffleBag.Add("Its sound could be heared from a long distance...");
         shuffleBag.Add("Sorry, I can use it now!");
+        
+        dragonExist.add("Looks like there is a dragon somewhere...");
+        dragonExist.add("Oh! There is the Ender Dragon!");
+        dragonExist.add("There can't be more dragons in this dimension...");
+        dragonExist.add("There should be a dragon somewhere here...");
 	}
 	
 	/**
@@ -50,26 +61,43 @@ public class ElysianItemWhistle extends ElysianItem
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entity)
     {
 		Elysium.soundWhistle.play();
-    	
-    	if(world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd)
-    	{
-    		EntityDragon entitydragon = new EntityDragon(world);
-    		entitydragon.setLocationAndAngles(0.0D, 128.0D, 0.0D, new Random().nextFloat() * 360.0F, 0.0F);
-    		world.spawnEntityInWorld(entitydragon);
+    	if(CommonProxy.proxy.isSimulating(world)){
+			
+	    	if(world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd )
+	    	{
+	    		if(isDragonAlive(world) < Elysium.MaxDragon){
+	    			EntityDragon entitydragon = new EntityDragon(world);
+	    			entitydragon.setLocationAndAngles(0.0D, 128.0D, 0.0D, rand.nextFloat() * 360.0F, 0.0F);
+	    			world.spawnEntityInWorld(entitydragon);
+	    		} else {
+					entity.sendChatToPlayer(dragonExist.get(rand.nextInt(dragonExist.size())));
+	    		}
+	    	}
+	    	else
+	    	{
+	    		if(!world.isRemote)
+	    		{
+	    			entity.sendChatToPlayer(shuffleBag.Next());
+	    		}
+	    	}
     	}
-    	else
-    	{
-    		if(!world.isRemote)
-    		{
-    			entity.sendChatToPlayer(shuffleBag.Next());
-    		}
-    	}
-    	
     	entity.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
         return itemStack;
     }
     
-    /**
+    private int isDragonAlive(World world) {
+    	List list = world.getLoadedEntityList();
+    	int dragonNum = 0;
+    	
+    	for (int i = 0; i < list.size(); i++) {
+    		if(list.get(i) instanceof EntityDragon)
+    			dragonNum++;
+    	}
+		
+    	return dragonNum;
+	}
+
+	/**
      * Called each tick as long the item is on a player inventory. Uses by maps to check if is on a player hand and
      * update it's contents.
      */
