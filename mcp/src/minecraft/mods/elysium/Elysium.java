@@ -20,6 +20,7 @@ import mods.elysium.handlers.ElysianBonemealHandler;
 import mods.elysium.handlers.ElysianFuelHandler;
 import mods.elysium.handlers.ElysianSoundHandler;
 import mods.elysium.item.*;
+import mods.elysium.network.PacketHandler;
 import mods.elysium.proxy.ClientProxy;
 import mods.elysium.proxy.CommonProxy;
 import net.minecraft.block.Block;
@@ -42,11 +43,12 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 @Mod(name="The Elysium", version="1.0", useMetadata = false, modid = "TheElysium", dependencies="required-after:Forge@[7.8.0,)")
-//@NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandler.class, clientSideRequired = true, serverSideRequired = true)
+@NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandler.class, clientSideRequired = true, serverSideRequired = true)
 public class Elysium
 {
 	@Instance("The Elysium")

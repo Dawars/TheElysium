@@ -7,7 +7,7 @@ import org.lwjgl.input.Keyboard;
 public class DefaultProps {
 	
 	public static final String modId = "elysium";
-	
+	public static final String NET_CHANNEL_NAME = "elysium";
 	public static int DimensionID = 8;
 	
 	public static int idPalestoneBlock = 200;
