@@ -75,7 +75,7 @@ public class Elysium
 	public static Block blockLeavesFostimber;
 	public static Block blockGastroShell;
 	public static Block blockSaplingFostimber;
-	public static Block blockFostimberPlanks;
+	public static Block blockPlanksFostimber;
 	public static Block blockFlowerAsphodel;
 	/** It means elysian grass overlay. **/
 	public static Block blockTallGrass;
@@ -161,9 +161,9 @@ public class Elysium
 			mainConfiguration.load();
 
 			
-			Property idDim = Elysium.mainConfiguration.get("dimensionID", "dim", DefaultProps.DimensionID, "This is the id of the dimension change if needed!");
+			Property idDim = Elysium.mainConfiguration.get("other", "dimensionID", DefaultProps.DimensionID, "This is the id of the dimension change if needed!");
 			DimensionID = idDim.getInt();
-			Property MAX_DRAGON_IN_END = Elysium.mainConfiguration.get("MAX_DRAGON_IN_END", "dim", DefaultProps.MAX_DRAGON_IN_END, "How many dragons can be spawned to the End at the same time!");
+			Property MAX_DRAGON_IN_END = Elysium.mainConfiguration.get("other", "MAX_DRAGON_IN_END", DefaultProps.MAX_DRAGON_IN_END, "How many dragons can be spawned to the End at the same time!");
 			MaxDragon = MAX_DRAGON_IN_END.getInt();
 			
 			//Handlers
@@ -214,9 +214,9 @@ public class Elysium
 			LanguageRegistry.addName(blockLeavesFostimber, "Fostimber Leaves");
 
 			Property idWoodBlock = Elysium.mainConfiguration.getBlock("idWoodBlock.id", DefaultProps.idWoodBlock);
-			blockFostimberPlanks = (new ElysianBlock(idWoodBlock.getInt(), Material.wood)).setHardness(0.2F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("fostimber_planks");
-			ClientProxy.proxy.registerBlock(blockFostimberPlanks);
-			LanguageRegistry.addName(blockFostimberPlanks, "Wooden Planks");
+			blockPlanksFostimber = (new ElysianBlock(idWoodBlock.getInt(), Material.wood)).setHardness(0.2F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("fostimber_planks");
+			ClientProxy.proxy.registerBlock(blockPlanksFostimber);
+			LanguageRegistry.addName(blockPlanksFostimber, "Wooden Planks");
 			
 			Property idGastroShellBlock = Elysium.mainConfiguration.getBlock("idGastroShellBlock.id", DefaultProps.idGastroShellBlock);
 			blockGastroShell = (new ElysianBlockGastroShell(idGastroShellBlock.getInt(), Material.rock)).setHardness(0.2F).setStepSound(Block.soundGrassFootstep).setUnlocalizedName("gastroshellTop");
@@ -424,19 +424,22 @@ public class Elysium
 			
 			// Crafting Registry
 			GameRegistry.addRecipe(new ItemStack(itemGracePrism), new Object[] {"SMS","MDM","SMS", Character.valueOf('S'), Block.whiteStone, Character.valueOf('M'), Item.bucketMilk, Character.valueOf('D'), Item.diamond});
-			GameRegistry.addRecipe(new ItemStack(this.itemPickaxeFostimber), new Object[] {"WW "," SW","S W", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockFostimberPlanks});
-			GameRegistry.addRecipe(new ItemStack(this.itemPickaxePalestone), new Object[] {"WW "," SW","S W", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockCobblePalestone});
-			GameRegistry.addRecipe(new ItemStack(this.itemShovelFostimber), new Object[] {" WW"," SW","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockFostimberPlanks});
-			GameRegistry.addRecipe(new ItemStack(this.itemSpadePalestone), new Object[] {" WW"," SW","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockCobblePalestone});
-			GameRegistry.addRecipe(new ItemStack(this.itemHoeFostimber), new Object[] {"WWW"," S ","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockFostimberPlanks});
-			GameRegistry.addRecipe(new ItemStack(this.itemHoePalestone), new Object[] {"WWW"," S ","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockCobblePalestone});
-			GameRegistry.addRecipe(new ItemStack(this.itemAxeFostimber), new Object[] {"WW ","WS ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockFostimberPlanks});
-			GameRegistry.addRecipe(new ItemStack(this.itemAxePalestone), new Object[] {"WW ","WS ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockCobblePalestone});
-			GameRegistry.addRecipe(new ItemStack(this.itemSwordFostimber), new Object[] {"  W"," W ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockFostimberPlanks});
-			GameRegistry.addRecipe(new ItemStack(this.itemSwordPalestone), new Object[] {"  W"," W ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), this.blockCobblePalestone});
-			GameRegistry.addRecipe(new ItemStack(this.itemWhistle), new Object[] {" OO","O O", "EO ", Character.valueOf('O'), Block.obsidian, Character.valueOf('E'), Item.eyeOfEnder});
+			GameRegistry.addRecipe(new ItemStack(itemPickaxeFostimber), new Object[] {"WW "," SW","S W", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockPlanksFostimber});
+			GameRegistry.addRecipe(new ItemStack(itemPickaxePalestone), new Object[] {"WW "," SW","S W", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockCobblePalestone});
+			GameRegistry.addRecipe(new ItemStack(itemShovelFostimber), new Object[] {" WW"," SW","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockPlanksFostimber});
+			GameRegistry.addRecipe(new ItemStack(itemSpadePalestone), new Object[] {" WW"," SW","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockCobblePalestone});
+			GameRegistry.addRecipe(new ItemStack(itemHoeFostimber), new Object[] {"WWW"," S ","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockPlanksFostimber});
+			GameRegistry.addRecipe(new ItemStack(itemHoePalestone), new Object[] {"WWW"," S ","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockCobblePalestone});
+			GameRegistry.addRecipe(new ItemStack(itemAxeFostimber), new Object[] {"WW ","WS ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockPlanksFostimber});
+			GameRegistry.addRecipe(new ItemStack(itemAxePalestone), new Object[] {"WW ","WS ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockCobblePalestone});
+			GameRegistry.addRecipe(new ItemStack(itemSwordFostimber), new Object[] {"  W"," W ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockPlanksFostimber});
+			GameRegistry.addRecipe(new ItemStack(itemSwordPalestone), new Object[] {"  W"," W ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockCobblePalestone});
+			GameRegistry.addRecipe(new ItemStack(itemWhistle), new Object[] {" OO","O O", "EO ", Character.valueOf('O'), Block.obsidian, Character.valueOf('E'), Item.eyeOfEnder});
+			
+			GameRegistry.addRecipe(new ItemStack(Item.stick), new Object[] {"X", "X", "X", Character.valueOf('X'), blockPlanksFostimber});
 			
 			GameRegistry.addShapelessRecipe(new ItemStack(itemAsphodelPetals, 2), new Object[] {blockFlowerAsphodel});
+			GameRegistry.addShapelessRecipe(new ItemStack(blockPlanksFostimber, 4), new Object[] {blockLogFostimber});
 
 			//Smelting Regostry
 			GameRegistry.addSmelting(this.oreCobalt.blockID, new ItemStack(this.itemIngotCobalt), 0.7F);
