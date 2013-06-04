@@ -1,15 +1,20 @@
 package mods.elysium.entity;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mods.elysium.network.PacketCoins;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityTracker;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.packet.Packet22Collect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 
 public class ElysianEntityDrachma extends Entity
 {
@@ -19,14 +24,14 @@ public class ElysianEntityDrachma extends Entity
     public int xpColor;
 
     /** The age of the XP orb in ticks. */
-    public int xpOrbAge = 0;
+    public int coinAge = 0;
     public int field_70532_c;
 
     /** The health of this XP orb. */
-    private int xpOrbHealth = 5;
+    private int coinHealth = 5;
 
     /** This is how much XP this orb has. */
-    private int xpValue;
+    private int coinValue;
 
     /** The closest EntityPlayer to this orb. */
     private EntityPlayer closestPlayer;
@@ -37,14 +42,14 @@ public class ElysianEntityDrachma extends Entity
     public ElysianEntityDrachma(World par1World, double par2, double par4, double par6, int par8)
     {
         super(par1World);
-        this.setSize(1F, 1F);
+        this.setSize(.5F, .5F);
         this.yOffset = this.height / 2.0F;
         this.setPosition(par2, par4, par6);
         this.rotationYaw = (float)(Math.random() * 360.0D);
         this.motionX = (double)((float)(Math.random() * 0.20000000298023224D - 0.10000000149011612D) * 2.0F);
         this.motionY = (double)((float)(Math.random() * 0.2D) * 2.0F);
         this.motionZ = (double)((float)(Math.random() * 0.20000000298023224D - 0.10000000149011612D) * 2.0F);
-        this.xpValue = par8;
+        this.coinValue = par8;
     }
 
     /**
@@ -134,7 +139,7 @@ public class ElysianEntityDrachma extends Entity
         if (this.closestPlayer != null)
         {
             double d1 = (this.closestPlayer.posX - this.posX) / d0;
-            double d2 = (this.closestPlayer.posY + (double)this.closestPlayer.getEyeHeight() - this.posY) / d0;
+            double d2 = (this.closestPlayer.posY + (double)this.closestPlayer.getEyeHeight() - .5 - this.posY) / d0;
             double d3 = (this.closestPlayer.posZ - this.posZ) / d0;
             double d4 = Math.sqrt(d1 * d1 + d2 * d2 + d3 * d3);
             double d5 = 1.0D - d4;
@@ -172,9 +177,9 @@ public class ElysianEntityDrachma extends Entity
         }
 
         ++this.xpColor;
-        ++this.xpOrbAge;
+        ++this.coinAge;
 
-        if (this.xpOrbAge >= 6000)
+        if (this.coinAge >= 6000)
         {
             this.setDead();
         }
@@ -209,9 +214,9 @@ public class ElysianEntityDrachma extends Entity
         else
         {
             this.setBeenAttacked();
-            this.xpOrbHealth -= par2;
+            this.coinHealth -= par2;
 
-            if (this.xpOrbHealth <= 0)
+            if (this.coinHealth <= 0)
             {
                 this.setDead();
             }
@@ -225,9 +230,9 @@ public class ElysianEntityDrachma extends Entity
      */
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
     {
-        par1NBTTagCompound.setShort("Health", (short)((byte)this.xpOrbHealth));
-        par1NBTTagCompound.setShort("Age", (short)this.xpOrbAge);
-        par1NBTTagCompound.setShort("Value", (short)this.xpValue);
+        par1NBTTagCompound.setShort("Health", (short)((byte)this.coinHealth));
+        par1NBTTagCompound.setShort("Age", (short)this.coinAge);
+        par1NBTTagCompound.setShort("Value", (short)this.coinValue);
     }
 
     /**
@@ -235,9 +240,9 @@ public class ElysianEntityDrachma extends Entity
      */
     public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
     {
-        this.xpOrbHealth = par1NBTTagCompound.getShort("Health") & 255;
-        this.xpOrbAge = par1NBTTagCompound.getShort("Age");
-        this.xpValue = par1NBTTagCompound.getShort("Value");
+        this.coinHealth = par1NBTTagCompound.getShort("Health") & 255;
+        this.coinAge = par1NBTTagCompound.getShort("Age");
+        this.coinValue = par1NBTTagCompound.getShort("Value");
     }
 
     /**
@@ -245,17 +250,21 @@ public class ElysianEntityDrachma extends Entity
      */
     public void onCollideWithPlayer(EntityPlayer player)
     {
-    	
-        this.setDead();
 
         if (!this.worldObj.isRemote)
         {
             if (this.field_70532_c == 0 && player.xpCooldown == 0)
             {
                 player.xpCooldown = 2;
-                this.playSound("random.orb", 0.1F, 0.5F * ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.8F));
-                player.onItemPickup(this, 1);
-                player.addExperience(this.xpValue);
+                
+                System.out.println("Collide");
+                
+                if (!this.isDead)
+                {//send coin value to player
+//                    EntityTracker entitytracker = ((WorldServer)this.worldObj).getEntityTracker();
+//                    entitytracker.sendPacketToAllPlayersTrackingEntity(this, new PacketCoins(this.entityId, this.entityId));
+                }
+                player.addExperience(this.coinValue);
                 this.setDead();
             }
         }
@@ -264,29 +273,11 @@ public class ElysianEntityDrachma extends Entity
     /**
      * Returns the XP value of this XP orb.
      */
-    public int getXpValue()
+    public int getCoinValue()
     {
-        return this.xpValue;
+        return this.coinValue;
     }
 
-    @SideOnly(Side.CLIENT)
-
-    /**
-     * Returns a number from 1 to 10 based on how much XP this orb is worth. This is used by RenderXPOrb to determine
-     * what texture to use.
-     */
-    public int getTextureByXP()
-    {
-        return this.xpValue >= 2477 ? 10 : (this.xpValue >= 1237 ? 9 : (this.xpValue >= 617 ? 8 : (this.xpValue >= 307 ? 7 : (this.xpValue >= 149 ? 6 : (this.xpValue >= 73 ? 5 : (this.xpValue >= 37 ? 4 : (this.xpValue >= 17 ? 3 : (this.xpValue >= 7 ? 2 : (this.xpValue >= 3 ? 1 : 0)))))))));
-    }
-
-    /**
-     * Get xp split rate (Is called until the xp drop code in EntityLiving.onEntityUpdate is complete)
-     */
-    public static int getXPSplit(int par0)
-    {
-        return par0 >= 2477 ? 2477 : (par0 >= 1237 ? 1237 : (par0 >= 617 ? 617 : (par0 >= 307 ? 307 : (par0 >= 149 ? 149 : (par0 >= 73 ? 73 : (par0 >= 37 ? 37 : (par0 >= 17 ? 17 : (par0 >= 7 ? 7 : (par0 >= 3 ? 3 : 1)))))))));
-    }
 
     /**
      * If returns false, the item will not inflict any damage against entities.
