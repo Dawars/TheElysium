@@ -1,6 +1,10 @@
 package mods.elysium;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,9 +130,11 @@ public class Elysium
 	/** Biome's **/
 	public static BiomeGenBase ElysianPlainBiome = null;
 
+	public static AudioClip soundWhistle;
 	
 	@PreInit
-	public void loadConfiguration(FMLPreInitializationEvent evt) {
+	public void loadConfiguration(FMLPreInitializationEvent evt)
+	{
 //		NetworkRegistry.instance().registerGuiHandler(this, guiHandler);
 //		GameRegistry.registerTileEntity(TileMixer.class, "Mixer");
 //		GameRegistry.registerTileEntity(TileCandyMaker.class, "Candy Maker");
@@ -137,7 +143,14 @@ public class Elysium
 //		GameRegistry.addBiome(Halloween);
 
 //		Version.versionCheck();
-
+		try
+		{
+			soundWhistle = Applet.newAudioClip(new URL("file:mods/elysium/sound/FluteTrack.wav"));
+		}
+		catch (MalformedURLException e)
+		{
+			e.printStackTrace();
+		}
 
 		mainConfiguration = new ElysianConfiguration(new File(evt.getModConfigurationDirectory(), "Elysium.cfg"));
 		try

@@ -3,7 +3,6 @@ package mods.elysium.entity;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mods.elysium.network.PacketCoins;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -104,7 +103,9 @@ public class ElysianEntityDrachma extends Entity
     public void onUpdate()
     {
         super.onUpdate();
-
+        
+        this.rotationYaw += this.coinValue;
+        
         if (this.field_70532_c > 0)
         {
             --this.field_70532_c;
