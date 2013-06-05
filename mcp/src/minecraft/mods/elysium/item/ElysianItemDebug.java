@@ -32,7 +32,7 @@ public class ElysianItemDebug extends ElysianItem
 	@Override
 	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
-		world.spawnEntityInWorld(new ElysianEntityDrachma(world, x+hitX, y+hitY, z+hitZ, 10));
+		world.spawnEntityInWorld(new ElysianEntityDrachma(world, x+hitX, y+hitY, z+hitZ, new Random().nextInt(10)+10));
 		
 		if(!world.isRemote)
 		{
