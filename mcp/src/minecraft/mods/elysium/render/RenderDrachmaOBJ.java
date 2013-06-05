@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GLSync;
+
 import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -56,6 +58,5 @@ public class RenderDrachmaOBJ extends Render
 		
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
-        
 	}
 }

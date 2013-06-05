@@ -18,16 +18,11 @@ public class ElysianItemGracePrism extends ElysianItem
     {
 		if(world.getBlockId(x, y, z) == Block.dragonEgg.blockID)
 		{
+			world.createExplosion(player, x+0.5D, y+0.5D, z+0.5D, 2F, true);
 			world.setBlock(x, y, z, Elysium.blockPortalCore.blockID);
-			stack.damageItem(1, player);
+			stack.stackSize--;
 			//return true;
 		}
         return false;
     }
-	
-	@Override
-	public int getMaxDamage()
-	{
-		return 1;
-	}
 }

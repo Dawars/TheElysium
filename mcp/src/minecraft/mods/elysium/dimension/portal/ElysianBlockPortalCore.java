@@ -8,6 +8,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import mods.elysium.block.ElysianBlockContainer;
+import mods.elysium.client.particle.ElysianEntityFX;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -15,6 +16,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.src.ModLoader;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
@@ -24,7 +26,9 @@ public class ElysianBlockPortalCore extends ElysianBlockContainer
 	public ElysianBlockPortalCore(int id, Material mat)
 	{
 		super(id, mat);
+		this.setBlockUnbreakable();
 		this.setBlockBounds(0.5F, 1F, 0.5F, 0.5F, 1F, 0.5F);
+		this.setTickRandomly(true);
 	}
 	
 	@Override
@@ -68,6 +72,19 @@ public class ElysianBlockPortalCore extends ElysianBlockContainer
 					if(tile.timebeforetp == -1) tile.timebeforetp = DefaultProps.ticksbeforeportalteleport;
 				}
 			}
+		}
+	}
+	
+	@Override
+	public void randomDisplayTick(World world, int x, int y, int z, Random random)
+	{
+		int part = random.nextInt(50);
+		for(int i=0; i < part; i++)
+		{
+			//world.spawnParticle("crit", x+random.nextDouble()*2-0.5D, y+random.nextInt(100), z+random.nextDouble()*2-0.5D, 0, 0.25D, 0);
+			ElysianEntityFX entityfx = new ElysianEntityFX(65, world, x+random.nextDouble()*2-0.5D, y+random.nextInt(100), z+random.nextDouble()*2-0.5D, 0, 0.25D, 0);
+			entityfx.setRBGColorF(0.9F,0.9F, 0F);
+			ModLoader.getMinecraftInstance().effectRenderer.addEffect(entityfx);
 		}
 	}
 
