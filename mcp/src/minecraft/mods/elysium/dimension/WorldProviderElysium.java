@@ -35,10 +35,10 @@ public class WorldProviderElysium extends WorldProvider
 	
 //	@SideOnly(Side.CLIENT)
 //    public Vec3 getSkyColor(Entity cameraEntity, float partialTicks)
-//    {//86C7FF
-//        return getSkyColorBody(worldObj, cameraEntity, partialTicks);
+//    {
+//        return Vec3.createVectorHelper(134, 199, 255);
 //    }
-	
+
 	
 	
 	public IChunkProvider createChunkGenerator()
@@ -87,7 +87,7 @@ public class WorldProviderElysium extends WorldProvider
 
 	protected void generateLightBrightnessTable()
 	{
-		float f = 3.0F;
+		float f = 0.0F;
 
         for (int i = 0; i <= 15; ++i)
         {
@@ -95,7 +95,6 @@ public class WorldProviderElysium extends WorldProvider
             this.lightBrightnessTable[i] = (1.0F - f1) / (f1 * 3.0F + 1.0F) * (1.0F - f) + f;
         }
     }
-
 	@SideOnly(Side.CLIENT)
 	public String getWelcomeMessage()
 	{
@@ -130,6 +129,30 @@ public class WorldProviderElysium extends WorldProvider
 		return null;
 	}
     
+	/**
+     * Calculates the angle of sun and moon in the sky relative to a specified time (usually worldTime)
+     */
+    public float calculateCelestialAngle(long par1, float par3)
+    {
+        int j = (int)(par1 % 24000L);
+        float f1 = ((float)j + par3) / 24000.0F - 0.25F;
+
+        if (f1 < 0.0F)
+        {
+            ++f1;
+        }
+
+        if (f1 > 1.0F)
+        {
+            --f1;
+        }
+
+        float f2 = f1;
+        f1 = 1.0F - (float)((Math.cos((double)f1 * Math.PI) + 1.0D) / 2.0D);
+        f1 = f2 + (f1 - f2) / 3.0F;
+        return f1;
+    }
+	
 	@SideOnly(Side.CLIENT)
 	public Vec3 getFogColor(float par1, float par2)
 	{
