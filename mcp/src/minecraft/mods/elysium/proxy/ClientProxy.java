@@ -32,7 +32,7 @@ public class ClientProxy extends CommonProxy{
 //		Suggestions.SlimeBlockRenderId = RenderingRegistry.getNextAvailableRenderId();
 //
 //		RenderingRegistry.registerBlockHandler(new RenderSlimeBlock());
-		RenderingRegistry.registerEntityRenderingHandler(ElysianEntityDrachma.class, new RenderDrachma());
+		RenderingRegistry.registerEntityRenderingHandler(ElysianEntityDrachma.class, new RenderDrachmaOBJ());
 		ClientRegistry.bindTileEntitySpecialRenderer(ElysianTileEntityPortal.class, new ElysianTileEntityPortalRenderer());
 	}
 	

@@ -4,6 +4,8 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 public class OBJLoader
@@ -18,10 +20,16 @@ public class OBJLoader
 		{
 			if(cline.startsWith("v "))
 			{
+				float x = Float.valueOf(cline.split(" ")[2]);
+				float y = Float.valueOf(cline.split(" ")[3]);
+				float z = Float.valueOf(cline.split(" ")[4]);
+				retModel.verticies.add(new Vector3f(x, y, z));
+			}
+			else if(cline.startsWith("vt"))
+			{
 				float x = Float.valueOf(cline.split(" ")[1]);
 				float y = Float.valueOf(cline.split(" ")[2]);
-				float z = Float.valueOf(cline.split(" ")[3]);
-				retModel.verticies.add(new Vector3f(x, y, z));
+				retModel.textures.add(new Vector2f(x, y));
 			}
 			else if(cline.startsWith("vn"))
 			{
@@ -32,13 +40,27 @@ public class OBJLoader
 			}
 			else if(cline.startsWith("f "))
 			{
-				Vector3f vertexIndices = new Vector3f(Float.valueOf(cline.split(" ")[1].split("/")[0]),
-						Float.valueOf(cline.split(" ")[2].split("/")[0]),
-						Float.valueOf(cline.split(" ")[3].split("/")[0]));
-				Vector3f normalIndices = new Vector3f(Float.valueOf(cline.split(" ")[1].split("/")[1]),
-						Float.valueOf(cline.split(" ")[2].split("/")[1]),
-						Float.valueOf(cline.split(" ")[3].split("/")[1]));
-				retModel.faces.add(new OBJFace(vertexIndices, normalIndices));
+				Vector3f vertex = null, texture = null, normal = null;
+				
+				if(cline.split(" ")[1].split("/")[0] != "")
+				{
+					vertex = new Vector3f(Float.valueOf(cline.split(" ")[1].split("/")[0]),
+										Float.valueOf(cline.split(" ")[2].split("/")[0]),
+										Float.valueOf(cline.split(" ")[3].split("/")[0]));
+				}
+				if(cline.split(" ")[1].split("/")[1] != "")
+				{
+					texture = new Vector3f(Float.valueOf(cline.split(" ")[1].split("/")[1]),
+										Float.valueOf(cline.split(" ")[2].split("/")[1]),
+										Float.valueOf(cline.split(" ")[3].split("/")[1]));
+				}
+				if(cline.split(" ")[1].split("/")[2] != "")
+				{
+					normal = new Vector3f(Float.valueOf(cline.split(" ")[1].split("/")[2]),
+										Float.valueOf(cline.split(" ")[2].split("/")[2]),
+										Float.valueOf(cline.split(" ")[3].split("/")[2]));
+				}
+				retModel.faces.add(new OBJFace(vertex, texture, normal));
 			}
 			cline = modelReader.readLine();
 		}

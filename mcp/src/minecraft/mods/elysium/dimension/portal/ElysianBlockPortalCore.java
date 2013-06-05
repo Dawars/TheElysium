@@ -16,6 +16,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public class ElysianBlockPortalCore extends ElysianBlockContainer
@@ -23,7 +24,13 @@ public class ElysianBlockPortalCore extends ElysianBlockContainer
 	public ElysianBlockPortalCore(int id, Material mat)
 	{
 		super(id, mat);
-		this.setBlockBounds(0, 0, 0, 1, 0.9375F, 1);
+		this.setBlockBounds(0.5F, 1F, 0.5F, 0.5F, 1F, 0.5F);
+	}
+	
+	@Override
+	public AxisAlignedBB getCollisionBoundingBoxFromPool(World wolrd, int x, int y, int z)
+	{
+		return null;
 	}
 	
 	@Override
@@ -33,22 +40,9 @@ public class ElysianBlockPortalCore extends ElysianBlockContainer
 	}
 	
 	@Override
-	public int idDropped(int par1, Random par2Random, int par3)
-	{
-		return Elysium.itemGracePrism.itemID;
-	}
-	
-	@Override
-	public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player)
-    {
-        dropBlockAsItem(world, x, y, z, 0, 0);
-        world.setBlock(x, y, z, Block.dragonEgg.blockID);
-    }
-	
-	@Override
 	public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity)
 	{
-		if((world.getBlockMetadata(x, y, z) == 1) && (entity.riddenByEntity == null) && (entity.ridingEntity == null))
+		if((entity.riddenByEntity == null) && (entity.ridingEntity == null))
 		{
 			if(entity instanceof EntityPlayerMP)
 			{
@@ -73,10 +67,6 @@ public class ElysianBlockPortalCore extends ElysianBlockContainer
 					tile.wasCollided = true;
 					if(tile.timebeforetp == -1) tile.timebeforetp = DefaultProps.ticksbeforeportalteleport;
 				}
-			}
-			else
-			{
-				//System.err.println("error");
 			}
 		}
 	}

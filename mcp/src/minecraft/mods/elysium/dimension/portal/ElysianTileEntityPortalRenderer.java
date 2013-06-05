@@ -12,48 +12,25 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 
 @SideOnly(Side.CLIENT)
 public class ElysianTileEntityPortalRenderer extends TileEntitySpecialRenderer
 {
-	float bright;
-	long ptime;
-	
-    public void renderTileEntityPortalAt(ElysianTileEntityPortal tile, double par2, double par4, double par6, float par8)
-    {
-    	int i = (int)(tile.worldObj.getTotalWorldTime() - this.ptime);
-        this.ptime = tile.worldObj.getTotalWorldTime();
-
-        if (i > 1)
-        {
-            this.bright -= (float)i / 40.0F;
-
-            if (this.bright < 0.0F)
-            {
-                this.bright = 0.0F;
-            }
-        }
-
-        this.bright += 0.025F;
-
-        if (this.bright > 1.0F)
-        {
-            this.bright = 1.0F;
-        }
-
-        if (bright > 0.0F)
+	public void renderTileEntityPortalAt(ElysianTileEntityPortal tile)
+	{
+		/*if(bright > 0.0F)
         {
             Tessellator tessellator = Tessellator.instance;
             this.bindTextureByName("/mods/" + DefaultProps.modId + "/textures/misc/beam.png");
-            GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, 10497.0F);
-            GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, 10497.0F);
-            GL11.glDisable(GL11.GL_LIGHTING);
-            GL11.glDisable(GL11.GL_CULL_FACE);
-            GL11.glDisable(GL11.GL_BLEND);
-            GL11.glDepthMask(true);
-            GL11.glEnable (GL11.GL_BLEND);
-            GL11.glBlendFunc (GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 10497.0F);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 10497.0F);
+            glDisable(GL_LIGHTING);
+            glDisable(GL_CULL_FACE);
+            glDisable(GL_BLEND);
+            glDepthMask(true);
+            glEnable (GL_BLEND);
+            glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             float f2 = (float)tile.getWorldObj().getTotalWorldTime() + par8;
             float f3 = -f2 * 0.2F - (float)MathHelper.floor_float(-f2 * 0.1F);
             float radius = (float)(Math.sin(System.currentTimeMillis()/180) + 6);//radius
@@ -75,26 +52,26 @@ public class ElysianTileEntityPortalRenderer extends TileEntitySpecialRenderer
             double d15 = 1.0D;
             double d16 = (double)(-1.0F + f3);
             double d17 = (double)(256.0F * bright) * (0.5D / d4) + d16;
-            tessellator.addVertexWithUV(par2 + d5, par4 + d13, par6 + d6, d15, d17);
-            tessellator.addVertexWithUV(par2 + d5, par4, par6 + d6, d15, d16);
-            tessellator.addVertexWithUV(par2 + d7, par4, par6 + d8, d14, d16);
-            tessellator.addVertexWithUV(par2 + d7, par4 + d13, par6 + d8, d14, d17);
-            tessellator.addVertexWithUV(par2 + d11, par4 + d13, par6 + d12, d15, d17);
-            tessellator.addVertexWithUV(par2 + d11, par4, par6 + d12, d15, d16);
-            tessellator.addVertexWithUV(par2 + d9, par4, par6 + d10, d14, d16);
-            tessellator.addVertexWithUV(par2 + d9, par4 + d13, par6 + d10, d14, d17);
-            tessellator.addVertexWithUV(par2 + d7, par4 + d13, par6 + d8, d15, d17);
-            tessellator.addVertexWithUV(par2 + d7, par4, par6 + d8, d15, d16);
-            tessellator.addVertexWithUV(par2 + d11, par4, par6 + d12, d14, d16);
-            tessellator.addVertexWithUV(par2 + d11, par4 + d13, par6 + d12, d14, d17);
-            tessellator.addVertexWithUV(par2 + d9, par4 + d13, par6 + d10, d15, d17);
-            tessellator.addVertexWithUV(par2 + d9, par4, par6 + d10, d15, d16);
-            tessellator.addVertexWithUV(par2 + d5, par4, par6 + d6, d14, d16);
-            tessellator.addVertexWithUV(par2 + d5, par4 + d13, par6 + d6, d14, d17);
+            tessellator.addVertexWithUV(x + d5, y + d13, z + d6, d15, d17);
+            tessellator.addVertexWithUV(x + d5, y, z + d6, d15, d16);
+            tessellator.addVertexWithUV(x + d7, y, z + d8, d14, d16);
+            tessellator.addVertexWithUV(x + d7, y + d13, z + d8, d14, d17);
+            tessellator.addVertexWithUV(x + d11, y + d13, z + d12, d15, d17);
+            tessellator.addVertexWithUV(x + d11, y, z + d12, d15, d16);
+            tessellator.addVertexWithUV(x + d9, y, z + d10, d14, d16);
+            tessellator.addVertexWithUV(x + d9, y + d13, z + d10, d14, d17);
+            tessellator.addVertexWithUV(x + d7, y + d13, z + d8, d15, d17);
+            tessellator.addVertexWithUV(x + d7, y, z + d8, d15, d16);
+            tessellator.addVertexWithUV(x + d11, y, z + d12, d14, d16);
+            tessellator.addVertexWithUV(x + d11, y + d13, z + d12, d14, d17);
+            tessellator.addVertexWithUV(x + d9, y + d13, z + d10, d15, d17);
+            tessellator.addVertexWithUV(x + d9, y, z + d10, d15, d16);
+            tessellator.addVertexWithUV(x + d5, y, z + d6, d14, d16);
+            tessellator.addVertexWithUV(x + d5, y + d13, z + d6, d14, d17);
             tessellator.draw();
-            GL11.glEnable(GL11.GL_BLEND);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            GL11.glDepthMask(false);
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glDepthMask(false);
             tessellator.startDrawingQuads();
             tessellator.setColorRGBA(255, 255, 255, 32);
             double d18 = 0.2D;
@@ -110,36 +87,96 @@ public class ElysianTileEntityPortalRenderer extends TileEntitySpecialRenderer
             double d28 = 1.0D;
             double d29 = (double)(-1.0F + f3);
             double d30 = (double)(256.0F * bright) + d29;
-            tessellator.addVertexWithUV(par2 + d18, par4 + d26, par6 + d19, d28, d30);
-            tessellator.addVertexWithUV(par2 + d18, par4, par6 + d19, d28, d29);
-            tessellator.addVertexWithUV(par2 + d20, par4, par6 + d21, d27, d29);
-            tessellator.addVertexWithUV(par2 + d20, par4 + d26, par6 + d21, d27, d30);
-            tessellator.addVertexWithUV(par2 + d24, par4 + d26, par6 + d25, d28, d30);
-            tessellator.addVertexWithUV(par2 + d24, par4, par6 + d25, d28, d29);
-            tessellator.addVertexWithUV(par2 + d22, par4, par6 + d23, d27, d29);
-            tessellator.addVertexWithUV(par2 + d22, par4 + d26, par6 + d23, d27, d30);
-            tessellator.addVertexWithUV(par2 + d20, par4 + d26, par6 + d21, d28, d30);
-            tessellator.addVertexWithUV(par2 + d20, par4, par6 + d21, d28, d29);
-            tessellator.addVertexWithUV(par2 + d24, par4, par6 + d25, d27, d29);
-            tessellator.addVertexWithUV(par2 + d24, par4 + d26, par6 + d25, d27, d30);
-            tessellator.addVertexWithUV(par2 + d22, par4 + d26, par6 + d23, d28, d30);
-            tessellator.addVertexWithUV(par2 + d22, par4, par6 + d23, d28, d29);
-            tessellator.addVertexWithUV(par2 + d18, par4, par6 + d19, d27, d29);
-            tessellator.addVertexWithUV(par2 + d18, par4 + d26, par6 + d19, d27, d30);
+            tessellator.addVertexWithUV(x + d18, y + d26, z + d19, d28, d30);
+            tessellator.addVertexWithUV(x + d18, y, z + d19, d28, d29);
+            tessellator.addVertexWithUV(x + d20, y, z + d21, d27, d29);
+            tessellator.addVertexWithUV(x + d20, y + d26, z + d21, d27, d30);
+            tessellator.addVertexWithUV(x + d24, y + d26, z + d25, d28, d30);
+            tessellator.addVertexWithUV(x + d24, y, z + d25, d28, d29);
+            tessellator.addVertexWithUV(x + d22, y, z + d23, d27, d29);
+            tessellator.addVertexWithUV(x + d22, y + d26, z + d23, d27, d30);
+            tessellator.addVertexWithUV(x + d20, y + d26, z + d21, d28, d30);
+            tessellator.addVertexWithUV(x + d20, y, z + d21, d28, d29);
+            tessellator.addVertexWithUV(x + d24, y, z + d25, d27, d29);
+            tessellator.addVertexWithUV(x + d24, y + d26, z + d25, d27, d30);
+            tessellator.addVertexWithUV(x + d22, y + d26, z + d23, d28, d30);
+            tessellator.addVertexWithUV(x + d22, y, z + d23, d28, d29);
+            tessellator.addVertexWithUV(x + d18, y, z + d19, d27, d29);
+            tessellator.addVertexWithUV(x + d18, y + d26, z + d19, d27, d30);
             tessellator.draw();
-            GL11.glEnable(GL11.GL_LIGHTING);
-            GL11.glEnable(GL11.GL_TEXTURE_2D);
-            GL11.glDepthMask(true);
-        }
-    }
-
-    public void renderTileEntityAt(TileEntity tile, double d1, double d2, double d3, float par8)
-    {
-    	//blockRender.renderBlockDragonEgg((BlockDragonEgg)Block.dragonEgg, tile.xCoord, tile.yCoord, tile.zCoord);
-    	
-        if(((ElysianTileEntityPortal)tile).canstay)
-        {
-        	this.renderTileEntityPortalAt((ElysianTileEntityPortal)tile, d1, d2, d3, par8);
-        }
-    }
+            glEnable(GL_LIGHTING);
+            glEnable(GL_TEXTURE_2D);
+            glDepthMask(true);
+        }*/
+		
+		glDisable(GL_LIGHTING);
+		glDisable(GL_CULL_FACE);
+		glEnable (GL_BLEND);
+        glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
+        glColor4f(1, 1, 1, tile.alpha);
+		this.bindTextureByName("/mods/" + DefaultProps.modId + "/textures/misc/beam.png");
+		
+		glBegin(GL_QUADS);
+			glTexCoord2f(0, 0);
+			glVertex3d(-tile.radius, -0.5, -tile.radius);
+			glTexCoord2f(0, 100);
+			glVertex3d(-tile.radius, 99.5, -tile.radius);
+			glTexCoord2f(1, 100);
+			glVertex3d(-tile.radius, 99.5, tile.radius);
+			glTexCoord2f(1, 0);
+			glVertex3d(-tile.radius, -0.5, tile.radius);
+		glEnd();
+		
+		glBegin(GL_QUADS);
+			glTexCoord2f(0, 0);
+			glVertex3d(tile.radius, -0.5, -tile.radius);
+			glTexCoord2f(0, 100);
+			glVertex3d(tile.radius, 99.5, -tile.radius);
+			glTexCoord2f(1, 100);
+			glVertex3d(tile.radius, 99.5, tile.radius);
+			glTexCoord2f(1, 0);
+			glVertex3d(tile.radius, -0.5, tile.radius);
+		glEnd();
+	
+		glBegin(GL_QUADS);
+			glTexCoord2f(0, 0);
+			glVertex3d(-tile.radius, -0.5, -tile.radius);
+			glTexCoord2f(0, 100);
+			glVertex3d(-tile.radius, 99.5, -tile.radius);
+			glTexCoord2f(1, 100);
+			glVertex3d(tile.radius, 99.5, -tile.radius);
+			glTexCoord2f(1, 0);
+			glVertex3d(tile.radius, -0.5, -tile.radius);
+		glEnd();
+	
+		glBegin(GL_QUADS);
+			glTexCoord2f(0, 0);
+			glVertex3d(-tile.radius, -0.5, tile.radius);
+			glTexCoord2f(0, 100);
+			glVertex3d(-tile.radius, 99.5, tile.radius);
+			glTexCoord2f(1, 100);
+			glVertex3d(tile.radius, 99.5, tile.radius);
+			glTexCoord2f(1, 0);
+			glVertex3d(tile.radius, -0.5, tile.radius);
+		glEnd();
+		
+		glDisable(GL_BLEND);
+		glEnable(GL_CULL_FACE);
+		glEnable(GL_LIGHTING);
+	}
+	
+	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par8)
+	{
+		ElysianTileEntityPortal portalTile = (ElysianTileEntityPortal) tile;
+		
+		if(portalTile.canstay)
+		{
+			glPushMatrix();
+				glTranslated(x+0.5, y, z+0.5);
+				glRotatef(portalTile.rotation, 0, 1, 0);
+				this.renderTileEntityPortalAt(portalTile);
+			glPopMatrix();
+		}
+	}
 }
