@@ -28,49 +28,20 @@ public class ElysianTileEntityPortalRenderer extends TileEntitySpecialRenderer
 		glColor4f(1, 1, 1, tile.alpha);
 		this.bindTextureByName("/mods/" + DefaultProps.modId + "/textures/misc/beam.png");
 		
-		glBegin(GL_QUADS);
-			glTexCoord2f(0, 0);
-			glVertex3d(-tile.radius, -0.5, -tile.radius);
-			glTexCoord2f(0, 100);
-			glVertex3d(-tile.radius, 99.5, -tile.radius);
-			glTexCoord2f(1, 100);
-			glVertex3d(-tile.radius, 99.5, tile.radius);
-			glTexCoord2f(1, 0);
-			glVertex3d(-tile.radius, -0.5, tile.radius);
-		glEnd();
-		
-		glBegin(GL_QUADS);
-			glTexCoord2f(0, 0);
-			glVertex3d(tile.radius, -0.5, -tile.radius);
-			glTexCoord2f(0, 100);
-			glVertex3d(tile.radius, 99.5, -tile.radius);
-			glTexCoord2f(1, 100);
-			glVertex3d(tile.radius, 99.5, tile.radius);
-			glTexCoord2f(1, 0);
-			glVertex3d(tile.radius, -0.5, tile.radius);
-		glEnd();
-	
-		glBegin(GL_QUADS);
-			glTexCoord2f(0, 0);
-			glVertex3d(-tile.radius, -0.5, -tile.radius);
-			glTexCoord2f(0, 100);
-			glVertex3d(-tile.radius, 99.5, -tile.radius);
-			glTexCoord2f(1, 100);
-			glVertex3d(tile.radius, 99.5, -tile.radius);
-			glTexCoord2f(1, 0);
-			glVertex3d(tile.radius, -0.5, -tile.radius);
-		glEnd();
-	
-		glBegin(GL_QUADS);
-			glTexCoord2f(0, 0);
-			glVertex3d(-tile.radius, -0.5, tile.radius);
-			glTexCoord2f(0, 100);
-			glVertex3d(-tile.radius, 99.5, tile.radius);
-			glTexCoord2f(1, 100);
-			glVertex3d(tile.radius, 99.5, tile.radius);
-			glTexCoord2f(1, 0);
-			glVertex3d(tile.radius, -0.5, tile.radius);
-		glEnd();
+		int faces = 16;
+		for(int i = 0; i < faces; i++)
+		{
+			glBegin(GL_QUADS);
+				glTexCoord2f(0, 0);
+				glVertex3d(tile.radius*Math.cos(Math.PI*2*i/faces), -0.5, tile.radius*Math.sin(Math.PI*2*i/faces));
+				glTexCoord2f(0, 100);
+				glVertex3d(tile.radius*Math.cos(Math.PI*2*i/faces), 99.5, tile.radius*Math.sin(Math.PI*2*i/faces));
+				glTexCoord2f(16/faces, 100);
+				glVertex3d(tile.radius*Math.cos(Math.PI*2*(i+1)/faces), 99.5, tile.radius*Math.sin(Math.PI*2*(i+1)/faces));
+				glTexCoord2f(16/faces, 0);
+				glVertex3d(tile.radius*Math.cos(Math.PI*2*(i+1)/faces), -0.5, tile.radius*Math.sin(Math.PI*2*(i+1)/faces));
+			glEnd();
+		}
 		
 		glDisable(GL_BLEND);
 		glEnable(GL_CULL_FACE);

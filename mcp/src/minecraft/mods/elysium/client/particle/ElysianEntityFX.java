@@ -35,6 +35,14 @@ public class ElysianEntityFX extends EntityFX
 		float textureCoordY1 = (float)this.particleTextureIndexY / 16.0F;
 		float textureCoordY2 = textureCoordY1 + 0.0624375F;
 		
+		if(this.particleTextureIndexX < 0)
+		{
+			textureCoordX1 = 0F;
+			textureCoordX2 = 1F;
+			textureCoordY1 = 0F;
+			textureCoordY2 = 1F;
+		}
+		
 		float scaleAmount = 0.1F * this.particleScale;
 		
 		if(this.particleIcon != null)

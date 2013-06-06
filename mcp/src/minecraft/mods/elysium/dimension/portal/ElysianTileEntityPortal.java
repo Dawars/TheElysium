@@ -29,7 +29,7 @@ public class ElysianTileEntityPortal extends TileEntity
 		rotation += 2.5F;
 		if(rotation >= 360) rotation -= 360;
 		
-		radius = Math.sin(Math.toRadians(rotation*4))/8 + 0.8;
+		radius = Math.sin(Math.toRadians(rotation*2))/4 + 1.25;
 		alpha = (float) Math.sin(Math.toRadians(rotation*3))/4 + 0.5F;
 		
 		if(!wasCollided) ticksWithoutColliding++;
