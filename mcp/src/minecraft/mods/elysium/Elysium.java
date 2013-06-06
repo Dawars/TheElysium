@@ -18,6 +18,7 @@ import mods.elysium.dimension.portal.ElysianBlockPortalCore;
 import mods.elysium.dimension.portal.ElysianTileEntityPortal;
 import mods.elysium.dimension.portal.ElysianTileEntityPortalRenderer;
 import mods.elysium.handlers.ElysianBonemealHandler;
+import mods.elysium.handlers.ElysianCreatureSpawnHandler;
 import mods.elysium.handlers.ElysianFuelHandler;
 import mods.elysium.handlers.ElysianSoundHandler;
 import mods.elysium.item.*;
@@ -169,9 +170,10 @@ public class Elysium
 			MaxDragon = MAX_DRAGON_IN_END.getInt();
 			
 			//Handlers
-			/*MinecraftForge.EVENT_BUS.register(new ElysianBonemealHandler());
+			MinecraftForge.EVENT_BUS.register(new ElysianBonemealHandler());
+			MinecraftForge.EVENT_BUS.register(new ElysianCreatureSpawnHandler());
 			CommonProxy.proxy.addSoundHandler(new ElysianSoundHandler());
-			GameRegistry.registerFuelHandler(new ElysianFuelHandler());*/
+			GameRegistry.registerFuelHandler(new ElysianFuelHandler());
 
 			// Block Registry
 			
