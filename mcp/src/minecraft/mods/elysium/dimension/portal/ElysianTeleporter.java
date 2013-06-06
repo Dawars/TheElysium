@@ -96,9 +96,6 @@ public class ElysianTeleporter extends Teleporter
 				canBuild = true;
 			//check end
 			
-			worldServer.setBlock(x, y+9, z, Elysium.blockPortalCore.blockID);
-			worldServer.setBlockMetadataWithNotify(x, y+9, z, 1, 0);
-			
 			//get lowest air block underneath
 			int lowest = -1;
 			for (int i = -2; i <= 2; i++) {
@@ -110,13 +107,16 @@ public class ElysianTeleporter extends Teleporter
 			for (int j = y; j >= lowest; j--) {
 				for (int i = -2; i <= 2; i++) {
 					for (int k = -2; k <= 2; k++) {
-						int block = worldServer.getBlockId(i, j, k);
-						if(block == 0 || Block.blocksList[block].canBeReplacedByLeaves(worldServer, i, j, k)){
-							worldServer.setBlock(x+i, y+j, z+k, Elysium.blockDirt.blockID);
+						int block = worldServer.getBlockId(x+i, j, z+k);
+						if(block == 0 || Block.blocksList[block].canBeReplacedByLeaves(worldServer, x+i, j, z+k)){
+							worldServer.setBlock(x+i, j, z+k, Elysium.blockDirt.blockID);
 						}
 					}
 				}
 			}
+			
+			worldServer.setBlock(x, y+9, z, Elysium.blockPortalCore.blockID);
+			worldServer.setBlockMetadataWithNotify(x, y+9, z, 1, 0);
 			
 			for(int i=-1; i <= 1; i++)
 			{
