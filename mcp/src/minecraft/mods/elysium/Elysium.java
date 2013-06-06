@@ -11,8 +11,9 @@ import java.util.List;
 import mods.elysium.api.Plants;
 import mods.elysium.block.*;
 import mods.elysium.dimension.*;
-import mods.elysium.dimension.biome.BiomeGenElysium;
-import mods.elysium.dimension.gen.feature.WorldGenElysium;
+import mods.elysium.dimension.biome.ElysiumBiomeGenPlain;
+import mods.elysium.dimension.biome.ElysiumBiomeGenOcean;
+import mods.elysium.dimension.gen.WorldGenElysium;
 import mods.elysium.dimension.portal.ElysianBlockPortalCore;
 import mods.elysium.dimension.portal.ElysianTileEntityPortal;
 import mods.elysium.dimension.portal.ElysianTileEntityPortalRenderer;
@@ -131,7 +132,8 @@ public class Elysium
 	
 	
 	/** Biome's **/
-	public static BiomeGenBase ElysianPlainBiome = null;
+	public static BiomeGenBase elysianBiomePlain = null;
+	public static BiomeGenBase elysianBiomeOcean = null;
 
 	public static AudioClip soundWhistle;
 	
@@ -239,7 +241,7 @@ public class Elysium
 			LanguageRegistry.addName(oreSulphure, "Sulphur Ore");
 
 			Property idOreBerylBlock = Elysium.mainConfiguration.getBlock("idOreBerylBlock.id", DefaultProps.idOreBerylBlock);
-			oreBeryl = new ElysianBlockOre(idOreBerylBlock.getInt()).setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreBeryl");
+			oreBeryl = new ElysianBlockOre(idOreBerylBlock.getInt()).setHardness(3.0F).setResistance(5.0F).setLightValue(0.5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreBeryl");
 			ClientProxy.proxy.registerBlock(oreBeryl);
 			LanguageRegistry.addName(oreBeryl, "Beryl Ore");
 			
@@ -441,7 +443,7 @@ public class Elysium
 			GameRegistry.addShapelessRecipe(new ItemStack(itemAsphodelPetals, 2), new Object[] {blockFlowerAsphodel});
 			GameRegistry.addShapelessRecipe(new ItemStack(blockPlanksFostimber, 4), new Object[] {blockLogFostimber});
 
-			//Smelting Regostry
+			//Smelting Registry
 			GameRegistry.addSmelting(this.oreCobalt.blockID, new ItemStack(this.itemIngotCobalt), 0.7F);
 			GameRegistry.addSmelting(this.oreIridium.blockID, new ItemStack(this.itemIngotIridium), 1.0F);
 			
@@ -475,19 +477,20 @@ public class Elysium
 		
 	
 		/** Register WorldProvider for Dimension **/
-		DimensionManager.registerProviderType(DimensionID, WorldProviderElysium.class, true);
+		DimensionManager.registerProviderType(DimensionID, ElysiumWorldProvider.class, true);
 		DimensionManager.registerDimension(DimensionID, DimensionID);
 
 		
-		ElysianPlainBiome = new BiomeGenElysium(25);
+		elysianBiomePlain = new ElysiumBiomeGenPlain(25);
+		elysianBiomeOcean = new ElysiumBiomeGenOcean(26);
 		
 		
 		GameRegistry.registerWorldGenerator(new WorldGenElysium());
 
 	}
-	public static boolean isHeatWave() {
+	
+	public static boolean isHeatWave()
+	{
 		return true;
 	}
-
-	
 }

@@ -112,7 +112,8 @@ public class ElysianTeleporter extends Teleporter
 					for (int k = -2; k <= 2; k++) {
 						int block = worldServer.getBlockId(x+i, j, z+k);
 						if(block == 0 || Block.blocksList[block].canBeReplacedByLeaves(worldServer, x+i, j, z+k)){
-							worldServer.setBlock(x+i, j, z+k, worldServer.getBiomeGenForCoords(x+i, z+k).fillerBlock);
+							//worldServer.setBlock(x+i, j, z+k, worldServer.getBiomeGenForCoords(x+i, z+k).fillerBlock); Causes crash!
+							worldServer.setBlock(x+i, j, z+k, Elysium.blockDirt.blockID);
 						}
 					}
 				}

@@ -27,7 +27,6 @@ public class ElysianBlockPortalCore extends ElysianBlockContainer
 	public ElysianBlockPortalCore(int id, Material mat)
 	{
 		super(id, mat);
-		this.setBlockUnbreakable();
 		this.setBlockBounds(0.5F, 1F, 0.5F, 0.5F, 1F, 0.5F);
 		this.setTickRandomly(true);
 	}
@@ -83,6 +82,7 @@ public class ElysianBlockPortalCore extends ElysianBlockContainer
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World world, int x, int y, int z, Random random)
 	{
 		int part = random.nextInt(50);

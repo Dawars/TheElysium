@@ -161,7 +161,7 @@ public class ElysiumGenLakes extends WorldGenerator
         	{
         		new ElysiumGenSand(Elysium.blockRilt.blockID, 3).generate(world, random, x+8, y+4, z+8);
         	}
-        	System.out.println("Generated lake on surface at: " + (x+8) + " " + (y+4) + " " + (z+8));
+        	//System.out.println("Generated lake on surface at: " + (x+8) + " " + (y+4) + " " + (z+8));
         }
         return true;
     }

@@ -62,23 +62,9 @@ public class ChunkProviderElysium implements IChunkProvider
     /** Reference to the World object. */
     private World worldObj;
 
-    /** are map structures going to be generated (e.g. strongholds) */
-    private final boolean mapFeaturesEnabled;
-
     /** Holds the overall noise array used in chunk generation */
     private double[] noiseArray;
     private double[] stoneNoise = new double[256];
-//    private MapGenBase caveGenerator = new MapGenCaves();
-
-    /** Holds Stronghold Generator */
-//    private MapGenStronghold strongholdGenerator = new MapGenStronghold();
-
-    /** Holds Village Generator */
-//    private MapGenVillage villageGenerator = new MapGenVillage();
-
-    /** Holds Mineshaft Generator */
-//    private MapGenMineshaft mineshaftGenerator = new MapGenMineshaft();
-//    private MapGenScatteredFeature scatteredFeatureGenerator = new MapGenScatteredFeature();
 
     /** Holds ravine generator */
     private MapGenBase ravineGenerator = new MapGenRavine();
@@ -107,19 +93,9 @@ public class ChunkProviderElysium implements IChunkProvider
     float[] parabolicField;
     int[][] field_73219_j = new int[32][32];
 
+    public ChunkProviderElysium(World world, long par2)
     {
-//        caveGenerator = TerrainGen.getModdedMapGen(caveGenerator, CAVE);
-//        strongholdGenerator = (MapGenStronghold) TerrainGen.getModdedMapGen(strongholdGenerator, STRONGHOLD);
-//        villageGenerator = (MapGenVillage) TerrainGen.getModdedMapGen(villageGenerator, VILLAGE);
-//        mineshaftGenerator = (MapGenMineshaft) TerrainGen.getModdedMapGen(mineshaftGenerator, MINESHAFT);
-//        scatteredFeatureGenerator = (MapGenScatteredFeature) TerrainGen.getModdedMapGen(scatteredFeatureGenerator, SCATTERED_FEATURE);
-//        ravineGenerator = TerrainGen.getModdedMapGen(ravineGenerator, RAVINE);
-    }
-
-    public ChunkProviderElysium(World par1World, long par2, boolean par4)
-    {
-        this.worldObj = par1World;
-        this.mapFeaturesEnabled = par4;
+        this.worldObj = world;
         this.rand = new Random(par2);
         this.noiseGen1 = new NoiseGeneratorOctaves(this.rand, 16);
         this.noiseGen2 = new NoiseGeneratorOctaves(this.rand, 16);
@@ -130,7 +106,7 @@ public class ChunkProviderElysium implements IChunkProvider
         this.mobSpawnerNoise = new NoiseGeneratorOctaves(this.rand, 8);
 
         NoiseGeneratorOctaves[] noiseGens = {noiseGen1, noiseGen2, noiseGen3, noiseGen4, noiseGen5, noiseGen6, mobSpawnerNoise};
-        noiseGens = TerrainGen.getModdedNoiseGenerators(par1World, this.rand, noiseGens);
+        noiseGens = TerrainGen.getModdedNoiseGenerators(world, this.rand, noiseGens);
         this.noiseGen1 = noiseGens[0];
         this.noiseGen2 = noiseGens[1];
         this.noiseGen3 = noiseGens[2];
@@ -326,25 +302,15 @@ public class ChunkProviderElysium implements IChunkProvider
      * Will return back a chunk, if it doesn't exist and its not a MP client it will generates all the blocks for the
      * specified chunk from the map seed and chunk seed
      */
-    public Chunk provideChunk(int par1, int par2)
+    public Chunk provideChunk(int chunkX, int chunkZ)
     {
-        this.rand.setSeed((long)par1 * 341873128712L + (long)par2 * 132897987541L);
+        this.rand.setSeed((long)chunkX * 341873128712L + (long)chunkZ * 132897987541L);
         byte[] abyte = new byte[32768];
-        this.generateTerrain(par1, par2, abyte);
-        this.biomesForGeneration = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(this.biomesForGeneration, par1 * 16, par2 * 16, 16, 16);
-        this.replaceBlocksForBiome(par1, par2, abyte, this.biomesForGeneration);
-//        this.caveGenerator.generate(this, this.worldObj, par1, par2, abyte);
-//        this.ravineGenerator.generate(this, this.worldObj, par1, par2, abyte);
+        this.generateTerrain(chunkX, chunkZ, abyte);
+        this.biomesForGeneration = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(this.biomesForGeneration, chunkX * 16, chunkZ * 16, 16, 16);
+        this.replaceBlocksForBiome(chunkX, chunkZ, abyte, this.biomesForGeneration);
 
-        if (this.mapFeaturesEnabled)
-        {
-//            this.mineshaftGenerator.generate(this, this.worldObj, par1, par2, abyte);
-//            this.villageGenerator.generate(this, this.worldObj, par1, par2, abyte);
-//            this.strongholdGenerator.generate(this, this.worldObj, par1, par2, abyte);
-//            this.scatteredFeatureGenerator.generate(this, this.worldObj, par1, par2, abyte);
-        }
-
-        Chunk chunk = new Chunk(this.worldObj, abyte, par1, par2);
+        Chunk chunk = new Chunk(this.worldObj, abyte, chunkX, chunkZ);
         byte[] abyte1 = chunk.getBiomeArray();
 
         for (int k = 0; k < abyte1.length; ++k)
@@ -406,14 +372,14 @@ public class ChunkProviderElysium implements IChunkProvider
                 float f3 = 0.0F;
                 byte b0 = 2;
                 BiomeGenBase biomegenbase = this.biomesForGeneration[k2 + 2 + (l2 + 2) * (par5 + 5)];
-
+                
                 for (int i3 = -b0; i3 <= b0; ++i3)
                 {
                     for (int j3 = -b0; j3 <= b0; ++j3)
                     {
                         BiomeGenBase biomegenbase1 = this.biomesForGeneration[k2 + i3 + 2 + (l2 + j3 + 2) * (par5 + 5)];
                         float f4 = this.parabolicField[i3 + 2 + (j3 + 2) * 5] / (biomegenbase1.minHeight + 2.0F);
-
+                        
                         if (biomegenbase1.minHeight > biomegenbase.minHeight)
                         {
                             f4 /= 2.0F;
@@ -541,15 +507,6 @@ public class ChunkProviderElysium implements IChunkProvider
         boolean flag = false;
 
         MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Pre(par1IChunkProvider, worldObj, rand, par2, par3, flag));
-
-        if (this.mapFeaturesEnabled)
-        {
-//            this.mineshaftGenerator.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
-//            flag = this.villageGenerator.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
-//            this.strongholdGenerator.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
-//            this.scatteredFeatureGenerator.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
-        	
-        }
         
         this.lakegenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), 0, l+this.rand.nextInt(16));
         this.sandgenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), 0, l+this.rand.nextInt(16));
@@ -632,7 +589,6 @@ public class ChunkProviderElysium implements IChunkProvider
     public ChunkPosition findClosestStructure(World par1World, String par2Str, int par3, int par4, int par5)
     {
     	return null;
-//        return "Stronghold".equals(par2Str) && this.strongholdGenerator != null ? this.strongholdGenerator.getNearestInstance(par1World, par3, par4, par5) : null;
     }
 
     public int getLoadedChunkCount()
@@ -642,12 +598,6 @@ public class ChunkProviderElysium implements IChunkProvider
 
     public void recreateStructures(int par1, int par2)
     {
-        if (this.mapFeaturesEnabled)
-        {
-//            this.mineshaftGenerator.generate(this, this.worldObj, par1, par2, (byte[])null);
-//            this.villageGenerator.generate(this, this.worldObj, par1, par2, (byte[])null);
-//            this.strongholdGenerator.generate(this, this.worldObj, par1, par2, (byte[])null);
-//            this.scatteredFeatureGenerator.generate(this, this.worldObj, par1, par2, (byte[])null);
-        }
+        
     }
 }

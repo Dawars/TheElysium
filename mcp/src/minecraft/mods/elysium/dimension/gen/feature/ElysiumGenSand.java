@@ -70,7 +70,7 @@ public class ElysiumGenSand extends WorldGenerator
             }
             if(placedSand)
             {
-            	System.out.println("Generated liquid side at: "+x+" "+y+" "+z);
+            	//System.out.println("Generated liquid side at: "+x+" "+y+" "+z);
             }
             return true;
         }

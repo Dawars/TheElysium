@@ -4,6 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
+import mods.elysium.dimension.biome.ElysiumBiomeGenPlain;
 import mods.elysium.dimension.gen.ChunkProviderElysium;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ChunkCoordinates;
@@ -12,80 +13,75 @@ import net.minecraft.util.Vec3;
 import net.minecraft.util.Vec3Pool;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
-import net.minecraft.world.WorldProviderEnd;
-import net.minecraft.world.WorldProviderHell;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.WorldChunkManagerHell;
+import net.minecraft.world.biome.*;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.client.IRenderHandler;
 
-public class WorldProviderElysium extends WorldProvider
+public class ElysiumWorldProvider extends WorldProvider
 {
 	private float[] colorsSunriseSunset = new float[4];
-
+	
+	@Override
 	public void registerWorldChunkManager()
 	{
-		this.worldChunkMgr = new WorldChunkManagerHell(Elysium.ElysianPlainBiome, this.dimensionId, this.dimensionId);
+		this.worldChunkMgr = new ElysiumChunkManager(this.worldObj);
 		this.dimensionId = Elysium.DimensionID;
 		this.hasNoSky = false;
 		if(worldObj.isRemote)
 		this.setSkyRenderer(new SkyRendererElysium());
 		this.setCloudRenderer(new CloudRendererElysium());
-		
 	}
 	
-//	@SideOnly(Side.CLIENT)
-//    public Vec3 getSkyColor(Entity cameraEntity, float partialTicks)
-//    {
-//        return Vec3.createVectorHelper(134, 199, 255);
-//    }
-
-	
-	
+	@Override
 	public IChunkProvider createChunkGenerator()
 	{
-		return new ChunkProviderElysium(this.worldObj,
-				this.worldObj.getSeed(), false);
+		return new ChunkProviderElysium(this.worldObj, this.worldObj.getSeed());
 	}
-
+	
+	@Override
 	public int getAverageGroundLevel()
 	{
 		return 64;
 	}
-
-
+	
+	@Override
 	public String getDimensionName()
 	{
 		return "The Elysium";
 	}
-
+	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean isSkyColored()
 	{
 		return true;
 	}
-
+	
+	@Override
 	public boolean canRespawnHere()
 	{
 		return true;
 	}
-
+	
+	@Override
 	public boolean isSurfaceWorld()
 	{
 		return true;
 	}
 	
-	
+	@Override
 	public boolean canCoordinateBeSpawn(int par1, int par2)
 	{
 		return false;
 	}
-
+	
+	@Override
 	public ChunkCoordinates getEntrancePortalLocation()
 	{
 		return new ChunkCoordinates(50, 5, 0);
 	}
-
+	
+	@Override
 	protected void generateLightBrightnessTable()
 	{
 		float f = 0.0F;
@@ -96,6 +92,8 @@ public class WorldProviderElysium extends WorldProvider
             this.lightBrightnessTable[i] = (1.0F - f1) / (f1 * 3.0F + 1.0F) * (1.0F - f) + f;
         }
     }
+	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public String getWelcomeMessage()
 	{
@@ -107,11 +105,13 @@ public class WorldProviderElysium extends WorldProvider
     *
     * @return The message to be displayed
     */
+	@Override
 	public String getDepartMessage()
     {
 		return "Leaving The Elysium";
     }
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public float[] calcSunriseSunsetColors(float par1, float par2) {
 		float f2 = 0.4F;
@@ -133,6 +133,7 @@ public class WorldProviderElysium extends WorldProvider
 	/**
      * Calculates the angle of sun and moon in the sky relative to a specified time (usually worldTime)
      */
+	@Override
     public float calculateCelestialAngle(long par1, float par3)
     {
         int j = (int)(par1 % 24000L);
@@ -154,6 +155,7 @@ public class WorldProviderElysium extends WorldProvider
         return f1;
     }
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public Vec3 getFogColor(float par1, float par2)
 	{

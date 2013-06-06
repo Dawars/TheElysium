@@ -13,30 +13,30 @@ import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
-public class BiomeElysiumPlainDecorator extends BiomeDecorator {
+public class BiomeElysiumPlainDecorator extends BiomeDecorator
+{
 	 /** Field that holds one of the plantYellow WorldGenFlowers */
     public WorldGenerator plantAsphodelGen;
     
-    
-    
-	public BiomeElysiumPlainDecorator(BiomeGenBase biomeGenBase) {
+	public BiomeElysiumPlainDecorator(BiomeGenBase biomeGenBase)
+	{
 		super(biomeGenBase);
-		
         this.plantAsphodelGen = new WorldGenFlowers(Elysium.blockFlowerAsphodel.blockID);//meatada
-
 	}
 
 	/**
 	 * The method that does the work of actually decorating chunks
 	 */
-	protected void decorate() {
+	protected void decorate()
+	{
 		int i;
 		int j;
 		int k;
 		// this.generateOres();
 		boolean doGen = TerrainGen.decorate(currentWorld, randomGenerator, chunk_X, chunk_Z, GRASS);
 		
-		for (int x = 0; doGen && x < this.grassPerChunk; ++x) {
+		for(int x = 0; doGen && x < this.grassPerChunk; ++x)
+		{
 			
 			i = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
 			j = this.randomGenerator.nextInt(128);

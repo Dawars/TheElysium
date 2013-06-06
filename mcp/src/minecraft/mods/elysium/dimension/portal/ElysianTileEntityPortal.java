@@ -69,6 +69,7 @@ public class ElysianTileEntityPortal extends TileEntity
 			{
 				ElysianTeleporter.portals.remove(coords);
 			}
+			
 			if(!worldObj.isRemote)
 				worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord, yCoord, zCoord, new ItemStack(Elysium.itemGracePrism)));
 			worldObj.setBlock(xCoord, yCoord, zCoord, Block.dragonEgg.blockID);
