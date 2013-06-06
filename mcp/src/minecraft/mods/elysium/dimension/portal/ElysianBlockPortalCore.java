@@ -19,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
 public class ElysianBlockPortalCore extends ElysianBlockContainer
@@ -41,6 +42,12 @@ public class ElysianBlockPortalCore extends ElysianBlockContainer
 	public boolean isOpaqueCube()
 	{
 		return false;
+	}
+	
+	@Override
+	public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion)
+	{
+		world.setBlock(x, y, z, this.blockID);
 	}
 	
 	@Override
@@ -81,9 +88,9 @@ public class ElysianBlockPortalCore extends ElysianBlockContainer
 		int part = random.nextInt(50);
 		for(int i=0; i < part; i++)
 		{
-			//world.spawnParticle("crit", x+random.nextDouble()*2-0.5D, y+random.nextInt(100), z+random.nextDouble()*2-0.5D, 0, 0.25D, 0);
-			ElysianEntityFX entityfx = new ElysianEntityFX(65, world, x+random.nextDouble()*2-0.5D, y+random.nextInt(100), z+random.nextDouble()*2-0.5D, 0, 0.25D, 0);
+			ElysianEntityFX entityfx = new ElysianEntityFX(world, x+random.nextDouble()*2-0.5D, y+random.nextInt(100), z+random.nextDouble()*2-0.5D, 0, 0.25D, 0);
 			entityfx.setRBGColorF(0.9F,0.9F, 0F);
+			entityfx.setParticleTextureIndex(65);
 			ModLoader.getMinecraftInstance().effectRenderer.addEffect(entityfx);
 		}
 	}

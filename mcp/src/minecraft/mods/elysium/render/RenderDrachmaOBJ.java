@@ -18,7 +18,6 @@ import net.minecraftforge.client.model.obj.ObjModelLoader;
 import net.minecraftforge.client.model.obj.WavefrontObject;
 
 import mods.elysium.DefaultProps;
-import mods.elysium.api.obj.*;
 import mods.elysium.entity.ElysianEntityDrachma;
 
 public class RenderDrachmaOBJ extends Render
