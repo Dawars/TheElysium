@@ -20,7 +20,6 @@ import mods.elysium.dimension.portal.ElysianTileEntityPortalRenderer;
 import mods.elysium.handlers.ElysianBonemealHandler;
 import mods.elysium.handlers.ElysianFuelHandler;
 import mods.elysium.handlers.ElysianSoundHandler;
-import mods.elysium.handlers.ElysianCreatureSpawnHandler;
 import mods.elysium.item.*;
 import mods.elysium.network.PacketHandler;
 import mods.elysium.proxy.ClientProxy;
@@ -170,10 +169,9 @@ public class Elysium
 			MaxDragon = MAX_DRAGON_IN_END.getInt();
 			
 			//Handlers
-			MinecraftForge.EVENT_BUS.register(new ElysianBonemealHandler());
-			MinecraftForge.EVENT_BUS.register(new ElysianCreatureSpawnHandler());
+			/*MinecraftForge.EVENT_BUS.register(new ElysianBonemealHandler());
 			CommonProxy.proxy.addSoundHandler(new ElysianSoundHandler());
-			GameRegistry.registerFuelHandler(new ElysianFuelHandler());
+			GameRegistry.registerFuelHandler(new ElysianFuelHandler());*/
 
 			// Block Registry
 			
@@ -440,8 +438,7 @@ public class Elysium
 			GameRegistry.addRecipe(new ItemStack(itemSwordPalestone), new Object[] {"  W"," W ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockCobblePalestone});
 			GameRegistry.addRecipe(new ItemStack(itemWhistle), new Object[] {" OO","O O", "EO ", Character.valueOf('O'), Block.obsidian, Character.valueOf('E'), Item.eyeOfEnder});
 			
-			GameRegistry.addRecipe(new ItemStack(Item.stick, 3), new Object[] {"X", "X", "X", Character.valueOf('X'), blockPlanksFostimber});
-			GameRegistry.addRecipe(new ItemStack(Block.workbench), new Object[] {"XX", "XX", Character.valueOf('X'), blockPlanksFostimber});
+			GameRegistry.addRecipe(new ItemStack(Item.stick), new Object[] {"X", "X", "X", Character.valueOf('X'), blockPlanksFostimber});
 			
 			GameRegistry.addShapelessRecipe(new ItemStack(itemAsphodelPetals, 2), new Object[] {blockFlowerAsphodel});
 			GameRegistry.addShapelessRecipe(new ItemStack(blockPlanksFostimber, 4), new Object[] {blockLogFostimber});
@@ -494,6 +491,6 @@ public class Elysium
 	
 	public static boolean isHeatWave()
 	{
-		return false;
+		return true;
 	}
 }
