@@ -485,6 +485,9 @@ public class Elysium
 		GameRegistry.registerWorldGenerator(new WorldGenElysium());
 
 	}
+	public static boolean isHeatWave() {
+		return true;
+	}
 
 	
 }

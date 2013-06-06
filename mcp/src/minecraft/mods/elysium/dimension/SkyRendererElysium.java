@@ -122,7 +122,10 @@ public class SkyRendererElysium extends IRenderHandler {
             GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
             GL11.glRotatef(world.getCelestialAngle(partialTicks) * 360.0F, 1.0F, 0.0F, 0.0F);
             f10 = 30.0F;
-            FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/" + DefaultProps.modId + "/textures/misc/sun.png");
+            if(Elysium.isHeatWave())
+                FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/" + DefaultProps.modId + "/textures/misc/heatbuff.png");
+            else
+            	FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/" + DefaultProps.modId + "/textures/misc/sun.png");
             tessellator1.startDrawingQuads();
             tessellator1.addVertexWithUV((double)(-f10), 100.0D, (double)(-f10), 0.0D, 0.0D);
             tessellator1.addVertexWithUV((double)f10, 100.0D, (double)(-f10), 1.0D, 0.0D);
@@ -200,6 +203,60 @@ public class SkyRendererElysium extends IRenderHandler {
         }
 	}
 
+	private void renderNightSky2(float PartitalTicks){
+		GL11.glDisable(2912);
+	      GL11.glDisable(3008);
+	      GL11.glEnable(3042);
+	      GL11.glBlendFunc(770, 771);
+	        RenderHelper.disableStandardItemLighting();
+	      GL11.glDepthMask(false);
+	        FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/" + DefaultProps.modId + "/textures/misc/space.png");
+	        Tessellator tessellator = Tessellator.instance;
+
+	      for (int var22 = 0; var22 < 6; var22++)
+	      {
+	        GL11.glPushMatrix();
+
+	        if (var22 == 1)
+	        {
+	          GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
+	        }
+
+	        if (var22 == 2)
+	        {
+	          GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
+	        }
+
+	        if (var22 == 3)
+	        {
+	          GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F);
+	        }
+
+	        if (var22 == 4)
+	        {
+	          GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
+	        }
+
+	        if (var22 == 5)
+	        {
+	          GL11.glRotatef(-90.0F, 0.0F, 0.0F, 1.0F);
+	        }
+
+	        tessellator.startDrawingQuads();
+//	        tessellator.(255, 255, 255);
+	        tessellator.addVertexWithUV(-1.0D, -1000.0D, -10.0D, 0.0D, 0.0D);
+	        tessellator.addVertexWithUV(-1.0D, -1000.0D, 100.0D, 0.0D, 1.0D);
+	        tessellator.addVertexWithUV(1.0D, -1000.0D, 100.0D, 1.0D, 1.0D);
+	        tessellator.addVertexWithUV(0.0D, -1000.0D, -100.0D, 2.0D, 1.0D);
+	        tessellator.draw();
+	        GL11.glPopMatrix();
+	      }
+
+	      GL11.glDepthMask(true);
+	      GL11.glEnable(3553);
+	      GL11.glEnable(3008);
+	}
+	
 	private void renderNightSky(float partialTicks) {
 		//night
     	GL11.glDisable(GL11.GL_FOG);
@@ -208,7 +265,8 @@ public class SkyRendererElysium extends IRenderHandler {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         RenderHelper.disableStandardItemLighting();
         GL11.glDepthMask(false);
-        FMLClientHandler.instance().getClient().renderEngine.bindTexture("/misc/tunnel.png");
+//        FMLClientHandler.instance().getClient().renderEngine.bindTexture("/misc/tunnel.png");
+        FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/" + DefaultProps.modId + "/textures/misc/space.png");
         Tessellator tessellator = Tessellator.instance;
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, (CommonProxy.proxy.getClientWorld().getStarBrightness(partialTicks)) * (1.0F - CommonProxy.proxy.getClientWorld().getRainStrength(partialTicks)));

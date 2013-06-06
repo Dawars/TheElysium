@@ -89,12 +89,15 @@ public class ElysianTeleporter extends Teleporter
 			
 				}
 			}
-			System.out.println(waterBellow);
+
 			if(waterBellow > 25/2)//More then the half is water bellow
 				continue;
 			else
 				canBuild = true;
 			//check end
+			
+			if(y<63-7)
+				y=63-7;
 			
 			//get lowest air block underneath
 			int lowest = -1;
@@ -109,7 +112,7 @@ public class ElysianTeleporter extends Teleporter
 					for (int k = -2; k <= 2; k++) {
 						int block = worldServer.getBlockId(x+i, j, z+k);
 						if(block == 0 || Block.blocksList[block].canBeReplacedByLeaves(worldServer, x+i, j, z+k)){
-							worldServer.setBlock(x+i, j, z+k, Elysium.blockDirt.blockID);
+							worldServer.setBlock(x+i, j, z+k, worldServer.getBiomeGenForCoords(x+i, z+k).fillerBlock);
 						}
 					}
 				}
