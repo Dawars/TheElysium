@@ -30,6 +30,7 @@ public class WorldProviderElysium extends WorldProvider
 		this.hasNoSky = false;
 		if(worldObj.isRemote)
 		this.setSkyRenderer(new SkyRendererElysium());
+		this.setCloudRenderer(new CloudRendererElysium());
 		
 	}
 	
