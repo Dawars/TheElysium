@@ -6,6 +6,8 @@ import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import mods.elysium.dimension.biome.ElysiumBiomeGenPlain;
 import mods.elysium.dimension.gen.ChunkProviderElysium;
+import mods.elysium.render.CloudRendererElysium;
+import mods.elysium.render.SkyRendererElysium;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.MathHelper;

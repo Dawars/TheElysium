@@ -1,4 +1,4 @@
-package mods.elysium.dimension;
+package mods.elysium.render;
 
 import java.util.Iterator;
 
