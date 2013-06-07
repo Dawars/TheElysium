@@ -28,7 +28,7 @@ public class ElysianBlockPortalCore extends ElysianBlockContainer
 	{
 		super(id, mat);
 		this.setBlockBounds(0.5F, 1F, 0.5F, 0.5F, 1F, 0.5F);
-		this.setTickRandomly(true);
+		//this.setTickRandomly(true);
 	}
 	
 	@Override
@@ -81,7 +81,7 @@ public class ElysianBlockPortalCore extends ElysianBlockContainer
 		}
 	}
 	
-	@Override
+	/*@Override
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World world, int x, int y, int z, Random random)
 	{
@@ -94,7 +94,7 @@ public class ElysianBlockPortalCore extends ElysianBlockContainer
 			//entityfx.setTextureFile("/mods/elysium/textures/items/debug.png");
 			ModLoader.getMinecraftInstance().effectRenderer.addEffect(entityfx);
 		}
-	}
+	}*/
 
 	@Override
 	public TileEntity createNewTileEntity(World world)

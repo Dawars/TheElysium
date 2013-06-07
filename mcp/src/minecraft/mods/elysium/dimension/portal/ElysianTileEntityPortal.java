@@ -22,14 +22,18 @@ public class ElysianTileEntityPortal extends TileEntity
 	public float rotation = 0;
 	public float alpha;
 	public double radius;
+	public float texPos;
 	
 	@Override
 	public void updateEntity()
 	{
+		texPos -= 0.05F;
+		if(texPos >= 1F) texPos -= 1F;
+		
 		rotation += 2.5F;
 		if(rotation >= 360) rotation -= 360;
 		
-		radius = Math.sin(Math.toRadians(rotation*2))/4 + 1.25;
+		radius = Math.sin(Math.toRadians(rotation*2))/4 + 1;
 		alpha = (float) Math.sin(Math.toRadians(rotation*3))/4 + 0.5F;
 		
 		if(!wasCollided) ticksWithoutColliding++;

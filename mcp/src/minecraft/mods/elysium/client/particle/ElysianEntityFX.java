@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 public class ElysianEntityFX extends EntityFX
 {
 	String texturefile = null;
+	int brightness = 200;
 	
 	public ElysianEntityFX(World world, double x, double y, double z, double mx, double my, double mz)
 	{
@@ -17,11 +18,21 @@ public class ElysianEntityFX extends EntityFX
 		this.motionY = my;
 		this.motionZ = mz;
 		this.setParticleTextureIndex(-1);
+		this.setRBGColorF(-1, -1, -1);
 	}
 	
 	public void setTextureFile(String path)
 	{
 		this.texturefile = path;
+	}
+	
+	/**
+	 * Sets the particles brightness for rendering. The maximum value is about 240.
+	 * @param amount
+	 */
+	public void setBrightness(int amount)
+	{
+		this.brightness = amount;
 	}
 	
 	@Override
@@ -61,7 +72,9 @@ public class ElysianEntityFX extends EntityFX
 		z = (float)this.posZ;
 		float colorMultiplier = 1.0F;
 		
-		tessellator.setColorRGBA_F(this.particleRed * colorMultiplier, this.particleGreen * colorMultiplier, this.particleBlue * colorMultiplier, this.particleAlpha);
+		tessellator.setBrightness(this.brightness);
+		if(this.particleRed >= 0)
+			tessellator.setColorRGBA_F(this.particleRed * colorMultiplier, this.particleGreen * colorMultiplier, this.particleBlue * colorMultiplier, this.particleAlpha);
 		tessellator.addVertexWithUV((double)(x - par3 * scaleAmount - par6 * scaleAmount), (double)(y - par4 * scaleAmount), (double)(z - par5 * scaleAmount - par7 * scaleAmount), (double)textureCoordX2, (double)textureCoordY2);
         tessellator.addVertexWithUV((double)(x - par3 * scaleAmount + par6 * scaleAmount), (double)(y + par4 * scaleAmount), (double)(z - par5 * scaleAmount + par7 * scaleAmount), (double)textureCoordX2, (double)textureCoordY1);
         tessellator.addVertexWithUV((double)(x + par3 * scaleAmount + par6 * scaleAmount), (double)(y + par4 * scaleAmount), (double)(z + par5 * scaleAmount + par7 * scaleAmount), (double)textureCoordX1, (double)textureCoordY1);
