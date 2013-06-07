@@ -288,12 +288,12 @@ public class Elysium
 			LanguageRegistry.addName(blockPortalCore, "Elysian Portal Block");
 
 			Property idShellsBlock = Elysium.mainConfiguration.getBlock("idShellsBlock.id", DefaultProps.idShellsBlock);
-			blockFloatingShell = new ElysianBlockShell(idShellsBlock.getInt()).setHardness(0.0F).setStepSound(Block.soundGlassFootstep).setUnlocalizedName("shell");
+			blockFloatingShell = new ElysianBlockShell(idShellsBlock.getInt()).setHardness(0.0F).setStepSound(Block.soundGrassFootstep).setUnlocalizedName("shell");
 			ClientProxy.proxy.registerBlock(blockFloatingShell);
 			LanguageRegistry.addName(blockFloatingShell, "Shell");
 
 			Property idConchBlock = Elysium.mainConfiguration.getBlock("idConchBlock.id", DefaultProps.idConchBlock);
-			blockFloatingConch = new ElysianBlockShell(idConchBlock.getInt()).setHardness(0.0F).setStepSound(Block.soundGlassFootstep).setUnlocalizedName("conch");
+			blockFloatingConch = new ElysianBlockShell(idConchBlock.getInt()).setHardness(0.0F).setStepSound(Block.soundGrassFootstep).setUnlocalizedName("conch");
 			ClientProxy.proxy.registerBlock(blockFloatingConch);
 			LanguageRegistry.addName(blockFloatingConch, "Conch");
 
@@ -493,6 +493,6 @@ public class Elysium
 	
 	public static boolean isHeatWave()
 	{
-		return true;
+		return false;
 	}
 }
