@@ -124,7 +124,7 @@ public class ChunkProviderElysium implements IChunkProvider
     {
         byte b0 = 4;
         byte b1 = 16;
-        byte seeLevel = 65;
+        byte seeLevel = 63;
         int k = b0 + 1;
         byte b3 = 17;
         int l = b0 + 1;
@@ -203,7 +203,7 @@ public class ChunkProviderElysium implements IChunkProvider
         MinecraftForge.EVENT_BUS.post(event);
         if (event.getResult() == Result.DENY) return;
 
-        byte seeLevel = 65;
+        byte seeLevel = 63;
         double d0 = 0.03125D;
         this.stoneNoise = this.noiseGen4.generateNoiseOctaves(this.stoneNoise, par1 * 16, par2 * 16, 0, 16, 16, 1, d0 * 2.0D, d0 * 2.0D, d0 * 2.0D);
 

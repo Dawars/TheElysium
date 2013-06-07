@@ -17,6 +17,7 @@ import mods.elysium.dimension.gen.WorldGenElysium;
 import mods.elysium.dimension.portal.ElysianBlockPortalCore;
 import mods.elysium.dimension.portal.ElysianTileEntityPortal;
 import mods.elysium.dimension.portal.ElysianTileEntityPortalRenderer;
+import mods.elysium.entity.EntityCatorPillar;
 import mods.elysium.handlers.ElysianBonemealHandler;
 import mods.elysium.handlers.ElysianCreatureSpawnHandler;
 import mods.elysium.handlers.ElysianFuelHandler;
@@ -145,8 +146,6 @@ public class Elysium
 //		GameRegistry.registerTileEntity(TileMixer.class, "Mixer");
 //		GameRegistry.registerTileEntity(TileCandyMaker.class, "Candy Maker");
 
-
-//		GameRegistry.addBiome(Halloween);
 
 //		Version.versionCheck();
 		try
@@ -440,7 +439,8 @@ public class Elysium
 			GameRegistry.addRecipe(new ItemStack(itemSwordPalestone), new Object[] {"  W"," W ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockCobblePalestone});
 			GameRegistry.addRecipe(new ItemStack(itemWhistle), new Object[] {" OO","O O", "EO ", Character.valueOf('O'), Block.obsidian, Character.valueOf('E'), Item.eyeOfEnder});
 			
-			GameRegistry.addRecipe(new ItemStack(Item.stick), new Object[] {"X", "X", "X", Character.valueOf('X'), blockPlanksFostimber});
+			GameRegistry.addRecipe(new ItemStack(Item.stick, 9), new Object[] {"X", "X", "X", Character.valueOf('X'), blockPlanksFostimber});
+			GameRegistry.addRecipe(new ItemStack(Block.workbench), new Object[] {"XX", "XX", Character.valueOf('X'), blockPlanksFostimber});
 			
 			GameRegistry.addShapelessRecipe(new ItemStack(itemAsphodelPetals, 2), new Object[] {blockFlowerAsphodel});
 			GameRegistry.addShapelessRecipe(new ItemStack(blockPlanksFostimber, 4), new Object[] {blockLogFostimber});
@@ -489,6 +489,11 @@ public class Elysium
 		
 		GameRegistry.registerWorldGenerator(new WorldGenElysium());
 
+		
+		cpw.mods.fml.common.registry.EntityRegistry.registerGlobalEntityID(EntityCatorPillar.class, "CatorPillar", cpw.mods.fml.common.registry.EntityRegistry.findGlobalUniqueEntityId(), 0x45454B, 0x62D420);
+//		cpw.mods.fml.common.registry.EntityRegistry.registerModEntity(EntityCatorPillar.class, "CatorPillar", 0, Elysium.instance, 64, 1, true);
+
+		LanguageRegistry.instance().addStringLocalization("entity.CatorPillar.name", "en_US", "Cator Pillar");
 	}
 	
 	public static boolean isHeatWave()
