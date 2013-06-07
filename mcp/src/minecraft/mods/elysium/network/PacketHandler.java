@@ -17,50 +17,37 @@ public class PacketHandler implements IPacketHandler {
 	 * Handle a entity experience orb packet.
 	 */
 	public void handleCoins(PacketCoins packet) {
-		ElysianEntityDrachma coin = new ElysianEntityDrachma(
-				CommonProxy.proxy.getClientWorld(), (double) packet.posX, (double) packet.posY, (double) packet.posZ, packet.xpValue);
-		coin.serverPosX = packet.posX;
-		coin.serverPosY = packet.posY;
-		coin.serverPosZ = packet.posZ;
-		coin.rotationYaw = 0.0F;
-		coin.rotationPitch = 0.0F;
-		coin.entityId = packet.entityId;
-		CommonProxy.proxy.getClientWorld().addEntityToWorld(packet.entityId, coin);
+//		ElysianEntityDrachma coin = new ElysianEntityDrachma(
+//				CommonProxy.proxy.getClientWorld(), (double) packet.posX, (double) packet.posY, (double) packet.posZ, packet.xpValue);
+//		coin.serverPosX = packet.posX;
+//		coin.serverPosY = packet.posY;
+//		coin.serverPosZ = packet.posZ;
+//		coin.rotationYaw = 0.0F;
+//		coin.rotationPitch = 0.0F;
+//		coin.entityId = packet.entityId;
+//		CommonProxy.proxy.getClientWorld().addEntityToWorld(packet.entityId, coin);
 	}
 
-//	private void handleRandom(Packet250CustomPayload packet) {
-//		DataInputStream inputStream = new DataInputStream(
-//				new ByteArrayInputStream(packet.data));
-//
-//		int randomInt1;
-//		int randomInt2;
-//
-//		try {
-//			randomInt1 = inputStream.readInt();
-//			randomInt2 = inputStream.readInt();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			return;
-//		}
-//
-//		System.out.println(randomInt1 + " " + randomInt2);
-//	}
+	private void handleRandom(PacketRandom packetT) {
+		int randomNum = packetT.randomNum;
+		
+		System.out.println("Random num: " + randomNum);
+	}
 
 	@Override
 	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
 		DataInputStream data = new DataInputStream(new ByteArrayInputStream(packet.data));
 		try {
-//			if (packet.channel.equals("GenericRandom")) {
-//				handleRandom(packet);
-//			}
-			
-			
-//			int packetID = data.read();
-//			switch (packetID) {
-//				case PacketIds.DRACHMA:
-//					handleCoins(packet);
-//				break;
-//			}
+			int packetID = data.read();
+			switch (packetID) {
+			case PacketIds.RANDOM:
+				
+				PacketRandom packetT = new PacketRandom();
+				packetT.readData(data);
+				handleRandom(packetT);
+				
+			break;
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
