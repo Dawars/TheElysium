@@ -40,6 +40,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Property;
 import net.minecraftforge.event.EventBus;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
@@ -49,6 +50,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.relauncher.Side;
 
 @Mod(name="The Elysium", version="1.0", useMetadata = false, modid = "TheElysium", dependencies="required-after:Forge@[7.8.0,)")
 @NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandler.class, clientSideRequired = true, serverSideRequired = true)
@@ -136,27 +138,14 @@ public class Elysium
 	/** Biome's **/
 	public static BiomeGenBase elysianBiomePlain = null;
 	public static BiomeGenBase elysianBiomeOcean = null;
-
-	public static AudioClip soundWhistle;
 	
 	@PreInit
 	public void loadConfiguration(FMLPreInitializationEvent evt)
 	{
 //		NetworkRegistry.instance().registerGuiHandler(this, guiHandler);
-//		GameRegistry.registerTileEntity(TileMixer.class, "Mixer");
-//		GameRegistry.registerTileEntity(TileCandyMaker.class, "Candy Maker");
-
 
 //		Version.versionCheck();
-		try
-		{
-			soundWhistle = Applet.newAudioClip(new URL("file:mods/elysium/sound/FluteTrack.wav"));
-		}
-		catch (MalformedURLException e)
-		{
-			e.printStackTrace();
-		}
-
+		
 		mainConfiguration = new ElysianConfiguration(new File(evt.getModConfigurationDirectory(), "Elysium.cfg"));
 		try
 		{
@@ -171,7 +160,8 @@ public class Elysium
 			//Handlers
 			MinecraftForge.EVENT_BUS.register(new ElysianBonemealHandler());
 			MinecraftForge.EVENT_BUS.register(new ElysianCreatureSpawnHandler());
-			CommonProxy.proxy.addSoundHandler(new ElysianSoundHandler());
+			if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+				MinecraftForge.EVENT_BUS.register(new ElysianSoundHandler());
 			GameRegistry.registerFuelHandler(new ElysianFuelHandler());
 
 			// Block Registry
@@ -490,7 +480,7 @@ public class Elysium
 		GameRegistry.registerWorldGenerator(new WorldGenElysium());
 
 		
-		cpw.mods.fml.common.registry.EntityRegistry.registerGlobalEntityID(EntityCatorPillar.class, "CatorPillar", cpw.mods.fml.common.registry.EntityRegistry.findGlobalUniqueEntityId(), 0x45454B, 0x62D420);
+		cpw.mods.fml.common.registry.EntityRegistry.registerGlobalEntityID(EntityCatorPillar.class, "CatorPillar", cpw.mods.fml.common.registry.EntityRegistry.findGlobalUniqueEntityId(), 0x646464, 0x3A3A3A);
 //		cpw.mods.fml.common.registry.EntityRegistry.registerModEntity(EntityCatorPillar.class, "CatorPillar", 0, Elysium.instance, 64, 1, true);
 
 		LanguageRegistry.instance().addStringLocalization("entity.CatorPillar.name", "en_US", "Cator Pillar");

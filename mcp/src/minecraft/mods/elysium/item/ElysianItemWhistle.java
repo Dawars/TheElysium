@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import cpw.mods.fml.client.FMLClientHandler;
+
 import mods.elysium.Elysium;
 import mods.elysium.ShuffleBag;
 import mods.elysium.proxy.CommonProxy;
@@ -60,7 +62,9 @@ public class ElysianItemWhistle extends ElysianItem
      */
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entity)
     {
-		Elysium.soundWhistle.play();
+    	if(!world.isRemote)
+    		world.playSoundAtEntity(entity, "flute.track", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+
     	if(CommonProxy.proxy.isSimulating(world)){
 			
 	    	if(world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd )
