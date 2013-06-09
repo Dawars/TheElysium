@@ -1,6 +1,7 @@
 package mods.elysium.item;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 public class ElysianItemOverkill extends ElysianItem{
@@ -15,7 +16,13 @@ public class ElysianItemOverkill extends ElysianItem{
      */
     public boolean hitEntity(ItemStack par1ItemStack, EntityLiving target, EntityLiving attacker)
     {
-    	target.setEntityHealth(0);
+    	if(target instanceof EntityPlayer){
+    		if(!((EntityPlayer) target).capabilities.isCreativeMode){
+    			target.setEntityHealth(0);
+    		}
+    	} else {
+    		target.setEntityHealth(0);
+    	}
         return true;
     }
 

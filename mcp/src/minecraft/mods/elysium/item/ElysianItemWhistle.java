@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import cpw.mods.fml.client.FMLClientHandler;
+
 import mods.elysium.Elysium;
 import mods.elysium.ShuffleBag;
 import mods.elysium.proxy.CommonProxy;
@@ -38,12 +40,14 @@ public class ElysianItemWhistle extends ElysianItem
 	//Add API support
 	public static ArrayList<String> dragonExist = new ArrayList<String>();
 	public static ShuffleBag shuffleBag = new ShuffleBag();
+	
+	private long lastPlay = 0;
 
 	public ElysianItemWhistle(int id)
 	{
 		super(id);
-        this.maxStackSize = 9;
-        this.setMaxDamage(9*20);
+		this.maxStackSize = 1;
+        this.setMaxDamage(1);
         
         shuffleBag.Add("Hmm... looks like a musical instrument");
         shuffleBag.Add("Its sound could be heared from a long distance...");
@@ -60,25 +64,21 @@ public class ElysianItemWhistle extends ElysianItem
      */
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entity)
     {
-		Elysium.soundWhistle.play();
-    	if(CommonProxy.proxy.isSimulating(world)){
-			
+    	if(!world.isRemote){
+    		if((System.currentTimeMillis() - lastPlay) / 1000 > 9D){
+	    		world.playSoundAtEntity(entity, "flute.track", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+    			lastPlay = System.currentTimeMillis();
+    		}
+    		
 	    	if(world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd )
 	    	{
-	    		if(isDragonAlive(world) < Elysium.MaxDragon){
-	    			EntityDragon entitydragon = new EntityDragon(world);
-	    			entitydragon.setLocationAndAngles(0.0D, 128.0D, 0.0D, rand.nextFloat() * 360.0F, 0.0F);
-	    			world.spawnEntityInWorld(entitydragon);
-	    		} else {
+	    		if(isDragonAlive(world) >= Elysium.MaxDragon){
 					entity.sendChatToPlayer(dragonExist.get(rand.nextInt(dragonExist.size())));
 	    		}
 	    	}
 	    	else
 	    	{
-	    		if(!world.isRemote)
-	    		{
-	    			entity.sendChatToPlayer(shuffleBag.Next());
-	    		}
+	    		entity.sendChatToPlayer(shuffleBag.Next());
 	    	}
     	}
     	entity.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
@@ -96,15 +96,19 @@ public class ElysianItemWhistle extends ElysianItem
 		
     	return dragonNum;
 	}
-
-	/**
-     * Called each tick as long the item is on a player inventory. Uses by maps to check if is on a player hand and
-     * update it's contents.
-     */
-    public void onUpdate(ItemStack item, World world, Entity entity, int par4, boolean flag)
-    {
-    	if(world.isRemote && entity instanceof EntityPlayer && ((EntityPlayer) entity).getItemInUse() == item)
-    		item.damageItem(2, (EntityPlayer)entity);
+    
+    public ItemStack onEaten(ItemStack itemStack, World world, EntityPlayer entity){
+	    if(!world.isRemote){
+    		if(world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd )
+	    	{
+	    		itemStack.damageItem(2, entity);
+	    		
+	    		EntityDragon entitydragon = new EntityDragon(world);
+				entitydragon.setLocationAndAngles(0.0D, 128.0D, 0.0D, rand.nextFloat() * 360.0F, 0.0F);
+				world.spawnEntityInWorld(entitydragon);
+	    	}
+	    }
+		return itemStack;
     }
     
     /**
@@ -120,7 +124,7 @@ public class ElysianItemWhistle extends ElysianItem
      */
     public int getMaxItemUseDuration(ItemStack item)
     {
-        return 9*20;
+        return 10*20;
     }
     
     /**

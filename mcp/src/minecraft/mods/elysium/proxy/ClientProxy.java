@@ -4,6 +4,7 @@ import mods.elysium.DefaultProps;
 import mods.elysium.dimension.portal.ElysianTileEntityPortal;
 import mods.elysium.dimension.portal.ElysianTileEntityPortalRenderer;
 import mods.elysium.entity.ElysianEntityDrachma;
+import mods.elysium.entity.EntityCatorPillar;
 import mods.elysium.handlers.ElysianSoundHandler;
 import mods.elysium.render.*;
 import net.minecraft.block.Block;
@@ -34,6 +35,9 @@ public class ClientProxy extends CommonProxy{
 //		RenderingRegistry.registerBlockHandler(new RenderSlimeBlock());
 		RenderingRegistry.registerEntityRenderingHandler(ElysianEntityDrachma.class, new RenderDrachmaOBJ());
 		ClientRegistry.bindTileEntitySpecialRenderer(ElysianTileEntityPortal.class, new ElysianTileEntityPortalRenderer());
+		
+		RenderingRegistry.registerEntityRenderingHandler(EntityCatorPillar.class, new RenderCaterPillar());
+
 	}
 	
 	public static void registerBlock(Block block){
