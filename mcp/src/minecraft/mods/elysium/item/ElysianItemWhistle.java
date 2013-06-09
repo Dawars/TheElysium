@@ -64,6 +64,7 @@ public class ElysianItemWhistle extends ElysianItem
      */
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entity)
     {
+<<<<<<< HEAD
     	if(!world.isRemote){
     		if((System.currentTimeMillis() - lastPlay) / 1000 > 9D){
 	    		world.playSoundAtEntity(entity, "flute.track", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
@@ -71,6 +72,14 @@ public class ElysianItemWhistle extends ElysianItem
     		}
    
     		if(world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd )
+=======
+    	if(!world.isRemote)
+    		world.playSoundAtEntity(entity, "flute.track", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+
+    	if(CommonProxy.proxy.isSimulating(world)){
+			
+	    	if(world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd )
+>>>>>>> 6eb8e52c15d11ab345514b0395f7c616bc41c2c3
 	    	{
 	    		if(isDragonAlive(world) >= Elysium.MaxDragon){
 					entity.sendChatToPlayer(dragonExist.get(rand.nextInt(dragonExist.size())));
