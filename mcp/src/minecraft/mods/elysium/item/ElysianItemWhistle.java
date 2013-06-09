@@ -69,8 +69,8 @@ public class ElysianItemWhistle extends ElysianItem
 	    		world.playSoundAtEntity(entity, "flute.track", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
     			lastPlay = System.currentTimeMillis();
     		}
-    		
-	    	if(world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd )
+   
+    		if(world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd )
 	    	{
 	    		if(isDragonAlive(world) >= Elysium.MaxDragon){
 					entity.sendChatToPlayer(dragonExist.get(rand.nextInt(dragonExist.size())));
