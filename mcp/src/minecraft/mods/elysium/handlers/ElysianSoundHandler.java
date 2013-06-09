@@ -37,10 +37,7 @@ public class ElysianSoundHandler {
 			String soundName = soundFiles[i].substring(6);
 			try {
 				manager.soundPoolSounds.addSound(soundName, new URL("file:" + soundFiles[i]));
-<<<<<<< HEAD
 				System.out.println("Loaded sound: " + soundName);
-=======
->>>>>>> 6eb8e52c15d11ab345514b0395f7c616bc41c2c3
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 				System.out.println("Failed to load sound + " + soundName);
@@ -66,8 +63,4 @@ public class ElysianSoundHandler {
 //		if (FMLClientHandler.instance().getClient().theWorld.provider.dimensionId == Elysium.DimensionID)
 //			event.result = music.get(rand.nextInt(music.size()));
 //	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 6eb8e52c15d11ab345514b0395f7c616bc41c2c3

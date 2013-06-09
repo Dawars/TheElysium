@@ -62,19 +62,16 @@ public class EntityCatorPillar extends EntityMob
         super.updateAITasks();
     }
 
-<<<<<<< HEAD
-=======
     /**
      * returns true if all the conditions for steering the entity are met. For pigs, this is true if it is being ridden
      * by a player and the player is holding a carrot-on-a-stick
      */
-    public boolean canBeSteered()
-    {
-        ItemStack itemstack = ((EntityPlayer)this.riddenByEntity).getHeldItem();
-        return itemstack != null && itemstack.itemID == Item.carrotOnAStick.itemID;
-    }
+//    public boolean canBeSteered()
+//    {
+//        ItemStack itemstack = ((EntityPlayer)this.riddenByEntity).getHeldItem();
+//        return itemstack != null && itemstack.itemID == Item.carrotOnAStick.itemID;
+//    }
 
->>>>>>> 6eb8e52c15d11ab345514b0395f7c616bc41c2c3
     protected void entityInit()
     {
         super.entityInit();
