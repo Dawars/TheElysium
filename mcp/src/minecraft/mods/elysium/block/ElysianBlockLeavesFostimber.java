@@ -20,7 +20,8 @@ import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import mods.elysium.block.ElysianBlock;
 
-public class ElysianBlockLeavesFostimber extends ElysianBlock implements IShearable{
+public class ElysianBlockLeavesFostimber extends ElysianBlock implements IShearable
+{
 
     @SideOnly(Side.CLIENT)
     private Icon leaves_fast;
@@ -30,21 +31,24 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
     
     int[] adjacentTreeBlocks;
 
-	public ElysianBlockLeavesFostimber(int id, Material mat) {
+	public ElysianBlockLeavesFostimber(int id, Material mat)
+	{
 		super(id, mat);
         this.setTickRandomly(true);
 	}
-
+	
+	@Override
 	/**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
     public Icon getIcon(int par1, int par2)
     {
-		if(Minecraft.getMinecraft().gameSettings.fancyGraphics){
+		if(Minecraft.getMinecraft().gameSettings.fancyGraphics)
 			return this.leaves;
-		}
 		return this.leaves_fast;
     }
+	
+	@Override
     /**
      * ejects contained items into the world, and notifies neighbours of an update, as appropriate
      */
@@ -72,7 +76,8 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
             }
         }
     }
-
+	
+	@Override
     /**
      * Ticks the block if it's been scheduled
      */
@@ -89,7 +94,7 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
                 byte b1 = 32;
                 int j1 = b1 * b1;
                 int k1 = b1 / 2;
-
+                
                 if (this.adjacentTreeBlocks == null)
                 {
                     this.adjacentTreeBlocks = new int[b1 * b1 * b1];
@@ -188,9 +193,9 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
             }
         }
     }
-
+	
+	@Override
     @SideOnly(Side.CLIENT)
-
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
@@ -210,7 +215,8 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
         this.dropBlockAsItem(par1World, par2, par3, par4, par1World.getBlockMetadata(par2, par3, par4), 0);
         par1World.setBlockToAir(par2, par3, par4);
     }
-
+    
+    @Override
     /**
      * Returns the quantity of items to drop on block destruction.
      */
@@ -218,7 +224,8 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
     {
         return par1Random.nextInt(20) == 0 ? 1 : 0;
     }
-
+    
+    @Override
     /**
      * Returns the ID of the items to drop on destruction.
      */
@@ -226,7 +233,8 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
     {
         return Elysium.blockSaplingFostimber.blockID;
     }
-
+    
+    @Override
     /**
      * Drops the block items with a specified chance of dropping the specified items
      */
@@ -275,7 +283,14 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
 //            }
         }
     }
-
+    
+    @Override
+	public void beginLeavesDecay(World world, int x, int y, int z)
+	{
+		world.setBlockMetadataWithNotify(x, y, z, world.getBlockMetadata(x, y, z) | 8, 4);
+	}
+    
+    @Override
     /**
      * Called when the player destroys a block with an item that can harvest it. (i, j, k) are the coordinates of the
      * block and l is the block's subtype/damage.
@@ -284,7 +299,8 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
     {
         super.harvestBlock(par1World, par2EntityPlayer, par3, par4, par5, par6);
     }
-
+    
+    @Override
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
@@ -293,6 +309,7 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
         return par1 & 3;
     }
     
+    @Override
     @SideOnly(Side.CLIENT)
     /**
      * Is this block (a) opaque and (b) a full 1m cube?  This determines whether or not to render the shared face of two
@@ -303,8 +320,8 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
         return !Minecraft.getMinecraft().gameSettings.fancyGraphics;
     }
     
+    @Override
     @SideOnly(Side.CLIENT)
-
     /**
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
@@ -316,6 +333,7 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
 
     }
     
+    @Override
     /**
      * Returns true if the given side of this block type should be rendered, if the adjacent block is at the given
      * coordinates.  Args: blockAccess, x, y, z, side

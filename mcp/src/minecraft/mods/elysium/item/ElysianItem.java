@@ -18,7 +18,7 @@ public class ElysianItem extends Item
 		super(id);
 		this.setCreativeTab(Elysium.tabElysium);
 	}
-
+	
 	@Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister itemIcon)

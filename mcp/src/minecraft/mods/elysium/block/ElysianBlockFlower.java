@@ -28,7 +28,8 @@ public class ElysianBlockFlower extends ElysianBlock implements IPlantable
     {
         this(id, Material.plants);
     }
-
+    
+    @Override
     /**
      * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
      */
@@ -45,7 +46,8 @@ public class ElysianBlockFlower extends ElysianBlock implements IPlantable
     {
         return id == Elysium.blockGrass.blockID || id == Elysium.blockDirt.blockID;
     }
-
+    
+    @Override
     /**
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
@@ -55,7 +57,8 @@ public class ElysianBlockFlower extends ElysianBlock implements IPlantable
         super.onNeighborBlockChange(par1World, par2, par3, par4, par5);
         this.checkFlowerChange(par1World, par2, par3, par4);
     }
-
+    
+    @Override
     /**
      * Ticks the block if it's been scheduled
      */
@@ -72,7 +75,8 @@ public class ElysianBlockFlower extends ElysianBlock implements IPlantable
             par1World.setBlockToAir(par2, par3, par4);
         }
     }
-
+    
+    @Override
     /**
      * Can this block stay at this position.  Similar to canPlaceBlockAt except gets checked often with plants.
      */
@@ -82,7 +86,8 @@ public class ElysianBlockFlower extends ElysianBlock implements IPlantable
         return (par1World.getFullBlockLightValue(par2, par3, par4) >= 8 || par1World.canBlockSeeTheSky(par2, par3, par4)) && 
                 (soil != null && soil.canSustainPlant(par1World, par2, par3 - 1, par4, ForgeDirection.UP, this));
     }
-
+    
+    @Override
     /**
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
@@ -91,7 +96,8 @@ public class ElysianBlockFlower extends ElysianBlock implements IPlantable
     {
         return null;
     }
-
+    
+    @Override
     /**
      * Is this block (a) opaque and (b) a full 1m cube?  This determines whether or not to render the shared face of two
      * adjacent blocks and also whether the player can attach torches, redstone wire, etc to this block.
@@ -100,7 +106,8 @@ public class ElysianBlockFlower extends ElysianBlock implements IPlantable
     {
         return false;
     }
-
+    
+    @Override
     /**
      * If this block doesn't render as an ordinary block it will return False (examples: signs, buttons, stairs, etc)
      */
@@ -108,7 +115,8 @@ public class ElysianBlockFlower extends ElysianBlock implements IPlantable
     {
         return false;
     }
-
+    
+    @Override
     /**
      * The type of render function that is called for this block
      */

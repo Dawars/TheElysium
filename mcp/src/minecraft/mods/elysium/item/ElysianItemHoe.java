@@ -23,7 +23,8 @@ public class ElysianItemHoe extends ElysianItem
         this.maxStackSize = 1;
         this.setMaxDamage(toolMat.getMaxUses());
     }
-
+    
+    @Override
     /**
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
@@ -73,9 +74,9 @@ public class ElysianItemHoe extends ElysianItem
             }
         }
     }
-
+    
+    @Override
     @SideOnly(Side.CLIENT)
-
     /**
      * Returns True is the item is renderer in full 3D when hold.
      */

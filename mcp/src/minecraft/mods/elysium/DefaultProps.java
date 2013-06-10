@@ -4,8 +4,8 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.input.Keyboard;
 
-public class DefaultProps {
-	
+public class DefaultProps
+{
 	public static final String modId = "elysium";
 	public static final String NET_CHANNEL_NAME = "elysium";
 	public static int DimensionID = 8;
@@ -25,14 +25,17 @@ public class DefaultProps {
 	
 	public static int idPortalCoreBlock = 210;
 	
-	
 	public static int idFostimberSaplingBlock = 2000;
 	public static int idFostimberLogBlock = 2001;
 	public static int idFostimberLeavesBlock = 2002;
+	
 	public static int idGastroShellBlock = 2003;
+	
 	public static int idWoodBlock = 2004;
+	
 	public static int idAsphodelFlowerBlock = 2005;
 	public static int idCurlgrassBlock = 2006;
+	
 	public static int idOreSulphurBlock = 2007;
 	public static int idOreCobaltBlock = 2008;
 	public static int idOreIridiumBlock = 2009;
@@ -42,14 +45,17 @@ public class DefaultProps {
 	public static int idOreBerylBlock = 2013;
 	public static int idShellsBlock = 2014;
 	public static int idConchBlock = 2015;
+	
 	public static int idPaleCobblestoneBlock = 2016;
+	public static int idPalestonePillarBlock = 2017;
 	
 	//Items
 	public static int idGracePrismItem = 5000;
-
 	public static int idWhistleItem = 5001;
+	
 	public static int idPepperSeedItem = 5002;
 	public static int idAsphodelPetalsItem = 5003;
+	
 	public static int idBerylItem = 5004;
 	public static int idCobaltIngotItem = 5005;
 	public static int idIridiumIngotItem = 5006;
@@ -58,9 +64,6 @@ public class DefaultProps {
 	public static int idSulphurItem = 5009;
 	public static int idTourmalineItem = 5010;
 	public static int idSturdyHideItem = 5011;
-
-	
-	
 	
 	public static int idWoodSwordItem = 5051;
 	public static int idWoodPickaxeItem = 5052;

@@ -15,7 +15,8 @@ public class ElysianBlockOre extends ElysianBlock
     {
         super(par1, Material.rock);
     }
-
+    
+    @Override
     /**
      * Returns the ID of the items to drop on destruction.
      */
@@ -23,7 +24,8 @@ public class ElysianBlockOre extends ElysianBlock
     {
         return this.blockID == Elysium.oreSulphure.blockID ? Elysium.itemSulphur.itemID : (this.blockID == Elysium.oreTourmaline.blockID ? Elysium.itemTourmaline.itemID : (this.blockID == Elysium.oreJade.blockID ? Elysium.itemJade.itemID : (this.blockID == Elysium.oreBeryl.blockID ? Elysium.itemBerly.itemID : this.blockID)));
     }
-
+    
+    @Override
     /**
      * Returns the quantity of items to drop on block destruction.
      */
@@ -31,7 +33,8 @@ public class ElysianBlockOre extends ElysianBlock
     {
         return this.blockID == Elysium.oreBeryl.blockID ? 4 + par1Random.nextInt(5) : 1;
     }
-
+    
+    @Override
     /**
      * Returns the usual quantity dropped by the block plus a bonus of 1 to 'i' (inclusive).
      */
@@ -53,7 +56,8 @@ public class ElysianBlockOre extends ElysianBlock
             return this.quantityDropped(par2Random);
         }
     }
-
+    
+    @Override
     /**
      * Drops the block items with a specified chance of dropping the specified items
      */

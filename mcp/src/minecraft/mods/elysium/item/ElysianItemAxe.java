@@ -14,7 +14,8 @@ public class ElysianItemAxe extends ElysianItemTool
     {
         super(par1, 3, par2EnumToolMaterial, blocksEffectiveAgainst);
     }
-
+    
+    @Override
     /**
      * Returns the strength of the stack against a given block. 1.0F base, (Quality+1)*2 if correct blocktype, 1.5F if
      * sword

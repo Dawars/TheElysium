@@ -33,7 +33,8 @@ public class ElysianItemTool extends ElysianItem
         this.efficiencyOnProperMaterial = toolMat.getEfficiencyOnProperMaterial();
         this.damageVsEntity = par2 + toolMat.getDamageVsEntity();
     }
-
+    
+    @Override
     /**
      * Returns the strength of the stack against a given block. 1.0F base, (Quality+1)*2 if correct blocktype, 1.5F if
      * sword
@@ -50,7 +51,8 @@ public class ElysianItemTool extends ElysianItem
 
         return 1.0F;
     }
-
+    
+    @Override
     /**
      * Current implementations of this method in child classes do not use the entry argument beside ev. They just raise
      * the damage on the stack.
@@ -60,7 +62,8 @@ public class ElysianItemTool extends ElysianItem
         par1ItemStack.damageItem(2, par3EntityLiving);
         return true;
     }
-
+    
+    @Override
     public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, int par3, int par4, int par5, int par6, EntityLiving par7EntityLiving)
     {
         if ((double)Block.blocksList[par3].getBlockHardness(par2World, par4, par5, par6) != 0.0D)
@@ -70,7 +73,8 @@ public class ElysianItemTool extends ElysianItem
 
         return true;
     }
-
+    
+    @Override
     /**
      * Returns the damage against a given entity.
      */
@@ -78,9 +82,9 @@ public class ElysianItemTool extends ElysianItem
     {
         return this.damageVsEntity;
     }
-
+    
+    @Override
     @SideOnly(Side.CLIENT)
-
     /**
      * Returns True is the item is renderer in full 3D when hold.
      */
@@ -88,7 +92,8 @@ public class ElysianItemTool extends ElysianItem
     {
         return true;
     }
-
+    
+    @Override
     /**
      * Return the enchantability factor of the item, most of the time is based on material.
      */
@@ -104,7 +109,8 @@ public class ElysianItemTool extends ElysianItem
     {
         return this.toolMaterial.toString();
     }
-
+    
+    @Override
     /**
      * Return whether this item is repairable in an anvil.
      */

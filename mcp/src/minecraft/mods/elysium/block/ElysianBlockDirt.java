@@ -6,12 +6,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.IPlantable;
 
-public class ElysianBlockDirt extends ElysianBlock{
-
-	public ElysianBlockDirt(int id, Material mat) {
+public class ElysianBlockDirt extends ElysianBlock
+{
+	public ElysianBlockDirt(int id, Material mat)
+	{
 		super(id, mat);
 	}
 	
+	@Override
 	/**
      * Determines if this block can support the passed in plant, allowing it to be planted and grow.
      * Some examples:
@@ -42,5 +44,4 @@ public class ElysianBlockDirt extends ElysianBlock{
 		return false;
     }
 	//->grass
-
 }

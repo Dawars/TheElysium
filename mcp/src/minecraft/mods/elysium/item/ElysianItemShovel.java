@@ -13,7 +13,8 @@ public class ElysianItemShovel extends ElysianItemTool
     {
         super(par1, 1, par2EnumToolMaterial, blocksEffectiveAgainst);
     }
-
+    
+    @Override
     /**
      * Returns if the item (tool) can harvest results from the block type.
      */

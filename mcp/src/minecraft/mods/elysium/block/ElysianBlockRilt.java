@@ -22,6 +22,7 @@ public class ElysianBlockRilt extends ElysianBlock
 		entity.motionZ *= 0.025;
 	}
 	
+	@Override
 	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z)
 	{
 		return null;

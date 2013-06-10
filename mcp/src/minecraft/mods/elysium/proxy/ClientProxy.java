@@ -16,35 +16,31 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class ClientProxy extends CommonProxy{
-
-	/* INSTANCES */
-	public Object getClient() {
+public class ClientProxy extends CommonProxy
+{
+	@Override
+	public Object getClient()
+	{
 		return FMLClientHandler.instance().getClient();
 	}
-
-	public World getClientWorld() {
+	
+	@Override
+	public World getClientWorld()
+	{
 		return FMLClientHandler.instance().getClient().theWorld;
 	}
 	
 	@Override
 	public void RegisterRenders()
 	{
-//		Suggestions.SlimeBlockRenderId = RenderingRegistry.getNextAvailableRenderId();
-//
-//		RenderingRegistry.registerBlockHandler(new RenderSlimeBlock());
 		RenderingRegistry.registerEntityRenderingHandler(ElysianEntityDrachma.class, new RenderDrachmaOBJ());
 		ClientRegistry.bindTileEntitySpecialRenderer(ElysianTileEntityPortal.class, new ElysianTileEntityPortalRenderer());
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityCatorPillar.class, new RenderCaterPillar());
-
 	}
 	
-	public static void registerBlock(Block block){
-		GameRegistry.registerBlock(block, DefaultProps.modId + block.getUnlocalizedName2());
-	}
-	
-	public static void addSoundHandler(Object handler){
+	public static void addSoundHandler(Object handler)
+	{
 		MinecraftForge.EVENT_BUS.register(handler);
 	}
 }

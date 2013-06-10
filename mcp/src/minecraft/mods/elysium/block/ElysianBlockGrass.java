@@ -16,20 +16,21 @@ import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.IPlantable;
 
-public class ElysianBlockGrass extends ElysianBlock{
+public class ElysianBlockGrass extends ElysianBlock
+{
 	@SideOnly(Side.CLIENT)
     private Icon iconGrassTop;
 //    @SideOnly(Side.CLIENT)
 //    private Icon iconGrassSideOverlay;
     
-	public ElysianBlockGrass(int id, Material mat) {
+	public ElysianBlockGrass(int id, Material mat)
+	{
 		super(id, mat);
 		this.setTickRandomly(true);
-
 	}
 	
+	@Override
 	@SideOnly(Side.CLIENT)
-
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
@@ -38,6 +39,7 @@ public class ElysianBlockGrass extends ElysianBlock{
         return side == 1 ? this.iconGrassTop : (side == 0 ? Elysium.blockDirt.getBlockTextureFromSide(side) : this.blockIcon);
     }
 	
+	@Override
 	/**
      * Determines if this block can support the passed in plant, allowing it to be planted and grow.
      * Some examples:
@@ -67,7 +69,8 @@ public class ElysianBlockGrass extends ElysianBlock{
         
 		return false;
     }
-
+	
+	@Override
     /**
      * Ticks the block if it's been scheduled
      */
@@ -96,7 +99,8 @@ public class ElysianBlockGrass extends ElysianBlock{
             }
         }
     }
-
+	
+	@Override
     /**
      * Returns the ID of the items to drop on destruction.
      */
@@ -104,8 +108,9 @@ public class ElysianBlockGrass extends ElysianBlock{
     {
         return Elysium.blockDirt.blockID;
     }
+	
+	@Override
 	@SideOnly(Side.CLIENT)
-
     /**
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.

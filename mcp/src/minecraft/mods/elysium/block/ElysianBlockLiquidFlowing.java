@@ -40,12 +40,14 @@ public class ElysianBlockLiquidFlowing extends ElysianBlockLiquid
         int l = par1World.getBlockMetadata(par2, par3, par4);
         par1World.setBlock(par2, par3, par4, this.blockID + 1, l, 2);
     }
-
+    
+    @Override
     public boolean getBlocksMovement(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
     {
         return this.blockMaterial != Material.lava;
     }
-
+    
+    @Override
     /**
      * Ticks the block if it's been scheduled
      */
@@ -407,7 +409,8 @@ public class ElysianBlockLiquidFlowing extends ElysianBlockLiquid
         Material material = par1World.getBlockMaterial(par2, par3, par4);
         return material == this.blockMaterial ? false : (material == Material.lava ? false : !this.blockBlocksFlow(par1World, par2, par3, par4));
     }
-
+    
+    @Override
     /**
      * Called whenever the block is added into the world. Args: world, x, y, z
      */
@@ -420,7 +423,8 @@ public class ElysianBlockLiquidFlowing extends ElysianBlockLiquid
             par1World.scheduleBlockUpdate(par2, par3, par4, this.blockID, this.tickRate(par1World));
         }
     }
-
+    
+    @Override
     public boolean func_82506_l()
     {
         return false;

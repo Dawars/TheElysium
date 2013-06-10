@@ -19,8 +19,8 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.client.FMLClientHandler;
 
-public class SkyRendererElysium extends IRenderHandler {
-
+public class SkyRendererElysium extends IRenderHandler
+{
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void render(float partialTicks, WorldClient world, Minecraft mc)
@@ -216,7 +216,7 @@ public class SkyRendererElysium extends IRenderHandler {
 		FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/" + DefaultProps.modId + "/textures/misc/space.png");
 		Tessellator tessellator = Tessellator.instance;
 
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, (CommonProxy.proxy.getClientWorld().getStarBrightness(partialTicks)) * (1.0F - CommonProxy.proxy.getClientWorld().getRainStrength(partialTicks)));
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, (Elysium.proxy.getClientWorld().getStarBrightness(partialTicks)) * (1.0F - Elysium.proxy.getClientWorld().getRainStrength(partialTicks)));
 //		GL11.glColor4f(1.0F, 1.0F, 1.0F, 0F);
 		
 		for (int i = 0; i < 6; ++i)

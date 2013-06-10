@@ -19,12 +19,14 @@ public class ElysianBlockLiquidStationary extends ElysianBlockLiquid
             this.setTickRandomly(true);
         }
     }
-
+    
+    @Override
     public boolean getBlocksMovement(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
     {
         return this.blockMaterial != Material.lava;
     }
-
+    
+    @Override
     /**
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
@@ -38,7 +40,7 @@ public class ElysianBlockLiquidStationary extends ElysianBlockLiquid
             this.setNotStationary(par1World, par2, par3, par4);
         }
     }
-
+    
     /**
      * Changes the block ID to that of an updating fluid.
      */
@@ -48,7 +50,8 @@ public class ElysianBlockLiquidStationary extends ElysianBlockLiquid
         par1World.setBlock(par2, par3, par4, this.blockID - 1, l, 2);
         par1World.scheduleBlockUpdate(par2, par3, par4, this.blockID - 1, this.tickRate(par1World));
     }
-
+    
+    @Override
     /**
      * Ticks the block if it's been scheduled
      */

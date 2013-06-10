@@ -9,35 +9,21 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-public class CommonProxy {
-	
-	@SidedProxy(clientSide = "mods.elysium.proxy.ClientProxy", serverSide = "mods.elysium.proxy.CommonProxy")
-	public static CommonProxy proxy;
-
-	/* INSTANCES */
-	public Object getClient() {
-		return null;
-	}
-
-	public World getClientWorld() {
+public class CommonProxy
+{
+	public Object getClient()
+	{
 		return null;
 	}
 	
-	/* SIMULATION */
-	public boolean isSimulating(World world) {
-		return !world.isRemote;
-	}
-
-	public boolean isRenderWorld(World world) {
-		return world.isRemote;
+	public World getClientWorld()
+	{
+		return null;
 	}
 	
-	public void RegisterRenders(){
+	public void RegisterRenders()
+	{
 		
-	}
-
-	public static void registerBlock(Block block){
-		GameRegistry.registerBlock(block);
 	}
 	
 	public static void addSoundHandler(Object handler){	}

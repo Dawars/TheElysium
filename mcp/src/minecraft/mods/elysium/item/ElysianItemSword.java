@@ -31,7 +31,8 @@ public class ElysianItemSword extends ElysianItem
     {
         return this.toolMaterial.getDamageVsEntity();
     }
-
+    
+    @Override
     /**
      * Returns the strength of the stack against a given block. 1.0F base, (Quality+1)*2 if correct blocktype, 1.5F if
      * sword
@@ -48,7 +49,8 @@ public class ElysianItemSword extends ElysianItem
             return material != Material.plants && material != Material.vine && material != Material.coral && material != Material.leaves && material != Material.pumpkin ? 1.0F : 1.5F;
         }
     }
-
+    
+    @Override
     /**
      * Current implementations of this method in child classes do not use the entry argument beside ev. They just raise
      * the damage on the stack.
@@ -58,7 +60,8 @@ public class ElysianItemSword extends ElysianItem
         par1ItemStack.damageItem(1, par3EntityLiving);
         return true;
     }
-
+    
+    @Override
     public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, int par3, int par4, int par5, int par6, EntityLiving par7EntityLiving)
     {
         if ((double)Block.blocksList[par3].getBlockHardness(par2World, par4, par5, par6) != 0.0D)
@@ -68,7 +71,8 @@ public class ElysianItemSword extends ElysianItem
 
         return true;
     }
-
+    
+    @Override
     /**
      * Returns the damage against a given entity.
      */
@@ -76,9 +80,9 @@ public class ElysianItemSword extends ElysianItem
     {
         return this.weaponDamage;
     }
-
+    
+    @Override
     @SideOnly(Side.CLIENT)
-
     /**
      * Returns True is the item is renderer in full 3D when hold.
      */
@@ -86,7 +90,8 @@ public class ElysianItemSword extends ElysianItem
     {
         return true;
     }
-
+    
+    @Override
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
@@ -94,7 +99,8 @@ public class ElysianItemSword extends ElysianItem
     {
         return EnumAction.block;
     }
-
+    
+    @Override
     /**
      * How long it takes to use or consume an item
      */
@@ -102,7 +108,8 @@ public class ElysianItemSword extends ElysianItem
     {
         return 72000;
     }
-
+    
+    @Override
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
@@ -111,7 +118,8 @@ public class ElysianItemSword extends ElysianItem
         par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
         return par1ItemStack;
     }
-
+    
+    @Override
     /**
      * Returns if the item (tool) can harvest results from the block type.
      */
@@ -119,7 +127,8 @@ public class ElysianItemSword extends ElysianItem
     {
         return par1Block.blockID == Block.web.blockID;
     }
-
+    
+    @Override
     /**
      * Return the enchantability factor of the item, most of the time is based on material.
      */
@@ -127,7 +136,7 @@ public class ElysianItemSword extends ElysianItem
     {
         return this.toolMaterial.getEnchantability();
     }
-
+    
     /**
      * Return the name for this tool's material.
      */
@@ -135,7 +144,8 @@ public class ElysianItemSword extends ElysianItem
     {
         return this.toolMaterial.toString();
     }
-
+    
+    @Override
     /**
      * Return whether this item is repairable in an anvil.
      */

@@ -51,7 +51,8 @@ public class ElysianBlockTallgrass extends ElysianBlockFlower implements ISheara
 //
 //        return this.iconArray[par2];
 //    }
-
+    
+    @Override
     /**
      * Returns the ID of the items to drop on destruction.
      */
@@ -59,7 +60,8 @@ public class ElysianBlockTallgrass extends ElysianBlockFlower implements ISheara
     {
         return -1;
     }
-
+    
+    @Override
     /**
      * Returns the usual quantity dropped by the block plus a bonus of 1 to 'i' (inclusive).
      */
@@ -67,7 +69,8 @@ public class ElysianBlockTallgrass extends ElysianBlockFlower implements ISheara
     {
         return 1 + par2Random.nextInt(par1 * 2 + 1);
     }
-
+    
+    @Override
     /**
      * Called when the player destroys a block with an item that can harvest it. (i, j, k) are the coordinates of the
      * block and l is the block's subtype/damage.

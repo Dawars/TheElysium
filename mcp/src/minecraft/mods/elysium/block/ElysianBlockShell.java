@@ -32,7 +32,8 @@ public class ElysianBlockShell extends ElysianBlockFlower
         float f1 = 0.015625F;
         this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f1, 0.5F + f);
     }
-
+    
+    @Override
     /**
      * The type of render function that is called for this block
      */
@@ -40,6 +41,8 @@ public class ElysianBlockShell extends ElysianBlockFlower
     {
         return 23;
     }
+    
+    @Override
     /**
      * Adds all intersecting collision boxes to a list. (Be sure to only add boxes to the list if they intersect the
      * mask.) Parameters: World, X, Y, Z, mask, list, colliding entity
@@ -51,7 +54,8 @@ public class ElysianBlockShell extends ElysianBlockFlower
             super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, entity);
         }
     }
-
+    
+    @Override
     /**
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
@@ -70,7 +74,8 @@ public class ElysianBlockShell extends ElysianBlockFlower
     {
         return par1 == Elysium.blockLeucosand.blockID;
     }
-
+    
+    @Override
     /**
      * Can this block stay at this position.  Similar to canPlaceBlockAt except gets checked often with plants.
      */
@@ -79,6 +84,7 @@ public class ElysianBlockShell extends ElysianBlockFlower
         return world.getBlockId(i, j - 1, k) == Elysium.blockLeucosand.blockID ? true : false;
     }
     
+    @Override
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */

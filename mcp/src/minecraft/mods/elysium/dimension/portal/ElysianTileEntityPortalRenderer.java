@@ -9,6 +9,7 @@ import mods.elysium.DefaultProps;
 import mods.elysium.client.particle.ElysianEntityFX;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDragonEgg;
+import net.minecraft.client.particle.EntitySmokeFX;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -64,12 +65,14 @@ public class ElysianTileEntityPortalRenderer extends TileEntitySpecialRenderer
 			if(random.nextInt(2) == 0)
 			{
 				int deg = random.nextInt(360);
-				ElysianEntityFX entityfx = new ElysianEntityFX(tile.worldObj, x+portalTile.radius*Math.cos(Math.toRadians(deg))+0.5D, y+random.nextInt(100), z+portalTile.radius*Math.sin(Math.toRadians(deg))+0.5D, 0, 0.1D, 0);
-				/*entityfx.setParticleTextureIndex(65);*/
+				/*ElysianEntityFX entityfx = new ElysianEntityFX(tile.worldObj, x+portalTile.radius*Math.cos(Math.toRadians(deg))+0.5D, y+random.nextInt(100), z+portalTile.radius*Math.sin(Math.toRadians(deg))+0.5D, 0, 0.1D, 0);
+				entityfx.setParticleTextureIndex(65);
 				entityfx.setRBGColorF(1, 1, 0);
 				entityfx.setBrightness(125);
 				entityfx.setTextureFile("/mods/elysium/textures/misc/particles/beam.png");
-				ModLoader.getMinecraftInstance().effectRenderer.addEffect(entityfx);
+				ModLoader.getMinecraftInstance().effectRenderer.addEffect(entityfx);*/
+				ModLoader.getMinecraftInstance().effectRenderer.addEffect(new EntitySmokeFX(tile.worldObj, x+portalTile.radius*Math.cos(Math.toRadians(deg))+0.5D, y+random.nextInt(100), z+portalTile.radius*Math.sin(Math.toRadians(deg))+0.5D, 0, 0.1D, 0));
+				tile.worldObj.spawnParticle("crit", x+portalTile.radius*Math.cos(Math.toRadians(deg))+0.5D, y+random.nextInt(100), z+portalTile.radius*Math.sin(Math.toRadians(deg))+0.5D, 0, 0.1D, 0);
 			}
 			
 			glPushMatrix();

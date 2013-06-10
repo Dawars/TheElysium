@@ -7,37 +7,40 @@ import net.minecraft.world.World;
 
 public abstract class ElysianBlockContainer extends ElysianBlock implements ITileEntityProvider
 {
-    protected ElysianBlockContainer(int par1, Material par2Material)
+    protected ElysianBlockContainer(int id, Material material)
     {
-        super(par1, par2Material);
+        super(id, material);
         this.isBlockContainer = true;
     }
-
+    
+    @Override
     /**
      * Called whenever the block is added into the world. Args: world, x, y, z
      */
-    public void onBlockAdded(World par1World, int par2, int par3, int par4)
+    public void onBlockAdded(World world, int x, int y, int z)
     {
-        super.onBlockAdded(par1World, par2, par3, par4);
+        super.onBlockAdded(world, x, y, z);
     }
-
+    
+    @Override
     /**
      * ejects contained items into the world, and notifies neighbours of an update, as appropriate
      */
-    public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+    public void breakBlock(World world, int x, int y, int z, int par5, int par6)
     {
-        super.breakBlock(par1World, par2, par3, par4, par5, par6);
-        par1World.removeBlockTileEntity(par2, par3, par4);
+        super.breakBlock(world, x, y, z, par5, par6);
+        world.removeBlockTileEntity(x, y, z);
     }
-
+    
+    @Override
     /**
      * Called when the block receives a BlockEvent - see World.addBlockEvent. By default, passes it on to the tile
      * entity at this location. Args: world, x, y, z, blockID, EventID, event parameter
      */
-    public boolean onBlockEventReceived(World par1World, int par2, int par3, int par4, int par5, int par6)
+    public boolean onBlockEventReceived(World world, int x, int y, int z, int blockID, int eventID)
     {
-        super.onBlockEventReceived(par1World, par2, par3, par4, par5, par6);
-        TileEntity tileentity = par1World.getBlockTileEntity(par2, par3, par4);
-        return tileentity != null ? tileentity.receiveClientEvent(par5, par6) : false;
+        super.onBlockEventReceived(world, x, y, z, blockID, eventID);
+        TileEntity tileentity = world.getBlockTileEntity(x, y, z);
+        return tileentity != null ? tileentity.receiveClientEvent(blockID, eventID) : false;
     }
 }

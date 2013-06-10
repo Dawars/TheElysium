@@ -36,9 +36,9 @@ public class ElysianEntityFX extends EntityFX
 	}
 	
 	@Override
-	public void renderParticle(Tessellator tessellator, float par2, float par3, float par4, float par5, float par6, float par7)
+	public void renderParticle(Tessellator tessellator, float tick, float rotationX, float rotationXZ, float rotationZ, float rotationYZ, float rotationXY)
 	{
-		if(this.texturefile != null)
+		/*if(this.texturefile != null)
 			FMLClientHandler.instance().getClient().renderEngine.bindTexture(this.texturefile);
 		
 		float textureCoordX1 = (float)this.particleTextureIndexX / 16.0F;
@@ -64,20 +64,19 @@ public class ElysianEntityFX extends EntityFX
 			textureCoordY2 = this.particleIcon.getMaxV();
 		}
 		
-		float x = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)par2 - interpPosX);
-		float y = (float)(this.prevPosY + (this.posY - this.prevPosY) * (double)par2 - interpPosY);
-		float z = (float)(this.prevPosZ + (this.posZ - this.prevPosZ) * (double)par2 - interpPosZ);
-		x = (float)this.posX;
-		y = (float)this.posY;
-		z = (float)this.posZ;
+		float x = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)tick);
+		float y = (float)(this.prevPosY + (this.posY - this.prevPosY) * (double)tick);
+		float z = (float)(this.prevPosZ + (this.posZ - this.prevPosZ) * (double)tick);
+		
 		float colorMultiplier = 1.0F;
 		
 		tessellator.setBrightness(this.brightness);
 		if(this.particleRed >= 0)
 			tessellator.setColorRGBA_F(this.particleRed * colorMultiplier, this.particleGreen * colorMultiplier, this.particleBlue * colorMultiplier, this.particleAlpha);
-		tessellator.addVertexWithUV((double)(x - par3 * scaleAmount - par6 * scaleAmount), (double)(y - par4 * scaleAmount), (double)(z - par5 * scaleAmount - par7 * scaleAmount), (double)textureCoordX2, (double)textureCoordY2);
-        tessellator.addVertexWithUV((double)(x - par3 * scaleAmount + par6 * scaleAmount), (double)(y + par4 * scaleAmount), (double)(z - par5 * scaleAmount + par7 * scaleAmount), (double)textureCoordX2, (double)textureCoordY1);
-        tessellator.addVertexWithUV((double)(x + par3 * scaleAmount + par6 * scaleAmount), (double)(y + par4 * scaleAmount), (double)(z + par5 * scaleAmount + par7 * scaleAmount), (double)textureCoordX1, (double)textureCoordY1);
-        tessellator.addVertexWithUV((double)(x + par3 * scaleAmount - par6 * scaleAmount), (double)(y - par4 * scaleAmount), (double)(z + par5 * scaleAmount - par7 * scaleAmount), (double)textureCoordX1, (double)textureCoordY2);
+		tessellator.addVertexWithUV((double)(x - rotationX * scaleAmount - rotationYZ * scaleAmount), (double)(y - rotationXZ * scaleAmount), (double)(z - rotationZ * scaleAmount - rotationXY * scaleAmount), (double)textureCoordX2, (double)textureCoordY2);
+        tessellator.addVertexWithUV((double)(x - rotationX * scaleAmount + rotationYZ * scaleAmount), (double)(y + rotationXZ * scaleAmount), (double)(z - rotationZ * scaleAmount + rotationXY * scaleAmount), (double)textureCoordX2, (double)textureCoordY1);
+        tessellator.addVertexWithUV((double)(x + rotationX * scaleAmount + rotationYZ * scaleAmount), (double)(y + rotationXZ * scaleAmount), (double)(z + rotationZ * scaleAmount + rotationXY * scaleAmount), (double)textureCoordX1, (double)textureCoordY1);
+        tessellator.addVertexWithUV((double)(x + rotationX * scaleAmount - rotationYZ * scaleAmount), (double)(y - rotationXZ * scaleAmount), (double)(z + rotationZ * scaleAmount - rotationXY * scaleAmount), (double)textureCoordX1, (double)textureCoordY2);*/
+		super.renderParticle(tessellator, tick, rotationX, rotationXZ, rotationZ, rotationYZ, rotationXY);
 	}
 }

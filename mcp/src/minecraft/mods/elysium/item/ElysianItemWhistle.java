@@ -34,7 +34,6 @@ import net.minecraftforge.transformers.ForgeAccessTransformer;
 
 public class ElysianItemWhistle extends ElysianItem
 {
-	
 	private static Random rand = new Random();
 	
 	//Add API support
@@ -59,22 +58,23 @@ public class ElysianItemWhistle extends ElysianItem
         dragonExist.add("There should be a dragon somewhere here...");
 	}
 	
+	@Override
 	/**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entity)
     {
-    	if(!world.isRemote){
-    		if((System.currentTimeMillis() - lastPlay) / 1000 > 9D){
-	    		world.playSoundAtEntity(entity, "flute.track", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+    	if(!world.isRemote)
+    	{
+    		if((System.currentTimeMillis() - lastPlay) / 1000 > 9D)
+    		{
+	    		//world.playSoundAtEntity(entity, "flute.track", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
     			lastPlay = System.currentTimeMillis();
-
-
+    			
 		    	if(world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd )
 		    	{
-		    		if(isDragonAlive(world) >= Elysium.MaxDragon){
+		    		if(isDragonAlive(world) >= Elysium.MaxDragon)
 						entity.sendChatToPlayer(dragonExist.get(rand.nextInt(dragonExist.size())));
-		    		}
 		    	}
 		    	else
 		    	{
@@ -86,11 +86,13 @@ public class ElysianItemWhistle extends ElysianItem
         return itemStack;
     }
     
-    private int isDragonAlive(World world) {
+    private int isDragonAlive(World world)
+    {
     	List list = world.getLoadedEntityList();
     	int dragonNum = 0;
     	
-    	for (int i = 0; i < list.size(); i++) {
+    	for (int i = 0; i < list.size(); i++)
+    	{
     		if(list.get(i) instanceof EntityDragon)
     			dragonNum++;
     	}
@@ -98,8 +100,11 @@ public class ElysianItemWhistle extends ElysianItem
     	return dragonNum;
 	}
     
-    public ItemStack onEaten(ItemStack itemStack, World world, EntityPlayer entity){
-	    if(!world.isRemote){
+    @Override
+    public ItemStack onEaten(ItemStack itemStack, World world, EntityPlayer entity)
+    {
+	    if(!world.isRemote)
+	    {
     		if(world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd )
 	    	{
 	    		itemStack.damageItem(2, entity);
@@ -112,6 +117,7 @@ public class ElysianItemWhistle extends ElysianItem
 		return itemStack;
     }
     
+    @Override
     /**
      * Returns True is the item is renderer in full 3D when hold.
      */
@@ -120,6 +126,7 @@ public class ElysianItemWhistle extends ElysianItem
         return true;
     }
     
+    @Override
     /**
      * How long it takes to use or consume an item
      */
@@ -128,6 +135,7 @@ public class ElysianItemWhistle extends ElysianItem
         return 10*20;
     }
     
+    @Override
     /**
      * returns the action that specifies what animation to play when the items is being used
      */

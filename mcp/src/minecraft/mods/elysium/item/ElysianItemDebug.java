@@ -51,15 +51,14 @@ public class ElysianItemDebug extends ElysianItem
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-		if(world.isRemote){
-		
+		if(world.isRemote)
+		{
 			int randomNum = new Random().nextInt();
 			
 			player.sendChatToPlayer("Sending packet to server: " + randomNum);
 			PacketDispatcher.sendPacketToServer(new PacketRandom(randomNum).getPacket());
-		
 		}
-		if(player.isSneaking() /*Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)*/ && (player instanceof EntityPlayerMP))
+		if(player.isSneaking() && (player instanceof EntityPlayerMP))
 		{
 			EntityPlayerMP playermp = (EntityPlayerMP)player;
 			if(playermp.dimension == Elysium.DimensionID)

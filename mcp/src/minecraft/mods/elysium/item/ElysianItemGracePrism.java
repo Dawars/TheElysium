@@ -20,7 +20,8 @@ public class ElysianItemGracePrism extends ElysianItem
 		{
 			world.createExplosion(player, x+0.5D, y+0.5D, z+0.5D, 2F, true);
 			world.setBlock(x, y, z, Elysium.blockPortalCore.blockID);
-			stack.stackSize--;
+			if(!player.capabilities.isCreativeMode)
+				stack.stackSize--;
 			//return true;
 		}
         return false;
