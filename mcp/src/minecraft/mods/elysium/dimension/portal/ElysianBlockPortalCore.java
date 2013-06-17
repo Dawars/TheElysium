@@ -19,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
@@ -28,7 +29,8 @@ public class ElysianBlockPortalCore extends ElysianBlockContainer
 	{
 		super(id, mat);
 		this.setBlockBounds(0.5F, 1F, 0.5F, 0.5F, 1F, 0.5F);
-		//this.setTickRandomly(true);
+		this.setTickRandomly(true);
+		this.setCreativeTab(null);
 	}
 	
 	@Override
@@ -59,6 +61,11 @@ public class ElysianBlockPortalCore extends ElysianBlockContainer
 				EntityPlayerMP player = (EntityPlayerMP) entity;
 				ElysianTileEntityPortal tile = (ElysianTileEntityPortal)world.getBlockTileEntity(x, y, z);
 				
+				if((!world.isRemote) && (tile.timebeforetp == DefaultProps.ticksbeforeportalteleport-1))
+				{
+					player.addChatMessage(getWorldMessage(player));
+				}
+				
 				if(tile.timebeforetp == 0)
 				{
 					tile.timebeforetp = -1;
@@ -81,24 +88,44 @@ public class ElysianBlockPortalCore extends ElysianBlockContainer
 		}
 	}
 	
-	/*@Override
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World world, int x, int y, int z, Random random)
 	{
-		int part = random.nextInt(50);
-		for(int i=0; i < part; i++)
+		double rad = ((ElysianTileEntityPortal)world.getBlockTileEntity(x, y, z)).radius;
+		
+		int part = random.nextInt(20);
+		for(int i = 0; i < part; i++)
 		{
-			ElysianEntityFX entityfx = new ElysianEntityFX(world, x+random.nextDouble()*2-0.5D, y+random.nextInt(100), z+random.nextDouble()*2-0.5D, 0, 0.25D, 0);
-			entityfx.setRBGColorF(0.9F,0.9F, 0F);
-			entityfx.setParticleTextureIndex(65);
-			//entityfx.setTextureFile("/mods/elysium/textures/items/debug.png");
+			int deg = random.nextInt(360);
+			ElysianEntityFX entityfx = new ElysianEntityFX(world, x+rad*Math.cos(Math.toRadians(deg))+0.5D, y+random.nextInt(100), z+rad*Math.sin(Math.toRadians(deg))+0.5D, 0, 0.1D, 0);
+			entityfx.setRBGColorF(1, 1, 0);
+			entityfx.setBrightness(125);
+			entityfx.setTextureFile("/mods/elysium/textures/misc/particles/beam.png");
 			ModLoader.getMinecraftInstance().effectRenderer.addEffect(entityfx);
 		}
-	}*/
+	}
 
 	@Override
 	public TileEntity createNewTileEntity(World world)
 	{
 		return new ElysianTileEntityPortal();
+	}
+	
+	/**
+	 * Returns the correct warping message for elysium depending on where the player is.
+	 * @param player
+	 * @return Message to where the player is warping
+	 */
+	public String getWorldMessage(EntityPlayer player)
+	{
+		if(player.dimension == 0)
+		{
+			return "Teleporting to the " + EnumChatFormatting.GRAY + "Elysium";
+		}
+		else
+		{
+			return "Teleporting to the " + EnumChatFormatting.GRAY + "Overworld";
+		}
 	}
 }

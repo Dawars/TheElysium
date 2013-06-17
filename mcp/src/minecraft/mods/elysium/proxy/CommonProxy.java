@@ -21,10 +21,13 @@ public class CommonProxy
 		return null;
 	}
 	
-	public void RegisterRenders()
+	public void registerRenderers()
 	{
 		
 	}
 	
-	public static void addSoundHandler(Object handler){	}
+	public void installSounds()
+	{
+		
+	}
 }

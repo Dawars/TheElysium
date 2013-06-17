@@ -21,8 +21,6 @@ import static org.lwjgl.opengl.GL11.*;
 @SideOnly(Side.CLIENT)
 public class ElysianTileEntityPortalRenderer extends TileEntitySpecialRenderer
 {
-	Random random;
-	
 	public void renderTileEntityPortalAt(ElysianTileEntityPortal tile)
 	{
 		glDisable(GL_LIGHTING);
@@ -59,22 +57,6 @@ public class ElysianTileEntityPortalRenderer extends TileEntitySpecialRenderer
 		
 		if(portalTile.canstay)
 		{
-			if(random == null)
-				random = new Random(tile.worldObj.getSeed());
-			
-			if(random.nextInt(2) == 0)
-			{
-				int deg = random.nextInt(360);
-				/*ElysianEntityFX entityfx = new ElysianEntityFX(tile.worldObj, x+portalTile.radius*Math.cos(Math.toRadians(deg))+0.5D, y+random.nextInt(100), z+portalTile.radius*Math.sin(Math.toRadians(deg))+0.5D, 0, 0.1D, 0);
-				entityfx.setParticleTextureIndex(65);
-				entityfx.setRBGColorF(1, 1, 0);
-				entityfx.setBrightness(125);
-				entityfx.setTextureFile("/mods/elysium/textures/misc/particles/beam.png");
-				ModLoader.getMinecraftInstance().effectRenderer.addEffect(entityfx);*/
-				ModLoader.getMinecraftInstance().effectRenderer.addEffect(new EntitySmokeFX(tile.worldObj, x+portalTile.radius*Math.cos(Math.toRadians(deg))+0.5D, y+random.nextInt(100), z+portalTile.radius*Math.sin(Math.toRadians(deg))+0.5D, 0, 0.1D, 0));
-				tile.worldObj.spawnParticle("crit", x+portalTile.radius*Math.cos(Math.toRadians(deg))+0.5D, y+random.nextInt(100), z+portalTile.radius*Math.sin(Math.toRadians(deg))+0.5D, 0, 0.1D, 0);
-			}
-			
 			glPushMatrix();
 				glTranslated(x+0.5, y, z+0.5);
 				glRotatef(portalTile.rotation, 0, 1, 0);

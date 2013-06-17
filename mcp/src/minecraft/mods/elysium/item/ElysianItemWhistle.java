@@ -68,8 +68,8 @@ public class ElysianItemWhistle extends ElysianItem
     	{
     		if((System.currentTimeMillis() - lastPlay) / 1000 > 9D)
     		{
-	    		//world.playSoundAtEntity(entity, "flute.track", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
-    			lastPlay = System.currentTimeMillis();
+    			world.playSoundAtEntity(entity, "elysium.FluteTrack", 1F, 1F);
+	    		lastPlay = System.currentTimeMillis();
     			
 		    	if(world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd )
 		    	{

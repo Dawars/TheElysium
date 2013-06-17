@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.Player;
-import mods.elysium.entity.ElysianEntityDrachma;
+import mods.elysium.entity.EntityDrachma;
 import mods.elysium.proxy.CommonProxy;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet250CustomPayload;

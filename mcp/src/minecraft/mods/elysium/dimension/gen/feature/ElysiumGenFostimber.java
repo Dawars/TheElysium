@@ -24,6 +24,7 @@ public class ElysiumGenFostimber extends WorldGenerator
 		this.fromSapling = fromSapling;
 	}
 	
+	@Override
 	public boolean generate(World world, Random random, int x, int y, int z)
 	{
 		int cap = random.nextInt(2) + 2;

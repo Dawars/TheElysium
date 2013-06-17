@@ -14,7 +14,7 @@ import cpw.mods.fml.common.network.Player;
 import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import mods.elysium.dimension.portal.ElysianTeleporter;
-import mods.elysium.entity.ElysianEntityDrachma;
+import mods.elysium.entity.EntityDrachma;
 import mods.elysium.network.PacketRandom;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.Entity;
@@ -36,7 +36,7 @@ public class ElysianItemDebug extends ElysianItem
 	@Override
 	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
-		world.spawnEntityInWorld(new ElysianEntityDrachma(world, x+hitX, y+hitY, z+hitZ, new Random().nextInt(10)+10));
+		world.spawnEntityInWorld(new EntityDrachma(world, x+hitX, y+hitY, z+hitZ, new Random().nextInt(10)+10));
 		
 		if(!world.isRemote)
 		{

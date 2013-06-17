@@ -2,7 +2,7 @@ package mods.elysium.render;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mods.elysium.model.ModelCaterPillar;
+import mods.elysium.model.ModelGerbil;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelSnowMan;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -19,15 +19,14 @@ import static net.minecraftforge.client.IItemRenderer.ItemRendererHelper.*;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 @SideOnly(Side.CLIENT)
-public class RenderCaterPillar extends RenderLiving
+public class RenderGerbil extends RenderLiving
 {
-    private ModelCaterPillar model;
+    private ModelGerbil model;
 
-    public RenderCaterPillar()
+    public RenderGerbil()
     {
-        super(new ModelCaterPillar(), 1F);
-        this.model = (ModelCaterPillar)super.mainModel;
+        super(new ModelGerbil(), 0.25F);
+        this.model = (ModelGerbil)super.mainModel;
         this.setRenderPassModel(this.model);
     }
-
 }

@@ -43,11 +43,30 @@ public class DefaultProps
 	public static int idOreJadeBlock = 2011;
 	public static int idOreTourmalineBlock = 2012;
 	public static int idOreBerylBlock = 2013;
+	
 	public static int idShellsBlock = 2014;
 	public static int idConchBlock = 2015;
 	
-	public static int idPaleCobblestoneBlock = 2016;
-	public static int idPalestonePillarBlock = 2017;
+	public static int idPaleCobblestone = 2016;
+	public static int idPaleCobblestoneMossy = 2017;
+	public static int idPalestoneBrick = 2018;
+	public static int idPalestoneBrickCracked = 2019;
+	public static int idPalestoneBrickMossy = 2020;
+	public static int idPalestoneBrickChiseld = 2031;
+	public static int idPalestonePillar = 2021;
+	
+	public static int idExpeller = 2022;
+	
+	public static int idBlockSulphur = 2023;
+	public static int idBlockCobalt = 2024;
+	public static int idBlockIridium = 2025;
+	public static int idBlockSilicon = 2026;
+	public static int idBlockJade = 2027;
+	public static int idBlockTourmaline = 2028;
+	public static int idBlockBeryl = 2029;
+	
+	public static int idShrinePillar = 2030;
+	public static int idWorkbench = 2031;
 	
 	//Items
 	public static int idGracePrismItem = 5000;

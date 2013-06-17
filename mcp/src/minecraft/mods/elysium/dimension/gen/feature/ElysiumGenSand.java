@@ -18,7 +18,8 @@ public class ElysiumGenSand extends WorldGenerator
         this.sandId = sandId;
         this.radius = radius;
     }
-
+    
+    @Override
     public boolean generate(World world, Random random, int x, int y, int z)
     {
     	y = world.getTopSolidOrLiquidBlock(x, z);

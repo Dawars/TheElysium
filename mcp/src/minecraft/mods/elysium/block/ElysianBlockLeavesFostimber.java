@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.src.ModLoader;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -19,10 +20,10 @@ import net.minecraftforge.common.IShearable;
 import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import mods.elysium.block.ElysianBlock;
+import mods.elysium.client.particle.ElysianEntityFX;
 
 public class ElysianBlockLeavesFostimber extends ElysianBlock implements IShearable
 {
-
     @SideOnly(Side.CLIENT)
     private Icon leaves_fast;
 
@@ -199,14 +200,24 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void randomDisplayTick(World world, int x, int y, int z, Random random)
     {
-        if (par1World.canLightningStrikeAt(par2, par3 + 1, par4) && !par1World.doesBlockHaveSolidTopSurface(par2, par3 - 1, par4) && par5Random.nextInt(15) == 1)
+		if(random.nextInt(10) == 0)
+		{
+			ElysianEntityFX entityfx = new ElysianEntityFX(world, x+random.nextDouble()*2-0.5D, y+random.nextDouble()*2-0.5D, z+random.nextDouble()*2-0.5D, random.nextDouble()/10-0.05D, random.nextDouble()/10-0.05D, random.nextDouble()/10-0.05D);
+			entityfx.setRBGColorF(1, 1, 1);
+			entityfx.multipleParticleScaleBy(0.25F);
+			entityfx.setBrightness(200);
+			entityfx.setTextureFile("/mods/elysium/textures/misc/particles/fost.png");
+			ModLoader.getMinecraftInstance().effectRenderer.addEffect(entityfx);
+		}
+		
+        if(world.canLightningStrikeAt(x, y + 1, z) && !world.doesBlockHaveSolidTopSurface(x, y - 1, z) && random.nextInt(15) == 1)
         {
-            double d0 = (double)((float)par2 + par5Random.nextFloat());
-            double d1 = (double)par3 - 0.05D;
-            double d2 = (double)((float)par4 + par5Random.nextFloat());
-            par1World.spawnParticle("dripWater", d0, d1, d2, 0.0D, 0.0D, 0.0D);
+            double d0 = (double)((float)x + random.nextFloat());
+            double d1 = (double)y - 0.05D;
+            double d2 = (double)((float)z + random.nextFloat());
+            world.spawnParticle("dripWater", d0, d1, d2, 0.0D, 0.0D, 0.0D);
         }
     }
 

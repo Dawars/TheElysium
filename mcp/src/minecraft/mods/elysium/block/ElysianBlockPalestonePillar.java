@@ -32,7 +32,7 @@ public class ElysianBlockPalestonePillar extends ElysianBlock
 	@SideOnly(Side.CLIENT)
 	public Icon getIcon(int side, int meta)
 	{
-		if((meta == 2) && ((side == 0) || (side == 1)))
+		if(((meta == 2) || (meta == 0)) && ((side == 0) || (side == 1)))
 			return this.iconTop;
 		
 		if((meta == 4) && ((side == 2) || (side == 3)))
@@ -76,12 +76,5 @@ public class ElysianBlockPalestonePillar extends ElysianBlock
 		}
 
 		return meta;
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int id, CreativeTabs creativeTabs, List list)
-	{
-		list.add(new ItemStack(id, 1, 2));
 	}
 }
