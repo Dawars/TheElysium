@@ -27,9 +27,9 @@ public class EntityCatorPillar extends EntityMob
     /** AI task for player control. */
     private final EntityAIControlledByPlayer aiControlledByPlayer;
 
-    public EntityCatorPillar(World par1World)
+    public EntityCatorPillar(World world)
     {
-        super(par1World);
+        super(world);
         this.texture = "/mods/" + DefaultProps.modId + "/textures/mob/CaterPillar.png";
         this.setSize(0.9F, 0.9F);
         this.getNavigator().setAvoidsWater(true);
@@ -37,11 +37,17 @@ public class EntityCatorPillar extends EntityMob
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIPanic(this, 0.38F));
         this.tasks.addTask(2, this.aiControlledByPlayer = new EntityAIControlledByPlayer(this, 0.34F));
-        this.tasks.addTask(4, new EntityAITempt(this, 0.3F, Item.carrotOnAStick.itemID, false));
+//        this.tasks.addTask(4, new EntityAITempt(this, 0.3F, Item.carrotOnAStick.itemID, false));
 //        this.tasks.addTask(4, new EntityAITempt(this, 0.3F, Item.carrot.itemID, false));
         this.tasks.addTask(6, new EntityAIWander(this, f));
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
+    }
+    
+    @Override
+    public void onUpdate()
+    {
+    	super.onUpdate();
     }
 
     /**

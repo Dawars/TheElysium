@@ -29,5 +29,4 @@ public class RenderCaterPillar extends RenderLiving
         this.model = (ModelCaterPillar)super.mainModel;
         this.setRenderPassModel(this.model);
     }
-
 }
