@@ -54,9 +54,10 @@ public class ElysianBlockWorkbench extends ElysianBlockContainer
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)
 	{
-		//if(world.isRemote)
+		if(world.isRemote)
 			ModLoader.openGUI(player, new GuiElysianCrafting(world, x, y, z, player.inventory, (IInventory)world.getBlockTileEntity(x, y, z)));
 		return true;
 	}

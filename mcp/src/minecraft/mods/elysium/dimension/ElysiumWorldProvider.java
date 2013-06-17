@@ -29,9 +29,12 @@ public class ElysiumWorldProvider extends WorldProvider
 		this.worldChunkMgr = new ElysiumChunkManager(this.worldObj);
 		this.dimensionId = Elysium.DimensionID;
 		this.hasNoSky = false;
+		
 		if(worldObj.isRemote)
-		this.setSkyRenderer(new SkyRendererElysium());
-		this.setCloudRenderer(new CloudRendererElysium());
+		{
+			this.setSkyRenderer(new SkyRendererElysium());
+			this.setCloudRenderer(new CloudRendererElysium());
+		}
 	}
 	
 	@Override
