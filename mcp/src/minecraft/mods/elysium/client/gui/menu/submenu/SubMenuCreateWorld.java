@@ -49,8 +49,8 @@ public class SubMenuCreateWorld extends SubMenu
 		this.seed = "";
 		this.localizedNewWorldText = translator.translateKey("selectWorld.newWorld");
 		
-		this.buttons.add(new ElysianButton(0, 80, this.height-24, 160, 16, translator.translateKey("selectWorld.create"), "center"));
-		this.buttons.add(new ElysianButton(1, 80 + 164, this.height-24, 160, 16, translator.translateKey("gui.cancel"), "center"));
+		this.buttons.add(new ElysianButton(0, 80, this.displayHeight-24, 160, 16, translator.translateKey("selectWorld.create"), "center"));
+		this.buttons.add(new ElysianButton(1, 80 + 164, this.displayHeight-24, 160, 16, translator.translateKey("gui.cancel"), "center"));
 		
 		this.buttons.add(new ElysianButton(2, 80, 156, 160, 16, translator.translateKey("selectWorld.gameMode"), "center"));
 		this.buttons.add(new ElysianButton(3, 80 + 164, 156, 160, 16, translator.translateKey("selectWorld.bonusItems"), "center"));
@@ -89,7 +89,7 @@ public class SubMenuCreateWorld extends SubMenu
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glColor4f(0F, 0F, 0F, 0.5F);
-		Menu.drawRect(76, 94, 332, this.height-98);
+		Menu.drawRect(76, 94, 332, this.displayHeight-98);
 		
 		StringTranslate translator = StringTranslate.getInstance();
 		glBindTexture(GL_TEXTURE_2D, mc.renderEngine.getTexture("/font/default.png"));
@@ -151,7 +151,7 @@ public class SubMenuCreateWorld extends SubMenu
 		}
 		else if(button.id == 1)
 		{
-			this.parent.openedSubMenus.add(new SubMenuSelectWorld());
+			this.parent.submenus.add(new SubMenuSelectWorld());
 			this.close();
 		}
 		else if(button.id == 2)
@@ -218,17 +218,17 @@ public class SubMenuCreateWorld extends SubMenu
 	}
 	
 	@Override
-	public void mouseClicked(int mx, int my, int mb)
+	public void onMousePressed(int mx, int my, int mb)
 	{
-		super.mouseClicked(mx, my, mb);
+		super.onMousePressed(mx, my, mb);
 		this.textboxWorldName.mouseClicked(mx, my, mb);
 		this.textboxSeed.mouseClicked(mx, my, mb);
 	}
 	
 	@Override
-	public void keyTyped(char c, int i)
+	public void onKeyPressed(char c, int i)
 	{
-		super.keyTyped(c, i);
+		super.onKeyPressed(c, i);
 		if(this.textboxWorldName.isFocused())
 		{
 			this.textboxWorldName.textboxKeyTyped(c, i);

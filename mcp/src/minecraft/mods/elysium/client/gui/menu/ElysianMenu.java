@@ -76,6 +76,8 @@ public class ElysianMenu extends Menu
 	@Override
 	public void initGui()
 	{
+		this.buttonList.clear();
+		
 		StringTranslate translator = StringTranslate.getInstance();
 		
 		int y = 94;
@@ -97,81 +99,81 @@ public class ElysianMenu extends Menu
 	{
 		if(button.id == 0)
 		{
-			if(this.openedSubMenus.size() != 0)
+			if(this.submenus.size() != 0)
 			{
-				for(SubMenu menu : this.openedSubMenus)
+				for(SubMenu menu : this.submenus)
 				{
 					menu.close();
 				}
 			}
-			this.openedSubMenus.clear();
+			this.submenus.clear();
 			
-			this.openedSubMenus.add(new SubMenuSelectWorld());
+			this.submenus.add(new SubMenuSelectWorld());
 			//this.mc.displayGuiScreen(new GuiSelectWorld(this));
 		}
 		else if(button.id == 1)
 		{
-			if(this.openedSubMenus.size() != 0)
+			if(this.submenus.size() != 0)
 			{
-				for(SubMenu menu : this.openedSubMenus)
+				for(SubMenu menu : this.submenus)
 				{
 					menu.close();
 				}
 			}
-			this.openedSubMenus.clear();
+			this.submenus.clear();
 			
 			this.mc.displayGuiScreen(new GuiMultiplayer(this));
 		}
 		else if(button.id == 2)
 		{
-			if(this.openedSubMenus.size() != 0)
+			if(this.submenus.size() != 0)
 			{
-				for(SubMenu menu : this.openedSubMenus)
+				for(SubMenu menu : this.submenus)
 				{
 					menu.close();
 				}
 			}
-			this.openedSubMenus.clear();
+			this.submenus.clear();
 			
 			this.mc.displayGuiScreen(new GuiModList(this));
 		}
 		else if(button.id == 3)
 		{
-			if(this.openedSubMenus.size() != 0)
+			if(this.submenus.size() != 0)
 			{
-				for(SubMenu menu : this.openedSubMenus)
+				for(SubMenu menu : this.submenus)
 				{
 					menu.close();
 				}
 			}
-			this.openedSubMenus.clear();
+			this.submenus.clear();
 			
 			this.mc.displayGuiScreen(new GuiOptions(this, this.mc.gameSettings));
 		}
 		else if(button.id == 4)
 		{
-			if(this.openedSubMenus.size() != 0)
+			if(this.submenus.size() != 0)
 			{
-				for(SubMenu menu : this.openedSubMenus)
+				for(SubMenu menu : this.submenus)
 				{
 					menu.close();
 				}
 			}
-			this.openedSubMenus.clear();
+			this.submenus.clear();
 			
 			this.mc.shutdown();
 		}
 		
 		else if(button.id == 5)
 		{
-			if(this.openedSubMenus.size() != 0)
+			if(this.submenus.size() != 0)
 			{
-				for(SubMenu menu : this.openedSubMenus)
+				for(SubMenu menu : this.submenus)
 				{
 					menu.close();
 				}
 			}
-			this.openedSubMenus.clear();
+			this.submenus.clear();
 			
 			this.mc.displayGuiScreen(new GuiLanguage(this, this.mc.gameSettings));
 		}

@@ -11,7 +11,7 @@ public abstract class SubMenu
 {
 	protected Menu parent;
 	protected Minecraft mc;
-	public int width, height;
+	public int displayWidth, displayHeight;
 	public List<GuiButton> buttons = new ArrayList<GuiButton>();
 	public List<SubMenu> submenus = new ArrayList<SubMenu>();
 	public boolean closed = false;
@@ -22,8 +22,8 @@ public abstract class SubMenu
 		this.resized = true;
 		this.parent = parent;
 		this.mc = mc;
-		this.width = mc.displayWidth/2;
-		this.height = mc.displayHeight/2;
+		this.displayWidth = mc.displayWidth/2;
+		this.displayHeight = mc.displayHeight/2;
 		this.buttons.clear();
 		this.submenus.clear();
 		this.init();
@@ -57,7 +57,7 @@ public abstract class SubMenu
 	
 	public void actionPerformed(GuiButton button){}
 	
-	public void mouseClicked(int mx, int my, int mb)
+	public void onMousePressed(int mx, int my, int mb)
 	{
 		if(mb == 0)
 		{
@@ -72,12 +72,12 @@ public abstract class SubMenu
 		}
 		
 		for(SubMenu sub : this.submenus)
-			sub.mouseClicked(mx, my, mb);
+			sub.onMousePressed(mx, my, mb);
 	}
 	
-	public void keyTyped(char c, int i)
+	public void onKeyPressed(char c, int i)
 	{
 		for(SubMenu sub : this.submenus)
-			sub.keyTyped(c, i);
+			sub.onKeyPressed(c, i);
 	}
 }

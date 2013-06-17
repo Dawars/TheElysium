@@ -2,26 +2,51 @@ package mods.elysium.client.gui.menu.submenu;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.client.Minecraft;
+
+import mods.elysium.client.gui.menu.Menu;
+
 public class SubMenuContainer extends SubMenu
 {
-	protected int x1, y1, x2, y2;
+	protected int x, y, width, height;
+	protected float sliderpos = 0F;
+	public List<SubMenuContainerElement> elements = new ArrayList<SubMenuContainerElement>();
+	protected int listHeight = 0;
 	
-	public SubMenuContainer(int x1, int y1, int x2, int y2)
+	public SubMenuContainer(int x, int y, int width, int height)
 	{
-		this.x1 = x1;
-		this.y1 = y1;
-		this.x2 = x2;
-		this.y2 = y2;
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+	}
+	
+	@Override
+	public void resize(Menu parent, Minecraft mc)
+	{
+		this.elements.clear();
+		super.resize(parent, mc);
+		this.listHeight = 0;
+		for(SubMenuContainerElement element : this.elements)
+			this.listHeight += element.getHeight();
 	}
 	
 	@Override
 	public void draw(int mx, int my, float partialTick)
 	{
-		glViewport(this.x1, this.y1, this.x2-this.x1, this.y2-this.y1);
-		
-		
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glColor4f(0F, 0F, 0F, 0.5F);
+		Menu.drawRect(this.x, this.y, this.width, this.height);
 		
 		super.draw(mx, my, partialTick);
-		glViewport(0, 0, this.width, this.height);
+	}
+	
+	@Override
+	public void onMousePressed(int mx, int my, int mb)
+	{
+		super.onMousePressed(mx, my, mb);
 	}
 }

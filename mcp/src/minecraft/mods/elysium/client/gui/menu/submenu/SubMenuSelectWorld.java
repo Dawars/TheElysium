@@ -35,16 +35,18 @@ public class SubMenuSelectWorld extends SubMenu
 		this.parent.buttonList.get(0).enabled = false;
 		
 		StringTranslate translator = StringTranslate.getInstance();
-		this.buttons.add(new ElysianButton(0, 80, this.height-44, 128, 16, translator.translateKey("selectWorld.select"), "center"));
+		this.buttons.add(new ElysianButton(0, 80, this.displayHeight-44, 128, 16, translator.translateKey("selectWorld.select"), "center"));
 		this.buttons.get(0).enabled = false;
-		this.buttons.add(new ElysianButton(1, 80+132, this.height-44, 128, 16, translator.translateKey("selectWorld.create"), "center"));
-		this.buttons.add(new ElysianButton(2, 80, this.height-24, 62, 16, translator.translateKey("selectWorld.rename"), "center"));
+		this.buttons.add(new ElysianButton(1, 80+132, this.displayHeight-44, 128, 16, translator.translateKey("selectWorld.create"), "center"));
+		this.buttons.add(new ElysianButton(2, 80, this.displayHeight-24, 62, 16, translator.translateKey("selectWorld.rename"), "center"));
 		this.buttons.get(2).enabled = false;
-		this.buttons.add(new ElysianButton(3, 80+66, this.height-24, 62, 16, translator.translateKey("selectWorld.delete"), "center"));
+		this.buttons.add(new ElysianButton(3, 80+66, this.displayHeight-24, 62, 16, translator.translateKey("selectWorld.delete"), "center"));
 		this.buttons.get(3).enabled = false;
-		this.buttons.add(new ElysianButton(4, 80+132, this.height-24, 62, 16, translator.translateKey("selectWorld.recreate"), "center"));
+		this.buttons.add(new ElysianButton(4, 80+132, this.displayHeight-24, 62, 16, translator.translateKey("selectWorld.recreate"), "center"));
 		this.buttons.get(4).enabled = false;
-		this.buttons.add(new ElysianButton(5, 80+198, this.height-24, 62, 16, translator.translateKey("gui.cancel"), "center"));
+		this.buttons.add(new ElysianButton(5, 80+198, this.displayHeight-24, 62, 16, translator.translateKey("gui.cancel"), "center"));
+		
+		this.submenus.add(new SubMenuContainer(80, 98, 260, this.displayHeight-48-98));
 		
 		try
 		{
@@ -63,7 +65,7 @@ public class SubMenuSelectWorld extends SubMenu
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glColor4f(0F, 0F, 0F, 0.5F);
-		Menu.drawRect(76, 94, 268, this.height-98);
+		Menu.drawRect(76, 94, 268, this.displayHeight-98);
 		
 		super.draw(mx, my, partialTick);
 	}
@@ -77,7 +79,7 @@ public class SubMenuSelectWorld extends SubMenu
 		}
 		else if(button.id == 1)
 		{
-			this.parent.openedSubMenus.add(new SubMenuCreateWorld());
+			this.parent.submenus.add(new SubMenuCreateWorld());
 			this.close();
 		}
 		else if(button.id == 2)

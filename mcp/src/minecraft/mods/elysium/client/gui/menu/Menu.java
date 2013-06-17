@@ -39,7 +39,7 @@ public class Menu extends MenuBase
 	protected float splashScale = 1F;
 	protected float splashDelta = 1.02F;
 	
-	public List<SubMenu> openedSubMenus = new ArrayList<SubMenu>();
+	public List<SubMenu> submenus = new ArrayList<SubMenu>();
 	public GuiButton selectedButton = null;
 	public List<GuiButton> buttonList = new ArrayList<GuiButton>();
 	
@@ -96,25 +96,13 @@ public class Menu extends MenuBase
 	}
 	
 	@Override
-	public void initGui()
-	{
-		if(this.openedSubMenus.size() != 0)
-		{
-			for(SubMenu menu : this.openedSubMenus)
-			{
-				menu.resize(this, this.mc);
-			}
-		}
-		
-		super.initGui();
-	}
-	
-	@Override
 	public void setWorldAndResolution(Minecraft mc, int width, int height)
 	{
-		this.buttonList.clear();
-		
+		//this.buttonList.clear();
+		//this.submenus.clear();
 		super.setWorldAndResolution(mc, width, height);
+		for(SubMenu sub : this.submenus)
+			sub.resize(this, this.mc);
 	}
 	
 	@Override
@@ -145,13 +133,11 @@ public class Menu extends MenuBase
 					this.actionPerformed(button);
 				}
 			}
-			
-			for(int i = 0; i < this.openedSubMenus.size(); i++)
-			{
-				if(this.openedSubMenus.get(i).resized)
-					this.openedSubMenus.get(i).mouseClicked(mx, my, mb);
-			}
 		}
+		
+		for(int i = 0; i < this.submenus.size(); i++)
+			if(this.submenus.get(i).resized)
+				this.submenus.get(i).onMousePressed(mx, my, mb);
 	}
 	
 	@Override
@@ -159,14 +145,9 @@ public class Menu extends MenuBase
 	{
 		super.keyTyped(c, i);
 		
-		if(this.openedSubMenus.size() != 0)
-		{
-			for(SubMenu menu : this.openedSubMenus)
-			{
-				if(menu.resized)
-					menu.keyTyped(c, i);
-			}
-		}
+		for(SubMenu sub : this.submenus)
+			if(sub.resized)
+				sub.onKeyPressed(c, i);
 	}
 	
 	@Override
@@ -176,22 +157,20 @@ public class Menu extends MenuBase
 		if((this.splashScale >= 1.15F) || (this.splashScale <= 1F))
 			this.splashDelta = 1F / this.splashDelta;
 		
-		for(int i = 0; i < this.openedSubMenus.size(); i++)
+		for(int i = 0; i < this.submenus.size(); i++)
 		{
-			SubMenu menu = this.openedSubMenus.get(i);
+			SubMenu sub = this.submenus.get(i);
 			
-			if(!menu.resized)
-				menu.resize(this, this.mc);
+			if(!sub.resized)
+				sub.resize(this, this.mc);
 			
-			if(menu.closed)
-				this.openedSubMenus.remove(i);
+			if(sub.closed)
+				this.submenus.remove(i);
 		}
 		
-		for(SubMenu menu : this.openedSubMenus)
-		{
-			if(menu.resized)
-				menu.update();
-		}
+		for(SubMenu sub : this.submenus)
+			if(sub.resized)
+				sub.update();
 	}
 	
 	@Override
@@ -206,11 +185,9 @@ public class Menu extends MenuBase
 			glPopMatrix();
 		glPopMatrix();
 		
-		for(SubMenu menu : this.openedSubMenus)
-		{
-			if(menu.resized)
-				menu.draw(mx, my, tick);
-		}
+		for(SubMenu sub : this.submenus)
+			if(sub.resized)
+				sub.draw(mx, my, tick);
 		
 		for(GuiButton button : this.buttonList)
 			button.drawButton(this.mc, mx, my);
