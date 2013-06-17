@@ -80,9 +80,11 @@ public class Elysium
 	/** Dimension ID **/
 	public static int DimensionID;
 	public static int MaxDragon;
+
+	//Rendering ids
+	public static int fancyWorkbenchRenderID;
 	
 	//Blocks
-	
 	public static Block blockPalestone;
 	/** It means elysian dirt. **/
 	public static Block blockDirt;
@@ -138,6 +140,7 @@ public class Elysium
 	
 	public static Block blockShrinePillar;
 	public static Block blockWorkbench;
+	public static Block blockFancyWorkbench;
 	
 	//Items
 	
@@ -365,6 +368,10 @@ public class Elysium
 			Property idWorkbenchBlock = Elysium.config.getBlock("idWorkbenchBlock.id", DefaultProps.idWorkbench);
 			blockWorkbench = (new ElysianBlockWorkbench(idWorkbenchBlock.getInt())).setHardness(0.2F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("elysianworkbench");
 			registerBlock(blockWorkbench, "Elysian Workbench");
+			
+			Property idFancyWorkbench = Elysium.config.getBlock("idFancyWorkbench.id", DefaultProps.idFancyWorkbench);
+			blockFancyWorkbench = (new ElysianFancyWorkbench(idFancyWorkbench.getInt())).setHardness(0.2F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("FancyWorkbench");
+			registerBlock(blockFancyWorkbench, "Fancy Workbench");
 			
 			
 			
