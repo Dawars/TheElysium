@@ -25,19 +25,9 @@ import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 
 public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInventory, ISidedInventory
 {
-	private Random random;
-	private ContainerFancyWorkbench container;
-	private ItemStack[] inventory;
-	public float rot;
-	
-	public TileEntityFancyWorkbench(World world)
-	{
-		this.worldObj = world;
-		this.random = new Random(this.worldObj.getSeed());
-		this.container = new ContainerFancyWorkbench(this);
-		this.inventory = new ItemStack[10];
-		this.rot = 0F;
-	}
+	private ContainerFancyWorkbench container = new ContainerFancyWorkbench(this);
+	private ItemStack[] inventory = new ItemStack[10];
+	public float rot = 0F;
 	
 	@Override
 	public void updateEntity()
@@ -95,8 +85,10 @@ public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInve
 		super.onInventoryChanged();
 		
 		rotateCraftingGrid();
-		
 		this.inventory[this.getSizeInventory()] = CraftingManager.getInstance().findMatchingRecipe(this.container.craftMatrix, this.worldObj);
+		
+		//TODO test
+		this.container.detectAndSendChanges();
 	}
 	
 	public void rotateCraftingGrid()
@@ -254,13 +246,13 @@ public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInve
 	}
 	
 	@Override
-	public void setInventorySlotContents(int slot, ItemStack itemstack)
+	public void setInventorySlotContents(int slot, ItemStack stack)
 	{
-		this.inventory[slot] = itemstack;
+		this.inventory[slot] = stack;
 		
-		if(itemstack != null && itemstack.stackSize > this.getInventoryStackLimit())
+		if(stack != null && stack.stackSize > this.getInventoryStackLimit())
 		{
-			itemstack.stackSize = this.getInventoryStackLimit();
+			stack.stackSize = this.getInventoryStackLimit();
 		}
 		
 		this.onInventoryChanged();
@@ -334,7 +326,7 @@ public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInve
 	@Override
 	public boolean isStackValidForSlot(int i, ItemStack itemstack)
 	{
-		return false;
+		return true;
 	}
 	
 	

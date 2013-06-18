@@ -8,6 +8,7 @@ import mods.elysium.Elysium;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 public abstract class ElysianTileEntity extends TileEntity{
 
@@ -31,6 +32,15 @@ public abstract class ElysianTileEntity extends TileEntity{
 //		updatePacket = updateWrappers.get(this.getClass());
 //		descriptionPacket = descriptionWrappers.get(this.getClass());
 
+	}
+	
+	protected Random random;
+	
+	@Override
+	public void setWorldObj(World world)
+	{
+		this.worldObj = world;
+		this.random = new Random(this.worldObj.getSeed());
 	}
 
 	public boolean isUseableByPlayer(EntityPlayer player) {

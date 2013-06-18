@@ -38,17 +38,17 @@ public class EntityDrachma extends Entity
     /** Threshold color for tracking players */
     private int xpTargetColor;
 
-    public EntityDrachma(World par1World, double par2, double par4, double par6, int par8)
+    public EntityDrachma(World world, double x, double y, double z, int size)
     {
-        super(par1World);
+        super(world);
         this.setSize(.5F, .5F);
         this.yOffset = this.height / 2.0F;
-        this.setPosition(par2, par4, par6);
+        this.setPosition(x, y, z);
         this.rotationYaw = (float)(Math.random() * 360.0D);
         this.motionX = (double)((float)(Math.random() * 0.20000000298023224D - 0.10000000149011612D) * 2.0F);
         this.motionY = (double)((float)(Math.random() * 0.2D) * 2.0F);
         this.motionZ = (double)((float)(Math.random() * 0.20000000298023224D - 0.10000000149011612D) * 2.0F);
-        this.coinValue = par8;
+        this.coinValue = size;
     }
 
     /**

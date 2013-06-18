@@ -544,7 +544,7 @@ public class Elysium
 			
 			GameRegistry.registerTileEntity(ElysianTileEntityPortal.class, "ElysianTileEntityPortal");
 			GameRegistry.registerTileEntity(TileEntityElysianWorkbench.class, "ElysianTileEntityWorkbench");
-			GameRegistry.registerTileEntity(TileEntityFancyWorkbench.class, "ElysianTileEntityShrine");
+			GameRegistry.registerTileEntity(TileEntityFancyWorkbench.class, "TileEntityFancyWorkbench");
 			
 			proxy.registerRenderers();
 			proxy.installSounds();

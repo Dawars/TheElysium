@@ -165,6 +165,7 @@ public class ElysianBlockFancyWorkbench extends ElysianBlockContainer
 	@Override
 	public TileEntity createNewTileEntity(World world)
 	{
-		return new TileEntityFancyWorkbench(world);
+		TileEntityFancyWorkbench tile = new TileEntityFancyWorkbench();
+		return tile;
 	}
 }

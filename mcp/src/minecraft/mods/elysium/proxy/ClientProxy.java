@@ -50,14 +50,12 @@ public class ClientProxy extends CommonProxy
 		//MainMenuAPI.registerMenu("Misc Elysian Menu", MiscElysianMenu.class);
 		
 		Elysium.fancyWorkbenchRenderID = RenderingRegistry.getNextAvailableRenderId();
-
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(ElysianTileEntityPortal.class, new ElysianTileEntityPortalRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFancyWorkbench.class, new RenderTileEntityFancyWorkbench());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileFancyWorkbench.class, new RenderFancyWorkbench());
 		
 		RenderingRegistry.registerBlockHandler(new RenderFancyWorkbench());
-
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityDrachma.class, new RenderDrachmaOBJ());
 		RenderingRegistry.registerEntityRenderingHandler(EntityCatorPillar.class, new RenderCaterPillar());
