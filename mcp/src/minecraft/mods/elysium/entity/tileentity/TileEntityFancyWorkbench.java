@@ -5,8 +5,11 @@ import static org.lwjgl.opengl.GL11.glTranslated;
 import java.util.Random;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 import mods.elysium.inventory.ContainerFancyWorkbench;
+import mods.elysium.inventory.ContainerFancyWorkbench2;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,55 +30,62 @@ public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInve
 {
 	private ContainerFancyWorkbench container = new ContainerFancyWorkbench(this);
 	private ItemStack[] inventory = new ItemStack[10];
+	@SideOnly(Side.CLIENT)
 	public float rot = 0F;
 	
 	@Override
 	public void updateEntity()
 	{
-		this.rot += 0.1F;
-		if(this.rot >= 360F) this.rot -= 360F;
+		if(worldObj.isRemote){
+			this.rot += 0.1F;
+			if(this.rot >= 360F) this.rot -= 360F;
+		}
 		
 		super.updateEntity();
 	}
 	
-	@Override
-	public void readFromNBT(NBTTagCompound nbt)
-	{
-		super.readFromNBT(nbt);
-		
-		NBTTagList nbtlist = nbt.getTagList("Items");
-		this.inventory = new ItemStack[this.getSizeInventory()+1];
-		
-		for(int i = 0; i < nbtlist.tagCount(); i++)
-		{
-			NBTTagCompound nbtslot = (NBTTagCompound) nbtlist.tagAt(i);
-			int j = nbtslot.getByte("Slot") & 255;
-			
-			if((j >= 0) && (j < this.getSizeInventory()))
-				this.inventory[j] = ItemStack.loadItemStackFromNBT(nbtslot);
-		}
-	}
-	
-	@Override
-	public void writeToNBT(NBTTagCompound nbt)
-	{
-		super.writeToNBT(nbt);
-		
-		NBTTagList nbtlist = new NBTTagList();
-		
-		for(int i = 0; i < this.getSizeInventory(); i++)
-		{
-			if(this.inventory[i] != null)
-			{
-				NBTTagCompound nbtslot = new NBTTagCompound();
-				nbtslot.setByte("Slot", (byte)i);
-				this.inventory[i].writeToNBT(nbtslot);
-				nbtlist.appendTag(nbtslot);
-			}
-		}
-		
-		nbt.setTag("Items", nbtlist);
-	}
+	/**
+     * Reads a tile entity from NBT.
+     */
+    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    {
+        super.readFromNBT(par1NBTTagCompound);
+        NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Inv");
+        this.inventory = new ItemStack[this.getSizeInventory()];
+
+        for (int i = 0; i < nbttaglist.tagCount(); ++i)
+        {
+            NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
+            int j = nbttagcompound1.getByte("Slot") & 255;
+
+            if (j >= 0 && j < this.inventory.length)
+            {
+                this.inventory[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+            }
+        }
+    }
+
+    /**
+     * Writes a tile entity to NBT.
+     */
+    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    {
+        super.writeToNBT(par1NBTTagCompound);
+        NBTTagList nbttaglist = new NBTTagList();
+
+        for (int i = 0; i < this.inventory.length; ++i)
+        {
+            if (this.inventory[i] != null)
+            {
+                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+                nbttagcompound1.setByte("Slot", (byte)i);
+                this.inventory[i].writeToNBT(nbttagcompound1);
+                nbttaglist.appendTag(nbttagcompound1);
+            }
+        }
+
+        par1NBTTagCompound.setTag("Inv", nbttaglist);
+    }
 	
 	
 	
@@ -334,7 +344,7 @@ public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInve
 	@Override
 	public int[] getAccessibleSlotsFromSide(int side)
 	{
-		return null;
+		return new int[]{9};
 	}
 
 	@Override
@@ -346,6 +356,6 @@ public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInve
 	@Override
 	public boolean canExtractItem(int slot, ItemStack itemstack, int side)
 	{
-		return false;
+		return slot == 9;
 	}
 }

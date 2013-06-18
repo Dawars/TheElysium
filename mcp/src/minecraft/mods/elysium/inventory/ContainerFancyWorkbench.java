@@ -24,4 +24,6 @@ public class ContainerFancyWorkbench extends Container
 	{
 		return this.tile.isUseableByPlayer(player);
 	}
+	
+	
 }

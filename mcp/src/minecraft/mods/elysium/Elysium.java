@@ -485,6 +485,8 @@ public class Elysium
 			MinecraftForge.setBlockHarvestLevel(oreBeryl, "pickaxe", 2);
 			MinecraftForge.setBlockHarvestLevel(oreTourmaline, "pickaxe", 3);
 			
+			MinecraftForge.setBlockHarvestLevel(blockFancyWorkbench, "pickaxe", 0);
+
 			MinecraftForge.setBlockHarvestLevel(blockSulphure, "pickaxe", 0);
 			MinecraftForge.setBlockHarvestLevel(blockCobalt, "pickaxe", 1);
 			MinecraftForge.setBlockHarvestLevel(blockSilicon, "pickaxe", 2);
@@ -497,7 +499,6 @@ public class Elysium
 			MinecraftForge.setBlockHarvestLevel(blockDirt, "shovel", 0);
 			MinecraftForge.setBlockHarvestLevel(blockLogFostimber, "axe", 0);
 			MinecraftForge.setBlockHarvestLevel(blockPlanksFostimber, "axe", 0);
-			MinecraftForge.setBlockHarvestLevel(blockFancyWorkbench, "pickaxe", 0);
 			
 			//Crafting Registering
 			
