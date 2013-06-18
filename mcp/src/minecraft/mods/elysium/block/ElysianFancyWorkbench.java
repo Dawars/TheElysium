@@ -6,7 +6,7 @@ import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import mods.elysium.client.gui.GuiElysianCrafting;
 import mods.elysium.entity.tileentity.TileEntityElysianWorkbench;
-import mods.elysium.entity.tileentity.TileEntityShrinePillar;
+import mods.elysium.entity.tileentity.TileEntityFancyWorkbench;
 import mods.elysium.entity.tileentity.TileFancyWorkbench;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;

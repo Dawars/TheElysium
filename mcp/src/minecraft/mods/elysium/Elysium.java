@@ -46,7 +46,7 @@ import mods.elysium.dimension.portal.*;
 import mods.elysium.entity.EntityCatorPillar;
 import mods.elysium.entity.EntityGerbil;
 import mods.elysium.entity.tileentity.TileEntityElysianWorkbench;
-import mods.elysium.entity.tileentity.TileEntityShrinePillar;
+import mods.elysium.entity.tileentity.TileEntityFancyWorkbench;
 import mods.elysium.handlers.*;
 import mods.elysium.item.*;
 import mods.elysium.network.PacketHandler;
@@ -362,7 +362,7 @@ public class Elysium
 			registerBlock(blockTourmaline, "Tourmaline Block");
 			
 			Property idBlockShrinePillar = Elysium.config.getBlock("idBlockShrinePillar.id", DefaultProps.idShrinePillar);
-			blockShrinePillar = new ElysianBlockShrinePillar(idBlockShrinePillar.getInt()).setHardness(2F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockShrinePillar");
+			blockShrinePillar = new ElysianBlockFancyWorkbench(idBlockShrinePillar.getInt()).setHardness(2F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockShrinePillar");
 			registerBlock(blockShrinePillar, "Work Pillar");
 			
 			Property idWorkbenchBlock = Elysium.config.getBlock("idWorkbenchBlock.id", DefaultProps.idWorkbench);
@@ -544,7 +544,7 @@ public class Elysium
 			
 			GameRegistry.registerTileEntity(ElysianTileEntityPortal.class, "ElysianTileEntityPortal");
 			GameRegistry.registerTileEntity(TileEntityElysianWorkbench.class, "ElysianTileEntityWorkbench");
-			GameRegistry.registerTileEntity(TileEntityShrinePillar.class, "ElysianTileEntityShrine");
+			GameRegistry.registerTileEntity(TileEntityFancyWorkbench.class, "ElysianTileEntityShrine");
 			
 			proxy.registerRenderers();
 			proxy.installSounds();

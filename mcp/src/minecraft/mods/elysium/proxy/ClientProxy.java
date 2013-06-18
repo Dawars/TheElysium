@@ -16,7 +16,7 @@ import mods.elysium.entity.EntityDrachma;
 import mods.elysium.entity.EntityCatorPillar;
 import mods.elysium.entity.EntityGerbil;
 import mods.elysium.entity.tileentity.TileEntityElysianWorkbench;
-import mods.elysium.entity.tileentity.TileEntityShrinePillar;
+import mods.elysium.entity.tileentity.TileEntityFancyWorkbench;
 import mods.elysium.entity.tileentity.TileFancyWorkbench;
 import mods.elysium.render.*;
 import net.aetherteam.mainmenu_api.MainMenuAPI;
@@ -53,7 +53,7 @@ public class ClientProxy extends CommonProxy
 
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(ElysianTileEntityPortal.class, new ElysianTileEntityPortalRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityShrinePillar.class, new RenderTileEntityShrinePillar());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFancyWorkbench.class, new RenderTileEntityFancyWorkbench());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileFancyWorkbench.class, new RenderFancyWorkbench());
 		
 		RenderingRegistry.registerBlockHandler(new RenderFancyWorkbench());
@@ -67,7 +67,7 @@ public class ClientProxy extends CommonProxy
 	@Override
 	public void installSounds()
 	{
-		this.installSound("resources/streaming/FluteTrack.wav");
+		this.installSound("resources/streaming/FluteTrack.ogg");
 		this.installSound("resources/streaming/Uranus Paradise Short.ogg");
 	}
 	

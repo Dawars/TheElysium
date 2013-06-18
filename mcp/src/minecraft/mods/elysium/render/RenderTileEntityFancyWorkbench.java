@@ -14,15 +14,15 @@ import net.minecraft.item.ItemStack;
 
 import mods.elysium.Elysium;
 import mods.elysium.client.gui.menu.MiscWorld;
-import mods.elysium.entity.tileentity.TileEntityShrinePillar;
+import mods.elysium.entity.tileentity.TileEntityFancyWorkbench;
 import mods.elysium.model.ModelWorkPillar;
 
-public class RenderTileEntityShrinePillar extends TileEntitySpecialRenderer
+public class RenderTileEntityFancyWorkbench extends TileEntitySpecialRenderer
 {
 	ModelWorkPillar model = new ModelWorkPillar();
 	RenderItem itemrenderer = new RenderItem();
 	
-	public RenderTileEntityShrinePillar()
+	public RenderTileEntityFancyWorkbench()
 	{
 		itemrenderer.setRenderManager(RenderManager.instance);
 	}
@@ -39,7 +39,9 @@ public class RenderTileEntityShrinePillar extends TileEntitySpecialRenderer
 			model.render(tile, 1F);
 		glPopMatrix();
 		
-		TileEntityShrinePillar workTile = (TileEntityShrinePillar) tile;
+		TileEntityFancyWorkbench workTile = (TileEntityFancyWorkbench) tile;
+		EntityItem citem = new EntityItem(tile.worldObj);
+		citem.hoverStart = workTile.rot;
 		
 		glPushMatrix();
 			glTranslated(x, y, z);
@@ -47,18 +49,25 @@ public class RenderTileEntityShrinePillar extends TileEntitySpecialRenderer
 			{
 				for(int k = 0; k < 3; k++)
 				{
-					if(workTile.stuff[i*3 + k] != null)
+					if(workTile.getStackInSlot(i*3 + k) != null)
 					{
-						EntityItem citem = new EntityItem(tile.worldObj);
-						citem.hoverStart = workTile.rot;
-						citem.setEntityItemStack(workTile.stuff[i*3 + k]);
+						citem.setEntityItemStack(workTile.getStackInSlot(i*3 + k));
 						glPushMatrix();
 							glTranslated(0.1875D + i*0.3125D, 1D + 0.1875D/3D, 0.1875D + k*0.3125D);
 							glScalef(0.5F, 0.5F, 0.5F);
-							itemrenderer.doRenderItem(citem, 0, 0, 0, 0F, 0F);
+							itemrenderer.doRenderItem(citem, 0D, 0D, 0D, 0F, 0F);
 						glPopMatrix();
 					}
 				}
+			}
+			
+			if(workTile.getStackInSlot(workTile.getSizeInventory()) != null)
+			{
+				glPushMatrix();
+					citem.hoverStart = -workTile.rot;
+					citem.setEntityItemStack(workTile.getStackInSlot(workTile.getSizeInventory()));
+					itemrenderer.doRenderItem(citem, 0.5D, 1.5D, 0.5D, 0F, 0F);
+				glPopMatrix();
 			}
 		glPopMatrix();
 	}
