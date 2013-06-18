@@ -4,7 +4,9 @@ import static org.lwjgl.opengl.GL11.glTranslated;
 
 import java.util.Random;
 
-import mods.elysium.inventory.ContainerShrinePillar;
+import cpw.mods.fml.common.registry.GameRegistry;
+
+import mods.elysium.inventory.ContainerFancyWorkbench;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,7 +26,7 @@ import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInventory, ISidedInventory
 {
 	private Random random;
-	private ContainerShrinePillar container;
+	private ContainerFancyWorkbench container;
 	private ItemStack[] inventory;
 	public float rot;
 	
@@ -32,7 +34,7 @@ public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInve
 	{
 		this.worldObj = world;
 		this.random = new Random(this.worldObj.getSeed());
-		this.container = new ContainerShrinePillar();
+		this.container = new ContainerFancyWorkbench(this);
 		this.inventory = new ItemStack[10];
 		this.rot = 0F;
 	}
@@ -101,8 +103,8 @@ public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInve
 	{
 		int meta = this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord);
 		
-		if(!this.worldObj.isRemote)
-			System.out.println(meta);
+		/*if(!this.worldObj.isRemote)
+			System.out.println(meta);*/
 		
 		for(int i = 0; i < 3; i++)
 		{
@@ -176,6 +178,7 @@ public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInve
 	
 	public void onCrafting(EntityPlayer player, ItemStack stack)
 	{
+		GameRegistry.onItemCrafted(player, stack, this.container.craftMatrix);
 		stack.onCrafting(this.worldObj, player, this.inventory[this.getSizeInventory()].stackSize);
 		
 		if (stack.itemID == Block.workbench.blockID)

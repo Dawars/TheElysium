@@ -57,8 +57,8 @@ public class ElysianBlockFancyWorkbench extends ElysianBlockContainer
 	{
 		int meta = determineOrientation(world, x, y, z, entity);
 		
-		if(!world.isRemote)
-			System.out.println(meta);
+		/*if(!world.isRemote)
+			System.out.println(meta);*/
 		
 		world.setBlockMetadataWithNotify(x, y, z, meta, 0);
 	}
