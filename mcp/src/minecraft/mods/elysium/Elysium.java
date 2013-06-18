@@ -150,7 +150,7 @@ public class Elysium
 	public static Item itemSeedsPepper;
 	public static Item itemAsphodelPetals;
 	
-	public static Item itemBerly;
+	public static Item itemBeryl;
 	public static Item itemIngotCobalt;
 	public static Item itemIngotIridium;
 	public static Item itemJade;
@@ -402,8 +402,8 @@ public class Elysium
 			LanguageRegistry.addName(itemDebug, "Modder Item");
 			
 			Property idBerylItem = Elysium.config.getItem("idBerylItem.id", DefaultProps.idBerylItem);
-			itemBerly = new ElysianItem(idBerylItem.getInt()).setUnlocalizedName("beryl");
-			LanguageRegistry.addName(itemBerly, "Beryl");
+			itemBeryl = new ElysianItem(idBerylItem.getInt()).setUnlocalizedName("beryl");
+			LanguageRegistry.addName(itemBeryl, "Beryl");
 			
 			Property idCobaltIngotItem = Elysium.config.getItem("idCobaltIngotItem.id", DefaultProps.idCobaltIngotItem);
 			itemIngotCobalt = new ElysianItem(idCobaltIngotItem.getInt()).setUnlocalizedName("ingotCobalt");
@@ -527,6 +527,21 @@ public class Elysium
 			
 			GameRegistry.addRecipe(new ItemStack(Item.stick, 9), new Object[] {"X", "X", "X", Character.valueOf('X'), blockPlanksFostimber});
 			GameRegistry.addRecipe(new ItemStack(Block.workbench), new Object[] {"XX", "XX", Character.valueOf('X'), blockPlanksFostimber});
+
+			GameRegistry.addRecipe(new ItemStack(blockSulphure), new Object[] {"XXX", "XXX", "XXX", Character.valueOf('X'), itemSulphur});
+			GameRegistry.addShapelessRecipe(new ItemStack(itemSulphur, 9), new Object[] {blockSulphure});
+			GameRegistry.addRecipe(new ItemStack(blockBeryl), new Object[] {"XXX", "XXX", "XXX", Character.valueOf('X'), itemBeryl});
+			GameRegistry.addShapelessRecipe(new ItemStack(itemBeryl, 9), new Object[] {blockBeryl});
+			GameRegistry.addRecipe(new ItemStack(blockCobalt), new Object[] {"XXX", "XXX", "XXX", Character.valueOf('X'), itemIngotCobalt});
+			GameRegistry.addShapelessRecipe(new ItemStack(itemIngotCobalt, 9), new Object[] {blockCobalt});
+			GameRegistry.addRecipe(new ItemStack(blockIridium), new Object[] {"XXX", "XXX", "XXX", Character.valueOf('X'), itemIngotIridium});
+			GameRegistry.addShapelessRecipe(new ItemStack(itemIngotIridium, 9), new Object[] {blockIridium});
+			GameRegistry.addRecipe(new ItemStack(blockSilicon), new Object[] {"XXX", "XXX", "XXX", Character.valueOf('X'), itemSiliconChunk});
+			GameRegistry.addShapelessRecipe(new ItemStack(itemSiliconChunk, 9), new Object[] {blockSilicon});
+			GameRegistry.addRecipe(new ItemStack(blockJade), new Object[] {"XXX", "XXX", "XXX", Character.valueOf('X'), itemJade});
+			GameRegistry.addShapelessRecipe(new ItemStack(itemJade, 9), new Object[] {blockJade});
+			GameRegistry.addRecipe(new ItemStack(blockTourmaline), new Object[] {"XXX", "XXX", "XXX", Character.valueOf('X'), itemTourmaline});
+			GameRegistry.addShapelessRecipe(new ItemStack(itemTourmaline, 9), new Object[] {blockTourmaline});
 			
 			GameRegistry.addShapelessRecipe(new ItemStack(itemAsphodelPetals, 2), new Object[] {blockFlowerAsphodel});
 			GameRegistry.addShapelessRecipe(new ItemStack(blockPlanksFostimber, 4), new Object[] {blockLogFostimber});

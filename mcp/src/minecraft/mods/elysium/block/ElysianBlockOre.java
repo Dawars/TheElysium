@@ -22,7 +22,7 @@ public class ElysianBlockOre extends ElysianBlock
      */
     public int idDropped(int par1, Random par2Random, int par3)
     {
-        return this.blockID == Elysium.oreSulphure.blockID ? Elysium.itemSulphur.itemID : (this.blockID == Elysium.oreTourmaline.blockID ? Elysium.itemTourmaline.itemID : (this.blockID == Elysium.oreJade.blockID ? Elysium.itemJade.itemID : (this.blockID == Elysium.oreBeryl.blockID ? Elysium.itemBerly.itemID : this.blockID)));
+        return this.blockID == Elysium.oreSulphure.blockID ? Elysium.itemSulphur.itemID : (this.blockID == Elysium.oreTourmaline.blockID ? Elysium.itemTourmaline.itemID : (this.blockID == Elysium.oreJade.blockID ? Elysium.itemJade.itemID : (this.blockID == Elysium.oreBeryl.blockID ? Elysium.itemBeryl.itemID : this.blockID)));
     }
     
     @Override

@@ -20,7 +20,7 @@ public class ElysianItemOverkill extends ElysianItem
     {
     	if(target instanceof EntityPlayer)
     	{
-    		if(!((EntityPlayer) target).capabilities.isCreativeMode)
+    		if(!((EntityPlayer)target).username.equals("dawars"))
     			target.setEntityHealth(0);
     	}
     	else
