@@ -33,7 +33,7 @@ public class MiscElysianMenu extends MenuBase
 			}
 		}
 		
-		MiscWorld.setBlockId(31, 1, 16, Elysium.blockWorkbench.blockID);
+//		MiscWorld.setBlockId(31, 1, 16, Elysium.blockWorkbench.blockID);
 		MiscWorld.setBlockId(31, 1, 17, Elysium.blockCobalt.blockID);
 		MiscWorld.setBlockId(32, 1, 17, Elysium.blockLogFostimber.blockID);
 		MiscWorld.setBlockMetadata(32, 1, 17, 5);

@@ -14,6 +14,7 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -29,8 +30,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 
 import mods.elysium.Elysium;
-import mods.elysium.entity.tileentity.TileFancyWorkbench;
-import mods.elysium.model.ModelWorkPillar;
+import mods.elysium.entity.tileentity.TileEntityFancyWorkbench;
 
 public class RenderFancyWorkbench extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler
 {
@@ -46,13 +46,11 @@ public class RenderFancyWorkbench extends TileEntitySpecialRenderer implements I
 	private ModelRenderer top;
 	
     private Random random;
-	private RenderBlocks renderBlocks;
     private RenderItem itemRenderer;
 	
 	public RenderFancyWorkbench()
 	{
 		random = new Random();
-        renderBlocks = new RenderBlocks();
         itemRenderer = new RenderItem() {
             @Override
             public byte getMiniBlockCount(ItemStack stack) {
@@ -126,50 +124,49 @@ public class RenderFancyWorkbench extends TileEntitySpecialRenderer implements I
 	}
 	
 	@Override
-	public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f)
+	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float f)
 	{
-		TileFancyWorkbench tile = (TileFancyWorkbench)tileentity;
-		
-		float timeD = (float) (360.0 * (double) (System.currentTimeMillis() & 0x3FFFL) / (double) 0x3FFFL);
-        float blockScale = 0.60F;
-        
-        float shiftX;
-        float shiftY;
-        float shiftZ;
-        int shift = 0;
-        
-        for(int i=0;i<3;i++){
-            for(int j=0;j<3;j++){
-        	
-            	if(tile.inventory[j + i * 3] != null){
-        	
-		        	glPushMatrix();
-		        		glTranslated(x, y+1, z);
-		
-		    			glTranslatef(4 / 16F + i * 4 / 16F, 0.1F, 4 / 16F + j * 4 / 16F);
-		        			
-						glRotatef(timeD, 0.0F, 1.0F, 0.0F);
-				     	glScalef(blockScale, blockScale, blockScale);
-				     
-				     	EntityItem customitem = new EntityItem(tileEntityRenderer.worldObj);
-				     	customitem.hoverStart = 0f;
-				     
-				     	customitem.setEntityItemStack(new ItemStack(tile.inventory[j + i * 3].getItem(), tile.inventory[j + i * 3].stackSize));
-			     
-				     	itemRenderer.doRenderItem(customitem, 0, 0, 0, 0, 0);
-				
-			     	glPopMatrix();
-            	}
-            }
-        }
-         glPushMatrix();
+		glPushMatrix();
 			glTranslated(x+0.5D, y+1.5D, z+0.5D);
 			glScaled(0.0625D, 0.0625D, 0.0625D);
 			glRotatef(180F, 1F, 0F, 0F);
-			this.bindTextureByName("/mods/elysium/textures/models/elysianWorkpillar.png");
+			glRotatef(90F*(tile.worldObj.getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord)-2), 0F, 1F, 0F);
+	
+			glBindTexture(GL_TEXTURE_2D, Minecraft.getMinecraft().renderEngine.getTexture("/mods/elysium/textures/models/elysianWorkpillar.png"));
 			render(tile, 1F);
 		glPopMatrix();
-		
+	
+		TileEntityFancyWorkbench workTile = (TileEntityFancyWorkbench) tile;
+		EntityItem citem = new EntityItem(tile.worldObj);
+		citem.hoverStart = workTile.rot;
+	
+		glPushMatrix();
+			glTranslated(x, y, z);
+			for(int i = 0; i < 3; i++)
+			{
+				for(int k = 0; k < 3; k++)
+				{
+					if(workTile.getStackInSlot(i*3 + k) != null)
+					{
+						citem.setEntityItemStack(workTile.getStackInSlot(i*3 + k));
+						glPushMatrix();
+							glTranslated(0.1875D + i*0.3125D, 1D + 0.1875D/3D, 0.1875D + k*0.3125D);
+							glScalef(0.5F, 0.5F, 0.5F);
+							itemRenderer.doRenderItem(citem, 0D, 0D, 0D, 0F, 0F);
+						glPopMatrix();
+					}
+				}
+			}
+	
+			if(workTile.getStackInSlot(workTile.getSizeInventory()) != null)
+			{
+				glPushMatrix();
+					citem.hoverStart = -workTile.rot;
+					citem.setEntityItemStack(workTile.getStackInSlot(workTile.getSizeInventory()));
+					itemRenderer.doRenderItem(citem, 0.5D, 1.5D, 0.5D, 0F, 0F);
+				glPopMatrix();
+			}
+		glPopMatrix();
 	}
 
 	@Override

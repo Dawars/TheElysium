@@ -45,7 +45,6 @@ import mods.elysium.dimension.gen.WorldGenElysium;
 import mods.elysium.dimension.portal.*;
 import mods.elysium.entity.EntityCatorPillar;
 import mods.elysium.entity.EntityGerbil;
-import mods.elysium.entity.tileentity.TileEntityElysianWorkbench;
 import mods.elysium.entity.tileentity.TileEntityFancyWorkbench;
 import mods.elysium.handlers.*;
 import mods.elysium.item.*;
@@ -138,8 +137,6 @@ public class Elysium
 	public static Block blockTourmaline;
 	public static Block blockBeryl;
 	
-	public static Block blockShrinePillar;
-	public static Block blockWorkbench;
 	public static Block blockFancyWorkbench;
 	
 	//Items
@@ -361,16 +358,8 @@ public class Elysium
 			blockTourmaline = new ElysianBlock(idBlockTourmaline.getInt(), Material.iron).setHardness(3F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockTourmaline");
 			registerBlock(blockTourmaline, "Tourmaline Block");
 			
-			Property idBlockShrinePillar = Elysium.config.getBlock("idBlockShrinePillar.id", DefaultProps.idShrinePillar);
-			blockShrinePillar = new ElysianBlockFancyWorkbench(idBlockShrinePillar.getInt()).setHardness(2F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockShrinePillar");
-			registerBlock(blockShrinePillar, "Work Pillar");
-			
-			Property idWorkbenchBlock = Elysium.config.getBlock("idWorkbenchBlock.id", DefaultProps.idWorkbench);
-			blockWorkbench = (new ElysianBlockWorkbench(idWorkbenchBlock.getInt())).setHardness(0.2F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("elysianworkbench");
-			registerBlock(blockWorkbench, "Elysian Workbench");
-			
 			Property idFancyWorkbench = Elysium.config.getBlock("idFancyWorkbench.id", DefaultProps.idFancyWorkbench);
-			blockFancyWorkbench = (new ElysianFancyWorkbench(idFancyWorkbench.getInt())).setHardness(0.2F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("FancyWorkbench");
+			blockFancyWorkbench = new ElysianFancyWorkbench(idFancyWorkbench.getInt()).setHardness(2F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockShrinePillar");
 			registerBlock(blockFancyWorkbench, "Fancy Workbench");
 			
 			
@@ -497,22 +486,27 @@ public class Elysium
 			MinecraftForge.setBlockHarvestLevel(oreTourmaline, "pickaxe", 3);
 			
 			MinecraftForge.setBlockHarvestLevel(blockSulphure, "pickaxe", 0);
-			MinecraftForge.setBlockHarvestLevel(blockCobalt, "pickaxe", 0);
-			MinecraftForge.setBlockHarvestLevel(blockSilicon, "pickaxe", 0);
-			MinecraftForge.setBlockHarvestLevel(blockIridium, "pickaxe", 0);
-			MinecraftForge.setBlockHarvestLevel(blockJade, "pickaxe", 0);
-			MinecraftForge.setBlockHarvestLevel(blockBeryl, "pickaxe", 0);
-			MinecraftForge.setBlockHarvestLevel(blockTourmaline, "pickaxe", 0);
+			MinecraftForge.setBlockHarvestLevel(blockCobalt, "pickaxe", 1);
+			MinecraftForge.setBlockHarvestLevel(blockSilicon, "pickaxe", 2);
+			MinecraftForge.setBlockHarvestLevel(blockIridium, "pickaxe", 2);
+			MinecraftForge.setBlockHarvestLevel(blockJade, "pickaxe", 2);
+			MinecraftForge.setBlockHarvestLevel(blockBeryl, "pickaxe", 2);
+			MinecraftForge.setBlockHarvestLevel(blockTourmaline, "pickaxe", 3);
 			
 			MinecraftForge.setBlockHarvestLevel(blockGrass, "shovel", 0);
 			MinecraftForge.setBlockHarvestLevel(blockDirt, "shovel", 0);
 			MinecraftForge.setBlockHarvestLevel(blockLogFostimber, "axe", 0);
 			MinecraftForge.setBlockHarvestLevel(blockPlanksFostimber, "axe", 0);
-			MinecraftForge.setBlockHarvestLevel(blockWorkbench, "axe", 0);
+			MinecraftForge.setBlockHarvestLevel(blockFancyWorkbench, "pickaxe", 0);
 			
 			//Crafting Registering
 			
-			GameRegistry.addRecipe(new ItemStack(itemGracePrism), new Object[] {"SMS","MDM","SMS", Character.valueOf('S'), Block.whiteStone, Character.valueOf('M'), Item.bucketMilk, Character.valueOf('D'), Item.diamond});
+			GameRegistry.addRecipe(new ItemStack(itemGracePrism), new Object[] {"SSS","SDT","TTT", Character.valueOf('S'), Item.sugar, Character.valueOf('T'), Item.ghastTear, Character.valueOf('D'), Item.diamond});
+			GameRegistry.addRecipe(new ItemStack(itemGracePrism), new Object[] {"SSS","SDT","TTT", Character.valueOf('T'), Item.sugar, Character.valueOf('S'), Item.ghastTear, Character.valueOf('D'), Item.diamond});
+			GameRegistry.addRecipe(new ItemStack(itemGracePrism), new Object[] {"SST","SDT","STT", Character.valueOf('S'), Item.sugar, Character.valueOf('T'), Item.ghastTear, Character.valueOf('D'), Item.diamond});
+			GameRegistry.addRecipe(new ItemStack(itemGracePrism), new Object[] {"SST","SDT","STT", Character.valueOf('T'), Item.sugar, Character.valueOf('S'), Item.ghastTear, Character.valueOf('D'), Item.diamond});
+			
+			
 			GameRegistry.addRecipe(new ItemStack(itemPickaxeFostimber), new Object[] {"WW "," SW","S W", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockPlanksFostimber});
 			GameRegistry.addRecipe(new ItemStack(itemPickaxePalestone), new Object[] {"WW "," SW","S W", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockCobblePalestone});
 			GameRegistry.addRecipe(new ItemStack(itemShovelFostimber), new Object[] {" WW"," SW","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockPlanksFostimber});
@@ -558,7 +552,6 @@ public class Elysium
 			//Entity Registering
 			
 			GameRegistry.registerTileEntity(ElysianTileEntityPortal.class, "ElysianTileEntityPortal");
-			GameRegistry.registerTileEntity(TileEntityElysianWorkbench.class, "ElysianTileEntityWorkbench");
 			GameRegistry.registerTileEntity(TileEntityFancyWorkbench.class, "TileEntityFancyWorkbench");
 			
 			proxy.registerRenderers();

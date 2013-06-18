@@ -15,9 +15,7 @@ import mods.elysium.dimension.portal.ElysianTileEntityPortalRenderer;
 import mods.elysium.entity.EntityDrachma;
 import mods.elysium.entity.EntityCatorPillar;
 import mods.elysium.entity.EntityGerbil;
-import mods.elysium.entity.tileentity.TileEntityElysianWorkbench;
 import mods.elysium.entity.tileentity.TileEntityFancyWorkbench;
-import mods.elysium.entity.tileentity.TileFancyWorkbench;
 import mods.elysium.render.*;
 import net.aetherteam.mainmenu_api.MainMenuAPI;
 import net.minecraft.block.Block;
@@ -47,13 +45,12 @@ public class ClientProxy extends CommonProxy
 	public void registerRenderers()
 	{
 		MainMenuAPI.registerMenu("Elysian Menu", ElysianMenu.class);
-		//MainMenuAPI.registerMenu("Misc Elysian Menu", MiscElysianMenu.class);
+//		MainMenuAPI.registerMenu("Misc Elysian Menu", MiscElysianMenu.class);
 		
 		Elysium.fancyWorkbenchRenderID = RenderingRegistry.getNextAvailableRenderId();
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(ElysianTileEntityPortal.class, new ElysianTileEntityPortalRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFancyWorkbench.class, new RenderTileEntityFancyWorkbench());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileFancyWorkbench.class, new RenderFancyWorkbench());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFancyWorkbench.class, new RenderFancyWorkbench());
 		
 		RenderingRegistry.registerBlockHandler(new RenderFancyWorkbench());
 		
