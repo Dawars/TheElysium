@@ -92,10 +92,40 @@ public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInve
 	{
 		super.onInventoryChanged();
 		
-		for(int i = 0; i < this.getSizeInventory(); i++)
-			this.container.craftMatrix.setInventorySlotContents(i, this.inventory[i]);
+		rotateCraftingGrid();
 		
 		this.inventory[this.getSizeInventory()] = CraftingManager.getInstance().findMatchingRecipe(this.container.craftMatrix, this.worldObj);
+	}
+	
+	public void rotateCraftingGrid()
+	{
+		int meta = this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord);
+		
+		if(!this.worldObj.isRemote)
+			System.out.println(meta);
+		
+		for(int i = 0; i < 3; i++)
+		{
+			for(int k = 0; k < 3; k++)
+			{
+				if(meta == 0)
+				{
+					this.container.craftMatrix.setInventorySlotContents(8 - k*3 - i, this.getStackInSlot(i*3 + k));
+				}
+				else if(meta == 1)
+				{
+					this.container.craftMatrix.setInventorySlotContents(i*3 + k, this.getStackInSlot(i*3 + k));
+				}
+				else if(meta == 2)
+				{
+					this.container.craftMatrix.setInventorySlotContents(k*3 + i, this.getStackInSlot(i*3 + k));
+				}
+				else
+				{
+					this.container.craftMatrix.setInventorySlotContents(8 - i*3 - k, this.getStackInSlot(i*3 + k));
+				}
+			}
+		}
 	}
 	
 	public void craftItem(EntityPlayer player)

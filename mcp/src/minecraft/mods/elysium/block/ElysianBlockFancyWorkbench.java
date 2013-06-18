@@ -56,6 +56,10 @@ public class ElysianBlockFancyWorkbench extends ElysianBlockContainer
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving entity, ItemStack stack)
 	{
 		int meta = determineOrientation(world, x, y, z, entity);
+		
+		if(!world.isRemote)
+			System.out.println(meta);
+		
 		world.setBlockMetadataWithNotify(x, y, z, meta, 0);
 	}
 	
@@ -81,7 +85,7 @@ public class ElysianBlockFancyWorkbench extends ElysianBlockContainer
 		int l = MathHelper.floor_double((double)(entity.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 		//Direction numbers
 		//return l == 0 ? 2 : (l == 1 ? 5 : (l == 2 ? 3 : (l == 3 ? 4 : 0)));
-		return l-1;
+		return l;
 	}
 	
 	@Override
