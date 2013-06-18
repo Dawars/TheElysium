@@ -34,8 +34,9 @@ public class RenderTileEntityFancyWorkbench extends TileEntitySpecialRenderer
 			glTranslated(x+0.5D, y+1.5D, z+0.5D);
 			glScaled(0.0625D, 0.0625D, 0.0625D);
 			glRotatef(180F, 1F, 0F, 0F);
+			glRotatef(90F*(tile.worldObj.getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord)-1), 0F, 1F, 0F);
 			
-			glBindTexture(GL_TEXTURE_2D, Minecraft.getMinecraft().renderEngine.getTexture("/mods/elysium/textures/models/elysianWorkpillar2.png"));
+			glBindTexture(GL_TEXTURE_2D, Minecraft.getMinecraft().renderEngine.getTexture("/mods/elysium/textures/models/elysianWorkpillar.png"));
 			model.render(tile, 1F);
 		glPopMatrix();
 		

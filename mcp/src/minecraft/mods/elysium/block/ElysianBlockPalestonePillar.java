@@ -58,7 +58,7 @@ public class ElysianBlockPalestonePillar extends ElysianBlock
 	}
 	
 	@Override
-	public int onBlockPlaced(World world, int x, int y, int z, int side, float par6, float par7, float par8, int meta)
+	public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta)
 	{
 		if((side == 0) || (side == 1))
 		{
