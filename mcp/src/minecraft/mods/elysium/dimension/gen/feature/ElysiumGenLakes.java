@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import mods.elysium.Elysium;
+import mods.elysium.block.ElysianBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.EnumSkyBlock;
@@ -144,9 +145,17 @@ public class ElysiumGenLakes extends WorldGenerator
 			{
 				for (cy = 0; cy < 8; cy++)
 				{
-					if((lake[(cx * 16 + cz) * 8 + cy] != -1) && (world.getBlockId(x+cx, y+cy, z+cz) != Block.blockNetherQuartz.blockID) && (world.getBlockId(x+cx, y+cy, z+cz) != Block.blockGold.blockID) && (world.getBlockId(x+cx, y+cy, z+cz) != Elysium.blockPortalCore.blockID))
+					if((lake[(cx * 16 + cz) * 8 + cy] != -1) && (world.getBlockId(x+cx, y+cy, z+cz) != Block.blockNetherQuartz.blockID) && (world.getBlockId(x+cx, y+cy, z+cz) != Block.blockGold.blockID))
 					{
-						world.setBlock(x+cx, y+cy, z+cz, lake[(cx * 16 + cz) * 8 + cy]);
+						if(Block.blocksList[world.getBlockId(x+cx, y+cy, z+cz)] instanceof ElysianBlock)
+						{
+							if(((ElysianBlock)Block.blocksList[world.getBlockId(x+cx, y+cy, z+cz)]).canBeReplacedByLake())
+								world.setBlock(x+cx, y+cy, z+cz, lake[(cx * 16 + cz) * 8 + cy]);
+						}
+						else
+						{
+							world.setBlock(x+cx, y+cy, z+cz, lake[(cx * 16 + cz) * 8 + cy]);
+						}
 					}
 				}
 			}
@@ -162,12 +171,12 @@ public class ElysiumGenLakes extends WorldGenerator
 			{
 				new ElysiumGenSand(Elysium.blockRilt.blockID, 3).generate(world, random, x+8, y+4, z+8);
 			}
-			//if(random.nextInt(3) == 0)
+			if(random.nextInt(3) == 0)
 			{
 				int c = random.nextInt(5);
 				for(i = 0; i < c; i++)
 				{
-					//new ElysiumGenLakePillar().generate(world, random, x+random.nextInt(16)-8, y+4, z+random.nextInt(16)-8);
+					new ElysiumGenLakePillar().generate(world, random, x+random.nextInt(16)-8, y+4, z+random.nextInt(16)-8);
 				}
 			}
 			//System.out.println("Generated lake on surface at: " + (x+8) + " " + (y+4) + " " + (z+8));

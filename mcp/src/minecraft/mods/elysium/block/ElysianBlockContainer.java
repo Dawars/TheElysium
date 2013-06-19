@@ -43,4 +43,10 @@ public abstract class ElysianBlockContainer extends ElysianBlock implements ITil
         TileEntity tileentity = world.getBlockTileEntity(x, y, z);
         return tileentity != null ? tileentity.receiveClientEvent(blockID, eventID) : false;
     }
+    
+    @Override
+    public boolean canBeReplacedByLake()
+	{
+		return false;
+	}
 }

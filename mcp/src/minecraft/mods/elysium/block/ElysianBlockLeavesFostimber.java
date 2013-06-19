@@ -375,4 +375,10 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
         ret.add(new ItemStack(this, 1, world.getBlockMetadata(x, y, z) & 3));
         return ret;
     }
+    
+    @Override
+	public boolean canBeReplacedByLake()
+	{
+		return false;
+	}
 }

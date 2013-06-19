@@ -33,7 +33,7 @@ public class ElysiumGenLakePillar extends WorldGenerator
 		
 		if(j == h+1)
 		{
-			System.out.println("yay");
+			//System.out.println("yay");
 			int w1 = random.nextInt(4);
 			int w2 = w1 + random.nextInt(3)-1;
 			

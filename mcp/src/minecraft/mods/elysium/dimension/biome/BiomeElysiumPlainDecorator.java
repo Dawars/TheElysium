@@ -21,7 +21,7 @@ public class BiomeElysiumPlainDecorator extends BiomeDecorator
 	public BiomeElysiumPlainDecorator(BiomeGenBase biomeGenBase)
 	{
 		super(biomeGenBase);
-        this.plantAsphodelGen = new WorldGenFlowers(Elysium.blockFlowerAsphodel.blockID);//meatada
+        this.plantAsphodelGen = new WorldGenFlowers(Elysium.blockFlowerAsphodel.blockID);//metadata
 	}
 
 	/**

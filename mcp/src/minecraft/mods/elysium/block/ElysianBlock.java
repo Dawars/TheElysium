@@ -39,4 +39,9 @@ public class ElysianBlock extends Block
 			}
 		}
 	}
+	
+	public boolean canBeReplacedByLake()
+	{
+		return true;
+	}
 }

@@ -77,4 +77,10 @@ public class ElysianBlockPalestonePillar extends ElysianBlock
 
 		return meta;
 	}
+	
+	@Override
+	public boolean canBeReplacedByLake()
+	{
+		return false;
+	}
 }

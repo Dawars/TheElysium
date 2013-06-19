@@ -119,4 +119,10 @@ public class ElysianBlockLogFostimber extends ElysianBlock
 	{
 		return true;
 	}
+	
+	@Override
+	public boolean canBeReplacedByLake()
+	{
+		return false;
+	}
 }
