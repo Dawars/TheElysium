@@ -19,6 +19,7 @@ import mods.elysium.entity.tileentity.TileEntityFancyWorkbench;
 import mods.elysium.render.*;
 import net.aetherteam.mainmenu_api.MainMenuAPI;
 import net.minecraft.block.Block;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.src.ModLoader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -29,15 +30,12 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ClientProxy extends CommonProxy
 {
-	@Override
-	public Object getClient()
-	{
+	/* INSTANCES */
+	public Object getClient() {
 		return FMLClientHandler.instance().getClient();
 	}
-	
-	@Override
-	public World getClientWorld()
-	{
+
+	public World getClientWorld() {
 		return FMLClientHandler.instance().getClient().theWorld;
 	}
 	
@@ -112,5 +110,16 @@ public class ClientProxy extends CommonProxy
 		{
 			System.err.println(Elysium.consolePrefix+"Could not load soundfile: " + soundFile);
 		}
+	}
+	
+	/* NETWORKING */
+	@Override
+	public void sendToServer(Packet packet) {
+		FMLClientHandler.instance().getClient().getNetHandler().addToSendQueue(packet);
+	}
+	
+	@Override
+	public String playerName() {
+		return FMLClientHandler.instance().getClient().thePlayer.username;
 	}
 }
