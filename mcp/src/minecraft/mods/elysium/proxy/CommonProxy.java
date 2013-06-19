@@ -49,7 +49,8 @@ public class CommonProxy
 		return world.isRemote;
 	}
 
-	public void sendToPlayer(EntityPlayer entityplayer, ElysiumPacket packet) {
+	public void sendToPlayer(EntityPlayer entityplayer, ElysiumPacket packet)
+	{
 		EntityPlayerMP player = (EntityPlayerMP) entityplayer;
 		player.playerNetServerHandler.sendPacketToPlayer(packet.getPacket());
 	}
@@ -69,7 +70,9 @@ public class CommonProxy
 		}
 	}
 	
-	public void sendToServer(Packet packet) {
+	public void sendToServer(Packet packet)
+	{
+		
 	}
 	
 	public String playerName() {

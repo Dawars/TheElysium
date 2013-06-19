@@ -1,5 +1,7 @@
 package mods.elysium.entity;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import net.minecraft.entity.EntityAgeable;
@@ -44,9 +46,16 @@ public class EntityCatorPillar extends EntityMob
         this.tasks.addTask(8, new EntityAILookIdle(this));
     }
     
+    @SideOnly(Side.CLIENT)
+    public float protationYaw = 0F;
+    
     @Override
     public void onUpdate()
     {
+    	if(this.worldObj.isRemote)
+    	{
+    		this.protationYaw = this.rotationYaw;
+    	}
     	super.onUpdate();
     }
 

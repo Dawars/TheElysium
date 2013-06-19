@@ -121,11 +121,11 @@ public class ClientProxy extends CommonProxy
 		FMLClientHandler.instance().getClient().getNetHandler().addToSendQueue(packet);
 	}
 	
-	@Override
+	/*@Override
 	public void sendToPlayer(EntityPlayer entityplayer, ElysiumPacket packet){}
 	
 	@Override
-	public void sendToPlayers(Packet packet, World world, int x, int y, int z, int maxDistance){}
+	public void sendToPlayers(Packet packet, World world, int x, int y, int z, int maxDistance){}*/
 	
 	@Override
 	public String playerName() {
