@@ -1,15 +1,13 @@
 package mods.elysium.entity.tileentity;
 
-import static org.lwjgl.opengl.GL11.glTranslated;
-
 import java.util.Random;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+import mods.elysium.Elysium;
 import mods.elysium.inventory.ContainerFancyWorkbench;
-import mods.elysium.inventory.ContainerFancyWorkbench2;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,6 +19,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.INetworkManager;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -28,64 +29,78 @@ import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 
 public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInventory, ISidedInventory
 {
-	private ContainerFancyWorkbench container = new ContainerFancyWorkbench(this);
-	private ItemStack[] inventory = new ItemStack[10];
-	@SideOnly(Side.CLIENT)
+	private ContainerFancyWorkbench container = new ContainerFancyWorkbench();
+	private ItemStack[] inventory = new ItemStack[this.getSizeInventory()+1];
 	public float rot = 0F;
 	
 	@Override
 	public void updateEntity()
 	{
-		if(worldObj.isRemote){
-			this.rot += 0.1F;
-			if(this.rot >= 360F) this.rot -= 360F;
-		}
+		this.rot += 0.1F;
+		if(this.rot >= 360F) this.rot -= 360F;
 		
 		super.updateEntity();
 	}
 	
-	/**
-     * Reads a tile entity from NBT.
-     */
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
-    {
-        super.readFromNBT(par1NBTTagCompound);
-        NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Inv");
-        this.inventory = new ItemStack[this.getSizeInventory()];
-
-        for (int i = 0; i < nbttaglist.tagCount(); ++i)
-        {
-            NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
-            int j = nbttagcompound1.getByte("Slot") & 255;
-
-            if (j >= 0 && j < this.inventory.length)
-            {
-                this.inventory[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-            }
-        }
-    }
-
-    /**
-     * Writes a tile entity to NBT.
-     */
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
-    {
-        super.writeToNBT(par1NBTTagCompound);
-        NBTTagList nbttaglist = new NBTTagList();
-
-        for (int i = 0; i < this.inventory.length; ++i)
-        {
-            if (this.inventory[i] != null)
-            {
-                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-                nbttagcompound1.setByte("Slot", (byte)i);
-                this.inventory[i].writeToNBT(nbttagcompound1);
-                nbttaglist.appendTag(nbttagcompound1);
-            }
-        }
-
-        par1NBTTagCompound.setTag("Inv", nbttaglist);
-    }
+	@Override
+	public void readFromNBT(NBTTagCompound nbt)
+	{
+		//System.out.println("read: "+this.worldObj.isRemote);
+		
+		super.readFromNBT(nbt);
+		
+		this.inventory = new ItemStack[this.getSizeInventory()+1];
+		NBTTagList nbtlist = nbt.getTagList("Items");
+		
+		for(int i = 0; i < nbtlist.tagCount(); i++)
+		{
+			NBTTagCompound nbtslot = (NBTTagCompound) nbtlist.tagAt(i);
+			int j = nbtslot.getByte("Slot") & 255;
+			
+			if((j >= 0) && (j < this.getSizeInventory()+1))
+				this.inventory[j] = ItemStack.loadItemStackFromNBT(nbtslot);
+		}
+	}
+	
+	@Override
+	public void writeToNBT(NBTTagCompound nbt)
+	{
+		//System.out.println("write: "+this.worldObj.isRemote);
+		
+		super.writeToNBT(nbt);
+		
+		NBTTagList nbtlist = new NBTTagList();
+		
+		for(int i = 0; i < this.getSizeInventory()+1; i++)
+		{
+			if(this.inventory[i] != null)
+			{
+				NBTTagCompound nbtslot = new NBTTagCompound();
+				nbtslot.setByte("Slot", (byte)i);
+				this.inventory[i].writeToNBT(nbtslot);
+				nbtlist.appendTag(nbtslot);
+			}
+		}
+		
+		nbt.setTag("Items", nbtlist);
+	}
+	
+	@Override
+	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt)
+	{
+		//System.out.println("receive: "+this.worldObj.isRemote);
+		NBTTagCompound nbt = pkt.customParam1;
+		this.readFromNBT(nbt);
+	}
+	
+	@Override
+	public Packet getDescriptionPacket()
+	{
+		//System.out.println("send: "+this.worldObj.isRemote);
+		NBTTagCompound nbt = new NBTTagCompound();
+		this.writeToNBT(nbt);
+		return new Packet132TileEntityData(xCoord, yCoord, zCoord, 0, nbt);
+	}
 	
 	
 	
@@ -94,11 +109,12 @@ public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInve
 	{
 		super.onInventoryChanged();
 		
-		rotateCraftingGrid();
-		this.inventory[this.getSizeInventory()] = CraftingManager.getInstance().findMatchingRecipe(this.container.craftMatrix, this.worldObj);
-		
-		//TODO test
-		this.container.detectAndSendChanges();
+		if(!this.worldObj.isRemote)
+		{
+			rotateCraftingGrid();
+			this.inventory[this.getSizeInventory()] = CraftingManager.getInstance().findMatchingRecipe(this.container.craftMatrix, this.worldObj);
+			Elysium.proxy.sendToPlayers(this.getDescriptionPacket(), this.worldObj, this.xCoord, this.yCoord, this.zCoord, 128);
+		}
 	}
 	
 	public void rotateCraftingGrid()
@@ -246,7 +262,7 @@ public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInve
 	@Override
 	public int getSizeInventory()
 	{
-		return this.inventory.length-1;
+		return 9;
 	}
 
 	@Override
@@ -344,7 +360,7 @@ public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInve
 	@Override
 	public int[] getAccessibleSlotsFromSide(int side)
 	{
-		return new int[]{9};
+		return null;
 	}
 
 	@Override
@@ -356,6 +372,6 @@ public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInve
 	@Override
 	public boolean canExtractItem(int slot, ItemStack itemstack, int side)
 	{
-		return slot == 9;
+		return false;
 	}
 }

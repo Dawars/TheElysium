@@ -16,9 +16,12 @@ import mods.elysium.entity.EntityDrachma;
 import mods.elysium.entity.EntityCatorPillar;
 import mods.elysium.entity.EntityGerbil;
 import mods.elysium.entity.tileentity.TileEntityFancyWorkbench;
+import mods.elysium.network.ElysiumPacket;
 import mods.elysium.render.*;
 import net.aetherteam.mainmenu_api.MainMenuAPI;
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.src.ModLoader;
 import net.minecraft.world.World;
@@ -117,6 +120,12 @@ public class ClientProxy extends CommonProxy
 	public void sendToServer(Packet packet) {
 		FMLClientHandler.instance().getClient().getNetHandler().addToSendQueue(packet);
 	}
+	
+	@Override
+	public void sendToPlayer(EntityPlayer entityplayer, ElysiumPacket packet){}
+	
+	@Override
+	public void sendToPlayers(Packet packet, World world, int x, int y, int z, int maxDistance){}
 	
 	@Override
 	public String playerName() {

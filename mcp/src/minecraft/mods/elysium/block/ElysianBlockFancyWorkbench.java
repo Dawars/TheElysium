@@ -19,9 +19,9 @@ import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class ElysianFancyWorkbench extends ElysianBlockContainer
+public class ElysianBlockFancyWorkbench extends ElysianBlockContainer
 {
-	public ElysianFancyWorkbench(int id)
+	public ElysianBlockFancyWorkbench(int id)
 	{
 		super(id, Material.rock);
 	}
@@ -100,8 +100,13 @@ public class ElysianFancyWorkbench extends ElysianBlockContainer
 			
 			if(player.isSneaking())
 			{
-				hitX = (float) Math.floor(hitX/0.33F);
-				hitZ = (float) Math.floor(hitZ/0.33F);
+				hitX = (int) Math.floor(hitX/0.33F);
+				if(hitX > 2) hitX = 2;
+				if(hitX < 0) hitX = 0;
+				hitZ = (int) Math.floor(hitZ/0.33F);
+				if(hitZ > 2) hitZ = 2;
+				if(hitZ < 0) hitZ = 0;
+				
 				int i = (int) (hitX*3 + hitZ);
 				
 				if(workTile.getStackInSlot(i) != null)
@@ -111,8 +116,13 @@ public class ElysianFancyWorkbench extends ElysianBlockContainer
 			}
 			if(player.getCurrentEquippedItem() != null)
 			{
-				hitX = (float) Math.floor(hitX/0.33F);
-				hitZ = (float) Math.floor(hitZ/0.33F);
+				hitX = (int) Math.floor(hitX/0.33F);
+				if(hitX > 2) hitX = 2;
+				if(hitX < 0) hitX = 0;
+				hitZ = (int) Math.floor(hitZ/0.33F);
+				if(hitZ > 2) hitZ = 2;
+				if(hitZ < 0) hitZ = 0;
+				
 				int i = (int) (hitX*3 + hitZ);
 				
 				if(workTile.getStackInSlot(i) == null)
@@ -176,12 +186,13 @@ public class ElysianFancyWorkbench extends ElysianBlockContainer
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister itemIcon)
     {
-        this.blockIcon = itemIcon.registerIcon(DefaultProps.modId + ":fancy_workbench_side");
+        this.blockIcon = itemIcon.registerIcon(DefaultProps.modId + ":palestone_pillar_side");
     }
 	
 	@Override
-	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int par1, int par2) {
+    @SideOnly(Side.CLIENT)
+	public Icon getIcon(int par1, int par2)
+	{
 		return this.blockIcon;
 	}
 }

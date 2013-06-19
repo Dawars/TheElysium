@@ -49,23 +49,26 @@ public class CommonProxy
 		return world.isRemote;
 	}
 
-	public void sendToPlayers(Packet packet, World world, int x, int y, int z, int maxDistance) {
-		if (packet != null) {
-			for (int j = 0; j < world.playerEntities.size(); j++) {
+	public void sendToPlayer(EntityPlayer entityplayer, ElysiumPacket packet) {
+		EntityPlayerMP player = (EntityPlayerMP) entityplayer;
+		player.playerNetServerHandler.sendPacketToPlayer(packet.getPacket());
+	}
+	
+	public void sendToPlayers(Packet packet, World world, int x, int y, int z, int maxDistance)
+	{
+		if(packet != null)
+		{
+			for (int j = 0; j < world.playerEntities.size(); j++)
+			{
 				EntityPlayerMP player = (EntityPlayerMP) world.playerEntities.get(j);
-
-				if (Math.abs(player.posX - x) <= maxDistance && Math.abs(player.posY - y) <= maxDistance && Math.abs(player.posZ - z) <= maxDistance) {
+				if((player.posX - x)*(player.posX - x) + (player.posY - y)*(player.posY - y) + (player.posZ - z)*(player.posZ - z) <= maxDistance*maxDistance)
+				{
 					player.playerNetServerHandler.sendPacketToPlayer(packet);
 				}
 			}
 		}
 	}
-
-	public void sendToPlayer(EntityPlayer entityplayer, ElysiumPacket packet) {
-		EntityPlayerMP player = (EntityPlayerMP) entityplayer;
-		player.playerNetServerHandler.sendPacketToPlayer(packet.getPacket());
-	}
-
+	
 	public void sendToServer(Packet packet) {
 	}
 	

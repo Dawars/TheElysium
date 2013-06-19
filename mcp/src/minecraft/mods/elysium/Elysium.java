@@ -359,7 +359,7 @@ public class Elysium
 			registerBlock(blockTourmaline, "Tourmaline Block");
 			
 			Property idFancyWorkbench = Elysium.config.getBlock("idFancyWorkbench.id", DefaultProps.idFancyWorkbench);
-			blockFancyWorkbench = new ElysianFancyWorkbench(idFancyWorkbench.getInt()).setHardness(2F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockShrinePillar");
+			blockFancyWorkbench = new ElysianBlockFancyWorkbench(idFancyWorkbench.getInt()).setHardness(2F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockShrinePillar");
 			registerBlock(blockFancyWorkbench, "Fancy Workbench");
 			
 			
