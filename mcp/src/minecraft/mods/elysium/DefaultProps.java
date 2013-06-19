@@ -97,7 +97,7 @@ public class DefaultProps
 	public static int idStoneShovelItem = 5059;
 	public static int idStoneHoeItem = 5060;
 
-	public static int idOverkillItem = 5106;
+	public static int idOverkillItem = 5555;
 	public static int idDebugItem = 5107;
 	
 	//Settings

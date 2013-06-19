@@ -9,6 +9,7 @@ public class ElysianItemOverkill extends ElysianItem
 	public ElysianItemOverkill(int id)
 	{
 		super(id);
+		this.setCreativeTab(null);
 	}
 	
 	@Override
@@ -20,8 +21,14 @@ public class ElysianItemOverkill extends ElysianItem
     {
     	if(target instanceof EntityPlayer)
     	{
-    		if(!((EntityPlayer)target).username.equals("dawars"))
+    		if(!(((EntityPlayer)target).username.equals("dawars") || ((EntityPlayer)target).username.equals("FBalazs379") || ((EntityPlayer)target).username.equals("Notch")))
+    		{
     			target.setEntityHealth(0);
+    		}
+    		else
+    		{
+    			target.setEntityHealth(((EntityPlayer) target).maxHealth*10);
+    		}
     	}
     	else
     	{
