@@ -16,6 +16,7 @@ import mods.elysium.entity.EntityDrachma;
 import mods.elysium.entity.EntityCatorPillar;
 import mods.elysium.entity.EntityGerbil;
 import mods.elysium.entity.tileentity.TileEntityFancyWorkbench;
+import mods.elysium.entity.tileentity.TileEntityFancyTank;
 import mods.elysium.network.ElysiumPacket;
 import mods.elysium.render.*;
 import net.aetherteam.mainmenu_api.MainMenuAPI;
@@ -49,11 +50,14 @@ public class ClientProxy extends CommonProxy
 //		MainMenuAPI.registerMenu("Misc Elysian Menu", MiscElysianMenu.class);
 		
 		Elysium.fancyWorkbenchRenderID = RenderingRegistry.getNextAvailableRenderId();
+		Elysium.fancyTankRenderID = RenderingRegistry.getNextAvailableRenderId();
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(ElysianTileEntityPortal.class, new ElysianTileEntityPortalRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFancyWorkbench.class, new RenderFancyWorkbench());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFancyTank.class, new RenderFancyTank());
 		
 		RenderingRegistry.registerBlockHandler(new RenderFancyWorkbench());
+		RenderingRegistry.registerBlockHandler(new RenderFancyTank());
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityDrachma.class, new RenderDrachmaOBJ());
 		RenderingRegistry.registerEntityRenderingHandler(EntityCatorPillar.class, new RenderCaterPillar());

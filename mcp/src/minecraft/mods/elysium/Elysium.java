@@ -82,6 +82,7 @@ public class Elysium
 
 	//Rendering ids
 	public static int fancyWorkbenchRenderID;
+	public static int fancyTankRenderID;
 	
 	//Blocks
 	public static Block blockPalestone;
