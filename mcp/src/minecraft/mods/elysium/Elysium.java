@@ -18,6 +18,7 @@ import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.src.ModLoader;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.EnumHelper;
@@ -184,8 +185,8 @@ public class Elysium
 	
 	
 	/** Biome's **/
-	public static BiomeGenBase elysianBiomePlain = null;
-	public static BiomeGenBase elysianBiomeOcean = null;
+	public static BiomeGenBase biomePlain = null;
+	public static BiomeGenBase biomeOcean = null;
 	
 	@PreInit
 	public void load(FMLPreInitializationEvent evt)
@@ -621,8 +622,8 @@ public class Elysium
 		DimensionManager.registerDimension(DimensionID, DimensionID);
 		
 		
-		elysianBiomePlain = new ElysiumBiomeGenPlain(25);
-		elysianBiomeOcean = new ElysiumBiomeGenOcean(26);
+		biomePlain = new ElysiumBiomeGenPlain(25);
+		biomeOcean = new ElysiumBiomeGenOcean(26);
 		
 		
 		GameRegistry.registerWorldGenerator(new WorldGenElysium());

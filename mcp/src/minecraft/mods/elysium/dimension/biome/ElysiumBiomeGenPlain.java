@@ -5,9 +5,10 @@ import net.minecraft.world.biome.BiomeGenBase;
 
 public class ElysiumBiomeGenPlain extends BiomeGenBase
 {
-	public ElysiumBiomeGenPlain(int par1)
+	public ElysiumBiomeGenPlain(int id)
 	{
-		super(par1);
+		super(id);
+		this.temperature = 1.8F;
 		this.minHeight = 0.1F;
 		this.maxHeight = 0.6F;
 		this.spawnableMonsterList.clear();

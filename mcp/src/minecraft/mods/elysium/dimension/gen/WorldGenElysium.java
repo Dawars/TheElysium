@@ -68,7 +68,7 @@ public class WorldGenElysium implements IWorldGenerator
 		
 		new ElysiumGenMinable(Elysium.oreTourmaline.blockID, 8).generate(world, random, blockX + random.nextInt(16), random.nextInt(16), blockZ + random.nextInt(16));
 		
-		if(world.getBiomeGenForCoords(blockX, blockZ) == Elysium.elysianBiomeOcean)
+		if(world.getBiomeGenForCoords(blockX, blockZ) == Elysium.biomeOcean)
 		{
 			int x = blockX + random.nextInt(16);
 			int z = blockZ + random.nextInt(16);
