@@ -41,6 +41,7 @@ mcp/src/minecraft/cpw/*
 mcp/src/minecraft/ibxm/*
 mcp/src/minecraft/paulscode/*
 mcp/src/minecraft/*.cfg
+mcp/src/minecraft/buildcraft/*
 
 mcp/src/minecraft/Start.java
 mcp/src/minecraft/mcpmod.info

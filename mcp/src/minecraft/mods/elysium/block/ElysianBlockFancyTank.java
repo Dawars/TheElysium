@@ -1,5 +1,6 @@
 package mods.elysium.block;
 
+import buildcraft.core.utils.Utils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import mods.elysium.DefaultProps;
@@ -19,6 +20,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.liquids.LiquidContainerRegistry;
+import net.minecraftforge.liquids.LiquidStack;
 
 public class ElysianBlockFancyTank extends ElysianBlockContainer
 {
@@ -44,41 +48,58 @@ public class ElysianBlockFancyTank extends ElysianBlockContainer
 	{
 		return false;
 	}
-	
-	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)
-	{
-		return true;
-	}
-	
-//	@Override
-//	public void breakBlock(World world, int x, int y, int z, int par5, int par6)
-//	{
-//		TileEntityFancyWorkbench workTile = (TileEntityFancyWorkbench) world.getBlockTileEntity(x, y, z);
-//		
-//		for(int i = 0; i < 3; i++)
-//		{
-//			for(int k = 0; k < 3; k++)
-//			{
-//				if(workTile.getStackInSlot(i*3 + k) != null)
-//				{
-//					EntityItem itemDropped = new EntityItem(world, x + 0.1875D+i*0.3125D, y+1D, z + 0.1875D+k*0.3125D, workTile.getStackInSlot(i*3 + k));
-//					itemDropped.motionX = itemDropped.motionY = itemDropped.motionZ = 0D;
-//					
-//					if(!world.isRemote)
-//						world.spawnEntityInWorld(itemDropped);
-//					
-//					if(workTile.getStackInSlot(i*3 + k).hasTagCompound())
-//					{
-//						itemDropped.getEntityItem().setTagCompound((NBTTagCompound)workTile.getStackInSlot(i*3 + k).getTagCompound().copy());
-//					}
-//				}
-//			}
-//		}
-//		
-//		super.breakBlock(world, x, y, z, par5, par6);
-//	}
 
+	@Override
+	public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer entityplayer, int side, float hitX, float hitY, float hitZ) {
+
+		ItemStack current = entityplayer.inventory.getCurrentItem();
+		if (current != null) {
+
+			LiquidStack liquid = LiquidContainerRegistry.getLiquidForFilledItem(current);
+
+			TileEntityFancyTank tank = (TileEntityFancyTank) world.getBlockTileEntity(i, j, k);
+
+			// Handle filled containers
+			if (liquid != null) {
+				int qty = tank.fill(ForgeDirection.UNKNOWN, liquid, true);
+
+				if (qty != 0 && !entityplayer.capabilities.isCreativeMode) {
+					entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, Utils.consumeItem(current));
+				}
+
+				return true;
+
+				// Handle empty containers
+			} else {
+
+				LiquidStack available = tank.getTanks(ForgeDirection.UNKNOWN)[0].getLiquid();
+				if (available != null) {
+					ItemStack filled = LiquidContainerRegistry.fillLiquidContainer(available, current);
+
+					liquid = LiquidContainerRegistry.getLiquidForFilledItem(filled);
+
+					if (liquid != null) {
+						if (!entityplayer.capabilities.isCreativeMode) {
+							if (current.stackSize > 1) {
+								if (!entityplayer.inventory.addItemStackToInventory(filled))
+									return false;
+								else {
+									entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, Utils.consumeItem(current));
+								}
+							} else {
+								entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, Utils.consumeItem(current));
+								entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, filled);
+							}
+						}
+						tank.drain(ForgeDirection.UNKNOWN, liquid.amount, true);
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
 	@Override
 	public TileEntity createNewTileEntity(World world)
 	{
