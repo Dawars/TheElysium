@@ -65,9 +65,8 @@ public class DefaultProps
 	public static int idBlockTourmaline = 2028;
 	public static int idBlockBeryl = 2029;
 	
-	public static int idShrinePillar = 2030;
-	public static int idWorkbench = 2031;
-	public static int idFancyWorkbench = 2032;
+	public static int idFancyWorkbench = 2030;
+	public static int idFancyTank = 2031;
 
 	//Items
 	public static int idGracePrismItem = 5000;
