@@ -51,7 +51,6 @@ public class ElysianBlockFancyTank extends ElysianBlockContainer
 
 	@Override
 	public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer entityplayer, int side, float hitX, float hitY, float hitZ) {
-
 		ItemStack current = entityplayer.inventory.getCurrentItem();
 		if (current != null) {
 

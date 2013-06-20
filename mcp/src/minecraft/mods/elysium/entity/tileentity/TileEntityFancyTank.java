@@ -20,24 +20,26 @@ import mods.elysium.entity.tileentity.ElysianTileEntity;
 
 public class TileEntityFancyTank extends ElysianTileEntity implements ITankContainer{
 
-	private static final int MAX_LIQUID = LiquidContainerRegistry.BUCKET_VOLUME * 11;
+	private static final int MAX_LIQUID = LiquidContainerRegistry.BUCKET_VOLUME * 10;
 	public final ILiquidTank tank = new LiquidTank((int)MAX_LIQUID);
 	
+	public TileEntityFancyTank(){
+		((LiquidTank)this.tank).setTankPressure(1);
+	}
 	
 	/* SAVING & LOADING */
 	@Override
 	public void readFromNBT(NBTTagCompound data) {
 		super.readFromNBT(data);
-
+		LiquidStack liquid = new LiquidStack(0, 0, 0);
+		
 		if (data.hasKey("stored") && data.hasKey("liquidId")) {
-			LiquidStack liquid = new LiquidStack(data.getInteger("liquidId"), data.getInteger("stored"), 0);
-			((LiquidTank) tank).setLiquid(liquid);
+			liquid = new LiquidStack(data.getInteger("liquidId"), data.getInteger("stored"), 0);
 		} else {
-			LiquidStack liquid = LiquidStack.loadLiquidStackFromNBT(data.getCompoundTag("tank"));
-			if (liquid != null) {
-				((LiquidTank) tank).setLiquid(liquid);
-			}
+			liquid = LiquidStack.loadLiquidStackFromNBT(data.getCompoundTag("tank"));
 		}
+		((LiquidTank) tank).setLiquid(liquid);
+
 	}
 
 	@Override

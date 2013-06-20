@@ -11,6 +11,8 @@ import static org.lwjgl.opengl.GL11.glTranslated;
 import org.lwjgl.opengl.GL11;
 
 import buildcraft.core.render.LiquidRenderer;
+import buildcraft.transport.PipeTransportLiquids;
+import buildcraft.transport.TileGenericPipe;
 import mods.elysium.Elysium;
 import mods.elysium.entity.tileentity.TileEntityFancyTank;
 import net.minecraft.block.Block;
@@ -22,6 +24,8 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.liquids.ILiquidTank;
+import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidStack;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -133,7 +137,6 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 		Valve1.setTextureSize(128, 64);
 		Valve1.mirror = true;
 		setRotation(Valve1, 0F, 3.141593F, 0F);
-		Valve1.isHidden = true;
 		
 		Valve2 = new ModelRenderer(model, 0, 0);
 		Valve2.addBox(5F, -3F, -3F, 3, 6, 6);
@@ -141,7 +144,6 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 		Valve2.setTextureSize(128, 64);
 		Valve2.mirror = true;
 		setRotation(Valve2, 0F, 1.570796F, 0F);
-		Valve2.isHidden = true;
 		
 		Valve3 = new ModelRenderer(model, 0, 0);
 		Valve3.addBox(5F, -3F, -3F, 3, 6, 6);
@@ -149,7 +151,6 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 		Valve3.setTextureSize(128, 64);
 		Valve3.mirror = true;
 		setRotation(Valve3, 0F, 0F, 0F);
-		Valve3.isHidden = true;
 		
 		Valve4 = new ModelRenderer(model, 0, 0);
 		Valve4.addBox(5F, -3F, -3F, 3, 6, 6);
@@ -157,7 +158,6 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 		Valve4.setTextureSize(128, 64);
 		Valve4.mirror = true;
 		setRotation(Valve4, 0F, -1.570796F, 0F);
-		Valve4.isHidden = true;
 	      
 	}
   
@@ -190,10 +190,10 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 			glScaled(0.0625D, 0.0625D, 0.0625D);
 			glRotatef(180F, 1F, 0F, 0F);
 			FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/elysium/textures/models/elysianTank.png");
+			
 			render(null, 1F);
-			Valve2.isHidden = false;
-		    Valve2.render(1F);
-			Valve2.isHidden = true;
+			Valve2.render(1.0F);
+
 		glPopMatrix();
 	}
 
@@ -215,16 +215,36 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float f) {
 		glPushMatrix();
+			
 			glTranslated(x+0.5D, y+1.5D, z+0.5D);
 			glScaled(0.0625D, 0.0625D, 0.0625D);
 			glRotatef(180F, 1F, 0F, 0F);
 			glBindTexture(GL_TEXTURE_2D, Minecraft.getMinecraft().renderEngine.getTexture("/mods/elysium/textures/models/elysianTank.png"));
+			
+			TileEntity tileNeighbour;
+
+			tileNeighbour= tile.worldObj.getBlockTileEntity((int)x, (int)y, (int)z+1);
+			if(tileNeighbour != null && tileNeighbour instanceof TileGenericPipe){
+				Valve2.render(1.0F);
+			}
+			
+			tileNeighbour= tile.worldObj.getBlockTileEntity((int)x+1, (int)y, (int)z);
+			if(tileNeighbour != null && (tileNeighbour instanceof ITankContainer || tileNeighbour instanceof ILiquidTank|| tileNeighbour instanceof TileGenericPipe)){
+				Valve3.render(1.0F);
+			}
+			
+			tileNeighbour= tile.worldObj.getBlockTileEntity((int)x, (int)y, (int)z-1);
+			if(tileNeighbour != null && (tileNeighbour instanceof ITankContainer || tileNeighbour instanceof ILiquidTank|| tileNeighbour instanceof TileGenericPipe)){
+				Valve4.render(1.0F);
+			}
+			
+
+			tileNeighbour= tile.worldObj.getBlockTileEntity((int)x-1, (int)y, (int)z);
+			if(tileNeighbour != null && (tileNeighbour instanceof ITankContainer || tileNeighbour instanceof ILiquidTank|| tileNeighbour instanceof TileGenericPipe)){
+				Valve1.render(1.0F);
+			}
+			
 			render(tile, 1F);
-			
-			
-			Valve2.isHidden = false;
-		    Valve2.render(1F);
-			Valve2.isHidden = true;
 			
 		glPopMatrix();
 
@@ -250,8 +270,8 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 
 			bindTextureByName(LiquidRenderer.getLiquidSheet(liquid));
 
-			GL11.glTranslatef((float) x + 0.125F, (float) y+0.188F, (float) z + 0.125F);
-			GL11.glScalef(0.75F, 0.688F, 0.75F);
+			GL11.glTranslatef((float) x + 0.125F, (float) y + 0.1875F, (float) z + 0.125F);
+			GL11.glScalef(0.75F, 0.625F, 0.75F);
 
 			GL11.glCallList(displayList[(int) ((float) liquid.amount / (float) (tank.tank.getCapacity()) * (LiquidRenderer.DISPLAY_STAGES - 1))]);
 

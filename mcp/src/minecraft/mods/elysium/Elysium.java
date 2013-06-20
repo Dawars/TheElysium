@@ -567,6 +567,14 @@ public class Elysium
             OreDictionary.registerOre("treeSapling", blockSaplingFostimber);
             OreDictionary.registerOre("treeLeaves", blockLeavesFostimber);
             
+            OreDictionary.registerOre("oreIridium", oreIridium);
+            OreDictionary.registerOre("oreSulphure", oreSulphure);
+            OreDictionary.registerOre("oreBeryl", oreBeryl);
+            OreDictionary.registerOre("oreCobalt", oreCobalt);
+            OreDictionary.registerOre("oreJade", oreJade);
+            OreDictionary.registerOre("oreSilicon", oreSilicon);
+            OreDictionary.registerOre("oreTourmaline", oreTourmaline);
+            
             //OreDictionary recipes
             CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(new ItemStack(Item.stick, 6), new Object[] {"X", "X", "X", Character.valueOf('X'), "plankWood"}));
 
