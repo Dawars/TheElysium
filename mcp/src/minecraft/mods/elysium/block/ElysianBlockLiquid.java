@@ -53,7 +53,10 @@ public abstract class ElysianBlockLiquid extends Block
     {
         if (this.blockMaterial != Material.water)
         {
-            return 16777215;
+        	if(Elysium.isAprilFools)
+        		return (16777215+super.colorMultiplier(par1IBlockAccess, par2, par3, par4))/2;
+        	else
+        		return 16777215;
         }
         else
         {
@@ -71,8 +74,11 @@ public abstract class ElysianBlockLiquid extends Block
                     j1 += i2 & 255;
                 }
             }
-
-            return (l / 9 & 255) << 16 | (i1 / 9 & 255) << 8 | j1 / 9 & 255;
+            
+            if(Elysium.isAprilFools)
+            	return (((l / 9 & 255) << 16 | (i1 / 9 & 255) << 8 | j1 / 9 & 255)+super.colorMultiplier(par1IBlockAccess, par2, par3, par4))/2;
+            else
+            	return (l / 9 & 255) << 16 | (i1 / 9 & 255) << 8 | j1 / 9 & 255;
         }
     }
 

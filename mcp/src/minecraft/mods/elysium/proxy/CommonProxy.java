@@ -1,6 +1,7 @@
 package mods.elysium.proxy;
 
 import mods.elysium.DefaultProps;
+import mods.elysium.handlers.ElysianServerTickHandler;
 import mods.elysium.network.ElysiumPacket;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,6 +14,8 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.common.registry.TickRegistry;
+import cpw.mods.fml.relauncher.Side;
 
 public class CommonProxy
 {

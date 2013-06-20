@@ -109,9 +109,9 @@ public class ElysianBlockExpeller extends ElysianBlock
     }
     
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void randomDisplayTick(World world, int x, int y, int z, Random random)
     {
-    	ElysianEntityFX particle = new ElysianEntityFX(par1World, par2, par3, par4 + 1, 0, 0, 0);
+    	ElysianEntityFX particle = new ElysianEntityFX(world, x, y, z + 1, 0, 0, 0);
     	particle.setTextureFile("/mods/elysium/textures/misc/particles/milksand.png");
     	particle.multipleParticleScaleBy(0.5F);
     	particle.setRBGColorF(1, 1, 1);

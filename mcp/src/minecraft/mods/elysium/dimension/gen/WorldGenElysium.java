@@ -80,5 +80,11 @@ public class WorldGenElysium implements IWorldGenerator
 				world.setBlock(x, y, z, Elysium.oreBeryl.blockID);
 			}
 		}
+		
+		for(int i = 0; i < 16; i++)
+			for(int k = 0; k < 16; k++)
+				for(int j = 0; j < 128; j++)
+					if(world.getBlockId(blockX+i, j, blockZ+k) == Elysium.blockPalestone.blockID)
+						world.setBlockMetadataWithNotify(blockX+i, j, blockZ+k, 7, 0);
 	}
 }

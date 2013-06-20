@@ -16,6 +16,7 @@ import mods.elysium.entity.EntityDrachma;
 import mods.elysium.entity.EntityCatorPillar;
 import mods.elysium.entity.EntityGerbil;
 import mods.elysium.entity.tileentity.TileEntityFancyWorkbench;
+import mods.elysium.handlers.ElysianClientTickHandler;
 import mods.elysium.entity.tileentity.TileEntityFancyTank;
 import mods.elysium.network.ElysiumPacket;
 import mods.elysium.render.*;
@@ -31,6 +32,8 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.TickRegistry;
+import cpw.mods.fml.relauncher.Side;
 
 public class ClientProxy extends CommonProxy
 {
@@ -62,6 +65,8 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntityDrachma.class, new RenderDrachmaOBJ());
 		RenderingRegistry.registerEntityRenderingHandler(EntityCatorPillar.class, new RenderCaterPillar());
 		RenderingRegistry.registerEntityRenderingHandler(EntityGerbil.class, new RenderGerbil());
+		
+		TickRegistry.registerTickHandler(new ElysianClientTickHandler(), Side.CLIENT);
 	}
 	
 	@Override

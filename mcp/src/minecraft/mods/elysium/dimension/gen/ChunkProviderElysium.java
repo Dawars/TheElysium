@@ -486,6 +486,7 @@ public class ChunkProviderElysium implements IChunkProvider
 	
 	
 	ElysiumGenLakes lakegenerator = new ElysiumGenLakes(Elysium.waterStill.blockID);
+	ElysiumGenLakes lavagenerator = new ElysiumGenLakes(Block.lavaStill.blockID);
 	ElysiumGenSand sandgenerator = new ElysiumGenSand(Elysium.blockLeucosand.blockID, 7);
 	//ElysiumGenSand riltgenerator = new ElysiumGenSand(Elysium.RiltBlock.blockID, 3);
 	ElysiumGenFostimber treegenerator = new ElysiumGenFostimber(Elysium.blockLeavesFostimber.blockID, Elysium.blockLogFostimber.blockID, false);
@@ -511,7 +512,8 @@ public class ChunkProviderElysium implements IChunkProvider
 		//TODO structures
 		if(biomegenbase != Elysium.elysianBiomeOcean)
 		{
-			this.lakegenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), 0, l+this.rand.nextInt(16));
+			this.lakegenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), rand.nextInt(128), l+this.rand.nextInt(16));
+			this.lavagenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), rand.nextInt(64), l+this.rand.nextInt(16));
 			this.sandgenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), 0, l+this.rand.nextInt(16));
 			//this.riltgenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), 0, l+this.rand.nextInt(16));
 			if(this.rand.nextInt(4) == 0)

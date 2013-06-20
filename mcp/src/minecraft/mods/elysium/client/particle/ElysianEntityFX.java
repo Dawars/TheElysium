@@ -21,7 +21,6 @@ public class ElysianEntityFX extends EntityFX
 		this.motionY = my;
 		this.motionZ = mz;
 		this.setParticleTextureIndex(-1);
-		this.setRBGColorF(-1, -1, -1);
 	}
 	
 	public void setTextureFile(String path)

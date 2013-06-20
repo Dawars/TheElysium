@@ -4,6 +4,8 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import net.aetherteam.mainmenu_api.MainMenuAPI;
@@ -15,6 +17,7 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.EnumHelper;
@@ -36,9 +39,12 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
 import mods.elysium.api.Plants;
+import mods.elysium.api.temperature.RangedTemperature;
+import mods.elysium.api.temperature.TemperatureManager;
 import mods.elysium.block.*;
 import mods.elysium.client.gui.menu.ElysianMenu;
 import mods.elysium.dimension.*;
@@ -47,8 +53,7 @@ import mods.elysium.dimension.gen.WorldGenElysium;
 import mods.elysium.dimension.portal.*;
 import mods.elysium.entity.EntityCatorPillar;
 import mods.elysium.entity.EntityGerbil;
-import mods.elysium.entity.tileentity.TileEntityFancyTank;
-import mods.elysium.entity.tileentity.TileEntityFancyWorkbench;
+import mods.elysium.entity.tileentity.*;
 import mods.elysium.handlers.*;
 import mods.elysium.item.*;
 import mods.elysium.network.PacketHandler;
@@ -77,6 +82,7 @@ public class Elysium
 	public static final String name = "The Elysium";
 	public static final String id = "TheElysium";
 	public static final String consolePrefix = "[Elysium] ";
+	public static boolean isAprilFools;
 	
 	
 	/** Dimension ID **/
@@ -184,6 +190,10 @@ public class Elysium
 	@PreInit
 	public void load(FMLPreInitializationEvent evt)
 	{
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		isAprilFools = (calendar.get(2)+1 == 4) && (calendar.get(5) == 1);
+		
 		config = new ElysianConfiguration(new File(evt.getModConfigurationDirectory(), "Elysium.cfg"));
 		try
 		{
@@ -574,8 +584,12 @@ public class Elysium
 			GameRegistry.registerTileEntity(TileEntityFancyWorkbench.class, "TileEntityFancyWorkbench");
 			GameRegistry.registerTileEntity(TileEntityFancyTank.class, "TileEntityFancyTank");
 			
+			TickRegistry.registerTickHandler(new ElysianServerTickHandler(), Side.SERVER);
 			proxy.registerRenderers();
 			proxy.installSounds();
+			
+			//Temperature API
+			TemperatureManager.addBlockTemperature(new RangedTemperature(blockPalestone.blockID, -273, 300));
 		}
 		finally
 		{
