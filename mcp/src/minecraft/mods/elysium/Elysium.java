@@ -149,6 +149,7 @@ public class Elysium
 	public static Block blockBeryl;
 	
 	public static Block blockFancyWorkbench;
+	public static Block blockFancyTank;
 	
 	//Items
 	
@@ -376,6 +377,14 @@ public class Elysium
 			Property idFancyWorkbench = Elysium.config.getBlock("idFancyWorkbench.id", DefaultProps.idFancyWorkbench);
 			blockFancyWorkbench = new ElysianBlockFancyWorkbench(idFancyWorkbench.getInt()).setHardness(2F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockShrinePillar");
 			registerBlock(blockFancyWorkbench, "Fancy Workbench");
+			
+			blockFancyWorkbench = new ElysianBlockFancyWorkbench(idFancyWorkbench.getInt()).setHardness(2F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockFancyWorkbench");
+ 			registerBlock(blockFancyWorkbench, "Fancy Workbench");
+
++			Property idFancyTank = Elysium.config.getBlock("idFancyTank.id", DefaultProps.idFancyTank);
++			blockFancyTank = new ElysianBlockFancyTank(idFancyTank.getInt()).setHardness(2F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockFancyTank");
++			registerBlock(blockFancyTank, "Fancy Tank");
+
 			
 			
 			
