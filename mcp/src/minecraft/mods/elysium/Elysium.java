@@ -378,13 +378,10 @@ public class Elysium
 			Property idFancyWorkbench = Elysium.config.getBlock("idFancyWorkbench.id", DefaultProps.idFancyWorkbench);
 			blockFancyWorkbench = new ElysianBlockFancyWorkbench(idFancyWorkbench.getInt()).setHardness(2F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockShrinePillar");
 			registerBlock(blockFancyWorkbench, "Fancy Workbench");
-			
-			blockFancyWorkbench = new ElysianBlockFancyWorkbench(idFancyWorkbench.getInt()).setHardness(2F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockFancyWorkbench");
- 			registerBlock(blockFancyWorkbench, "Fancy Workbench");
 
-+			Property idFancyTank = Elysium.config.getBlock("idFancyTank.id", DefaultProps.idFancyTank);
-+			blockFancyTank = new ElysianBlockFancyTank(idFancyTank.getInt()).setHardness(2F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockFancyTank");
-+			registerBlock(blockFancyTank, "Fancy Tank");
+			Property idFancyTank = Elysium.config.getBlock("idFancyTank.id", DefaultProps.idFancyTank);
+			blockFancyTank = new ElysianBlockFancyTank(idFancyTank.getInt()).setHardness(2F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockFancyTank");
+			registerBlock(blockFancyTank, "Fancy Tank");
 
 			
 			
@@ -596,6 +593,7 @@ public class Elysium
 			
 			GameRegistry.registerTileEntity(ElysianTileEntityPortal.class, "ElysianTileEntityPortal");
 			GameRegistry.registerTileEntity(TileEntityFancyWorkbench.class, "TileEntityFancyWorkbench");
+			GameRegistry.registerTileEntity(TileEntityFancyTank.class, "TileEntityFancyTank");
 			
 			TickRegistry.registerTickHandler(new TemperatureTickHandler(), Side.SERVER);
 			proxy.registerRenderers();

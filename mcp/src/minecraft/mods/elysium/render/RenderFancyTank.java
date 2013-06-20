@@ -16,6 +16,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.liquids.ILiquidTank;
 import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidStack;
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler {
@@ -58,37 +59,35 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 		pillartop.setTextureSize(128, 64);
 		pillartop.mirror = true;
 		setRotation(pillartop, 0F, 0F, 0F);
-		Corner1 = new ModelRenderer(model, 50, 0);
+
+		Corner1 = new ModelRenderer(model, 64, -2);
 		Corner1.addBox(5F, 0F, 5F, 2, 10, 2);
 		Corner1.setRotationPoint(0F, 11F, 0F);
 		Corner1.setTextureSize(128, 64);
-		Corner1.mirror = true;
-		setRotation(Corner1, 0F, 0F, 0F);
 		Corner1.mirror = false;
-		Corner2 = new ModelRenderer(model, 50, 0);
+		setRotation(Corner1, 0F, 0F, 0F);
+		Corner2 = new ModelRenderer(model, 48, 8);
 		Corner2.addBox(-7F, 0F, -7F, 2, 10, 2);
 		Corner2.setRotationPoint(0F, 11F, 0F);
 		Corner2.setTextureSize(128, 64);
-		Corner2.mirror = true;
 		setRotation(Corner2, 0F, 0F, 0F);
 		Corner2.mirror = false;
-		Corner3 = new ModelRenderer(model, 50, 0);
+		Corner3 = new ModelRenderer(model, 56, -2);
 		Corner3.addBox(5F, 0F, -7F, 2, 10, 2);
 		Corner3.setRotationPoint(0F, 11F, 0F);
 		Corner3.setTextureSize(128, 64);
-		Corner3.mirror = true;
+		Corner3.mirror = false;
 		setRotation(Corner3, 0F, 0F, 0F);
-		Corner4 = new ModelRenderer(model, 50, 0);
+		Corner4 = new ModelRenderer(model, 48, -2);
 		Corner4.addBox(-7F, 0F, 5F, 2, 10, 2);
 		Corner4.setRotationPoint(0F, 11F, 0F);
 		Corner4.setTextureSize(128, 64);
-		Corner4.mirror = true;
+		Corner4.mirror = false;
 		setRotation(Corner4, 0F, 0F, 0F);
 		BottomTank = new ModelRenderer(model, 64, 36);
 		BottomTank.addBox(-8F, 0F, -8F, 16, 2, 16);
 		BottomTank.setRotationPoint(0F, 22F, 0F);
 		BottomTank.setTextureSize(128, 64);
-		BottomTank.mirror = true;
 		setRotation(BottomTank, 0F, 0F, 0F);
 		BottomTank.mirror = false;
 		TopTank = new ModelRenderer(model, 64, 18);
@@ -171,24 +170,27 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 	    	return;
 	
 		if(tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) != null 
-				&& (/*tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof TileGenericPipe|| */
-						tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof ILiquidTank|| 
-						/*tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof TileGenericPipe|| */
-						tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof ITankContainer
-						)){
+				&& (tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof ILiquidTank || 
+					tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof ITankContainer)){
 			Valve2.render(1.0F);
 		}
 		
-		if(tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) != null && (tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) instanceof ITankContainer || tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) instanceof ILiquidTank/*|| tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) instanceof TileGenericPipe*/)){
+		if(tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) != null
+				&& (tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) instanceof ITankContainer || 
+					tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) instanceof ILiquidTank)){
 			Valve3.render(1.0F);
 		}
 		
-		if(tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) != null && (tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) instanceof ITankContainer || tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) instanceof ILiquidTank/*|| tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) instanceof TileGenericPipe*/)){
+		if(tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) != null
+				&& (tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) instanceof ITankContainer ||
+						tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) instanceof ILiquidTank)){
 			Valve4.render(1.0F);
 		}
 		
 	
-		if(tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) != null && (tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) instanceof ITankContainer || tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) instanceof ILiquidTank/*|| tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) instanceof TileGenericPipe*/)){
+		if(tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) != null
+				&& (tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) instanceof ITankContainer 
+						|| tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) instanceof ILiquidTank)){
 			Valve1.render(1.0F);
 		}
 	}
@@ -200,7 +202,16 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 	}
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
-
+		GL11.glPushMatrix();
+			GL11.glTranslated(0, 1.0D, 0);
+			GL11.glScaled(0.0625D, 0.0625D, 0.0625D);
+			GL11.glRotatef(180F, 1F, 0F, 0F);
+			FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/elysium/textures/models/elysianTank.png");
+	
+			render(null, 1F);
+			Valve2.render(1.0F);
+	
+		GL11.glPopMatrix();
 	}
 
 	@Override
@@ -222,13 +233,13 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float f) {
 		GL11.glPushMatrix();
 			
-		GL11.glTranslated(x+0.5D, y+1.5D, z+0.5D);
+			GL11.glTranslated(x+0.5D, y+1.5D, z+0.5D);
 			GL11.glScaled(0.0625D, 0.0625D, 0.0625D);
 			GL11.glRotatef(180F, 1F, 0F, 0F);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, Minecraft.getMinecraft().renderEngine.getTexture("/mods/elysium/textures/models/elysianTank.png"));
 			
 			render(tile, 1F);
-			GL11.glPopMatrix();
+		GL11.glPopMatrix();
 
 			
 			TileEntityFancyTank tank = ((TileEntityFancyTank) tile);
@@ -238,7 +249,7 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 				return;
 			}
 
-			int[] displayList = /*LiquidRenderer.getLiquidDisplayLists(liquid, tile.worldObj, false)*/null;
+			int[] displayList = LiquidRenderer.getLiquidDisplayLists(liquid, tile.worldObj, false);
 			if (displayList == null) {
 				return;
 			}
@@ -252,12 +263,12 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 		/*TODO do you know what these things mean?????
 		 * cull face already enabled in minecraft
 		 */
-			//bindTextureByName(LiquidRenderer.getLiquidSheet(liquid));
+			bindTextureByName(LiquidRenderer.getLiquidSheet(liquid));
 
 			GL11.glTranslatef((float) x + 0.125F, (float) y + 0.1875F, (float) z + 0.125F);
 			GL11.glScalef(0.75F, 0.625F, 0.75F);
 
-			//GL11.glCallList(displayList[(int) ((float) liquid.amount / (float) (tank.tank.getCapacity()) * (LiquidRenderer.DISPLAY_STAGES - 1))]);
+			GL11.glCallList(displayList[(int) ((float) liquid.amount / (float) (tank.tank.getCapacity()) * (LiquidRenderer.DISPLAY_STAGES - 1))]);
 
 		GL11.glPopAttrib();
 		GL11.glPopMatrix();
