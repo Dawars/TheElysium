@@ -17,6 +17,7 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.EnumHelper;
@@ -24,6 +25,8 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Property;
 import net.minecraftforge.event.EventBus;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -513,13 +516,13 @@ public class Elysium
 			MinecraftForge.setBlockHarvestLevel(blockPlanksFostimber, "axe", 0);
 			
 			//Crafting Registering
-			
+
 			GameRegistry.addRecipe(new ItemStack(itemGracePrism), new Object[] {"SSS","SDT","TTT", Character.valueOf('S'), Item.sugar, Character.valueOf('T'), Item.ghastTear, Character.valueOf('D'), Item.diamond});
 			GameRegistry.addRecipe(new ItemStack(itemGracePrism), new Object[] {"SSS","SDT","TTT", Character.valueOf('T'), Item.sugar, Character.valueOf('S'), Item.ghastTear, Character.valueOf('D'), Item.diamond});
 			GameRegistry.addRecipe(new ItemStack(itemGracePrism), new Object[] {"SST","SDT","STT", Character.valueOf('S'), Item.sugar, Character.valueOf('T'), Item.ghastTear, Character.valueOf('D'), Item.diamond});
 			GameRegistry.addRecipe(new ItemStack(itemGracePrism), new Object[] {"SST","SDT","STT", Character.valueOf('T'), Item.sugar, Character.valueOf('S'), Item.ghastTear, Character.valueOf('D'), Item.diamond});
-			
-			
+
+
 			GameRegistry.addRecipe(new ItemStack(itemPickaxeFostimber), new Object[] {"WW "," SW","S W", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockPlanksFostimber});
 			GameRegistry.addRecipe(new ItemStack(itemPickaxePalestone), new Object[] {"WW "," SW","S W", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockCobblePalestone});
 			GameRegistry.addRecipe(new ItemStack(itemShovelFostimber), new Object[] {" WW"," SW","S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockPlanksFostimber});
@@ -531,9 +534,9 @@ public class Elysium
 			GameRegistry.addRecipe(new ItemStack(itemSwordFostimber), new Object[] {"  W"," W ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockPlanksFostimber});
 			GameRegistry.addRecipe(new ItemStack(itemSwordPalestone), new Object[] {"  W"," W ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockCobblePalestone});
 			GameRegistry.addRecipe(new ItemStack(itemWhistle), new Object[] {" OO","O O", "EO ", Character.valueOf('O'), Block.obsidian, Character.valueOf('E'), Item.eyeOfEnder});
-			
-			GameRegistry.addRecipe(new ItemStack(Item.stick, 9), new Object[] {"X", "X", "X", Character.valueOf('X'), blockPlanksFostimber});
-			GameRegistry.addRecipe(new ItemStack(Block.workbench), new Object[] {"XX", "XX", Character.valueOf('X'), blockPlanksFostimber});
+
+			GameRegistry.addRecipe(new ItemStack(blockPalestonePillar), new Object[] {"X", "X", Character.valueOf('X'), blockPalestone});
+
 
 			GameRegistry.addRecipe(new ItemStack(blockSulphure), new Object[] {"XXX", "XXX", "XXX", Character.valueOf('X'), itemSulphur});
 			GameRegistry.addShapelessRecipe(new ItemStack(itemSulphur, 9), new Object[] {blockSulphure});
@@ -549,12 +552,29 @@ public class Elysium
 			GameRegistry.addShapelessRecipe(new ItemStack(itemJade, 9), new Object[] {blockJade});
 			GameRegistry.addRecipe(new ItemStack(blockTourmaline), new Object[] {"XXX", "XXX", "XXX", Character.valueOf('X'), itemTourmaline});
 			GameRegistry.addShapelessRecipe(new ItemStack(itemTourmaline, 9), new Object[] {blockTourmaline});
-			
+
 			GameRegistry.addShapelessRecipe(new ItemStack(itemAsphodelPetals, 2), new Object[] {blockFlowerAsphodel});
 			GameRegistry.addShapelessRecipe(new ItemStack(blockPlanksFostimber, 4), new Object[] {blockLogFostimber});
-			
-			
-			
+
+			//Ore registry
+			OreDictionary.registerOre("dyePink", itemAsphodelPetals);
+            OreDictionary.registerOre("logWood", blockLogFostimber);
+            OreDictionary.registerOre("plankWood", blockPlanksFostimber);
+            OreDictionary.registerOre("treeSapling", blockSaplingFostimber);
+            OreDictionary.registerOre("treeLeaves", blockLeavesFostimber);
+            
+            OreDictionary.registerOre("oreIridium", oreIridium);
+            OreDictionary.registerOre("oreSulphure", oreSulphure);
+            OreDictionary.registerOre("oreBeryl", oreBeryl);
+            OreDictionary.registerOre("oreCobalt", oreCobalt);
+            OreDictionary.registerOre("oreJade", oreJade);
+            OreDictionary.registerOre("oreSilicon", oreSilicon);
+            OreDictionary.registerOre("oreTourmaline", oreTourmaline);
+            
+            //OreDictionary recipes
+            CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(new ItemStack(Item.stick, 6), new Object[] {"X", "X", "X", Character.valueOf('X'), "plankWood"}));
+
+
 			//Smelting Registering
 			
 			GameRegistry.addSmelting(this.oreCobalt.blockID, new ItemStack(this.itemIngotCobalt), 0.7F);
