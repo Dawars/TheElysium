@@ -24,24 +24,28 @@ public class TileEntityFancyTank extends ElysianTileEntity implements ITankConta
 	public final ILiquidTank tank = new LiquidTank((int)MAX_LIQUID);
 	
 	
+	/* SAVING & LOADING */
 	@Override
-	public void readFromNBT(NBTTagCompound nbt)
-	{
-		super.readFromNBT(nbt);
-		
-		LiquidStack liquid = new LiquidStack(0, 0, 0);
-		liquid.loadLiquidStackFromNBT(nbt.getCompoundTag("tankCandy"));
+	public void readFromNBT(NBTTagCompound data) {
+		super.readFromNBT(data);
 
-	    ((LiquidTank) this.tank).setLiquid(liquid);
+		if (data.hasKey("stored") && data.hasKey("liquidId")) {
+			LiquidStack liquid = new LiquidStack(data.getInteger("liquidId"), data.getInteger("stored"), 0);
+			((LiquidTank) tank).setLiquid(liquid);
+		} else {
+			LiquidStack liquid = LiquidStack.loadLiquidStackFromNBT(data.getCompoundTag("tank"));
+			if (liquid != null) {
+				((LiquidTank) tank).setLiquid(liquid);
+			}
+		}
 	}
-	
+
 	@Override
-	public void writeToNBT(NBTTagCompound nbt)
-	{
-		super.writeToNBT(nbt);
-		if(this.tank.getLiquid() != null)
-			nbt.setTag("tank", this.tank.getLiquid().writeToNBT(new NBTTagCompound()));
-		
+	public void writeToNBT(NBTTagCompound data) {
+		super.writeToNBT(data);
+		if (((LiquidTank) tank).containsValidLiquid()) {
+			data.setTag("tank", tank.getLiquid().writeToNBT(new NBTTagCompound()));
+		}
 	}
 	
 	@Override
@@ -59,8 +63,6 @@ public class TileEntityFancyTank extends ElysianTileEntity implements ITankConta
 		return new Packet132TileEntityData(xCoord, yCoord, zCoord, 0, nbt);
 	}
 	
-	
-	
 	@Override
 	public void onInventoryChanged()
 	{
@@ -74,6 +76,8 @@ public class TileEntityFancyTank extends ElysianTileEntity implements ITankConta
 	
 	@Override
 	public int fill(ForgeDirection from, LiquidStack resource, boolean doFill) {
+		if(doFill)
+			onInventoryChanged();
 		return this.tank.fill(resource, doFill);
 	}
 
@@ -85,6 +89,8 @@ public class TileEntityFancyTank extends ElysianTileEntity implements ITankConta
 	@Override
 	public LiquidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
 //		return from != ForgeDirection.UP && from != ForgeDirection.DOWN ? this.tank.drain(maxDrain, doDrain) : null;
+		if(doDrain)
+			onInventoryChanged();
 		return this.tank.drain(maxDrain, doDrain);
 	}
 
