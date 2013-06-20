@@ -510,7 +510,7 @@ public class ChunkProviderElysium implements IChunkProvider
 		MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Pre(par1IChunkProvider, worldObj, rand, par2, par3, flag));
 		
 		//TODO structures
-		if(biomegenbase != Elysium.elysianBiomeOcean)
+		if(biomegenbase != Elysium.biomeOcean)
 		{
 			this.lakegenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), rand.nextInt(128), l+this.rand.nextInt(16));
 			this.lavagenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), rand.nextInt(64), l+this.rand.nextInt(16));

@@ -34,7 +34,7 @@ public class ElysianBlockHeatable extends ElysianBlock implements IBlockHeatable
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World world, int x, int y, int z, Random random)
 	{
-		for(int i = 0; i < (world.getBlockMetadata(x, y, z)-7)/2; i++)
+		for(int i = 0; i < (world.getBlockMetadata(x, y, z)-9); i++)
 		{
 			world.spawnParticle("smoke", x+random.nextDouble(), y+random.nextDouble(), z+random.nextDouble(), 0, 0, 0);
 		}
@@ -43,7 +43,7 @@ public class ElysianBlockHeatable extends ElysianBlock implements IBlockHeatable
 	@Override
 	public void onEntityWalking(World world, int x, int y, int z, Entity entity)
 	{
-		entity.attackEntityFrom(DamageSource.onFire, Math.abs(TemperatureManager.getBlockTemperature(this.blockID, world.getBlockMetadata(x, y, z), this.blockMaterial)-20)*(world.difficultySetting+1)/100);
+		entity.attackEntityFrom(DamageSource.onFire, Math.abs(TemperatureManager.getBlockTemperatureAt(world, x, y, z)-20)*(world.difficultySetting+1)/100);
 	}
 	
 	@Override
@@ -79,7 +79,7 @@ public class ElysianBlockHeatable extends ElysianBlock implements IBlockHeatable
 		if(blockAccess.getBlockMaterial(x, y, z-1) == Material.water)
 			moss += 20;
 		
-		int heat = TemperatureManager.getBlockTemperature(this.blockID, blockAccess.getBlockMetadata(x, y, z), this.blockMaterial) - 33;
+		int heat = TemperatureManager.getBlockTemperatureAt(blockAccess, x, y, z) - 33;
 		
 		int red = 255 + heat - moss;
 		if(red < 0) red = 0;
@@ -104,35 +104,15 @@ public class ElysianBlockHeatable extends ElysianBlock implements IBlockHeatable
 	@Override
 	public void updateTemperature(World world, int x, int y, int z, Random random)
 	{
-		int temperature = 0;
-		double div = 0D;
-		
-		for(int i = -TemperatureManager.temperatureDistance; i <= TemperatureManager.temperatureDistance; i++)
-		{
-			for(int j = -TemperatureManager.temperatureDistance; j <= TemperatureManager.temperatureDistance; j++)
-			{
-				for(int k = -TemperatureManager.temperatureDistance; k <= TemperatureManager.temperatureDistance; k++)
-				{
-					int d = i*i + j*j + k*k;
-					if(d <= TemperatureManager.temperatureDistance*TemperatureManager.temperatureDistance)
-					{
-						int temp = TemperatureManager.getBlockTemperature(world.getBlockId(x+i, y+j, z+k), world.getBlockMetadata(x+i, y+j, z+k), world.getBlockMaterial(x+i, y+j, z+k));
-						temperature += temp/Math.sqrt(d+1);
-						div += 1/Math.sqrt(d+1);
-					}
-				}
-			}
-		}
-		
-		temperature /= div;
+		int temperature = TemperatureManager.getTemperatureAt(world, x, y, z);
 		world.setBlockMetadataWithNotify(x, y, z, TemperatureManager.getBlockMetadataFromTemperature(this.blockID, temperature), 2);
 		
-		if((temperature > this.maxTemp) && (random.nextInt(5) == 0))
+		if((temperature > this.maxTemp*2) && (random.nextInt(5) == 0))
 		{
 			world.setBlock(x, y, z, Block.lavaStill.blockID);
 		}
 		
-		if((temperature < this.minTemp) && (random.nextInt(5) == 0))
+		if((temperature < this.minTemp*2) && (random.nextInt(5) == 0))
 		{
 			world.setBlock(x, y, z, Block.ice.blockID);
 		}

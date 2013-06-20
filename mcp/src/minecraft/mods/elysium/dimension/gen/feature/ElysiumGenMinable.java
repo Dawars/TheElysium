@@ -3,6 +3,8 @@ package mods.elysium.dimension.gen.feature;
 import java.util.Random;
 
 import mods.elysium.Elysium;
+import mods.elysium.api.temperature.IBlockHeatable;
+import mods.elysium.api.temperature.TemperatureManager;
 import net.minecraft.block.Block;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -81,6 +83,10 @@ public class ElysiumGenMinable
 								if (d12 * d12 + d13 * d13 + d14 * d14 < 1.0D && (world.getBlockId(cx, cy, cz) == target))
 								{
 									world.setBlock(cx, cy, cz, this.minableBlockId, minableBlockMeta, 2);
+									if(Block.blocksList[this.minableBlockId] instanceof IBlockHeatable)
+									{
+										world.setBlockMetadataWithNotify(x, y, z, TemperatureManager.getBlockMetadataFromTemperature(this.minableBlockId, TemperatureManager.getTemperatureForHeight(cy)), 0);
+									}
 									placedBlock = true;
 								}
 							}

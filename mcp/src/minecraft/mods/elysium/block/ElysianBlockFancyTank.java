@@ -1,6 +1,5 @@
 package mods.elysium.block;
 
-import buildcraft.core.utils.Utils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import mods.elysium.DefaultProps;
@@ -63,7 +62,7 @@ public class ElysianBlockFancyTank extends ElysianBlockContainer
 				int qty = tank.fill(ForgeDirection.UNKNOWN, liquid, true);
 
 				if (qty != 0 && !entityplayer.capabilities.isCreativeMode) {
-					entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, Utils.consumeItem(current));
+					//entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, Utils.consumeItem(current));
 				}
 
 				return true;
@@ -83,10 +82,10 @@ public class ElysianBlockFancyTank extends ElysianBlockContainer
 								if (!entityplayer.inventory.addItemStackToInventory(filled))
 									return false;
 								else {
-									entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, Utils.consumeItem(current));
+									//entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, Utils.consumeItem(current));
 								}
 							} else {
-								entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, Utils.consumeItem(current));
+								//entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, Utils.consumeItem(current));
 								entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, filled);
 							}
 						}

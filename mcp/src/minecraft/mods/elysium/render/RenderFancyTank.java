@@ -2,8 +2,6 @@ package mods.elysium.render;
 
 import org.lwjgl.opengl.GL11;
 
-import buildcraft.core.render.LiquidRenderer;
-import buildcraft.transport.TileGenericPipe;
 import mods.elysium.Elysium;
 import mods.elysium.entity.tileentity.TileEntityFancyTank;
 import net.minecraft.block.Block;
@@ -173,24 +171,24 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 	    	return;
 	
 		if(tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) != null 
-				&& (tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof TileGenericPipe|| 
+				&& (/*tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof TileGenericPipe|| */
 						tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof ILiquidTank|| 
-						tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof TileGenericPipe|| 
+						/*tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof TileGenericPipe|| */
 						tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof ITankContainer
 						)){
 			Valve2.render(1.0F);
 		}
 		
-		if(tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) != null && (tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) instanceof ITankContainer || tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) instanceof ILiquidTank|| tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) instanceof TileGenericPipe)){
+		if(tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) != null && (tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) instanceof ITankContainer || tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) instanceof ILiquidTank/*|| tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) instanceof TileGenericPipe*/)){
 			Valve3.render(1.0F);
 		}
 		
-		if(tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) != null && (tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) instanceof ITankContainer || tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) instanceof ILiquidTank|| tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) instanceof TileGenericPipe)){
+		if(tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) != null && (tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) instanceof ITankContainer || tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) instanceof ILiquidTank/*|| tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) instanceof TileGenericPipe*/)){
 			Valve4.render(1.0F);
 		}
 		
 	
-		if(tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) != null && (tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) instanceof ITankContainer || tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) instanceof ILiquidTank|| tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) instanceof TileGenericPipe)){
+		if(tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) != null && (tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) instanceof ITankContainer || tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) instanceof ILiquidTank/*|| tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) instanceof TileGenericPipe*/)){
 			Valve1.render(1.0F);
 		}
 	}
@@ -240,7 +238,7 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 				return;
 			}
 
-			int[] displayList = LiquidRenderer.getLiquidDisplayLists(liquid, tile.worldObj, false);
+			int[] displayList = /*LiquidRenderer.getLiquidDisplayLists(liquid, tile.worldObj, false)*/null;
 			if (displayList == null) {
 				return;
 			}
@@ -251,13 +249,15 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
-			bindTextureByName(LiquidRenderer.getLiquidSheet(liquid));
+		/*TODO do you know what these things mean?????
+		 * cull face already enabled in minecraft
+		 */
+			//bindTextureByName(LiquidRenderer.getLiquidSheet(liquid));
 
 			GL11.glTranslatef((float) x + 0.125F, (float) y + 0.1875F, (float) z + 0.125F);
 			GL11.glScalef(0.75F, 0.625F, 0.75F);
 
-			GL11.glCallList(displayList[(int) ((float) liquid.amount / (float) (tank.tank.getCapacity()) * (LiquidRenderer.DISPLAY_STAGES - 1))]);
+			//GL11.glCallList(displayList[(int) ((float) liquid.amount / (float) (tank.tank.getCapacity()) * (LiquidRenderer.DISPLAY_STAGES - 1))]);
 
 		GL11.glPopAttrib();
 		GL11.glPopMatrix();
