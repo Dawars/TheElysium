@@ -1,14 +1,18 @@
 package mods.elysium.block;
 
+import java.util.Random;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import mods.elysium.entity.EntityDrachma;
+import mods.elysium.handlers.ElysianClientTickHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class ElysianBlock extends Block 
@@ -20,11 +24,11 @@ public class ElysianBlock extends Block
 	}
 	
 	@Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister itemIcon)
-    {
-        this.blockIcon = itemIcon.registerIcon(DefaultProps.modId + ":" + getUnlocalizedName().substring(5));
-    }
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister itemIcon)
+	{
+		this.blockIcon = itemIcon.registerIcon(DefaultProps.modId + ":" + getUnlocalizedName().substring(5));
+	}
 	
 	@Override
 	protected void dropXpOnBlockBreak(World world, int x, int y, int z, int amount)
@@ -38,6 +42,16 @@ public class ElysianBlock extends Block
 				world.spawnEntityInWorld(new EntityDrachma(world, (double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, i1));
 			}
 		}
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z)
+	{
+		if(Elysium.isAprilFools)
+			return new Random().nextInt(0xFFFFFF);
+		else
+			return super.colorMultiplier(blockAccess, x, y, z);
 	}
 	
 	public boolean canBeReplacedByLake()

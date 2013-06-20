@@ -13,6 +13,7 @@ import cpw.mods.fml.common.network.Player;
 
 import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
+import mods.elysium.api.temperature.TemperatureManager;
 import mods.elysium.dimension.portal.ElysianTeleporter;
 import mods.elysium.entity.EntityDrachma;
 import mods.elysium.network.PacketRandom;
@@ -36,13 +37,14 @@ public class ElysianItemDebug extends ElysianItem
 	@Override
 	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
-		world.spawnEntityInWorld(new EntityDrachma(world, x+hitX, y+hitY, z+hitZ, new Random().nextInt(10)+10));
+		//world.spawnEntityInWorld(new EntityDrachma(world, x+hitX, y+hitY, z+hitZ, new Random().nextInt(10)+10));
 		
 		if(!world.isRemote)
 		{
-			player.sendChatToPlayer("Id: "+world.getBlockId(x, y, z));
+			//player.sendChatToPlayer("Id: "+world.getBlockId(x, y, z));
 			player.sendChatToPlayer("Metadata: "+world.getBlockMetadata(x, y, z));
-			player.sendChatToPlayer("TileEntity: "+world.getBlockTileEntity(x, y, z));
+			//player.sendChatToPlayer("TileEntity: "+world.getBlockTileEntity(x, y, z));
+			player.sendChatToPlayer("Temperature: "+TemperatureManager.getBlockTemperature(world.getBlockId(x, y, z), world.getBlockMetadata(x, y, z), world.getBlockMaterial(x, y, z)));
 		}
 		
         return false;
@@ -51,13 +53,14 @@ public class ElysianItemDebug extends ElysianItem
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-		if(world.isRemote)
+		/*if(world.isRemote)
 		{
 			int randomNum = new Random().nextInt();
 			
 			player.sendChatToPlayer("Sending packet to server: " + randomNum);
 			PacketDispatcher.sendPacketToServer(new PacketRandom(randomNum).getPacket());
-		}
+		}*/
+		
 		if(player.isSneaking() && (player instanceof EntityPlayerMP))
 		{
 			EntityPlayerMP playermp = (EntityPlayerMP)player;

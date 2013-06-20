@@ -25,7 +25,11 @@ public class ElysiumGenLakes extends WorldGenerator
 	@Override
 	public boolean generate(World world, Random random, int x, int y, int z)
 	{
-		y = world.getTopSolidOrLiquidBlock(x, z);
+		if(random.nextInt((Block.blocksList[this.liquidId].blockMaterial == Material.water) ? 2 : 16) == 0)
+		{
+			y = world.getTopSolidOrLiquidBlock(x, z);
+		}
+		
 		if(y <= 4)
 		{
 			return false;
@@ -125,15 +129,18 @@ public class ElysiumGenLakes extends WorldGenerator
 			}
 		}
 		
-		for (cx = 0; cx < 16; cx++)
+		if(Block.blocksList[this.liquidId].blockMaterial == Material.water)
 		{
-			for (cz = 0; cz < 16; cz++)
+			for (cx = 0; cx < 16; cx++)
 			{
-				for (cy = 0; cy < 8; cy++)
+				for (cz = 0; cz < 16; cz++)
 				{
-					if(isSurfaceLake && canPlaceLily(cx, cy, cz) && (random.nextInt(16) == 0))
+					for (cy = 0; cy < 8; cy++)
 					{
-						lake[(cx * 16 + cz) * 8 + cy] = Block.waterlily.blockID;
+						if(isSurfaceLake && canPlaceLily(cx, cy, cz) && (random.nextInt(16) == 0))
+						{
+							lake[(cx * 16 + cz) * 8 + cy] = Block.waterlily.blockID;
+						}
 					}
 				}
 			}
@@ -161,7 +168,7 @@ public class ElysiumGenLakes extends WorldGenerator
 			}
 		}
 		
-		if(isSurfaceLake)
+		if(isSurfaceLake && (Block.blocksList[this.liquidId].blockMaterial == Material.water))
 		{
 			if(random.nextInt(2) == 0)
 			{

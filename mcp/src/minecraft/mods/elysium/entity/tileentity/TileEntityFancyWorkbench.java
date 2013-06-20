@@ -31,7 +31,8 @@ public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInve
 {
 	private ContainerFancyWorkbench container = new ContainerFancyWorkbench();
 	private ItemStack[] inventory = new ItemStack[this.getSizeInventory()+1];
-	@SideOnly(Side.CLIENT)
+	
+	//@SideOnly(Side.CLIENT)
 	public float rot = 0F;
 	
 	@Override
