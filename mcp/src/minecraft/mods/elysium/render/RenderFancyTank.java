@@ -1,7 +1,13 @@
 package mods.elysium.render;
 
+import org.lwjgl.opengl.GL11;
+
+import buildcraft.core.render.LiquidRenderer;
+import buildcraft.transport.TileGenericPipe;
 import mods.elysium.Elysium;
+import mods.elysium.entity.tileentity.TileEntityFancyTank;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -9,6 +15,9 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.liquids.ILiquidTank;
+import net.minecraftforge.liquids.ITankContainer;
+import net.minecraftforge.liquids.LiquidStack;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler {
@@ -26,6 +35,12 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 	private ModelRenderer GlassPane2;
 	private ModelRenderer GlassPane4;
 	private ModelRenderer GlassPane3;
+
+	private ModelRenderer Valve1;
+	private ModelRenderer Valve2;
+	private ModelRenderer Valve3;
+	private ModelRenderer Valve4;
+	
 	private ModelRenderer Valve;
   
 	public RenderFancyTank()
@@ -108,15 +123,38 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 		GlassPane3.setTextureSize(128, 64);
 		GlassPane3.mirror = true;
 		setRotation(GlassPane3, 0F, 1.570796F, 0F);
-		Valve = new ModelRenderer(model, 0, 0);
-		Valve.addBox(6F, -3F, -3F, 2, 6, 6);
-		Valve.setRotationPoint(0F, 15F, 0F);
-		Valve.setTextureSize(128, 64);
-		Valve.mirror = true;
-		setRotation(Valve, 0F, 0F, 0F);
+
+		Valve1 = new ModelRenderer(model, 0, 0);
+		Valve1.addBox(5F, -3F, -3F, 3, 6, 6);
+		Valve1.setRotationPoint(0F, 16F, 0F);
+		Valve1.setTextureSize(128, 64);
+		Valve1.mirror = true;
+		setRotation(Valve1, 0F, 3.141593F, 0F);
+		
+		Valve2 = new ModelRenderer(model, 0, 0);
+		Valve2.addBox(5F, -3F, -3F, 3, 6, 6);
+		Valve2.setRotationPoint(0F, 16F, 0F);
+		Valve2.setTextureSize(128, 64);
+		Valve2.mirror = true;
+		setRotation(Valve2, 0F, 1.570796F, 0F);
+		
+		Valve3 = new ModelRenderer(model, 0, 0);
+		Valve3.addBox(5F, -3F, -3F, 3, 6, 6);
+		Valve3.setRotationPoint(0F, 16F, 0F);
+		Valve3.setTextureSize(128, 64);
+		Valve3.mirror = true;
+		setRotation(Valve3, 0F, 0F, 0F);
+		
+		Valve4 = new ModelRenderer(model, 0, 0);
+		Valve4.addBox(5F, -3F, -3F, 3, 6, 6);
+		Valve4.setRotationPoint(0F, 16F, 0F);
+		Valve4.setTextureSize(128, 64);
+		Valve4.mirror = true;
+		setRotation(Valve4, 0F, -1.570796F, 0F);
+
 	}
   
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
+	public void render(TileEntity tile, float f5)
 	{
 		pillarbottom.render(f5);
 		pillartop.render(f5);
@@ -130,9 +168,32 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 	    GlassPane2.render(f5);
 	    GlassPane4.render(f5);
 	    GlassPane3.render(f5);
-	    Valve.render(f5);
- 	 }
-  
+	    
+	    if(tile == null)
+	    	return;
+	
+		if(tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) != null 
+				&& (tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof TileGenericPipe|| 
+						tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof ILiquidTank|| 
+						tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof TileGenericPipe|| 
+						tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof ITankContainer
+						)){
+			Valve2.render(1.0F);
+		}
+		
+		if(tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) != null && (tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) instanceof ITankContainer || tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) instanceof ILiquidTank|| tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) instanceof TileGenericPipe)){
+			Valve3.render(1.0F);
+		}
+		
+		if(tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) != null && (tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) instanceof ITankContainer || tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) instanceof ILiquidTank|| tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) instanceof TileGenericPipe)){
+			Valve4.render(1.0F);
+		}
+		
+	
+		if(tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) != null && (tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) instanceof ITankContainer || tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) instanceof ILiquidTank|| tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) instanceof TileGenericPipe)){
+			Valve1.render(1.0F);
+		}
+	}
 	private void setRotation(ModelRenderer model, float x, float y, float z)
 	{
 		model.rotateAngleX = x;
@@ -160,8 +221,45 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 	}
 
 	@Override
-	public void renderTileEntityAt(TileEntity tileentity, double d0, double d1, double d2, float f) {
-		
-	}
+	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float f) {
+		GL11.glPushMatrix();
+			
+		GL11.glTranslated(x+0.5D, y+1.5D, z+0.5D);
+			GL11.glScaled(0.0625D, 0.0625D, 0.0625D);
+			GL11.glRotatef(180F, 1F, 0F, 0F);
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, Minecraft.getMinecraft().renderEngine.getTexture("/mods/elysium/textures/models/elysianTank.png"));
+			
+			render(tile, 1F);
+			GL11.glPopMatrix();
 
+			
+			TileEntityFancyTank tank = ((TileEntityFancyTank) tile);
+
+			LiquidStack liquid = tank.tank.getLiquid();
+			if (liquid == null || liquid.amount <= 0) {
+				return;
+			}
+
+			int[] displayList = LiquidRenderer.getLiquidDisplayLists(liquid, tile.worldObj, false);
+			if (displayList == null) {
+				return;
+			}
+
+		GL11.glPushMatrix();
+		GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glDisable(GL11.GL_LIGHTING);
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
+			bindTextureByName(LiquidRenderer.getLiquidSheet(liquid));
+
+			GL11.glTranslatef((float) x + 0.125F, (float) y + 0.1875F, (float) z + 0.125F);
+			GL11.glScalef(0.75F, 0.625F, 0.75F);
+
+			GL11.glCallList(displayList[(int) ((float) liquid.amount / (float) (tank.tank.getCapacity()) * (LiquidRenderer.DISPLAY_STAGES - 1))]);
+
+		GL11.glPopAttrib();
+		GL11.glPopMatrix();
+	}
 }

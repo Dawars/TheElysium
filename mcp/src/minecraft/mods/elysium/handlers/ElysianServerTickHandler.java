@@ -49,7 +49,7 @@ public class ElysianServerTickHandler implements ITickHandler
 							{
 								if((Block.blocksList[world.getBlockId(x, y, z)] instanceof IBlockHeatable) && (random.nextInt(Block.blocksList[world.getBlockId(x, y, z)].tickRate(world)) == 0))
 								{
-									((IBlockHeatable)Block.blocksList[world.getBlockId(x, y, z)]).updateTemperature(world, x, y, z);
+									((IBlockHeatable)Block.blocksList[world.getBlockId(x, y, z)]).updateTemperature(world, x, y, z, random);
 								}
 							}
 						}
