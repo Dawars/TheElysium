@@ -17,7 +17,6 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.EnumHelper;
@@ -25,8 +24,6 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Property;
 import net.minecraftforge.event.EventBus;
-import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -45,6 +42,7 @@ import cpw.mods.fml.relauncher.Side;
 import mods.elysium.api.Plants;
 import mods.elysium.api.temperature.RangedTemperature;
 import mods.elysium.api.temperature.TemperatureManager;
+import mods.elysium.api.temperature.TemperatureTickHandler;
 import mods.elysium.block.*;
 import mods.elysium.client.gui.menu.ElysianMenu;
 import mods.elysium.dimension.*;
@@ -148,7 +146,6 @@ public class Elysium
 	public static Block blockBeryl;
 	
 	public static Block blockFancyWorkbench;
-	public static Block blockFancyTank;
 	
 	//Items
 	
@@ -314,23 +311,23 @@ public class Elysium
 			registerBlock(blockCobblePalestone, "Cobble Palestone");
 			
 			Property idPaleCobblestoneMossyBlock = Elysium.config.getBlock("idPaleCobblestoneMossyBlock.id", DefaultProps.idPaleCobblestoneMossy);
-			blockCobblePalestoneMossy = (new ElysianBlock(idPaleCobblestoneMossyBlock.getInt(), Material.rock)).setHardness(1.0F).setResistance(10.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("palestone_cobble_mossy");
+			blockCobblePalestoneMossy = (new ElysianBlockHeatable(idPaleCobblestoneMossyBlock.getInt(), Material.rock, -273, 300)).setHardness(1.0F).setResistance(10.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("palestone_cobble_mossy");
 			registerBlock(blockCobblePalestoneMossy, "Mossy Cobble Palestone");
 			
 			Property idPalestoneBrickBlock = Elysium.config.getBlock("idPalestoneBrickBlock.id", DefaultProps.idPalestoneBrick);
-			blockPalestoneBrick = (new ElysianBlock(idPalestoneBrickBlock.getInt(), Material.rock)).setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("palestone_brick");
+			blockPalestoneBrick = (new ElysianBlockHeatable(idPalestoneBrickBlock.getInt(), Material.rock, -273, 300)).setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("palestone_brick");
 			registerBlock(blockPalestoneBrick, "Palestone Brick");
 			
 			Property idPalestoneBrickCrackedBlock = Elysium.config.getBlock("idPalestoneBrickCrackedBlock.id", DefaultProps.idPalestoneBrickCracked);
-			blockPalestoneBrickCracked = (new ElysianBlock(idPalestoneBrickCrackedBlock.getInt(), Material.rock)).setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("palestone_brick_cracked");
+			blockPalestoneBrickCracked = (new ElysianBlockHeatable(idPalestoneBrickCrackedBlock.getInt(), Material.rock, -273, 300)).setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("palestone_brick_cracked");
 			registerBlock(blockPalestoneBrickCracked, "Cracked Palestone Brick");
 			
 			Property idPalestoneBrickMossyBlock = Elysium.config.getBlock("idPalestoneBrickMossyBlock.id", DefaultProps.idPalestoneBrickMossy);
-			blockPalestoneBrickMossy = (new ElysianBlock(idPalestoneBrickMossyBlock.getInt(), Material.rock)).setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("palestone_brick_mossy");
+			blockPalestoneBrickMossy = (new ElysianBlockHeatable(idPalestoneBrickMossyBlock.getInt(), Material.rock, -273, 300)).setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("palestone_brick_mossy");
 			registerBlock(blockPalestoneBrickMossy, "Mossy Palestone Brick");
 			
 			Property idPalestoneChiseldBrickBlock = Elysium.config.getBlock("idPalestoneChiseldBrickBlock.id", DefaultProps.idPalestoneBrickChiseld);
-			blockPalestoneBrickChiseld = (new ElysianBlock(idPalestoneChiseldBrickBlock.getInt(), Material.rock)).setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("palestone_brick_chiseld");
+			blockPalestoneBrickChiseld = (new ElysianBlockHeatable(idPalestoneChiseldBrickBlock.getInt(), Material.rock, -273, 300)).setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("palestone_brick_chiseld");
 			registerBlock(blockPalestoneBrickChiseld, "Chiseld Palestone Brick");
 			
 			Property idPalestonePillarBlock = Elysium.config.getBlock("idPalestonePillarBlock.id", DefaultProps.idPalestonePillar);
@@ -372,14 +369,10 @@ public class Elysium
 			Property idBlockTourmaline = Elysium.config.getBlock("idBlockTourmaline.id", DefaultProps.idBlockTourmaline);
 			blockTourmaline = new ElysianBlock(idBlockTourmaline.getInt(), Material.iron).setHardness(3F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockTourmaline");
 			registerBlock(blockTourmaline, "Tourmaline Block");
-
+			
 			Property idFancyWorkbench = Elysium.config.getBlock("idFancyWorkbench.id", DefaultProps.idFancyWorkbench);
-			blockFancyWorkbench = new ElysianBlockFancyWorkbench(idFancyWorkbench.getInt()).setHardness(2F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockFancyWorkbench");
+			blockFancyWorkbench = new ElysianBlockFancyWorkbench(idFancyWorkbench.getInt()).setHardness(2F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockShrinePillar");
 			registerBlock(blockFancyWorkbench, "Fancy Workbench");
-
-			Property idFancyTank = Elysium.config.getBlock("idFancyTank.id", DefaultProps.idFancyTank);
-			blockFancyTank = new ElysianBlockFancyTank(idFancyTank.getInt()).setHardness(2F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockFancyTank");
-			registerBlock(blockFancyTank, "Fancy Tank");
 			
 			
 			
@@ -538,9 +531,9 @@ public class Elysium
 			GameRegistry.addRecipe(new ItemStack(itemSwordFostimber), new Object[] {"  W"," W ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockPlanksFostimber});
 			GameRegistry.addRecipe(new ItemStack(itemSwordPalestone), new Object[] {"  W"," W ", "S  ", Character.valueOf('S'), Item.stick, Character.valueOf('W'), blockCobblePalestone});
 			GameRegistry.addRecipe(new ItemStack(itemWhistle), new Object[] {" OO","O O", "EO ", Character.valueOf('O'), Block.obsidian, Character.valueOf('E'), Item.eyeOfEnder});
-						
-			GameRegistry.addRecipe(new ItemStack(blockPalestonePillar), new Object[] {"X", "X", Character.valueOf('X'), blockPalestone});
-
+			
+			GameRegistry.addRecipe(new ItemStack(Item.stick, 9), new Object[] {"X", "X", "X", Character.valueOf('X'), blockPlanksFostimber});
+			GameRegistry.addRecipe(new ItemStack(Block.workbench), new Object[] {"XX", "XX", Character.valueOf('X'), blockPlanksFostimber});
 
 			GameRegistry.addRecipe(new ItemStack(blockSulphure), new Object[] {"XXX", "XXX", "XXX", Character.valueOf('X'), itemSulphur});
 			GameRegistry.addShapelessRecipe(new ItemStack(itemSulphur, 9), new Object[] {blockSulphure});
@@ -560,24 +553,7 @@ public class Elysium
 			GameRegistry.addShapelessRecipe(new ItemStack(itemAsphodelPetals, 2), new Object[] {blockFlowerAsphodel});
 			GameRegistry.addShapelessRecipe(new ItemStack(blockPlanksFostimber, 4), new Object[] {blockLogFostimber});
 			
-			//Ore registry
-			OreDictionary.registerOre("dyePink", itemAsphodelPetals);
-            OreDictionary.registerOre("logWood", blockLogFostimber);
-            OreDictionary.registerOre("plankWood", blockPlanksFostimber);
-            OreDictionary.registerOre("treeSapling", blockSaplingFostimber);
-            OreDictionary.registerOre("treeLeaves", blockLeavesFostimber);
-            
-            OreDictionary.registerOre("oreIridium", oreIridium);
-            OreDictionary.registerOre("oreSulphure", oreSulphure);
-            OreDictionary.registerOre("oreBeryl", oreBeryl);
-            OreDictionary.registerOre("oreCobalt", oreCobalt);
-            OreDictionary.registerOre("oreJade", oreJade);
-            OreDictionary.registerOre("oreSilicon", oreSilicon);
-            OreDictionary.registerOre("oreTourmaline", oreTourmaline);
-            
-            //OreDictionary recipes
-            CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(new ItemStack(Item.stick, 6), new Object[] {"X", "X", "X", Character.valueOf('X'), "plankWood"}));
-
+			
 			
 			//Smelting Registering
 			
@@ -590,9 +566,8 @@ public class Elysium
 			
 			GameRegistry.registerTileEntity(ElysianTileEntityPortal.class, "ElysianTileEntityPortal");
 			GameRegistry.registerTileEntity(TileEntityFancyWorkbench.class, "TileEntityFancyWorkbench");
-			GameRegistry.registerTileEntity(TileEntityFancyTank.class, "TileEntityFancyTank");
 			
-			TickRegistry.registerTickHandler(new ElysianServerTickHandler(), Side.SERVER);
+			TickRegistry.registerTickHandler(new TemperatureTickHandler(), Side.SERVER);
 			proxy.registerRenderers();
 			proxy.installSounds();
 			

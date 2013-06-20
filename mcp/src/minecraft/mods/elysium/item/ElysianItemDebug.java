@@ -43,7 +43,7 @@ public class ElysianItemDebug extends ElysianItem
 		{
 			//player.sendChatToPlayer("Id: "+world.getBlockId(x, y, z));
 			player.sendChatToPlayer("Metadata: "+world.getBlockMetadata(x, y, z));
-			player.sendChatToPlayer("TileEntity: "+world.getBlockTileEntity(x, y, z));
+			//player.sendChatToPlayer("TileEntity: "+world.getBlockTileEntity(x, y, z));
 			player.sendChatToPlayer("Temperature: "+TemperatureManager.getBlockTemperature(world.getBlockId(x, y, z), world.getBlockMetadata(x, y, z), world.getBlockMaterial(x, y, z)));
 		}
 		

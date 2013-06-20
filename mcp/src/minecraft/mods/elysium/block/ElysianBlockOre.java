@@ -4,16 +4,15 @@ import java.util.Random;
 
 import mods.elysium.Elysium;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class ElysianBlockOre extends ElysianBlock
+public class ElysianBlockOre extends ElysianBlockHeatable
 {
-    public ElysianBlockOre(int par1)
+    public ElysianBlockOre(int id)
     {
-        super(par1, Material.rock);
+        super(id, Material.rock, -273, 300);
     }
     
     @Override

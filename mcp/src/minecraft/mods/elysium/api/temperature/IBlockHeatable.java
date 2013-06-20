@@ -1,5 +1,7 @@
 package mods.elysium.api.temperature;
 
+import java.util.Random;
+
 import net.minecraft.world.World;
 
 public interface IBlockHeatable
@@ -11,5 +13,5 @@ public interface IBlockHeatable
 	 * @param y
 	 * @param z
 	 */
-	public void updateTemperature(World world, int x, int y, int z);
+	public void updateTemperature(World world, int x, int y, int z, Random random);
 }

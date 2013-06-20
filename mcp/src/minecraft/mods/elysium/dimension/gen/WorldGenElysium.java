@@ -5,6 +5,7 @@ import java.util.Random;
 import javax.sound.midi.SysexMessage;
 
 import mods.elysium.Elysium;
+import mods.elysium.api.temperature.TemperatureManager;
 import mods.elysium.dimension.gen.feature.ElysiumGenLakes;
 import mods.elysium.dimension.gen.feature.ElysiumGenMinable;
 import net.minecraft.block.Block;
@@ -81,10 +82,13 @@ public class WorldGenElysium implements IWorldGenerator
 			}
 		}
 		
-		for(int i = 0; i < 16; i++)
-			for(int k = 0; k < 16; k++)
-				for(int j = 0; j < 128; j++)
+		for(int j = 0; j < 256; j++)
+		{
+			int meta = TemperatureManager.getBlockMetadataFromTemperature(Elysium.blockPalestone.blockID, TemperatureManager.getTemperatureForHeight(j));
+			for(int i = 0; i < 16; i++)
+				for(int k = 0; k < 16; k++)
 					if(world.getBlockId(blockX+i, j, blockZ+k) == Elysium.blockPalestone.blockID)
-						world.setBlockMetadataWithNotify(blockX+i, j, blockZ+k, 7, 0);
+						world.setBlockMetadataWithNotify(blockX+i, j, blockZ+k, meta, 0);
+		}
 	}
 }

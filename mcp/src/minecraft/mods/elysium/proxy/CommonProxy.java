@@ -1,7 +1,6 @@
 package mods.elysium.proxy;
 
 import mods.elysium.DefaultProps;
-import mods.elysium.handlers.ElysianServerTickHandler;
 import mods.elysium.network.ElysiumPacket;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
