@@ -68,6 +68,8 @@ public class DefaultProps
 	public static int idFancyWorkbench = 2030;
 	public static int idFancyTank = 2031;
 	
+	public static int idBlockCrystal = 2032;
+
 	//Items
 	public static int idGracePrismItem = 5000;
 	public static int idWhistleItem = 5001;

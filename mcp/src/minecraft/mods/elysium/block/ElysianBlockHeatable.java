@@ -24,20 +24,20 @@ public class ElysianBlockHeatable extends ElysianBlock implements IBlockHeatable
 	public ElysianBlockHeatable(int id, Material mat, int minTemp, int maxTemp)
 	{
 		super(id, mat);
-		this.setTickRandomly(true);
+//		this.setTickRandomly(true);
 		this.minTemp = minTemp;
 		this.maxTemp = maxTemp;
-		TemperatureManager.addBlockTemperature(new RangedTemperature(id, minTemp, maxTemp));
+//		TemperatureManager.addBlockTemperature(new RangedTemperature(id, minTemp, maxTemp));
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World world, int x, int y, int z, Random random)
 	{
-		for(int i = 0; i < (world.getBlockMetadata(x, y, z)-9); i++)
-		{
-			world.spawnParticle("smoke", x+random.nextDouble(), y+random.nextDouble(), z+random.nextDouble(), 0, 0, 0);
-		}
+//		for(int i = 0; i < (world.getBlockMetadata(x, y, z)-9); i++)
+//		{
+//			world.spawnParticle("smoke", x+random.nextDouble(), y+random.nextDouble(), z+random.nextDouble(), 0, 0, 0);
+//		}
 	}
 	
 	@Override
@@ -51,7 +51,7 @@ public class ElysianBlockHeatable extends ElysianBlock implements IBlockHeatable
 	{
 		return 20;
 	}
-	
+	/*
 	@Override
 	public void onBlockAdded(World world, int x, int y, int z)
 	{
@@ -100,7 +100,7 @@ public class ElysianBlockHeatable extends ElysianBlock implements IBlockHeatable
 		else
 			return Integer.parseInt(Integer.toHexString(color.getRGB()).substring(2), 16);
 	}
-	
+	*/
 	@Override
 	public void updateTemperature(World world, int x, int y, int z, Random random)
 	{

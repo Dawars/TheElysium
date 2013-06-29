@@ -54,6 +54,7 @@ public class ClientProxy extends CommonProxy
 		
 		Elysium.fancyWorkbenchRenderID = RenderingRegistry.getNextAvailableRenderId();
 		Elysium.fancyTankRenderID = RenderingRegistry.getNextAvailableRenderId();
+		Elysium.crystalBlockRenderID = RenderingRegistry.getNextAvailableRenderId();
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(ElysianTileEntityPortal.class, new ElysianTileEntityPortalRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFancyWorkbench.class, new RenderFancyWorkbench());
@@ -61,6 +62,7 @@ public class ClientProxy extends CommonProxy
 		
 		RenderingRegistry.registerBlockHandler(new RenderFancyWorkbench());
 		RenderingRegistry.registerBlockHandler(new RenderFancyTank());
+		RenderingRegistry.registerBlockHandler(new CrystalBlockRendererOBJ());
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityDrachma.class, new RenderDrachmaOBJ());
 		RenderingRegistry.registerEntityRenderingHandler(EntityCatorPillar.class, new RenderCaterPillar());

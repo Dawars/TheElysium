@@ -157,7 +157,7 @@ public class ElysiumGenLakes extends WorldGenerator
 						if(Block.blocksList[world.getBlockId(x+cx, y+cy, z+cz)] instanceof ElysianBlock)
 						{
 							if(((ElysianBlock)Block.blocksList[world.getBlockId(x+cx, y+cy, z+cz)]).canBeReplacedByLake())
-								world.setBlock(x+cx, y+cy, z+cz, lake[(cx * 16 + cz) * 8 + cy]);
+								world.setBlock(x+cx, y+cy, z+cz, lake[(cx * 16 + cz) * 8 + cy]);//FIXME: random crash
 						}
 						else
 						{

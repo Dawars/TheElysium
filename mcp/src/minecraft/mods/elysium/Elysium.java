@@ -94,6 +94,7 @@ public class Elysium
 	//Rendering ids
 	public static int fancyWorkbenchRenderID;
 	public static int fancyTankRenderID;
+	public static int crystalBlockRenderID;
 	
 	//Blocks
 	public static Block blockPalestone;
@@ -151,6 +152,8 @@ public class Elysium
 	
 	public static Block blockFancyWorkbench;
 	public static Block blockFancyTank;
+	
+	public static Block blockCrystal;
 	
 	//Items
 	
@@ -383,6 +386,10 @@ public class Elysium
 			blockFancyTank = new ElysianBlockFancyTank(idFancyTank.getInt()).setHardness(2F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockFancyTank");
 			registerBlock(blockFancyTank, "Fancy Tank");
 
+			Property idCrystalBlock = Elysium.config.getBlock("idCrystalBlock.id", DefaultProps.idBlockCrystal);
+			blockCrystal = new ElysianBlockCrystal(idCrystalBlock.getInt()).setHardness(2F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("crystalBlock");
+			registerBlock(blockCrystal, "Crystal block");
+
 			
 			
 			
@@ -595,7 +602,7 @@ public class Elysium
 			GameRegistry.registerTileEntity(TileEntityFancyWorkbench.class, "TileEntityFancyWorkbench");
 			GameRegistry.registerTileEntity(TileEntityFancyTank.class, "TileEntityFancyTank");
 			
-			TickRegistry.registerTickHandler(new TemperatureTickHandler(), Side.SERVER);
+//			TickRegistry.registerTickHandler(new TemperatureTickHandler(), Side.SERVER);
 			proxy.registerRenderers();
 			proxy.installSounds();
 			
