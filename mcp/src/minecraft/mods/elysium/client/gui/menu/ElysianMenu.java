@@ -26,7 +26,11 @@ public class ElysianMenu extends Menu
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
 		
-		if((calendar.get(2)+1 == 8) && (calendar.get(5) == 28))
+		if((calendar.get(2)+1 == 4) && (calendar.get(5) == 3))
+		{
+			this.splashText = "Happy birthday, Dawars!";
+		}
+		else if((calendar.get(2)+1 == 8) && (calendar.get(5) == 28))
 		{
 			this.splashText = "Happy birthday, FBalazs!";
 		}
