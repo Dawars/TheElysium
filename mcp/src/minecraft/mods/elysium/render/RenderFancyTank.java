@@ -2,6 +2,7 @@ package mods.elysium.render;
 
 import org.lwjgl.opengl.GL11;
 
+import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import mods.elysium.entity.tileentity.TileEntityFancyTank;
 import net.minecraft.block.Block;
@@ -21,7 +22,7 @@ import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler {
 
-	private static final ResourceLocation TEXTURE_FANCY_TANK = new ResourceLocation("/mods/elysium/textures/models/elysianTank.png");
+	private static final ResourceLocation TEXTURE_FANCY_TANK = new ResourceLocation(DefaultProps.modId + ":textures/models/elysianTank.png");
 	public static ModelBase model = new ModelBase() { };
 	private ModelRenderer pillarbottom;
 	private ModelRenderer pillartop;
@@ -265,13 +266,9 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 
 		GL11.glPushMatrix();
 		GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
-		//GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		/*TODO do you know what these things mean?????
-		 * cull face already enabled in minecraft
-		 */
 			//bindTextureByName(LiquidRenderer.getLiquidSheet(liquid));
 
 			GL11.glTranslatef((float) x + 0.125F, (float) y + 0.1875F, (float) z + 0.125F);

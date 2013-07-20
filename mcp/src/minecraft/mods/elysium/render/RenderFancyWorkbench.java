@@ -30,12 +30,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 
+import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import mods.elysium.entity.tileentity.TileEntityFancyWorkbench;
 
 public class RenderFancyWorkbench extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler
 {
-	private static final ResourceLocation TEXTURE_WORKPILLAR = new ResourceLocation("/mods/elysium/textures/models/elysianWorkpillar.png");
+	private static final ResourceLocation TEXTURE_WORKPILLAR = new ResourceLocation(DefaultProps.modId + ":textures/models/elysianWorkpillar.png");
 
 	public static ModelBase model = new ModelBase()
 	{
