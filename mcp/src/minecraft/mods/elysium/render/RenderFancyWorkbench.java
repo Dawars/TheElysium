@@ -24,6 +24,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -34,6 +35,8 @@ import mods.elysium.entity.tileentity.TileEntityFancyWorkbench;
 
 public class RenderFancyWorkbench extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler
 {
+	private static final ResourceLocation TEXTURE_WORKPILLAR = new ResourceLocation("/mods/elysium/textures/models/elysianWorkpillar.png");
+
 	public static ModelBase model = new ModelBase()
 	{
 		
@@ -132,7 +135,8 @@ public class RenderFancyWorkbench extends TileEntitySpecialRenderer implements I
 			glRotatef(180F, 1F, 0F, 0F);
 			glRotatef(90F*(tile.worldObj.getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord)-2), 0F, 1F, 0F);
 	
-			glBindTexture(GL_TEXTURE_2D, Minecraft.getMinecraft().renderEngine.getTexture("/mods/elysium/textures/models/elysianWorkpillar.png"));
+//			glBindTexture(GL_TEXTURE_2D, Minecraft.getMinecraft().renderEngine.func_110577_a(TEXTURE_WORKPILLAR)); ??
+			Minecraft.getMinecraft().renderEngine.func_110577_a(TEXTURE_WORKPILLAR);
 			render(tile, 1F);
 		glPopMatrix();
 	
@@ -175,7 +179,7 @@ public class RenderFancyWorkbench extends TileEntitySpecialRenderer implements I
 			glTranslated(0, 1.0D, 0);
 			glScaled(0.0625D, 0.0625D, 0.0625D);
 			glRotatef(180F, 1F, 0F, 0F);
-			FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/elysium/textures/models/elysianWorkpillar.png");
+			FMLClientHandler.instance().getClient().renderEngine.func_110577_a(TEXTURE_WORKPILLAR);
 			render(null, 1F);
 		glPopMatrix();
 	}

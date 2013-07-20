@@ -18,11 +18,13 @@ import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.IRenderHandler;
 
 public class CloudRendererElysium extends IRenderHandler {
 	
+	private static final ResourceLocation TEXTURE_CLOUDS = new ResourceLocation("/environment/clouds.png");
 	private int tick = 0;
     
 	@Override
@@ -42,7 +44,7 @@ public class CloudRendererElysium extends IRenderHandler {
 		             byte b0 = 32;
 		             int i = 256 / b0;
 		             Tessellator tessellator = Tessellator.instance;
-		             FMLClientHandler.instance().getClient().renderEngine.bindTexture("/environment/clouds.png");
+		             FMLClientHandler.instance().getClient().renderEngine.func_110577_a(TEXTURE_CLOUDS);
 		             GL11.glEnable(GL11.GL_BLEND);
 		             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		             Vec3 vec3 = world.getCloudColour(partialTicks);
@@ -109,7 +111,7 @@ public class CloudRendererElysium extends IRenderHandler {
         int j = MathHelper.floor_double(d2 / 2048.0D);
         d1 -= (double)(i * 2048);
         d2 -= (double)(j * 2048);
-        FMLClientHandler.instance().getClient().renderEngine.bindTexture("/environment/clouds.png");
+        FMLClientHandler.instance().getClient().renderEngine.func_110577_a(TEXTURE_CLOUDS);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         Vec3 vec3 = world.getCloudColour(partialTicks);

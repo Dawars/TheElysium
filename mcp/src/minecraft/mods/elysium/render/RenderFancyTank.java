@@ -12,15 +12,16 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.liquids.ILiquidTank;
-import net.minecraftforge.liquids.ITankContainer;
-import net.minecraftforge.liquids.LiquidStack;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidTank;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler {
 
+	private static final ResourceLocation TEXTURE_FANCY_TANK = new ResourceLocation("/mods/elysium/textures/models/elysianTank.png");
 	public static ModelBase model = new ModelBase() { };
 	private ModelRenderer pillarbottom;
 	private ModelRenderer pillartop;
@@ -170,27 +171,35 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 	    	return;
 	
 		if(tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) != null 
-				&& (tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof ILiquidTank || 
-					tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof ITankContainer)){
+				&& 
+//				(
+					tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof IFluidTank /*|| 
+					tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord+1) instanceof ITankContainer)*/){
 			Valve2.render(1.0F);
 		}
 		
 		if(tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) != null
-				&& (tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) instanceof ITankContainer || 
-					tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) instanceof ILiquidTank)){
+				&& /*(tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) instanceof ITankContainer || 
+					*/tile.worldObj.getBlockTileEntity(tile.xCoord+1, tile.yCoord, tile.zCoord) instanceof IFluidTank
+//					)
+					){
 			Valve3.render(1.0F);
 		}
 		
 		if(tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) != null
-				&& (tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) instanceof ITankContainer ||
-						tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) instanceof ILiquidTank)){
+				&&/* (tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) instanceof ITankContainer ||*/
+						tile.worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord-1) instanceof IFluidTank)
+//			)
+			{
 			Valve4.render(1.0F);
 		}
 		
 	
 		if(tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) != null
-				&& (tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) instanceof ITankContainer 
-						|| tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) instanceof ILiquidTank)){
+				&& /*(tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) instanceof ITankContainer 
+						|| */tile.worldObj.getBlockTileEntity(tile.xCoord-1, tile.yCoord, tile.zCoord) instanceof IFluidTank
+//						)
+			){
 			Valve1.render(1.0F);
 		}
 	}
@@ -206,7 +215,7 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 			GL11.glTranslated(0, 1.0D, 0);
 			GL11.glScaled(0.0625D, 0.0625D, 0.0625D);
 			GL11.glRotatef(180F, 1F, 0F, 0F);
-			FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/elysium/textures/models/elysianTank.png");
+			FMLClientHandler.instance().getClient().renderEngine.func_110577_a(TEXTURE_FANCY_TANK);
 	
 			render(null, 1F);
 			Valve2.render(1.0F);
@@ -236,39 +245,39 @@ public class RenderFancyTank extends TileEntitySpecialRenderer implements ISimpl
 			GL11.glTranslated(x+0.5D, y+1.5D, z+0.5D);
 			GL11.glScaled(0.0625D, 0.0625D, 0.0625D);
 			GL11.glRotatef(180F, 1F, 0F, 0F);
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, Minecraft.getMinecraft().renderEngine.getTexture("/mods/elysium/textures/models/elysianTank.png"));
-			
+//			GL11.glBindTexture(GL11.GL_TEXTURE_2D, Minecraft.getMinecraft().renderEngine.getTexture("/mods/elysium/textures/models/elysianTank.png")); TODO
+			Minecraft.getMinecraft().renderEngine.func_110577_a(TEXTURE_FANCY_TANK);
 			render(tile, 1F);
 		GL11.glPopMatrix();
 
 			
 			TileEntityFancyTank tank = ((TileEntityFancyTank) tile);
 
-			LiquidStack liquid = tank.tank.getLiquid();
+			FluidStack liquid = tank.tank.getFluid();
 			if (liquid == null || liquid.amount <= 0) {
 				return;
 			}
 
-			int[] displayList = LiquidRenderer.getLiquidDisplayLists(liquid, tile.worldObj, false);
+			/*int[] displayList = LiquidRenderer.getLiquidDisplayLists(liquid, tile.worldObj, false);
 			if (displayList == null) {
 				return;
-			}
+			}*/
 
 		GL11.glPushMatrix();
 		GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
-		GL11.glEnable(GL11.GL_CULL_FACE);
+		//GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		/*TODO do you know what these things mean?????
 		 * cull face already enabled in minecraft
 		 */
-			bindTextureByName(LiquidRenderer.getLiquidSheet(liquid));
+			//bindTextureByName(LiquidRenderer.getLiquidSheet(liquid));
 
 			GL11.glTranslatef((float) x + 0.125F, (float) y + 0.1875F, (float) z + 0.125F);
 			GL11.glScalef(0.75F, 0.625F, 0.75F);
 
-			GL11.glCallList(displayList[(int) ((float) liquid.amount / (float) (tank.tank.getCapacity()) * (LiquidRenderer.DISPLAY_STAGES - 1))]);
+			//GL11.glCallList(displayList[(int) ((float) liquid.amount / (float) (tank.tank.getCapacity()) * (LiquidRenderer.DISPLAY_STAGES - 1))]);
 
 		GL11.glPopAttrib();
 		GL11.glPopMatrix();

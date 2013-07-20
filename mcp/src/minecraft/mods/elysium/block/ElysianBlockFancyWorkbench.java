@@ -7,7 +7,7 @@ import mods.elysium.Elysium;
 import mods.elysium.entity.tileentity.TileEntityFancyWorkbench;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -56,7 +56,7 @@ public class ElysianBlockFancyWorkbench extends ElysianBlockContainer
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving entity, ItemStack stack)
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)
 	{
 		int meta = determineOrientation(world, x, y, z, entity);
 		
@@ -66,7 +66,7 @@ public class ElysianBlockFancyWorkbench extends ElysianBlockContainer
 		world.setBlockMetadataWithNotify(x, y, z, meta, 0);
 	}
 	
-	public static int determineOrientation(World world, int x, int y, int z, EntityLiving entity)
+	public static int determineOrientation(World world, int x, int y, int z, EntityLivingBase entity)
 	{
 		//Used for up and down orientation
 		

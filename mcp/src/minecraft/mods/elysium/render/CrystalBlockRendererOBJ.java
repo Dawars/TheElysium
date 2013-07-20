@@ -21,6 +21,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.obj.ObjModelLoader;
 import net.minecraftforge.client.model.obj.WavefrontObject;
@@ -32,12 +33,14 @@ import mods.elysium.entity.EntityDrachma;
 @SideOnly(Side.CLIENT)
 public class CrystalBlockRendererOBJ implements ISimpleBlockRenderingHandler
 {
+	private static final ResourceLocation TEXTURE_CRYSTAL = new ResourceLocation("/mods/elysium/textures/models/crystal.png");
+	private static final ResourceLocation TEXTURE_TERRAIN = new ResourceLocation("/terrain.png");
 	//WavefrontObject model;
 	OBJModel model;
 	
 	public CrystalBlockRendererOBJ()
 	{
-		this.model = OBJLoader.loadOBJModel(Minecraft.getMinecraftDir()+"/resources/elysium/crystal_block.obj");
+//		this.model = OBJLoader.loadOBJModel(Minecraft.getMinecraftDir()+"/resources/elysium/crystal_block.obj");
 	}
 
 	private void render(double x, double y, double z)
@@ -49,12 +52,12 @@ public class CrystalBlockRendererOBJ implements ISimpleBlockRenderingHandler
 		GL11.glScalef(.025F, .025F, .025F);
 //		GL11.glRotatef(90F, 1F, 0F, 0F);
 		
-		FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/elysium/textures/models/crystal.png");
-		this.model.renderAll();
+		FMLClientHandler.instance().getClient().renderEngine.func_110577_a(TEXTURE_CRYSTAL);
+//		this.model.renderAll();
 		
 //		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
-		FMLClientHandler.instance().getClient().renderEngine.bindTexture("/terrain.png");
+		FMLClientHandler.instance().getClient().renderEngine.func_110577_a(TEXTURE_TERRAIN);//FIXME
 
 	}
 
@@ -67,7 +70,6 @@ public class CrystalBlockRendererOBJ implements ISimpleBlockRenderingHandler
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 		
 		renderer.renderBlockAllFaces(Elysium.blockPalestone, x, y, z);
-		System.out.println("should render crystal block");
 		GL11.glPushMatrix();
 //		GL11.glDisable(GL11.GL_LIGHTING);
 		
@@ -75,11 +77,12 @@ public class CrystalBlockRendererOBJ implements ISimpleBlockRenderingHandler
 		GL11.glScalef(.025F, .025F, .025F);
 //		GL11.glRotatef(90F, 1F, 0F, 0F);
 		
-		FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/elysium/textures/models/crystal.png");
-		this.model.renderAll();
+		FMLClientHandler.instance().getClient().renderEngine.func_110577_a(TEXTURE_CRYSTAL);
+		renderer.renderBlockAllFaces(Elysium.blockPalestone, x, y, z);
+		//this.model.renderAll();
 		
 //		GL11.glEnable(GL11.GL_LIGHTING);
-		FMLClientHandler.instance().getClient().renderEngine.bindTexture("/terrain.png");
+		FMLClientHandler.instance().getClient().renderEngine.func_110577_a(TEXTURE_TERRAIN);
 
 		GL11.glPopMatrix();
 

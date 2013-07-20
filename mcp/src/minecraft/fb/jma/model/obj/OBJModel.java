@@ -3,6 +3,8 @@ package fb.jma.model.obj;
 import java.util.List;
 import java.util.ArrayList;
 
+import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -32,9 +34,13 @@ public class OBJModel
 	
 	public void renderAll()
 	{
-		for(OBJGroup group : this.groups)
-		{
-			this.renderGroup(group.name);
+		if(this.vertices != null){
+			for(OBJGroup group : this.groups)
+			{
+				this.renderGroup(group.name);
+			}
+		} else {
+			System.out.println("Warning: model couldn't be rendered!");
 		}
 	}
 	
@@ -81,7 +87,7 @@ public class OBJModel
 		OBJAnimationFrame frame = animation.frames.get(tick % animation.frames.size());
 		
 		if(frame.texture != "")
-			FMLClientHandler.instance().getClient().renderEngine.bindTexture(frame.texture);
+			FMLClientHandler.instance().getClient().renderEngine.func_110577_a(new ResourceLocation(frame.texture));
 		else
 			glBindTexture(GL_TEXTURE_2D, 0);
 		

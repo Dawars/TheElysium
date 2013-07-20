@@ -32,7 +32,6 @@ public class EntityCatorPillar extends EntityMob
     public EntityCatorPillar(World world)
     {
         super(world);
-        this.texture = "/mods/" + DefaultProps.modId + "/textures/mob/CaterPillar.png";
         this.setSize(0.9F, 0.9F);
         this.getNavigator().setAvoidsWater(true);
         float f = 0.25F;

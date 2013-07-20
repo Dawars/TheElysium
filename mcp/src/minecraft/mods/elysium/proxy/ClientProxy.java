@@ -9,7 +9,7 @@ import java.io.InputStream;
 
 import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
-import mods.elysium.client.gui.menu.*;
+//import mods.elysium.client.gui.menu.*;
 import mods.elysium.dimension.portal.ElysianTileEntityPortal;
 import mods.elysium.dimension.portal.ElysianTileEntityPortalRenderer;
 import mods.elysium.entity.EntityDrachma;
@@ -20,7 +20,7 @@ import mods.elysium.handlers.ElysianClientTickHandler;
 import mods.elysium.entity.tileentity.TileEntityFancyTank;
 import mods.elysium.network.ElysiumPacket;
 import mods.elysium.render.*;
-import net.aetherteam.mainmenu_api.MainMenuAPI;
+//import net.aetherteam.mainmenu_api.MainMenuAPI;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -49,7 +49,7 @@ public class ClientProxy extends CommonProxy
 	@Override
 	public void registerRenderers()
 	{
-		MainMenuAPI.registerMenu("Elysian Menu", ElysianMenu.class);
+//	FIXME	MainMenuAPI.registerMenu("Elysian Menu", ElysianMenu.class);
 //		MainMenuAPI.registerMenu("Misc Elysian Menu", MiscElysianMenu.class);
 		
 		Elysium.fancyWorkbenchRenderID = RenderingRegistry.getNextAvailableRenderId();
@@ -117,7 +117,7 @@ public class ClientProxy extends CommonProxy
 		
 		if (soundFile.canRead() && soundFile.isFile())
 		{
-			ModLoader.getMinecraftInstance().installResource(filename, soundFile);
+//	FIXME		ModLoader.getMinecraftInstance().installResource(filename, soundFile);
 			System.out.println(Elysium.consolePrefix+"Loaded soundfile: " + soundFile);
 		}
 		else

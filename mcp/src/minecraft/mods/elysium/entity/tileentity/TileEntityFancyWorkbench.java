@@ -355,12 +355,9 @@ public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInve
 	public void closeChest(){}
 
 	@Override
-	public boolean isStackValidForSlot(int i, ItemStack itemstack)
-	{
+	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		return true;
 	}
-	
-	
 	
 	@Override
 	public int[] getAccessibleSlotsFromSide(int side)
@@ -379,4 +376,5 @@ public class TileEntityFancyWorkbench extends ElysianTileEntity implements IInve
 	{
 		return false;
 	}
+
 }

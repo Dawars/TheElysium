@@ -32,7 +32,6 @@ public class EntityGerbil extends EntityMob
 	public EntityGerbil(World par1World)
 	{
 		super(par1World);
-		this.texture = "/mods/" + DefaultProps.modId + "/textures/mob/gerbil.png";
 		this.setSize(0.5F, 0.3F);
 		this.getNavigator().setAvoidsWater(true);
 		float f = 0.25F;
@@ -84,11 +83,12 @@ public class EntityGerbil extends EntityMob
 		return true;
 	}
 	
-	@Override
-	public int getMaxHealth()
-	{
-		return 10;
-	}
+	//TODO
+//	@Override
+//	public int getMaxHealth()
+//	{
+//		return 10;
+//	}
 	
 	@Override
 	protected void updateAITasks()

@@ -84,7 +84,7 @@ public class ElysianTeleporter extends Teleporter
 				for(int b=-2; b <= 2; b++)
 				{
 					int id = worldServer.getBlockId(x+a, y, z+b);
-					if(id == 0 || id == Block.waterStill.blockID || id == Block.waterMoving.blockID || id == Elysium.waterStill.blockID || id == Elysium.waterMoving.blockID || id == Block.blockNetherQuartz.blockID)
+					if(id == 0 || id == Block.waterStill.blockID || id == Block.waterMoving.blockID || /*id == Elysium.waterStill.blockID || id == Elysium.waterMoving.blockID ||*/ id == Block.blockNetherQuartz.blockID)
 						waterBellow++;
 			
 				}

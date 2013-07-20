@@ -571,10 +571,10 @@ public abstract class ElysianBlockLiquid extends Block
     {
         Vec3 vec3 = null;
 
-        if (par4Material == Material.water)
-        {
-            vec3 = ((ElysianBlockLiquid) Elysium.waterMoving).getFlowVector(par0IBlockAccess, par1, par2, par3);
-        }
+//        if (par4Material == Material.water)
+//        {
+//            vec3 = ((ElysianBlockLiquid) Elysium.waterMoving).getFlowVector(par0IBlockAccess, par1, par2, par3);
+//        }
 
 //        if (par4Material == Material.lava)
 //        {
@@ -669,10 +669,10 @@ public abstract class ElysianBlockLiquid extends Block
             this.theIcon = new Icon[] {par1IconRegister.registerIcon(DefaultProps.modId + ":elysian_water"), par1IconRegister.registerIcon(DefaultProps.modId + ":elysian_water_flow")};
         }
     }
-
-    @SideOnly(Side.CLIENT)
-    public static Icon func_94424_b(String par0Str)
-    {
-        return par0Str == "water" ? Elysium.waterMoving.theIcon[0] : Elysium.waterMoving.theIcon[1];
-    }
+//
+//    @SideOnly(Side.CLIENT)
+//    public static Icon func_94424_b(String par0Str)
+//    {
+//        return par0Str == "water" ? Elysium.waterMoving.theIcon[0] : Elysium.waterMoving.theIcon[1];
+//    }
 }

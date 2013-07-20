@@ -24,6 +24,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.util.ChatMessageComponent;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -42,9 +44,9 @@ public class ElysianItemDebug extends ElysianItem
 		if(!world.isRemote)
 		{
 			//player.sendChatToPlayer("Id: "+world.getBlockId(x, y, z));
-			player.sendChatToPlayer("Metadata: "+world.getBlockMetadata(x, y, z));
+			player.addChatMessage("" + world.getBlockMetadata(x, y, z));
 			//player.sendChatToPlayer("TileEntity: "+world.getBlockTileEntity(x, y, z));
-			player.sendChatToPlayer("Temperature: "+TemperatureManager.getTemperatureAt(world, x, y, z));
+			player.addChatMessage("Temperature: "+TemperatureManager.getTemperatureAt(world, x, y, z));
 			//player.sendChatToPlayer("Temperature: "+TemperatureManager.getBlockTemperature(world.getBlockId(x, y, z), world.getBlockMetadata(x, y, z), world.getBlockMaterial(x, y, z)));
 		}
 		

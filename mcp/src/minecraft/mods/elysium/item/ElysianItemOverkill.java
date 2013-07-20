@@ -1,6 +1,7 @@
 package mods.elysium.item;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
@@ -17,7 +18,7 @@ public class ElysianItemOverkill extends ElysianItem
      * Current implementations of this method in child classes do not use the entry argument beside ev. They just raise
      * the damage on the stack.
      */
-    public boolean hitEntity(ItemStack par1ItemStack, EntityLiving target, EntityLiving attacker)
+    public boolean hitEntity(ItemStack item, EntityLivingBase target, EntityLivingBase attacker)
     {
     	if(target instanceof EntityPlayer)
     	{
@@ -27,7 +28,7 @@ public class ElysianItemOverkill extends ElysianItem
     		}
     		else
     		{
-    			target.setEntityHealth(((EntityPlayer) target).maxHealth*10);
+//    	TODO		target.setEntityHealth(((EntityPlayer) target).maxHealth*10);
     		}
     	}
     	else

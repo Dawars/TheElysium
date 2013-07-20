@@ -20,8 +20,8 @@ import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.liquids.LiquidContainerRegistry;
-import net.minecraftforge.liquids.LiquidStack;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 public class ElysianBlockFancyTank extends ElysianBlockContainer
 {
@@ -53,13 +53,13 @@ public class ElysianBlockFancyTank extends ElysianBlockContainer
 		ItemStack current = entityplayer.inventory.getCurrentItem();
 		if (current != null) {
 
-			LiquidStack liquid = LiquidContainerRegistry.getLiquidForFilledItem(current);
+			FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(current);
 
 			TileEntityFancyTank tank = (TileEntityFancyTank) world.getBlockTileEntity(i, j, k);
 
 			// Handle filled containers
-			if (liquid != null) {
-				int qty = tank.fill(ForgeDirection.UNKNOWN, liquid, true);
+			if (fluid != null) {
+				int qty = tank.fill(ForgeDirection.UNKNOWN, fluid, true);
 
 				if (qty != 0 && !entityplayer.capabilities.isCreativeMode) {
 					//entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, Utils.consumeItem(current));
@@ -70,13 +70,13 @@ public class ElysianBlockFancyTank extends ElysianBlockContainer
 				// Handle empty containers
 			} else {
 
-				LiquidStack available = tank.getTanks(ForgeDirection.UNKNOWN)[0].getLiquid();
+				FluidStack available = tank.getTankInfo(ForgeDirection.UNKNOWN)[0].fluid;
 				if (available != null) {
-					ItemStack filled = LiquidContainerRegistry.fillLiquidContainer(available, current);
+					ItemStack filled = FluidContainerRegistry.fillFluidContainer(available, current);
 
-					liquid = LiquidContainerRegistry.getLiquidForFilledItem(filled);
+					fluid = FluidContainerRegistry.getFluidForFilledItem(filled);
 
-					if (liquid != null) {
+					if (fluid != null) {
 						if (!entityplayer.capabilities.isCreativeMode) {
 							if (current.stackSize > 1) {
 								if (!entityplayer.inventory.addItemStackToInventory(filled))
@@ -89,7 +89,7 @@ public class ElysianBlockFancyTank extends ElysianBlockContainer
 								entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, filled);
 							}
 						}
-						tank.drain(ForgeDirection.UNKNOWN, liquid.amount, true);
+						tank.drain(ForgeDirection.UNKNOWN, fluid.amount, true);
 						return true;
 					}
 				}

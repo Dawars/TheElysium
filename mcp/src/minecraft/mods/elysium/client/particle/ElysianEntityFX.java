@@ -5,10 +5,12 @@ import static org.lwjgl.opengl.GL11.*;
 import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class ElysianEntityFX extends EntityFX
 {
+	private static final ResourceLocation TEXTURE_PARTICLES = new ResourceLocation("/particles.png");
 	String texturefile = null;
 	int brightness = 200;
 	
@@ -41,9 +43,9 @@ public class ElysianEntityFX extends EntityFX
 	public void renderParticle(Tessellator tessellator, float tick, float rotationX, float rotationXZ, float rotationZ, float rotationYZ, float rotationXY)
 	{
 		if(this.texturefile != null)
-			FMLClientHandler.instance().getClient().renderEngine.bindTexture(this.texturefile);
+			FMLClientHandler.instance().getClient().renderEngine.func_110577_a(new ResourceLocation(this.texturefile));
 		else
-			FMLClientHandler.instance().getClient().renderEngine.bindTexture("/particles.png");
+			FMLClientHandler.instance().getClient().renderEngine.func_110577_a(TEXTURE_PARTICLES);
 		
 		float textureCoordX1 = (float)this.particleTextureIndexX / 16.0F;
 		float textureCoordX2 = textureCoordX1 + 0.0624375F;
@@ -93,6 +95,6 @@ public class ElysianEntityFX extends EntityFX
 		glEnd();
 		
 		if(this.texturefile != null)
-			FMLClientHandler.instance().getClient().renderEngine.bindTexture("/particles.png");
+			FMLClientHandler.instance().getClient().renderEngine.func_110577_a(TEXTURE_PARTICLES);
 	}
 }

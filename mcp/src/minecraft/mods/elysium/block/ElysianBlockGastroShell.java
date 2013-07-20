@@ -6,7 +6,7 @@ import mods.elysium.DefaultProps;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityBrewingStand;
@@ -34,7 +34,7 @@ public class ElysianBlockGastroShell extends ElysianBlock
 	/**
 	 * Called when the block is placed in the world.
 	 */
-	public void onBlockPlacedBy(World world, int i, int j, int k, EntityLiving entity, ItemStack itemstack)
+	public void onBlockPlacedBy(World world, int i, int j, int k, EntityLivingBase entity, ItemStack itemstack)
 	{
 		super.onBlockPlacedBy(world, i, j, k, entity, itemstack);
 		int dir = MathHelper.floor_double((double)((entity.rotationYaw * 4F) / 360F) + 0.5D) & 3;

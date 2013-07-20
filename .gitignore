@@ -45,4 +45,11 @@ mcp/src/minecraft/buildcraft/*
 
 mcp/src/minecraft/Start.java
 mcp/src/minecraft/mcpmod.info
-*.png
+
+mcp/src/minecraft/mods/buildcraft/textures/blocks/*.png
+mcp/src/minecraft/mods/buildcraft/textures/blocks/fillerPatterns/*.png
+mcp/src/minecraft/mods/buildcraft/textures/items/*.png
+mcp/src/minecraft/mods/buildcraft/textures/items/triggers/*.png
+mcp/src/minecraft/mods/buildcraft/textures/items/icons/*.png
+forge_logo.png
+*.lzma

@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -21,6 +22,11 @@ import cpw.mods.fml.client.FMLClientHandler;
 
 public class SkyRendererElysium extends IRenderHandler
 {
+	private static final ResourceLocation TEXTURE_SKY = new ResourceLocation("/mods/" + DefaultProps.modId + "/textures/misc/space.png");
+	private static final ResourceLocation TEXTURE_MOON = new ResourceLocation("/environment/moon_phases.png");
+	private static final ResourceLocation TEXTURE_SUN = new ResourceLocation("/mods/" + DefaultProps.modId + "/textures/misc/sun.png");
+	private static final ResourceLocation TEXTURE_SUN_HEATBUFF = new ResourceLocation("/mods/" + DefaultProps.modId + "/textures/misc/heatbuff.png");
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void render(float partialTicks, WorldClient world, Minecraft mc)
@@ -124,9 +130,9 @@ public class SkyRendererElysium extends IRenderHandler
 			GL11.glRotatef(world.getCelestialAngle(partialTicks) * 360.0F, 1.0F, 0.0F, 0.0F);
 			f10 = 30.0F;
 			if(Elysium.isHeatWave())
-				FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/" + DefaultProps.modId + "/textures/misc/heatbuff.png");
+				FMLClientHandler.instance().getClient().renderEngine.func_110577_a(TEXTURE_SUN_HEATBUFF);
 			else
-				FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/" + DefaultProps.modId + "/textures/misc/sun.png");
+				FMLClientHandler.instance().getClient().renderEngine.func_110577_a(TEXTURE_SUN);
 			tessellator1.startDrawingQuads();
 			tessellator1.addVertexWithUV((double)(-f10), 100.0D, (double)(-f10), 0.0D, 0.0D);
 			tessellator1.addVertexWithUV((double)f10, 100.0D, (double)(-f10), 1.0D, 0.0D);
@@ -134,7 +140,7 @@ public class SkyRendererElysium extends IRenderHandler
 			tessellator1.addVertexWithUV((double)(-f10), 100.0D, (double)f10, 0.0D, 1.0D);
 			tessellator1.draw();
 			f10 = 20.0F;
-			FMLClientHandler.instance().getClient().renderEngine.bindTexture("/environment/moon_phases.png");
+			FMLClientHandler.instance().getClient().renderEngine.func_110577_a(TEXTURE_MOON);
 			int k = world.getMoonPhase();
 			int l = k % 4;
 			int i1 = k / 4 % 2;
@@ -213,7 +219,7 @@ public class SkyRendererElysium extends IRenderHandler
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		RenderHelper.disableStandardItemLighting();
 		GL11.glDepthMask(false);
-		FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/" + DefaultProps.modId + "/textures/misc/space.png");
+		FMLClientHandler.instance().getClient().renderEngine.func_110577_a(TEXTURE_SKY);
 		Tessellator tessellator = Tessellator.instance;
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, (Elysium.proxy.getClientWorld().getStarBrightness(partialTicks)) * (1.0F - Elysium.proxy.getClientWorld().getRainStrength(partialTicks)));

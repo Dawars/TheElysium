@@ -38,7 +38,7 @@ public class ElysianItemWhistle extends ElysianItem
 	
 	//Add API support
 	public static ArrayList<String> dragonExist = new ArrayList<String>();
-	public static ShuffleBag shuffleBag = new ShuffleBag();
+	public static ArrayList<String> tips = new ArrayList<String>();
 	
 	private long lastPlay = 0;
 
@@ -48,9 +48,9 @@ public class ElysianItemWhistle extends ElysianItem
 		this.maxStackSize = 1;
         this.setMaxDamage(1);
         
-        shuffleBag.Add("Hmm... looks like a musical instrument");
-        shuffleBag.Add("Its sound could be heared from a long distance...");
-        shuffleBag.Add("Sorry, I can use it now!");
+        tips.add("Hmm... looks like a musical instrument");
+        tips.add("Its sound could be heared from a long distance...");
+        tips.add("Sorry, I can use it now!");
         
         dragonExist.add("Looks like there is a dragon somewhere...");
         dragonExist.add("Oh! There is the Ender Dragon!");
@@ -68,17 +68,17 @@ public class ElysianItemWhistle extends ElysianItem
     	{
     		if((System.currentTimeMillis() - lastPlay) / 1000 > 9D)
     		{
-    			world.playSoundAtEntity(entity, "elysium.FluteTrack", 1F, 1F);
+    			world.playSoundAtEntity(entity, "stream.FluteTrack", 1F, 1F);
 	    		lastPlay = System.currentTimeMillis();
     			
 		    	if(world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd )
 		    	{
 		    		if(isDragonAlive(world) >= Elysium.MaxDragon)
-						entity.sendChatToPlayer(dragonExist.get(rand.nextInt(dragonExist.size())));
+		    			entity.addChatMessage(dragonExist.get(rand.nextInt(dragonExist.size())));
 		    	}
 		    	else
 		    	{
-		    		entity.sendChatToPlayer(shuffleBag.Next());
+		    		entity.addChatMessage(tips.get(rand.nextInt(tips.size())));
 		    	}
     		}
 		}

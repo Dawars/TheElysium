@@ -5,48 +5,49 @@ import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.liquids.ILiquidTank;
-import net.minecraftforge.liquids.ITankContainer;
-import net.minecraftforge.liquids.LiquidContainerRegistry;
-import net.minecraftforge.liquids.LiquidStack;
-import net.minecraftforge.liquids.LiquidTank;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.fluids.IFluidContainerItem;
+import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.IFluidTank;
 import mods.elysium.Elysium;
 import mods.elysium.entity.tileentity.ElysianTileEntity;
 
-public class TileEntityFancyTank extends ElysianTileEntity implements ITankContainer {
+public class TileEntityFancyTank extends ElysianTileEntity implements IFluidHandler {
 
-	private static final int MAX_LIQUID = LiquidContainerRegistry.BUCKET_VOLUME * 10;
-	public final ILiquidTank tank = new LiquidTank((int) MAX_LIQUID);
+	private static final int MAX_Fluid = FluidContainerRegistry.BUCKET_VOLUME * 10;
+	public final FluidTank tank = new FluidTank((int) MAX_Fluid);
 
-	public TileEntityFancyTank() {
-		((LiquidTank) this.tank).setTankPressure(1);
-	}
 
 	/* SAVING & LOADING */
-	@Override
-	public void readFromNBT(NBTTagCompound data) {
-		super.readFromNBT(data);
-		LiquidStack liquid = new LiquidStack(0, 0, 0);
-
-		if (data.hasKey("stored") && data.hasKey("liquidId")) {
-			liquid = new LiquidStack(data.getInteger("liquidId"),
-					data.getInteger("stored"), 0);
-		} else {
-			liquid = LiquidStack.loadLiquidStackFromNBT(data
-					.getCompoundTag("tank"));
-		}
-		((LiquidTank) tank).setLiquid(liquid);
-
-	}
-
-	@Override
-	public void writeToNBT(NBTTagCompound data) {
-		super.writeToNBT(data);
-		if (((LiquidTank) tank).containsValidLiquid()) {
-			data.setTag("tank",
-					tank.getLiquid().writeToNBT(new NBTTagCompound()));
-		}
-	}
+//	@Override
+//	public void readFromNBT(NBTTagCompound data) {
+//		super.readFromNBT(data);
+//		FluidStack Fluid = new FluidStack(0, 0);
+//
+//		if (data.hasKey("stored") && data.hasKey("FluidId")) {
+//			Fluid = new FluidStack(data.getInteger("FluidId"),
+//					data.getInteger("stored"), 0);
+//		} else {
+//			Fluid = FluidStack.loadFluidStackFromNBT(data
+//					.getCompoundTag("tank"));
+//		}
+//		((FluidStack) tank).setFluid(Fluid);
+//
+//	}
+//
+//	@Override
+//	public void writeToNBT(NBTTagCompound data) {
+//		super.writeToNBT(data);
+//		if (((FluidTank) tank).containsValidFluid()) {
+//			data.setTag("tank",
+//					tank.getFluid().writeToNBT(new NBTTagCompound()));
+//		}
+//	}
 
 	@Override
 	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
@@ -72,38 +73,33 @@ public class TileEntityFancyTank extends ElysianTileEntity implements ITankConta
 	}
 
 	@Override
-	public int fill(ForgeDirection from, LiquidStack resource, boolean doFill) {
-		if (doFill)
-			onInventoryChanged();
+	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
 		return this.tank.fill(resource, doFill);
 	}
 
 	@Override
-	public int fill(int tankIndex, LiquidStack resource, boolean doFill) {
-		return this.fill(ForgeDirection.UNKNOWN, resource, doFill);
+	public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
+		return this.drain(from, resource.amount, doDrain);
 	}
 
 	@Override
-	public LiquidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-		// return from != ForgeDirection.UP && from != ForgeDirection.DOWN ?
-		// this.tank.drain(maxDrain, doDrain) : null;
-		if (doDrain)
-			onInventoryChanged();
+	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
 		return this.tank.drain(maxDrain, doDrain);
 	}
 
 	@Override
-	public LiquidStack drain(int tankIndex, int maxDrain, boolean doDrain) {
-		return this.drain(ForgeDirection.UNKNOWN, maxDrain, doDrain);
+	public boolean canFill(ForgeDirection from, Fluid fluid) {
+		return true;
 	}
 
 	@Override
-	public ILiquidTank[] getTanks(ForgeDirection direction) {
-		return new ILiquidTank[] { this.tank };
+	public boolean canDrain(ForgeDirection from, Fluid fluid) {
+		return true;
 	}
 
 	@Override
-	public ILiquidTank getTank(ForgeDirection direction, LiquidStack type) {
-		return this.tank;
+	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
+		return new FluidTankInfo[]{tank.getInfo()};
 	}
+
 }

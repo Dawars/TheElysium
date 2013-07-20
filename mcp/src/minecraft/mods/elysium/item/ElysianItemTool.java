@@ -5,7 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -31,7 +31,7 @@ public class ElysianItemTool extends ElysianItem
         this.maxStackSize = 1;
         this.setMaxDamage(toolMat.getMaxUses());
         this.efficiencyOnProperMaterial = toolMat.getEfficiencyOnProperMaterial();
-        this.damageVsEntity = par2 + toolMat.getDamageVsEntity();
+        this.damageVsEntity = (int) (par2 + toolMat.getDamageVsEntity());
     }
     
     @Override
@@ -57,14 +57,14 @@ public class ElysianItemTool extends ElysianItem
      * Current implementations of this method in child classes do not use the entry argument beside ev. They just raise
      * the damage on the stack.
      */
-    public boolean hitEntity(ItemStack par1ItemStack, EntityLiving par2EntityLiving, EntityLiving par3EntityLiving)
+    public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLiving, EntityLivingBase par3EntityLiving)
     {
         par1ItemStack.damageItem(2, par3EntityLiving);
         return true;
     }
     
     @Override
-    public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, int par3, int par4, int par5, int par6, EntityLiving par7EntityLiving)
+    public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, int par3, int par4, int par5, int par6, EntityLivingBase par7EntityLiving)
     {
         if ((double)Block.blocksList[par3].getBlockHardness(par2World, par4, par5, par6) != 0.0D)
         {
@@ -72,15 +72,6 @@ public class ElysianItemTool extends ElysianItem
         }
 
         return true;
-    }
-    
-    @Override
-    /**
-     * Returns the damage against a given entity.
-     */
-    public int getDamageVsEntity(Entity par1Entity)
-    {
-        return this.damageVsEntity;
     }
     
     @Override

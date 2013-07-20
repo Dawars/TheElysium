@@ -8,7 +8,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import net.aetherteam.mainmenu_api.MainMenuAPI;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -26,13 +25,14 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Property;
 import net.minecraftforge.event.EventBus;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Init;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -48,7 +48,7 @@ import mods.elysium.api.temperature.RangedTemperature;
 import mods.elysium.api.temperature.TemperatureManager;
 import mods.elysium.api.temperature.TemperatureTickHandler;
 import mods.elysium.block.*;
-import mods.elysium.client.gui.menu.ElysianMenu;
+//import mods.elysium.client.gui.menu.ElysianMenu;
 import mods.elysium.dimension.*;
 import mods.elysium.dimension.biome.*;
 import mods.elysium.dimension.gen.WorldGenElysium;
@@ -65,6 +65,7 @@ import mods.elysium.proxy.*;
 @NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandler.class, clientSideRequired = true, serverSideRequired = true)
 public class Elysium
 {
+
 	@Instance(Elysium.id)
 	private static Elysium instance;
 	
@@ -86,6 +87,9 @@ public class Elysium
 	public static final String consolePrefix = "[Elysium] ";
 	public static boolean isAprilFools;
 	
+	
+//	public static final Fluid FLUID_ELYSIAN_WATER = new Fluid("Elysian Water");
+
 	
 	/** Dimension ID **/
 	public static int DimensionID;
@@ -122,7 +126,7 @@ public class Elysium
 	public static Block oreBeryl;
 	
 	public static Block waterStill;
-	public static ElysianBlockLiquid waterMoving;
+//	public static ElysianBlockLiquid waterMoving;
 	
 	public static Block blockFloatingShell;
 	public static Block blockFloatingConch;
@@ -192,7 +196,8 @@ public class Elysium
 	public static BiomeGenBase biomePlain = null;
 	public static BiomeGenBase biomeOcean = null;
 	
-	@PreInit
+
+	@EventHandler
 	public void load(FMLPreInitializationEvent evt)
 	{
 		Calendar calendar = Calendar.getInstance();
@@ -298,9 +303,9 @@ public class Elysium
 			waterStill = new ElysianBlockLiquidStationary(idWaterBlock.getInt(), Material.water).setHardness(100.0F).setLightOpacity(3).setUnlocalizedName("elysian_water");
 			registerBlock(waterStill, "Elysium Water Still");
 			
-			Property idWaterFlowingBlock = Elysium.config.getTerrainBlock("terrainGen", "idWaterFlowingBlock.id", DefaultProps.idWaterFlowingBlock, null);
-			waterMoving = (ElysianBlockLiquid) new ElysianBlockLiquidFlowing(idWaterFlowingBlock.getInt(), Material.water).setHardness(100.0F).setLightOpacity(3).setUnlocalizedName("elysian_water_flow");
-			registerBlock(waterMoving, "Elysium Water Flowing");
+//			Property idWaterFlowingBlock = Elysium.config.getTerrainBlock("terrainGen", "idWaterFlowingBlock.id", DefaultProps.idWaterFlowingBlock, null);
+//			waterMoving = (ElysianBlockLiquid) new ElysianBlockLiquidFlowing(idWaterFlowingBlock.getInt(), Material.water).setHardness(100.0F).setLightOpacity(3).setUnlocalizedName("elysian_water_flow");
+//			registerBlock(waterMoving, "Elysium Water Flowing");
 			
 			Property idPortalCoreBlock = Elysium.config.getBlock("idPortalCoreBlock.id", DefaultProps.idPortalCoreBlock);
 			blockPortalCore = new ElysianBlockPortalCore(idPortalCoreBlock.getInt(), Material.glass).setHardness(5F).setStepSound(Block.soundGlassFootstep).setUnlocalizedName("portalCore");
@@ -615,21 +620,15 @@ public class Elysium
 		}
 	}
 	
-	@Init
+	@EventHandler
 	public void initialize(FMLInitializationEvent evt)
 	{
 		Plants.addGrassPlant(blockTallGrass, 0, 30);
 		Plants.addGrassPlant(blockFlowerAsphodel, 0, 10);
 		Plants.addGrassSeed(new ItemStack(itemSeedsPepper), 10);
 		
-//		new LiquidStacks();
-//		CoreProxy.proxy.addAnimation();
-//		LiquidManager.liquids.add(new LiquidData(LiquidStacks.rawCandy, new ItemStack(rawCandyBucket), new ItemStack(Item.bucketEmpty)));
-//		LiquidManager.liquids.add(new LiquidData(LiquidStacks.milk, new ItemStack(Item.bucketMilk), new ItemStack(Item.bucketEmpty)));
+//		FluidRegistry.registerFluid(FLUID_ELYSIAN_WATER);
 
-//		CoreProxy.proxy.initializeRendering();
-//		CoreProxy.proxy.initializeEntityRendering();
-		
 		
 		/** Register WorldProvider for Dimension **/
 		DimensionManager.registerProviderType(DimensionID, ElysiumWorldProvider.class, true);

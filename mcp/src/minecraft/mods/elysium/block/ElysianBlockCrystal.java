@@ -38,12 +38,6 @@ public class ElysianBlockCrystal extends ElysianBlock
 		return false;
 	}
 	
-	@Override
-	public boolean isOpaqueCube()
-	{
-		return false;
-	}
-	
 	
 	@Override
     @SideOnly(Side.CLIENT)

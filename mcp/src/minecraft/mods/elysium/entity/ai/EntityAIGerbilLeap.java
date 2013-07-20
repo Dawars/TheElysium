@@ -1,21 +1,22 @@
 package mods.elysium.entity.ai;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.MathHelper;
 
 public class EntityAIGerbilLeap extends EntityAIBase
 {
     /** The entity that is leaping. */
-    EntityLiving leaper;
+	EntityLivingBase leaper;
 
     /** The entity that the leaper is leaping towards. */
-    EntityLiving leapTarget;
+    EntityLivingBase leapTarget;
 
     /** The entity's motionY after leaping. */
     float leapMotionY;
 
-    public EntityAIGerbilLeap(EntityLiving par1EntityLiving, float leapmotion)
+    public EntityAIGerbilLeap(EntityLivingBase par1EntityLiving, float leapmotion)
     {
         this.leaper = par1EntityLiving;
         this.leapMotionY = leapmotion;
@@ -27,7 +28,7 @@ public class EntityAIGerbilLeap extends EntityAIBase
      */
     public boolean shouldExecute()
     {
-        this.leapTarget = this.leaper.getAttackTarget();
+        this.leapTarget = this.leaper.getAITarget();
 
         if (this.leapTarget == null)
         {
