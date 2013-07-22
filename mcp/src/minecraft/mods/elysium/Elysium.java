@@ -1,35 +1,74 @@
 package mods.elysium;
 
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
+import mods.elysium.api.Plants;
+import mods.elysium.api.temperature.RangedTemperature;
+import mods.elysium.api.temperature.TemperatureManager;
+import mods.elysium.block.ElysianBlock;
+import mods.elysium.block.ElysianBlockCrystal;
+import mods.elysium.block.ElysianBlockDirt;
+import mods.elysium.block.ElysianBlockExpeller;
+import mods.elysium.block.ElysianBlockFancyTank;
+import mods.elysium.block.ElysianBlockFancyWorkbench;
+import mods.elysium.block.ElysianBlockGastroShell;
+import mods.elysium.block.ElysianBlockGrass;
+import mods.elysium.block.ElysianBlockHeatable;
+import mods.elysium.block.ElysianBlockLeavesFostimber;
+import mods.elysium.block.ElysianBlockLeucosand;
+import mods.elysium.block.ElysianBlockLogFostimber;
+import mods.elysium.block.ElysianBlockOre;
+import mods.elysium.block.ElysianBlockPalestone;
+import mods.elysium.block.ElysianBlockPalestonePillar;
+import mods.elysium.block.ElysianBlockRilt;
+import mods.elysium.block.ElysianBlockSaplingFostimber;
+import mods.elysium.block.ElysianBlockShell;
+import mods.elysium.block.ElysianBlockTallgrass;
+import mods.elysium.block.ElysianWaterBlock;
+import mods.elysium.block.ElysiumFlowerBlock;
+import mods.elysium.dimension.ElysiumWorldProvider;
+import mods.elysium.dimension.biome.ElysiumBiomeGenOcean;
+import mods.elysium.dimension.biome.ElysiumBiomeGenPlain;
+import mods.elysium.dimension.gen.WorldGenElysium;
+import mods.elysium.dimension.portal.ElysianBlockPortalCore;
+import mods.elysium.dimension.portal.ElysianTileEntityPortal;
+import mods.elysium.entity.EntityCatorPillar;
+import mods.elysium.entity.EntityGerbil;
+import mods.elysium.entity.tileentity.TileEntityFancyTank;
+import mods.elysium.entity.tileentity.TileEntityFancyWorkbench;
+import mods.elysium.fluids.ElysianWaterFluid;
+import mods.elysium.handlers.ElysianBonemealHandler;
+import mods.elysium.handlers.ElysianCreatureSpawnHandler;
+import mods.elysium.handlers.ElysianFuelHandler;
+import mods.elysium.item.ElysianItem;
+import mods.elysium.item.ElysianItemAxe;
+import mods.elysium.item.ElysianItemDebug;
+import mods.elysium.item.ElysianItemGracePrism;
+import mods.elysium.item.ElysianItemHoe;
+import mods.elysium.item.ElysianItemOverkill;
+import mods.elysium.item.ElysianItemPickaxe;
+import mods.elysium.item.ElysianItemShovel;
+import mods.elysium.item.ElysianItemSword;
+import mods.elysium.item.ElysianItemWhistle;
+import mods.elysium.network.PacketHandler;
+import mods.elysium.proxy.CommonProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.src.ModLoader;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.EnumHelper;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Property;
-import net.minecraftforge.event.EventBus;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -40,28 +79,9 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.common.registry.TickRegistry;
-import cpw.mods.fml.relauncher.Side;
-
-import mods.elysium.api.Plants;
-import mods.elysium.api.temperature.RangedTemperature;
-import mods.elysium.api.temperature.TemperatureManager;
-import mods.elysium.api.temperature.TemperatureTickHandler;
-import mods.elysium.block.*;
 //import mods.elysium.client.gui.menu.ElysianMenu;
-import mods.elysium.dimension.*;
-import mods.elysium.dimension.biome.*;
-import mods.elysium.dimension.gen.WorldGenElysium;
-import mods.elysium.dimension.portal.*;
-import mods.elysium.entity.EntityCatorPillar;
-import mods.elysium.entity.EntityGerbil;
-import mods.elysium.entity.tileentity.*;
-import mods.elysium.handlers.*;
-import mods.elysium.item.*;
-import mods.elysium.network.PacketHandler;
-import mods.elysium.proxy.*;
 
-@Mod(name = Elysium.name, version = Elysium.version, useMetadata = false, modid = Elysium.id, dependencies="required-after:Forge@[7.8.0,)")
+@Mod(name = Elysium.name, version = Elysium.version, useMetadata = false, modid = Elysium.id, dependencies="required-after:Forge@[9.10.0,)")
 @NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandler.class, clientSideRequired = true, serverSideRequired = true)
 public class Elysium
 {
@@ -88,8 +108,6 @@ public class Elysium
 	public static boolean isAprilFools;
 	
 	
-//	public static final Fluid FLUID_ELYSIAN_WATER = new Fluid("Elysian Water");
-
 	
 	/** Dimension ID **/
 	public static int DimensionID;
@@ -99,6 +117,10 @@ public class Elysium
 	public static int fancyWorkbenchRenderID;
 	public static int fancyTankRenderID;
 	public static int crystalBlockRenderID;
+
+	//Fluids
+	public static Fluid elysianWaterFluid;
+
 	
 	//Blocks
 	public static Block blockPalestone;
@@ -125,8 +147,7 @@ public class Elysium
 	public static Block oreTourmaline;
 	public static Block oreBeryl;
 	
-	public static Block waterStill;
-//	public static ElysianBlockLiquid waterMoving;
+	public static Block elysianWater;
 	
 	public static Block blockFloatingShell;
 	public static Block blockFloatingConch;
@@ -200,6 +221,8 @@ public class Elysium
 	@EventHandler
 	public void load(FMLPreInitializationEvent evt)
 	{
+		elysianWaterFluid = new ElysianWaterFluid("Elysian Water");
+
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
 		isAprilFools = (calendar.get(2)+1 == 4) && (calendar.get(5) == 1);
@@ -299,13 +322,11 @@ public class Elysium
 			oreTourmaline = new ElysianBlockOre(idOreTourmalineBlock.getInt()).setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreTourmaline");
 			registerBlock(oreTourmaline, "Tourmaline Ore");
 
-			Property idWaterBlock = Elysium.config.getTerrainBlock("terrainGen", "idWaterBlock.id", DefaultProps.idWaterBlock, null);
-			waterStill = new ElysianBlockLiquidStationary(idWaterBlock.getInt(), Material.water).setHardness(100.0F).setLightOpacity(3).setUnlocalizedName("elysian_water");
-			registerBlock(waterStill, "Elysium Water Still");
+
 			
-//			Property idWaterFlowingBlock = Elysium.config.getTerrainBlock("terrainGen", "idWaterFlowingBlock.id", DefaultProps.idWaterFlowingBlock, null);
-//			waterMoving = (ElysianBlockLiquid) new ElysianBlockLiquidFlowing(idWaterFlowingBlock.getInt(), Material.water).setHardness(100.0F).setLightOpacity(3).setUnlocalizedName("elysian_water_flow");
-//			registerBlock(waterMoving, "Elysium Water Flowing");
+			Property idWaterBlock = Elysium.config.getTerrainBlock("terrainGen", "idWaterBlock.id", DefaultProps.idWaterBlock, null);
+			elysianWater = new ElysianWaterBlock(idWaterBlock.getInt()).setHardness(100.0F).setLightOpacity(3).setUnlocalizedName("elysian_water");
+			registerBlock(elysianWater, "Elysium Water");
 			
 			Property idPortalCoreBlock = Elysium.config.getBlock("idPortalCoreBlock.id", DefaultProps.idPortalCoreBlock);
 			blockPortalCore = new ElysianBlockPortalCore(idPortalCoreBlock.getInt(), Material.glass).setHardness(5F).setStepSound(Block.soundGlassFootstep).setUnlocalizedName("portalCore");

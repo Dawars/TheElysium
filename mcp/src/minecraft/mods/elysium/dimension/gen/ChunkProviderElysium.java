@@ -171,7 +171,7 @@ public class ChunkProviderElysium implements IChunkProvider
 								}
 								else if (k1 * 8 + l1 < seeLevel)
 								{
-									par3ArrayOfByte[j2 += short1] = (byte)Elysium.waterStill.blockID;
+									par3ArrayOfByte[j2 += short1] = (byte)Elysium.elysianWater.blockID;
 								}
 								else
 								{
@@ -256,7 +256,7 @@ public class ChunkProviderElysium implements IChunkProvider
 									}
 									else
 									{
-										top = (byte)Elysium.waterStill.blockID;
+										top = (byte)Elysium.elysianWater.blockID;
 									}
 								}
 
@@ -485,7 +485,7 @@ public class ChunkProviderElysium implements IChunkProvider
 	}
 	
 	
-	ElysiumGenLakes lakegenerator = new ElysiumGenLakes(Elysium.waterStill.blockID);
+	ElysiumGenLakes lakegenerator = new ElysiumGenLakes(Elysium.elysianWater.blockID);
 	ElysiumGenLakes lavagenerator = new ElysiumGenLakes(Block.lavaStill.blockID);
 	ElysiumGenSand sandgenerator = new ElysiumGenSand(Elysium.blockLeucosand.blockID, 7);
 	//ElysiumGenSand riltgenerator = new ElysiumGenSand(Elysium.RiltBlock.blockID, 3);

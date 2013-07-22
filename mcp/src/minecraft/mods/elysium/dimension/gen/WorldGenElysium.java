@@ -37,7 +37,7 @@ public class WorldGenElysium implements IWorldGenerator
 		int z = blockX + random.nextInt(16);
 		int y = world.getTopSolidOrLiquidBlock(x, z);
 		
-		new ElysiumGenLakes(Elysium.waterStill.blockID).generate(world, random, x, y, z);
+		new ElysiumGenLakes(Elysium.elysianWater.blockID).generate(world, random, x, y, z);
 	}
 	
 	private void generateElysium(World world, Random random, int blockX, int blockZ)
@@ -72,9 +72,9 @@ public class WorldGenElysium implements IWorldGenerator
 			int z = blockZ + random.nextInt(16);
 			
 			int y;
-			for(y = world.getTopSolidOrLiquidBlock(x, z); world.getBlockId(x, y, z) == Elysium.waterStill.blockID; y--);
+			for(y = world.getTopSolidOrLiquidBlock(x, z); world.getBlockId(x, y, z) == Elysium.elysianWater.blockID; y--);
 			
-			if(world.getBlockId(x, y+1, z) == Elysium.waterStill.blockID)
+			if(world.getBlockId(x, y+1, z) == Elysium.elysianWater.blockID)
 			{
 				world.setBlock(x, y, z, Elysium.oreBeryl.blockID);
 			}

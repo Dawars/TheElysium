@@ -13,13 +13,13 @@ public class ElysiumGenLakePillar extends WorldGenerator
 	{
 		y = world.getTopSolidOrLiquidBlock(x, z);
 		
-		if(world.getBlockId(x, y, z) != Elysium.waterStill.blockID)
+		if(world.getBlockId(x, y, z) != Elysium.elysianWater.blockID)
 			return false;
 		
 		int h = y + random.nextInt(6)+1;
 		
 		int j;
-		for(j = y; world.getBlockId(x, j, z) == Elysium.waterStill.blockID; j--)
+		for(j = y; world.getBlockId(x, j, z) == Elysium.elysianWater.blockID; j--)
 		{
 			world.setBlock(x, j, z, Elysium.blockPalestonePillar.blockID);
 			world.setBlockMetadataWithNotify(x, j, z, 2, 0);
