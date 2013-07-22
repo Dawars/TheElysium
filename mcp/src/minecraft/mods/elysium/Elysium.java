@@ -67,6 +67,7 @@ import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Property;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import cpw.mods.fml.common.Mod;
@@ -222,7 +223,7 @@ public class Elysium
 	public void load(FMLPreInitializationEvent evt)
 	{
 		elysianWaterFluid = new ElysianWaterFluid("Elysian Water");
-
+		 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
 		isAprilFools = (calendar.get(2)+1 == 4) && (calendar.get(5) == 1);
@@ -321,13 +322,11 @@ public class Elysium
 			Property idOreTourmalineBlock = Elysium.config.getBlock("idOreTourmalineBlock.id", DefaultProps.idOreTourmalineBlock);
 			oreTourmaline = new ElysianBlockOre(idOreTourmalineBlock.getInt()).setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("oreTourmaline");
 			registerBlock(oreTourmaline, "Tourmaline Ore");
-
-
 			
 			Property idWaterBlock = Elysium.config.getTerrainBlock("terrainGen", "idWaterBlock.id", DefaultProps.idWaterBlock, null);
 			elysianWater = new ElysianWaterBlock(idWaterBlock.getInt()).setHardness(100.0F).setLightOpacity(3).setUnlocalizedName("elysian_water");
 			registerBlock(elysianWater, "Elysium Water");
-			
+
 			Property idPortalCoreBlock = Elysium.config.getBlock("idPortalCoreBlock.id", DefaultProps.idPortalCoreBlock);
 			blockPortalCore = new ElysianBlockPortalCore(idPortalCoreBlock.getInt(), Material.glass).setHardness(5F).setStepSound(Block.soundGlassFootstep).setUnlocalizedName("portalCore");
 			registerBlock(blockPortalCore, "Elysian Portal Block");

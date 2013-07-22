@@ -30,7 +30,7 @@ public class ElysianTileEntityPortalRenderer extends TileEntitySpecialRenderer
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
 		glColor4f(1, 1, 1, tile.alpha);
-		this.func_110628_a(new ResourceLocation("/mods/" + DefaultProps.modId + "/textures/misc/beam.png"));
+		this.func_110628_a(new ResourceLocation(DefaultProps.modId + ":/textures/misc/beam.png"));
 		
 		int faces = 16;
 		glBegin(GL_QUADS);

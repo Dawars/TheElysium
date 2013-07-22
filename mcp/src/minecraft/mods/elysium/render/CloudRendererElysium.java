@@ -24,7 +24,7 @@ import net.minecraftforge.client.IRenderHandler;
 
 public class CloudRendererElysium extends IRenderHandler {
 	
-	private static final ResourceLocation TEXTURE_CLOUDS = new ResourceLocation("/environment/clouds.png");
+	private static final ResourceLocation TEXTURE_CLOUDS = new ResourceLocation("textures/environment/clouds.png");
 	private int tick = 0;
     
 	@Override

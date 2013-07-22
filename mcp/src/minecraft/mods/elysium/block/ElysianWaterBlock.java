@@ -12,7 +12,7 @@ import net.minecraftforge.fluids.BlockFluidClassic;
 public class ElysianWaterBlock extends BlockFluidClassic {
 	public ElysianWaterBlock(int id) {
 		super(id, Elysium.elysianWaterFluid, Material.water);
-		Elysium.elysianWaterFluid.setBlockID(Elysium.elysianWater);
+		Elysium.elysianWaterFluid.setBlockID(id);
 	}
 	
 	@Override

@@ -101,7 +101,7 @@ public class ElysianBlockPortalCore extends ElysianBlockContainer
 			ElysianEntityFX entityfx = new ElysianEntityFX(world, x+rad*Math.cos(Math.toRadians(deg))+0.5D, y+random.nextInt(100), z+rad*Math.sin(Math.toRadians(deg))+0.5D, 0, 0.1D, 0);
 			entityfx.setRBGColorF(1F, 1F, 0F);
 			entityfx.setBrightness(125);
-			entityfx.setTextureFile("/mods/elysium/textures/misc/particles/beam.png");
+			entityfx.setTextureFile("elysium:/textures/misc/particles/beam.png");
 			ModLoader.getMinecraftInstance().effectRenderer.addEffect(entityfx);
 		}
 	}

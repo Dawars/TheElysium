@@ -22,10 +22,10 @@ import cpw.mods.fml.client.FMLClientHandler;
 
 public class SkyRendererElysium extends IRenderHandler
 {
-	private static final ResourceLocation TEXTURE_SKY = new ResourceLocation("/mods/" + DefaultProps.modId + "/textures/misc/space.png");
-	private static final ResourceLocation TEXTURE_MOON = new ResourceLocation("/environment/moon_phases.png");
-	private static final ResourceLocation TEXTURE_SUN = new ResourceLocation("/mods/" + DefaultProps.modId + "/textures/misc/sun.png");
-	private static final ResourceLocation TEXTURE_SUN_HEATBUFF = new ResourceLocation("/mods/" + DefaultProps.modId + "/textures/misc/heatbuff.png");
+	private static final ResourceLocation TEXTURE_SKY = new ResourceLocation(DefaultProps.modId + ":/textures/misc/space.png");
+	private static final ResourceLocation TEXTURE_MOON = new ResourceLocation("textures/environment/moon_phases.png");
+	private static final ResourceLocation TEXTURE_SUN = new ResourceLocation(DefaultProps.modId + ":/textures/misc/sun.png");
+	private static final ResourceLocation TEXTURE_SUN_HEATBUFF = new ResourceLocation(DefaultProps.modId + ":/textures/misc/heatbuff.png");
 
 	@Override
 	@SideOnly(Side.CLIENT)

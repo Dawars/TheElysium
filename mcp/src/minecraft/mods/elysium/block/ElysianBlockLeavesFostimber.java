@@ -208,7 +208,7 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
 			entityfx.setRBGColorF(1, 1, 1);
 			entityfx.multipleParticleScaleBy(0.25F);
 			entityfx.setBrightness(200);
-			entityfx.setTextureFile("/mods/elysium/textures/misc/particles/fost.png");
+			entityfx.setTextureFile("elysium:/textures/misc/particles/fost.png");
 			ModLoader.getMinecraftInstance().effectRenderer.addEffect(entityfx);
 		}
 		
