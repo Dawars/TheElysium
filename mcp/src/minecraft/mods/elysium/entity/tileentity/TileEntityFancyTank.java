@@ -7,6 +7,7 @@ import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
@@ -23,31 +24,33 @@ public class TileEntityFancyTank extends ElysianTileEntity implements IFluidHand
 	public final FluidTank tank = new FluidTank((int) MAX_Fluid);
 
 
+	public void updateEntity() {
+		if(tank.getFluid() != null && !worldObj.isRemote)
+			System.out.println(tank.getFluid().amount + " " + FluidRegistry.getFluidName(tank.getFluid()));
+	}
 	/* SAVING & LOADING */
-//	@Override
-//	public void readFromNBT(NBTTagCompound data) {
-//		super.readFromNBT(data);
-//		FluidStack Fluid = new FluidStack(0, 0);
-//
-//		if (data.hasKey("stored") && data.hasKey("FluidId")) {
-//			Fluid = new FluidStack(data.getInteger("FluidId"),
-//					data.getInteger("stored"), 0);
-//		} else {
-//			Fluid = FluidStack.loadFluidStackFromNBT(data
-//					.getCompoundTag("tank"));
-//		}
-//		((FluidStack) tank).setFluid(Fluid);
-//
-//	}
-//
-//	@Override
-//	public void writeToNBT(NBTTagCompound data) {
-//		super.writeToNBT(data);
-//		if (((FluidTank) tank).containsValidFluid()) {
-//			data.setTag("tank",
-//					tank.getFluid().writeToNBT(new NBTTagCompound()));
-//		}
-//	}
+	@Override
+	public void readFromNBT(NBTTagCompound data) {
+		super.readFromNBT(data);
+		FluidStack liquid = new FluidStack(0, 0);
+
+		if (data.hasKey("stored") && data.hasKey("FluidId")) {
+			liquid = new FluidStack(data.getInteger("FluidId"),
+					data.getInteger("stored"));
+		} else {
+			liquid = FluidStack.loadFluidStackFromNBT(data
+					.getCompoundTag("tank"));
+		}
+		tank.setFluid(liquid);
+	}
+
+	@Override
+	public void writeToNBT(NBTTagCompound data) {
+		super.writeToNBT(data);
+		if (tank.getFluid() != null) {
+			data.setTag("tank", tank.getFluid().writeToNBT(new NBTTagCompound()));
+		}
+	}
 
 	@Override
 	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
