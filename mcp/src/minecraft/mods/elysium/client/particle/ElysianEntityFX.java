@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 
 public class ElysianEntityFX extends EntityFX
 {
-	private static final ResourceLocation TEXTURE_PARTICLES = new ResourceLocation("textures/particles.png");
+	private static final ResourceLocation TEXTURE_PARTICLES = new ResourceLocation("textures/particle/particles.png");
 	String texturefile = null;
 	int brightness = 200;
 	

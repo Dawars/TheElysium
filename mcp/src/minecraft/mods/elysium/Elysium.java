@@ -161,8 +161,6 @@ public class Elysium
 	public static Block blockPalestoneBrickMossy;
 	public static Block blockPalestonePillar;
 	public static Block blockPalestoneBrickChiseld;
-//	public static Block LeucosandBlock;
-//	public static Block LeucosandBlock;
 	
 	public static Block blockPortalCore;
 	
