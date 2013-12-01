@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import me.dawars.CraftingPillars.CraftingPillars;
-//import micdoodle8.mods.galacticraft.api.GalacticraftRegistry;
 import mods.elysium.api.Plants;
 import mods.elysium.api.temperature.RangedTemperature;
 import mods.elysium.api.temperature.TemperatureManager;
@@ -28,7 +27,6 @@ import mods.elysium.block.ElysianBlockShell;
 import mods.elysium.block.ElysianBlockTallgrass;
 import mods.elysium.block.ElysianWaterBlock;
 import mods.elysium.block.ElysiumFlowerBlock;
-import mods.elysium.dimension.ElysiumPlanet;
 import mods.elysium.dimension.ElysiumWorldProvider;
 import mods.elysium.dimension.biome.ElysiumBiomeGenOcean;
 import mods.elysium.dimension.biome.ElysiumBiomeGenPlain;
