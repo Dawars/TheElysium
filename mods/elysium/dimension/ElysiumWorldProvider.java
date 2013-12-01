@@ -29,7 +29,7 @@ import net.minecraft.world.biome.*;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.client.IRenderHandler;
 
-public class ElysiumWorldProvider extends WorldProvider implements IGalacticraftWorldProvider, IExitHeight, ISolarLevel, ITeleportType//FIXME:add java reflect thing for independency
+public class ElysiumWorldProvider extends WorldProvider
 {
 	private float[] colorsSunriseSunset = new float[4];
 	
@@ -197,82 +197,5 @@ public class ElysiumWorldProvider extends WorldProvider implements IGalacticraft
 	{
 		double bright = 1D;
 		return this.worldObj.getWorldVec3Pool().getVecFromPool(1.17D*bright, 2.27D*bright, 2.55D*bright);
-	}
-
-	@Override
-    public double getSolarEnergyMultiplier() {
-            return 3.0;//This is optional, it allows you to change how much energy is produced by solar panels from the default
-    }
-
-    @Override
-    public double getYCoordinateToTeleport() {
-            return 1200;//This is from IExitHeight, and it is at this y-coord that the planet selection gui opens up. 1200 is the overworld value
-    }
-
-    @Override
-    public float getGravity() {
-            return 1.0F;//This is pretty explanatory, 1.0 is like the overworld.
-    }
-
-    @Override
-    public double getMeteorFrequency() {
-            return 0;//This determines how often meteors spawn in the world. 7 is the value from the moon, i'm pretty sure
-    }
-
-    @Override
-    public double getFuelUsageMultiplier() {
-            return 1.0;//This helps determine how much fuel is used up, and should probably be related to the gravity level
-    }
-
-    @Override
-    public boolean canSpaceshipTierPass(int tier) {
-            return tier>0;//As the only current space ship in the game is tier one, if you made the required tier greater than one the planet would be unaccesible
-    }
-
-	@Override
-	public float getFallDamageModifier() {
-		return 1;
-	}
-
-	@Override
-	public float getSoundVolReductionAmount() {
-		return 1;
-	}
-
-	@Override
-	public boolean useParachute() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	 @Override
-     public Vector3 getPlayerSpawnLocation(WorldServer world, EntityPlayerMP player) {
-             GCCorePlayerMP p = null;
-             if(player instanceof GCCorePlayerMP){
-                     p = (GCCorePlayerMP) player;
-             }
-             if(p == null){
-                     return getEntitySpawnLocation(world, player);
-             }
-             else{
-                     return new Vector3(p.getCoordsTeleportedFromX(), 250, p.getCoordsTeleportedFromZ());//This is where the player spawns, same place he tp'd from.
-             }
-     }
-
-     @Override
-     public Vector3 getEntitySpawnLocation(WorldServer world, Entity entity) {
-             return new Vector3(entity.posX, 250, entity.posZ);
-     }
-
-     @Override
-     public Vector3 getParaChestSpawnLocation(WorldServer world, EntityPlayerMP player, Random rand) {
-             return new Vector3(player.posX, 250, player.posZ);//this determines the chest spawn location
-     }
-
-	@Override
-	public void onSpaceDimensionChanged(World newWorld, EntityPlayerMP player,
-			boolean ridingAutoRocket) {
-		// TODO Auto-generated method stub
-		
 	}
 }

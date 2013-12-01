@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import me.dawars.CraftingPillars.CraftingPillars;
-import micdoodle8.mods.galacticraft.api.GalacticraftRegistry;
+//import micdoodle8.mods.galacticraft.api.GalacticraftRegistry;
 import mods.elysium.api.Plants;
 import mods.elysium.api.temperature.RangedTemperature;
 import mods.elysium.api.temperature.TemperatureManager;
@@ -229,7 +229,7 @@ public class Elysium
 	public void load(FMLPreInitializationEvent evt)
 	{
 //		GalacticraftRegistry.registerTeleportType(ElysiumWorldProvider.class, new ElysianTeleporter()));
-		GalacticraftRegistry.registerCelestialBody(new ElysiumPlanet());
+//		GalacticraftRegistry.registerCelestialBody(new ElysiumPlanet());
 		
 		elysianWaterFluid = new ElysianWaterFluid("Elysian Water");
 		 

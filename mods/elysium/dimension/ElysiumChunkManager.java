@@ -1,5 +1,10 @@
 package mods.elysium.dimension;
 
+import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.DUNGEON;
+import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE;
+import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAKE;
+import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAVA;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -8,18 +13,29 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 import mods.elysium.Elysium;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockSand;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.util.IProgressUpdate;
 import net.minecraft.world.ChunkPosition;
+import net.minecraft.world.SpawnerAnimals;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeCache;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.WorldChunkManager;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.feature.WorldGenDungeons;
+import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.terraingen.PopulateChunkEvent;
+import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.event.terraingen.WorldTypeEvent;
 
-public class ElysiumChunkManager extends WorldChunkManager
+public class ElysiumChunkManager extends WorldChunkManager implements IChunkProvider
 {
 	private GenLayer genBiomes;
 	/** A GenLayer containing the indices into BiomeGenBase.biomeList[] */
@@ -274,5 +290,98 @@ public class ElysiumChunkManager extends WorldChunkManager
 		WorldTypeEvent.InitBiomeGens event = new WorldTypeEvent.InitBiomeGens(worldType, seed, original);
 		MinecraftForge.TERRAIN_GEN_BUS.post(event);
 		return event.newBiomeGens;
+	}
+	
+	 /**
+     * Checks to see if a chunk exists at x, y
+     */
+    public boolean chunkExists(int par1, int par2)
+    {
+        return true;
+    }
+
+    /**
+     * Populates chunk with ores etc etc
+     */
+    public void populate(IChunkProvider par1IChunkProvider, int par2, int par3)
+    {
+        
+    }
+
+    /**
+     * Two modes of operation: if passed true, save all Chunks in one go.  If passed false, save up to two chunks.
+     * Return true if all chunks have been saved.
+     */
+    public boolean saveChunks(boolean par1, IProgressUpdate par2IProgressUpdate)
+    {
+        return true;
+    }
+
+    /**
+     * Save extra data not associated with any Chunk.  Not saved during autosave, only during world unload.  Currently
+     * unimplemented.
+     */
+    public void saveExtraData() {}
+
+    /**
+     * Unloads chunks that are marked to be unloaded. This is not guaranteed to unload every such chunk.
+     */
+    public boolean unloadQueuedChunks()
+    {
+        return false;
+    }
+
+    /**
+     * Returns if the IChunkProvider supports saving.
+     */
+    public boolean canSave()
+    {
+        return true;
+    }
+
+    /**
+     * Converts the instance data to a readable string.
+     */
+    public String makeString()
+    {
+        return "RandomLevelSource";
+    }
+
+    /**
+     * Returns a list of creatures of the specified type that can spawn at the given location.
+     */
+    public List getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int par2, int par3, int par4)
+    {
+       return null;
+    }
+
+    /**
+     * Returns the location of the closest structure of the specified type. If not found returns null.
+     */
+    public ChunkPosition findClosestStructure(World par1World, String par2Str, int par3, int par4, int par5)
+    {
+        return null;
+    }
+
+    public int getLoadedChunkCount()
+    {
+        return 0;
+    }
+
+    public void recreateStructures(int par1, int par2)
+    {
+        
+    }
+
+	@Override
+	public Chunk provideChunk(int i, int j) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Chunk loadChunk(int i, int j) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

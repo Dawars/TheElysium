@@ -25,7 +25,7 @@ import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
-public class ElysianTeleporter extends Teleporter implements ITeleportType
+public class ElysianTeleporter extends Teleporter
 {
 	private final WorldServer worldServer;
     private final Random random;
@@ -172,39 +172,5 @@ public class ElysianTeleporter extends Teleporter implements ITeleportType
 		entity.setPosition(x+0.5D+dx, y+9, z+0.5D+dz);
 		
 		return true;
-	}
-
-	@Override
-	public boolean useParachute() {
-		return true;
-	}
-
-	 @Override
-     public Vector3 getPlayerSpawnLocation(WorldServer world, EntityPlayerMP player) {
-             GCCorePlayerMP p = null;
-             if(player instanceof GCCorePlayerMP){
-                     p = (GCCorePlayerMP) player;
-             }
-             if(p == null){
-                     return getEntitySpawnLocation(world, player);
-             }
-             else{
-                     return new Vector3(p.getCoordsTeleportedFromX(), 250, p.getCoordsTeleportedFromZ());//This is where the player spawns, same place he tp'd from.
-             }
-     }
-
-     @Override
-     public Vector3 getEntitySpawnLocation(WorldServer world, Entity entity) {
-             return new Vector3(entity.posX, 250, entity.posZ);
-     }
-
-     @Override
-     public Vector3 getParaChestSpawnLocation(WorldServer world, EntityPlayerMP player, Random rand) {
-             return new Vector3(player.posX, 250, player.posZ);//this determines the chest spawn location
-     }
-
-	@Override
-	public void onSpaceDimensionChanged(World newWorld, EntityPlayerMP player, boolean ridingAutoRocket) {
-		
 	}
 }
