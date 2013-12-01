@@ -648,8 +648,8 @@ public class Elysium
 
 		
 		/** Register WorldProvider for Dimension **/
-//		DimensionManager.registerProviderType(DimensionID, ElysiumWorldProvider.class, true);
-//		DimensionManager.registerDimension(DimensionID, DimensionID);
+		DimensionManager.registerProviderType(DimensionID, ElysiumWorldProvider.class, true);
+		DimensionManager.registerDimension(DimensionID, DimensionID);
 		
 		
 		biomePlain = new ElysiumBiomeGenPlain(25);
