@@ -2,6 +2,7 @@ package mods.elysium.block;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import me.dawars.CraftingPillars.CraftingPillars;
 import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import net.minecraft.block.Block;
@@ -28,7 +29,11 @@ public class ElysianWaterBlock extends BlockFluidClassic {
      */
     public void registerIcons(IconRegister iconRegister)
     {
-        this.theIcon = new Icon[] {iconRegister.registerIcon("elysium:elysian_water_still"), iconRegister.registerIcon("elysium:elysian_water_flow")};
+        this.theIcon = new Icon[]
+				{
+        		iconRegister.registerIcon(Elysium.id + ":elysian_water_flow"),
+        		iconRegister.registerIcon(Elysium.id + ":elysian_water_still")
+				};
     }
 
 	
@@ -38,9 +43,9 @@ public class ElysianWaterBlock extends BlockFluidClassic {
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(int id, int meta)
     {
-        return par2 != 0 && par2 != 1 ? this.theIcon[1] : this.theIcon[0];
+        return meta != 0 && meta != 1 ? this.theIcon[0] : this.theIcon[1];
     }
 	
 //	@Override

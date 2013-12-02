@@ -107,7 +107,7 @@ public class Elysium
 	
 	public static final String version = "1.0.0";
 	public static final String name = "The Elysium";
-	public static final String id = "TheElysium";
+	public static final String id = "elysium";
 	public static final String consolePrefix = "[Elysium] ";
 	public static boolean isAprilFools;
 	
