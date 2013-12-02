@@ -31,7 +31,6 @@ import mods.elysium.dimension.biome.ElysiumBiomeGenOcean;
 import mods.elysium.dimension.biome.ElysiumBiomeGenPlain;
 import mods.elysium.dimension.gen.WorldGenElysium;
 import mods.elysium.dimension.portal.ElysianBlockPortalCore;
-import mods.elysium.dimension.portal.ElysianTeleporter;
 import mods.elysium.dimension.portal.ElysianTileEntityPortal;
 import mods.elysium.entity.EntityCatorPillar;
 import mods.elysium.entity.EntityGerbil;
@@ -64,7 +63,6 @@ import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Property;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import cpw.mods.fml.common.Mod;
@@ -77,9 +75,9 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-//import mods.elysium.client.gui.menu.ElysianMenu;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+//import mods.elysium.client.gui.menu.ElysianMenu;
 
 @Mod(name = Elysium.name, version = Elysium.version, useMetadata = false, modid = Elysium.id, dependencies="required-after:Forge@[9.11.1.953,)")
 @NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandler.class, clientSideRequired = true, serverSideRequired = true)
@@ -225,8 +223,6 @@ public class Elysium
 	@EventHandler
 	public void load(FMLPreInitializationEvent evt)
 	{
-//		GalacticraftRegistry.registerTeleportType(ElysiumWorldProvider.class, new ElysianTeleporter()));
-//		GalacticraftRegistry.registerCelestialBody(new ElysiumPlanet());
 		
 		elysianWaterFluid = new ElysianWaterFluid("Elysian Water");
 		 
@@ -661,8 +657,6 @@ public class Elysium
 		EntityRegistry.registerGlobalEntityID(EntityCatorPillar.class, "CatorPillar", EntityRegistry.findGlobalUniqueEntityId(), 0x646464, 0x3A3A3A);
 		EntityRegistry.registerGlobalEntityID(EntityGerbil.class, "Gerbil", EntityRegistry.findGlobalUniqueEntityId(), 0x646464, 0x3A3A3A);
 		
-		//		cpw.mods.fml.common.registry.EntityRegistry.registerModEntity(EntityCatorPillar.class, "CatorPillar", 0, Elysium.instance, 64, 1, true);
-
 		LanguageRegistry.instance().addStringLocalization("entity.CatorPillar.name", "en_US", "Cator Pillar");
 		LanguageRegistry.instance().addStringLocalization("entity.Gerbil.name", "en_US", "Atmogerbil");
 		
