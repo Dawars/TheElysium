@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 
-import me.dawars.CraftingPillars.CraftingPillars;
 import mods.elysium.api.Plants;
 import mods.elysium.api.temperature.RangedTemperature;
 import mods.elysium.api.temperature.TemperatureManager;
@@ -82,7 +81,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(name = Elysium.name, version = Elysium.version, useMetadata = false, modid = Elysium.id, dependencies="required-after:Forge@[9.10.0,),GalacticraftCore")
+@Mod(name = Elysium.name, version = Elysium.version, useMetadata = false, modid = Elysium.id, dependencies="required-after:Forge@[9.11.1.953,)")
 @NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandler.class, clientSideRequired = true, serverSideRequired = true)
 public class Elysium
 {
