@@ -26,12 +26,6 @@ import mods.elysium.block.ElysianBlockShell;
 import mods.elysium.block.ElysianBlockTallgrass;
 import mods.elysium.block.ElysianWaterBlock;
 import mods.elysium.block.ElysiumFlowerBlock;
-import mods.elysium.dimension.ElysiumWorldProvider;
-import mods.elysium.dimension.biome.ElysiumBiomeGenOcean;
-import mods.elysium.dimension.biome.ElysiumBiomeGenPlain;
-import mods.elysium.dimension.gen.WorldGenElysium;
-import mods.elysium.dimension.portal.ElysianBlockPortalCore;
-import mods.elysium.dimension.portal.ElysianTileEntityPortal;
 import mods.elysium.entity.EntityCatorPillar;
 import mods.elysium.entity.EntityGerbil;
 import mods.elysium.fluids.ElysianWaterFluid;
@@ -50,6 +44,12 @@ import mods.elysium.item.ElysianItemSword;
 import mods.elysium.item.ElysianItemWhistle;
 import mods.elysium.network.PacketHandler;
 import mods.elysium.proxy.CommonProxy;
+import mods.elysium.world.ElysiumWorldProvider;
+import mods.elysium.world.biome.ElysiumBiomeGenOcean;
+import mods.elysium.world.biome.ElysiumBiomeGenPlain;
+import mods.elysium.world.gen.WorldGenElysium;
+import mods.elysium.world.portal.ElysianBlockPortalCore;
+import mods.elysium.world.portal.ElysianTileEntityPortal;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -65,11 +65,13 @@ import net.minecraftforge.common.Property;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -77,6 +79,9 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import forestry.api.apiculture.FlowerManager;
+import forestry.api.core.GlobalManager;
+import forestry.api.storage.BackpackManager;
 //import mods.elysium.client.gui.menu.ElysianMenu;
 
 @Mod(name = Elysium.name, version = Elysium.version, useMetadata = false, modid = Elysium.id, dependencies="required-after:Forge@[9.11.1.953,)")
@@ -218,6 +223,8 @@ public class Elysium
 	/** Biome's **/
 	public static BiomeGenBase biomePlain = null;
 	public static BiomeGenBase biomeOcean = null;
+
+	public static boolean modForestry;
 	
 
 	@EventHandler
@@ -639,8 +646,6 @@ public class Elysium
 		Plants.addGrassPlant(blockFlowerAsphodel, 0, 10);
 		Plants.addGrassSeed(new ItemStack(itemSeedsPepper), 10);
 		
-//		FluidRegistry.registerFluid(FLUID_ELYSIAN_WATER);
-
 		
 		/** Register WorldProvider for Dimension **/
 		DimensionManager.registerProviderType(DimensionID, ElysiumWorldProvider.class, true);
@@ -661,6 +666,28 @@ public class Elysium
 		LanguageRegistry.instance().addStringLocalization("entity.Gerbil.name", "en_US", "Atmogerbil");
 		
 	}
+	
+	@EventHandler
+    public void modsLoaded(FMLPostInitializationEvent evt){
+    	modForestry = Loader.isModLoaded("Forestry");
+    	
+    	if(modForestry)
+    	{
+    		FlowerManager.plainFlowers.add(new ItemStack(blockFlowerAsphodel));
+    		
+    		GlobalManager.dirtBlockIds.add(blockDirt.blockID);
+    		GlobalManager.dirtBlockIds.add(blockGrass.blockID);
+    		GlobalManager.sandBlockIds.add(blockLeucosand.blockID);
+    		
+    		BackpackManager.backpackItems[0].add(new ItemStack(itemBeryl));
+    		BackpackManager.backpackItems[0].add(new ItemStack(itemJade));
+    		BackpackManager.backpackItems[0].add(new ItemStack(itemSulphur));
+    		BackpackManager.backpackItems[0].add(new ItemStack(itemSiliconChunk));
+    		BackpackManager.backpackItems[0].add(new ItemStack(itemTourmaline));
+    		BackpackManager.backpackItems[0].add(new ItemStack(oreCobalt));
+    		BackpackManager.backpackItems[0].add(new ItemStack(oreIridium));
+    	}
+    }
 	
 	public static void registerBlock(Block block, String name)
 	{

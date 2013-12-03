@@ -1,37 +1,25 @@
 package mods.elysium.proxy;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
-//import mods.elysium.client.gui.menu.*;
-import mods.elysium.dimension.portal.ElysianTileEntityPortal;
-import mods.elysium.dimension.portal.ElysianTileEntityPortalRenderer;
-import mods.elysium.entity.EntityDrachma;
 import mods.elysium.entity.EntityCatorPillar;
+import mods.elysium.entity.EntityDrachma;
 import mods.elysium.entity.EntityGerbil;
 import mods.elysium.handlers.ElysianClientTickHandler;
-import mods.elysium.network.ElysiumPacket;
-import mods.elysium.render.*;
-//import net.aetherteam.mainmenu_api.MainMenuAPI;
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import mods.elysium.render.CrystalBlockRendererOBJ;
+import mods.elysium.render.RenderCaterPillar;
+import mods.elysium.render.RenderDrachmaOBJ;
+import mods.elysium.render.RenderGerbil;
+import mods.elysium.world.portal.ElysianTileEntityPortal;
+import mods.elysium.world.portal.ElysianTileEntityPortalRenderer;
 import net.minecraft.network.packet.Packet;
-import net.minecraft.src.ModLoader;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
+//import mods.elysium.client.gui.menu.*;
+//import net.aetherteam.mainmenu_api.MainMenuAPI;
 
 public class ClientProxy extends CommonProxy
 {

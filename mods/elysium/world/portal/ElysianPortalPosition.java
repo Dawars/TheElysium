@@ -1,4 +1,4 @@
-package mods.elysium.dimension.portal;
+package mods.elysium.world.portal;
 
 public class ElysianPortalPosition
 {

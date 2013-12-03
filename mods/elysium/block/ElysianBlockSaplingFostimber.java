@@ -1,35 +1,14 @@
 package mods.elysium.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import java.util.List;
 import java.util.Random;
 
 import mods.elysium.Elysium;
-import mods.elysium.dimension.gen.feature.ElysiumGenFostimber;
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
-import net.minecraft.util.MathHelper;
+import mods.elysium.world.gen.feature.ElysiumGenFostimber;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenBigTree;
-import net.minecraft.world.gen.feature.WorldGenForest;
-import net.minecraft.world.gen.feature.WorldGenHugeTrees;
-import net.minecraft.world.gen.feature.WorldGenTaiga2;
-import net.minecraft.world.gen.feature.WorldGenTrees;
-import net.minecraft.world.gen.feature.WorldGenerator;
-
-import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
 public class ElysianBlockSaplingFostimber extends ElysianBlockFlower
 {
-//    public static final String[] WOOD_TYPES = new String[] {"oak", "spruce", "birch", "jungle"};
-//    private static final String[] field_94370_b = new String[] {"sapling", "sapling_spruce", "sapling_birch", "sapling_jungle"};
-//    @SideOnly(Side.CLIENT)
-//    private Icon[] saplingIcon;
-
     public ElysianBlockSaplingFostimber(int par1)
     {
         super(par1);
@@ -54,17 +33,6 @@ public class ElysianBlockSaplingFostimber extends ElysianBlockFlower
         }
     }
     
-//    @SideOnly(Side.CLIENT)
-//
-//    /**
-//     * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
-//     */
-//    public Icon getIcon(int par1, int par2)
-//    {
-//        par2 &= 3;
-//        return this.saplingIcon[par2];
-//    }
-
     public void markOrGrowMarked(World world, int par2, int par3, int par4, Random par5Random)
     {
         int l = world.getBlockMetadata(par2, par3, par4);

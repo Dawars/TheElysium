@@ -1,4 +1,4 @@
-package mods.elysium.dimension.gen.feature;
+package mods.elysium.world.gen.feature;
 import java.util.Random;
 
 import mods.elysium.Elysium;

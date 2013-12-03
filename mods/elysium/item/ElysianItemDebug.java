@@ -1,32 +1,11 @@
 package mods.elysium.item;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.util.Random;
-
-import org.lwjgl.input.Keyboard;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
-
-import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
 import mods.elysium.api.temperature.TemperatureManager;
-import mods.elysium.dimension.portal.ElysianTeleporter;
-import mods.elysium.entity.EntityDrachma;
-import mods.elysium.network.PacketRandom;
-import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityXPOrb;
+import mods.elysium.world.portal.ElysianTeleporter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.util.ChatMessageComponent;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class ElysianItemDebug extends ElysianItem

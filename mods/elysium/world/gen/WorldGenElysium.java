@@ -1,19 +1,13 @@
-package mods.elysium.dimension.gen;
+package mods.elysium.world.gen;
 
 import java.util.Random;
 
-import javax.sound.midi.SysexMessage;
-
 import mods.elysium.Elysium;
 import mods.elysium.api.temperature.TemperatureManager;
-import mods.elysium.dimension.gen.feature.ElysiumGenLakes;
-import mods.elysium.dimension.gen.feature.ElysiumGenMinable;
-import net.minecraft.block.Block;
-import net.minecraft.util.AxisAlignedBB;
+import mods.elysium.world.gen.feature.ElysiumGenLakes;
+import mods.elysium.world.gen.feature.ElysiumGenMinable;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.gen.feature.WorldGenerator;
 import cpw.mods.fml.common.IWorldGenerator;
 
 public class WorldGenElysium implements IWorldGenerator

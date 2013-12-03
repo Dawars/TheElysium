@@ -1,22 +1,26 @@
-package mods.elysium.dimension.biome;
+package mods.elysium.world.biome;
 
+import me.dawars.CraftingPillars.CraftingPillars;
 import mods.elysium.Elysium;
-import net.minecraft.world.biome.BiomeGenBase;
 
-public class ElysiumBiomeGenPlain extends BiomeGenBase
+public class ElysiumBiomeGenPlain extends ElysiumBiomeGenBase
 {
 	public ElysiumBiomeGenPlain(int id)
 	{
 		super(id);
-		this.temperature = 1.8F;
 		this.minHeight = 0.1F;
 		this.maxHeight = 0.6F;
-		this.spawnableMonsterList.clear();
-		this.spawnableCreatureList.clear();
+		this.setTemperatureRainfall(0.5F, 0.4F);
+
 		this.topBlock = ((byte) Elysium.blockGrass.blockID);
 		this.fillerBlock = ((byte) Elysium.blockDirt.blockID);
-
 		this.setBiomeName("Elysium Plain");
+
+		if(CraftingPillars.winter)
+		{
+			this.setEnableSnow();
+			this.setTemperatureRainfall(0.05F, 0.8F);
+		}
 		
         this.theBiomeDecorator = new BiomeElysiumPlainDecorator(this);
 		this.theBiomeDecorator.grassPerChunk = 3;

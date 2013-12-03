@@ -1,27 +1,17 @@
-package mods.elysium.dimension;
+package mods.elysium.world;
 
-import java.util.Random;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import mods.elysium.DefaultProps;
 import mods.elysium.Elysium;
-import mods.elysium.dimension.biome.ElysiumBiomeGenPlain;
-import mods.elysium.dimension.gen.ChunkProviderElysium;
 import mods.elysium.render.CloudRendererElysium;
 import mods.elysium.render.SkyRendererElysium;
+import mods.elysium.world.gen.ChunkProviderElysium;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
-import net.minecraft.util.Vec3Pool;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
-import net.minecraft.world.WorldServer;
-import net.minecraft.world.biome.*;
 import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraftforge.client.IRenderHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ElysiumWorldProvider extends WorldProvider
 {

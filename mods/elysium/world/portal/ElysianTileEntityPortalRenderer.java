@@ -1,4 +1,4 @@
-package mods.elysium.dimension.portal;
+package mods.elysium.world.portal;
 
 import java.nio.FloatBuffer;
 import java.util.Random;
