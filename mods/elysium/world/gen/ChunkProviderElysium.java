@@ -1,5 +1,7 @@
 package mods.elysium.world.gen;
 
+import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE;
+
 import java.util.List;
 import java.util.Random;
 
@@ -483,7 +485,7 @@ public class ChunkProviderElysium implements IChunkProvider
 	
 	
 	ElysiumGenLakes lakegenerator = new ElysiumGenLakes(Elysium.elysianWater.blockID);
-	ElysiumGenLakes lavagenerator = new ElysiumGenLakes(Block.lavaStill.blockID);
+//	ElysiumGenLakes lavagenerator = new ElysiumGenLakes(Block.lavaStill.blockID);
 	ElysiumGenSand sandgenerator = new ElysiumGenSand(Elysium.blockLeucosand.blockID, 7);
 	//ElysiumGenSand riltgenerator = new ElysiumGenSand(Elysium.RiltBlock.blockID, 3);
 	ElysiumGenFostimber treegenerator = new ElysiumGenFostimber(Elysium.blockLeavesFostimber.blockID, Elysium.blockLogFostimber.blockID, false);
@@ -511,7 +513,7 @@ public class ChunkProviderElysium implements IChunkProvider
 		if(biomegenbase != Elysium.biomeOcean)
 		{
 			this.lakegenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), rand.nextInt(128), l+this.rand.nextInt(16));
-			this.lavagenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), rand.nextInt(64), l+this.rand.nextInt(16));
+//			this.lavagenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), rand.nextInt(64), l+this.rand.nextInt(16));
 			this.sandgenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), 0, l+this.rand.nextInt(16));
 			//this.riltgenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), 0, l+this.rand.nextInt(16));
 			if(this.rand.nextInt(4) == 0)
@@ -540,9 +542,31 @@ public class ChunkProviderElysium implements IChunkProvider
 		
 		biomegenbase.decorate(this.worldObj, this.rand, k, l);
 		SpawnerAnimals.performWorldGenSpawning(this.worldObj, biomegenbase, k + 8, l + 8, 16, 16, this.rand);
+		
+		//Snow
 		k += 8;
 		l += 8;
 
+		int i2;
+		boolean doGen = TerrainGen.populate(par1IChunkProvider, worldObj, rand, par2, par3, flag, ICE);
+        for (int k1 = 0; doGen && k1 < 16; ++k1)
+        {
+            for (int l1 = 0; l1 < 16; ++l1)
+            {
+                i2 = this.worldObj.getPrecipitationHeight(k + k1, l + l1);
+
+                if (this.worldObj.isBlockFreezable(k1 + k, i2 - 1, l1 + l))
+                {
+                    this.worldObj.setBlock(k1 + k, i2 - 1, l1 + l, Block.ice.blockID, 0, 2);
+                }
+
+                if (this.worldObj.canSnowAt(k1 + k, i2, l1 + l))
+                {
+                    this.worldObj.setBlock(k1 + k, i2, l1 + l, Block.snow.blockID, 0, 2);
+                }
+            }
+        }
+		
 		MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Post(par1IChunkProvider, worldObj, rand, par2, par3, flag));
 
 		BlockSand.fallInstantly = false;
