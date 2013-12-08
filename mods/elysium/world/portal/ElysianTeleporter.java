@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import mods.elysium.Elysium;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -53,7 +53,7 @@ public class ElysianTeleporter extends Teleporter
 		int i;
 		for(i=0; i<portals.size(); i++)
 		{
-			if((portals.get(i).dim == entity.dimension) && (Math.abs(portals.get(i).posX-x) < DefaultProps.maxportaldistance) && (Math.abs(portals.get(i).posZ-z) < DefaultProps.maxportaldistance))
+			if((portals.get(i).dim == entity.dimension) && (Math.abs(portals.get(i).posX-x) < BlockItemIDs.maxportaldistance) && (Math.abs(portals.get(i).posZ-z) < BlockItemIDs.maxportaldistance))
 			{
 				entity.motionX = entity.motionY = entity.motionZ = 0.0D;
 				int dx = random.nextInt(2);
@@ -75,8 +75,8 @@ public class ElysianTeleporter extends Teleporter
 		boolean canBuild = false;
 		
 		while(true){
-			x = MathHelper.floor_double(entity.posX) + random.nextInt(DefaultProps.maxportaldistance+1) - DefaultProps.maxportaldistance/2;
-			z = MathHelper.floor_double(entity.posZ) + random.nextInt(DefaultProps.maxportaldistance+1) - DefaultProps.maxportaldistance/2;
+			x = MathHelper.floor_double(entity.posX) + random.nextInt(BlockItemIDs.maxportaldistance+1) - BlockItemIDs.maxportaldistance/2;
+			z = MathHelper.floor_double(entity.posZ) + random.nextInt(BlockItemIDs.maxportaldistance+1) - BlockItemIDs.maxportaldistance/2;
 			y = worldServer.getTopSolidOrLiquidBlock(x, z)-1;
 			
 			//check if can build

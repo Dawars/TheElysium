@@ -2,7 +2,7 @@ package mods.elysium.block;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -123,10 +123,10 @@ public class ElysianBlockGastroShell extends ElysianBlock
 	 */
 	public void registerIcons(IconRegister IconRegister)
 	{
-		this.blockIcon = IconRegister.registerIcon(DefaultProps.modId + ":gastroshellTop");
-		this.shellTop2 = IconRegister.registerIcon(DefaultProps.modId + ":gastroshellTop2");
-		this.shellRightSide = IconRegister.registerIcon(DefaultProps.modId + ":gastroshellRightSide");
-		this.shellLeftSide = IconRegister.registerIcon(DefaultProps.modId + ":gastroshellLeftSide");
-		this.shellHole = IconRegister.registerIcon(DefaultProps.modId + ":gastroshellHole");
+		this.blockIcon = IconRegister.registerIcon(BlockItemIDs.modId + ":gastroshellTop");
+		this.shellTop2 = IconRegister.registerIcon(BlockItemIDs.modId + ":gastroshellTop2");
+		this.shellRightSide = IconRegister.registerIcon(BlockItemIDs.modId + ":gastroshellRightSide");
+		this.shellLeftSide = IconRegister.registerIcon(BlockItemIDs.modId + ":gastroshellLeftSide");
+		this.shellHole = IconRegister.registerIcon(BlockItemIDs.modId + ":gastroshellHole");
 	}
 }

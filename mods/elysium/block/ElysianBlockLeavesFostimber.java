@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import me.dawars.CraftingPillars.CraftingPillars;
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import mods.elysium.Elysium;
 import mods.elysium.client.particle.ElysianEntityFX;
 import net.minecraft.block.Block;
@@ -341,8 +341,8 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
      */
     public void registerIcons(IconRegister registerIcon)
     {
-    	this.iconArray[0] = registerIcon.registerIcon(DefaultProps.modId + ":fostimber_leaves_fast");
-		this.iconArray[1] = registerIcon.registerIcon(DefaultProps.modId + ":fostimber_leaves");
+    	this.iconArray[0] = registerIcon.registerIcon(BlockItemIDs.modId + ":fostimber_leaves_fast");
+		this.iconArray[1] = registerIcon.registerIcon(BlockItemIDs.modId + ":fostimber_leaves");
 		this.glowing = registerIcon.registerIcon(CraftingPillars.id + ":ChristmasTreeLeavesOverlay");
     }
     

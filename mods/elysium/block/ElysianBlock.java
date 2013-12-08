@@ -4,7 +4,7 @@ import java.util.Random;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import mods.elysium.Elysium;
 import mods.elysium.entity.EntityDrachma;
 import mods.elysium.handlers.ElysianClientTickHandler;
@@ -27,7 +27,7 @@ public class ElysianBlock extends Block
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister itemIcon)
 	{
-		this.blockIcon = itemIcon.registerIcon(DefaultProps.modId + ":" + getUnlocalizedName().substring(5));
+		this.blockIcon = itemIcon.registerIcon(BlockItemIDs.modId + ":" + getUnlocalizedName().substring(5));
 	}
 	
 	@Override

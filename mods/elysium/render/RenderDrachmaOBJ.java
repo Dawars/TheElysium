@@ -22,7 +22,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.obj.ObjModelLoader;
 import net.minecraftforge.client.model.obj.WavefrontObject;
 
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import mods.elysium.entity.EntityDrachma;
 
 @SideOnly(Side.CLIENT)

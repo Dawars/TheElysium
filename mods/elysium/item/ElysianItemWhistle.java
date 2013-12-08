@@ -68,7 +68,6 @@ public class ElysianItemWhistle extends ElysianItem
     	{
     		if((System.currentTimeMillis() - lastPlay) / 1000 > 9D)
     		{
-    			world.playSoundAtEntity(entity, "stream.FluteTrack", 1F, 1F);
 	    		lastPlay = System.currentTimeMillis();
     			
 		    	if(world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd )
@@ -81,6 +80,13 @@ public class ElysianItemWhistle extends ElysianItem
 		    		entity.addChatMessage(tips.get(rand.nextInt(tips.size())));
 		    	}
     		}
+		} else {
+			if((System.currentTimeMillis() - lastPlay) / 1000 > 9D)
+			{
+	    		lastPlay = System.currentTimeMillis();
+				world.playSoundAtEntity(entity, "elysium:FluteTrack", 1F, 1F);
+				System.out.println("playing whistle sound");
+			}
 		}
     	entity.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
         return itemStack;

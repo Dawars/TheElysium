@@ -6,7 +6,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Random;
 
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.packet.Packet250CustomPayload;

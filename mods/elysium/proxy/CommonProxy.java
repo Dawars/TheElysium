@@ -1,6 +1,6 @@
 package mods.elysium.proxy;
 
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import mods.elysium.network.ElysiumPacket;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,11 +20,6 @@ public class CommonProxy
 {
 	
 	public void registerRenderers()
-	{
-		
-	}
-	
-	public void installSounds()
 	{
 		
 	}

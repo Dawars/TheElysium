@@ -6,6 +6,7 @@ import mods.elysium.entity.EntityCatorPillar;
 import mods.elysium.entity.EntityDrachma;
 import mods.elysium.entity.EntityGerbil;
 import mods.elysium.handlers.ElysianClientTickHandler;
+import mods.elysium.handlers.ElysiumSoundHandler;
 import mods.elysium.render.CrystalBlockRendererOBJ;
 import mods.elysium.render.RenderCaterPillar;
 import mods.elysium.render.RenderChristmasLeaves;
@@ -15,9 +16,11 @@ import mods.elysium.world.portal.ElysianTileEntityPortal;
 import mods.elysium.world.portal.ElysianTileEntityPortalRenderer;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 //import mods.elysium.client.gui.menu.*;
@@ -39,6 +42,7 @@ public class ClientProxy extends CommonProxy
 	{
 //	FIXME	MainMenuAPI.registerMenu("Elysian Menu", ElysianMenu.class);
 //		MainMenuAPI.registerMenu("Misc Elysian Menu", MiscElysianMenu.class);
+		MinecraftForge.EVENT_BUS.register(new ElysiumSoundHandler());
 		
 		Elysium.crystalBlockRenderID = RenderingRegistry.getNextAvailableRenderId();
 		Elysium.fostimberLeavesRenderID = RenderingRegistry.getNextAvailableRenderId();

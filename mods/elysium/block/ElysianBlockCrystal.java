@@ -2,7 +2,7 @@ package mods.elysium.block;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import mods.elysium.Elysium;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -42,6 +42,6 @@ public class ElysianBlockCrystal extends ElysianBlock
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister itemIcon)
     {
-        this.blockIcon = itemIcon.registerIcon(DefaultProps.modId + ":palestone");
+        this.blockIcon = itemIcon.registerIcon(BlockItemIDs.modId + ":palestone");
     }
 }

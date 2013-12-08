@@ -2,7 +2,7 @@ package mods.elysium.render;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import mods.elysium.model.ModelCaterPillar;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelSnowMan;
@@ -25,7 +25,7 @@ import net.minecraftforge.client.MinecraftForgeClient;
 @SideOnly(Side.CLIENT)
 public class RenderCaterPillar extends RenderLiving
 {
-    private static final ResourceLocation TEXTURE_CATER_PILLAR = new ResourceLocation("/mods/" + DefaultProps.modId + "/textures/mob/CaterPillar.png");
+    private static final ResourceLocation TEXTURE_CATER_PILLAR = new ResourceLocation("/mods/" + BlockItemIDs.modId + "/textures/mob/CaterPillar.png");
 	private ModelCaterPillar model;
 
     public RenderCaterPillar()

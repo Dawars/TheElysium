@@ -22,10 +22,14 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.Event.Result;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.BonemealEvent;
+import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundPoolEntry;
+import net.minecraft.item.ItemStack;
 import net.minecraft.src.*;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.World;
 
 public class ElysianBonemealHandler {
 	
@@ -69,5 +73,27 @@ public class ElysianBonemealHandler {
                 }
 			}
 		}  
+    }
+	@ForgeSubscribe
+    public void onBucketFill(FillBucketEvent event) {
+            ItemStack result = attemptFill(event.world, event.target);
+
+            if (result != null) {
+                    event.result = result;
+                    event.setResult(Result.ALLOW);
+            }
+    }
+
+    private ItemStack attemptFill(World world, MovingObjectPosition target) {
+            int id = world.getBlockId(target.blockX, target.blockY, target.blockZ);
+
+            if (id == Elysium.elysianWater.blockID) {
+                    if (world.getBlockMetadata(target.blockX, target.blockY, target.blockZ) == 0) {
+                            world.setBlock(target.blockX, target.blockY, target.blockZ, 0);
+
+                            return new ItemStack(Elysium.itemWaterBucket);
+                    }
+            }
+            return null;
     }
 }

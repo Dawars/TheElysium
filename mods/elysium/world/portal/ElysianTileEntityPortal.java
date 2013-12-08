@@ -2,7 +2,7 @@ package mods.elysium.world.portal;
 
 import java.util.Random;
 
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import mods.elysium.Elysium;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
@@ -54,7 +54,7 @@ public class ElysianTileEntityPortal extends TileEntity
 		}
 		
 		tick++;
-		if(tick >= DefaultProps.ticksbeforeportalcheck)
+		if(tick >= BlockItemIDs.ticksbeforeportalcheck)
 		{
 			tick = 0;
 			canstay = canStayPortal();

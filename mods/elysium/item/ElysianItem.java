@@ -2,7 +2,7 @@ package mods.elysium.item;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import mods.elysium.Elysium;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -23,6 +23,6 @@ public class ElysianItem extends Item
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister itemIcon)
     {
-        this.itemIcon = itemIcon.registerIcon(DefaultProps.modId + ":" + getUnlocalizedName().substring(5));
+        this.itemIcon = itemIcon.registerIcon(BlockItemIDs.modId + ":" + getUnlocalizedName().substring(5));
     }
 }

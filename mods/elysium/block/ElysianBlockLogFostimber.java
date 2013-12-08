@@ -2,7 +2,7 @@ package mods.elysium.block;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import mods.elysium.Elysium;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -104,8 +104,8 @@ public class ElysianBlockLogFostimber extends ElysianBlock
 	 */
 	public void registerIcons(IconRegister par1IconRegister)
 	{
-		this.iconTop = par1IconRegister.registerIcon(DefaultProps.modId + ":fostimber_log_top");
-		this.iconSide = par1IconRegister.registerIcon(DefaultProps.modId + ":fostimber_log_side");
+		this.iconTop = par1IconRegister.registerIcon(BlockItemIDs.modId + ":fostimber_log_top");
+		this.iconSide = par1IconRegister.registerIcon(BlockItemIDs.modId + ":fostimber_log_side");
 	}
 
 	@Override

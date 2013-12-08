@@ -26,7 +26,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.obj.ObjModelLoader;
 import net.minecraftforge.client.model.obj.WavefrontObject;
 
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import mods.elysium.Elysium;
 import mods.elysium.entity.EntityDrachma;
 

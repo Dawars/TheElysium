@@ -4,7 +4,7 @@ import java.util.Random;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import mods.elysium.Elysium;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
@@ -117,8 +117,8 @@ public class ElysianBlockGrass extends ElysianBlock
      */
     public void registerIcons(IconRegister IconRegister)
     {
-        this.blockIcon = IconRegister.registerIcon(DefaultProps.modId +":elysium_grass");
-        this.iconGrassTop = IconRegister.registerIcon(DefaultProps.modId +":elysium_grass_top");
+        this.blockIcon = IconRegister.registerIcon(BlockItemIDs.modId +":elysium_grass");
+        this.iconGrassTop = IconRegister.registerIcon(BlockItemIDs.modId +":elysium_grass_top");
 //        this.iconGrassSideOverlay = par1IconRegister.registerIcon("grass_side_overlay");
     }
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -48,8 +48,8 @@ public class ElysianBlockPalestonePillar extends ElysianBlock
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister)
 	{
-		this.iconTop = par1IconRegister.registerIcon(DefaultProps.modId + ":palestone_pillar_top");
-		this.iconSide = par1IconRegister.registerIcon(DefaultProps.modId + ":palestone_pillar_side");
+		this.iconTop = par1IconRegister.registerIcon(BlockItemIDs.modId + ":palestone_pillar_top");
+		this.iconSide = par1IconRegister.registerIcon(BlockItemIDs.modId + ":palestone_pillar_side");
 	}
 	
 	public int getRenderType()

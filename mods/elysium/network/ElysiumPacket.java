@@ -5,14 +5,14 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
 
 public abstract class ElysiumPacket {
 
 	protected boolean isChunkDataPacket = false; //don't know that does but everything uses true
-	protected String channel = DefaultProps.NET_CHANNEL_NAME;
+	protected String channel = BlockItemIDs.NET_CHANNEL_NAME;
 
 	public abstract int getID();
 

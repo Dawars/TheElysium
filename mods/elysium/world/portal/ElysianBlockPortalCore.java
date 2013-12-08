@@ -5,7 +5,7 @@ import java.util.Random;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import mods.elysium.Elysium;
 import mods.elysium.block.ElysianBlockContainer;
 import mods.elysium.client.particle.ElysianEntityFX;
@@ -61,7 +61,7 @@ public class ElysianBlockPortalCore extends ElysianBlockContainer
 				EntityPlayerMP player = (EntityPlayerMP) entity;
 				ElysianTileEntityPortal tile = (ElysianTileEntityPortal)world.getBlockTileEntity(x, y, z);
 				
-				if((!world.isRemote) && (tile.timebeforetp == DefaultProps.ticksbeforeportalteleport-1))
+				if((!world.isRemote) && (tile.timebeforetp == BlockItemIDs.ticksbeforeportalteleport-1))
 				{
 					player.addChatMessage(getWorldMessage(player));
 				}
@@ -82,7 +82,7 @@ public class ElysianBlockPortalCore extends ElysianBlockContainer
 				else if(player.prevPosY == player.posY)
 				{
 					tile.wasCollided = true;
-					if(tile.timebeforetp == -1) tile.timebeforetp = DefaultProps.ticksbeforeportalteleport;
+					if(tile.timebeforetp == -1) tile.timebeforetp = BlockItemIDs.ticksbeforeportalteleport;
 				}
 			}
 		}

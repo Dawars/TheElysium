@@ -4,7 +4,7 @@ import java.util.Random;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import mods.elysium.Elysium;
 import mods.elysium.client.particle.ElysianEntityFX;
 import net.minecraft.block.Block;
@@ -95,8 +95,8 @@ public class ElysianBlockExpeller extends ElysianBlock
      */
     public void registerIcons(IconRegister par1IconRegister)
     {
-        this.blockIcon = par1IconRegister.registerIcon(DefaultProps.modId + ":" + "palestoneslab");
-        this.front = par1IconRegister.registerIcon(DefaultProps.modId + ":" + "expeller");
+        this.blockIcon = par1IconRegister.registerIcon(BlockItemIDs.modId + ":" + "palestoneslab");
+        this.front = par1IconRegister.registerIcon(BlockItemIDs.modId + ":" + "expeller");
     }
 
     /**

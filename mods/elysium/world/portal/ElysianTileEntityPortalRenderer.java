@@ -5,7 +5,7 @@ import java.util.Random;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import mods.elysium.client.particle.ElysianEntityFX;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDragonEgg;
@@ -30,7 +30,7 @@ public class ElysianTileEntityPortalRenderer extends TileEntitySpecialRenderer
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
 		glColor4f(1, 1, 1, tile.alpha);
-		this.bindTexture(new ResourceLocation(DefaultProps.modId + ":textures/misc/beam.png"));
+		this.bindTexture(new ResourceLocation(BlockItemIDs.modId + ":textures/misc/beam.png"));
 		
 		int faces = 16;
 		glBegin(GL_QUADS);

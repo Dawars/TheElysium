@@ -1,6 +1,6 @@
 package mods.elysium.entity;
 
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import mods.elysium.Elysium;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;

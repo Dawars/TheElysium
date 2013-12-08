@@ -4,7 +4,7 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.input.Keyboard;
 
-public class DefaultProps
+public class BlockItemIDs
 {
 	public static final String modId = "elysium";
 	public static final String NET_CHANNEL_NAME = "elysium";
@@ -94,10 +94,12 @@ public class DefaultProps
 	public static int idStoneAxeItem = 5058;
 	public static int idStoneShovelItem = 5059;
 	public static int idStoneHoeItem = 5060;
+	
+	public static int idElysianWaterBucket = 5110;
 
 	public static int idOverkillItem = 5555;
 	public static int idDebugItem = 5107;
-	
+
 	//Settings
 	public static int maxportaldistance = 64;
 	public static byte ticksbeforeportalcheck = 5;

@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import mods.elysium.Elysium;
 import mods.elysium.proxy.CommonProxy;
 import net.minecraft.client.Minecraft;
@@ -22,10 +22,10 @@ import cpw.mods.fml.client.FMLClientHandler;
 
 public class SkyRendererElysium extends IRenderHandler
 {
-	private static final ResourceLocation TEXTURE_SKY = new ResourceLocation(DefaultProps.modId + ":textures/misc/space.png");
+	private static final ResourceLocation TEXTURE_SKY = new ResourceLocation(BlockItemIDs.modId + ":textures/misc/space.png");
 	private static final ResourceLocation TEXTURE_MOON = new ResourceLocation("textures/environment/moon_phases.png");
-	private static final ResourceLocation TEXTURE_SUN = new ResourceLocation(DefaultProps.modId + ":textures/misc/sun.png");
-	private static final ResourceLocation TEXTURE_SUN_HEATBUFF = new ResourceLocation(DefaultProps.modId + ":textures/misc/heatbuff.png");
+	private static final ResourceLocation TEXTURE_SUN = new ResourceLocation(BlockItemIDs.modId + ":textures/misc/sun.png");
+	private static final ResourceLocation TEXTURE_SUN_HEATBUFF = new ResourceLocation(BlockItemIDs.modId + ":textures/misc/heatbuff.png");
 
 	@Override
 	@SideOnly(Side.CLIENT)

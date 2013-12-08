@@ -2,7 +2,7 @@ package mods.elysium.render;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mods.elysium.DefaultProps;
+import mods.elysium.BlockItemIDs;
 import mods.elysium.model.ModelGerbil;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelSnowMan;
@@ -25,7 +25,7 @@ import net.minecraftforge.client.MinecraftForgeClient;
 @SideOnly(Side.CLIENT)
 public class RenderGerbil extends RenderLiving
 {
-    private static final ResourceLocation TEXTURE_GERBRIL = new ResourceLocation("/mods/" + DefaultProps.modId + "/textures/mob/gerbil.png");
+    private static final ResourceLocation TEXTURE_GERBRIL = new ResourceLocation("/mods/" + BlockItemIDs.modId + "/textures/mob/gerbil.png");
 	private ModelGerbil model;
 
     public RenderGerbil()
