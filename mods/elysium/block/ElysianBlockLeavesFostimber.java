@@ -3,34 +3,32 @@ package mods.elysium.block;
 import java.util.ArrayList;
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import me.dawars.CraftingPillars.CraftingPillars;
+import mods.elysium.DefaultProps;
+import mods.elysium.Elysium;
+import mods.elysium.client.particle.ElysianEntityFX;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
-import mods.elysium.DefaultProps;
-import mods.elysium.Elysium;
-import mods.elysium.block.ElysianBlock;
-import mods.elysium.client.particle.ElysianEntityFX;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ElysianBlockLeavesFostimber extends ElysianBlock implements IShearable
 {
     @SideOnly(Side.CLIENT)
-    private Icon leaves_fast;
-
+    public Icon[] iconArray = new Icon[2];
     @SideOnly(Side.CLIENT)
-    private Icon leaves;
-    
-    int[] adjacentTreeBlocks;
+    public Icon glowing;
+	int[] adjacentTreeBlocks;
 
 	public ElysianBlockLeavesFostimber(int id, Material mat)
 	{
@@ -39,16 +37,20 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
 	}
 	
 	@Override
+	public int getRenderType()
+	{
+		return Elysium.fostimberLeavesRenderID;
+	}
+
+	@Override
 	/**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
     public Icon getIcon(int par1, int par2)
     {
-		if(Minecraft.getMinecraft().gameSettings.fancyGraphics)
-			return this.leaves;
-		return this.leaves_fast;
+		return FMLClientHandler.instance().getClient().isFancyGraphicsEnabled() ? this.iconArray[1] : this.iconArray[0];
     }
-	
+
 	@Override
     /**
      * ejects contained items into the world, and notifies neighbours of an update, as appropriate
@@ -209,7 +211,7 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
 			entityfx.multipleParticleScaleBy(0.25F);
 			entityfx.setBrightness(200);
 			entityfx.setTextureFile("elysium:/textures/misc/particles/fost.png");
-			ModLoader.getMinecraftInstance().effectRenderer.addEffect(entityfx);
+			FMLClientHandler.instance().getClient().effectRenderer.addEffect(entityfx);
 		}
 		
         if(world.canLightningStrikeAt(x, y + 1, z) && !world.doesBlockHaveSolidTopSurface(x, y - 1, z) && random.nextInt(15) == 1)
@@ -328,7 +330,7 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
      */
     public boolean isOpaqueCube()
     {
-        return !Minecraft.getMinecraft().gameSettings.fancyGraphics;
+        return !FMLClientHandler.instance().getClient().isFancyGraphicsEnabled();
     }
     
     @Override
@@ -337,11 +339,11 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(IconRegister registerIcon)
     {
-        this.leaves = par1IconRegister.registerIcon(DefaultProps.modId + ":fostimber_leaves");
-        this.leaves_fast = par1IconRegister.registerIcon(DefaultProps.modId + ":fostimber_leaves_fast");
-
+    	this.iconArray[0] = registerIcon.registerIcon(DefaultProps.modId + ":fostimber_leaves_fast");
+		this.iconArray[1] = registerIcon.registerIcon(DefaultProps.modId + ":fostimber_leaves");
+		this.glowing = registerIcon.registerIcon(CraftingPillars.id + ":ChristmasTreeLeavesOverlay");
     }
     
     @Override
@@ -352,7 +354,7 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
     public boolean shouldSideBeRendered(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
     {
         int i1 = par1IBlockAccess.getBlockId(par2, par3, par4);
-        return !Minecraft.getMinecraft().gameSettings.fancyGraphics && i1 == this.blockID ? false : super.shouldSideBeRendered(par1IBlockAccess, par2, par3, par4, par5);
+        return !FMLClientHandler.instance().getClient().isFancyGraphicsEnabled() && i1 == this.blockID ? false : super.shouldSideBeRendered(par1IBlockAccess, par2, par3, par4, par5);
     }
     
     @Override

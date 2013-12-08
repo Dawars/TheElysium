@@ -1,5 +1,6 @@
 package mods.elysium.proxy;
 
+import me.dawars.CraftingPillars.renderer.RenderExtendPillar;
 import mods.elysium.Elysium;
 import mods.elysium.entity.EntityCatorPillar;
 import mods.elysium.entity.EntityDrachma;
@@ -7,6 +8,7 @@ import mods.elysium.entity.EntityGerbil;
 import mods.elysium.handlers.ElysianClientTickHandler;
 import mods.elysium.render.CrystalBlockRendererOBJ;
 import mods.elysium.render.RenderCaterPillar;
+import mods.elysium.render.RenderChristmasLeaves;
 import mods.elysium.render.RenderDrachmaOBJ;
 import mods.elysium.render.RenderGerbil;
 import mods.elysium.world.portal.ElysianTileEntityPortal;
@@ -39,16 +41,18 @@ public class ClientProxy extends CommonProxy
 //		MainMenuAPI.registerMenu("Misc Elysian Menu", MiscElysianMenu.class);
 		
 		Elysium.crystalBlockRenderID = RenderingRegistry.getNextAvailableRenderId();
+		Elysium.fostimberLeavesRenderID = RenderingRegistry.getNextAvailableRenderId();
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(ElysianTileEntityPortal.class, new ElysianTileEntityPortalRenderer());
 		
+		RenderingRegistry.registerBlockHandler(new RenderChristmasLeaves());
 		RenderingRegistry.registerBlockHandler(new CrystalBlockRendererOBJ());
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityDrachma.class, new RenderDrachmaOBJ());
 		RenderingRegistry.registerEntityRenderingHandler(EntityCatorPillar.class, new RenderCaterPillar());
 		RenderingRegistry.registerEntityRenderingHandler(EntityGerbil.class, new RenderGerbil());
 		
-		TickRegistry.registerTickHandler(new ElysianClientTickHandler(), Side.CLIENT);
+//		TickRegistry.registerTickHandler(new ElysianClientTickHandler(), Side.CLIENT);
 	}
 	
 	/* NETWORKING */

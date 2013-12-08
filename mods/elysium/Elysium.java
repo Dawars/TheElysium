@@ -126,6 +126,7 @@ public class Elysium
 	public static int fancyWorkbenchRenderID;
 	public static int fancyTankRenderID;
 	public static int crystalBlockRenderID;
+	public static int fostimberLeavesRenderID;
 
 	//Fluids
 	public static Fluid elysianWaterFluid;
@@ -225,7 +226,6 @@ public class Elysium
 	public static BiomeGenBase biomeOcean = null;
 
 	public static boolean modForestry;
-	
 
 	@EventHandler
 	public void load(FMLPreInitializationEvent evt)
