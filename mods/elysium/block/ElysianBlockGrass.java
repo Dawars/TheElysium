@@ -4,6 +4,7 @@ import java.util.Random;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import me.dawars.CraftingPillars.blocks.BaseFlowerBlock;
 import mods.elysium.BlockItemIDs;
 import mods.elysium.Elysium;
 import net.minecraft.block.Block;
@@ -63,6 +64,10 @@ public class ElysianBlockGrass extends ElysianBlock
     {
         int plantID = plant.getPlantID(world, x, y + 1, z);
         if (Block.blocksList[plantID] instanceof ElysianBlockFlower && ((ElysianBlockFlower) Block.blocksList[plantID]).canThisPlantGrowOnThisBlockID(world.getBlockId(x, y, z)))
+        {
+            return true;
+        }
+        if (Block.blocksList[plantID] instanceof BaseFlowerBlock && ((BaseFlowerBlock) Block.blocksList[plantID]).canThisPlantGrowOnThisBlockID(world.getBlockId(x, y, z)))
         {
             return true;
         }
