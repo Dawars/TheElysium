@@ -8,20 +8,21 @@ import net.minecraftforge.event.ForgeSubscribe;
 public class ElysiumSoundHandler {
 	private static final String SOUND_RESOURCE_LOCATION = "elysium:";
 
-	public static String[] soundFiles = {"FluteTrack.ogg"};
+	public static String[] soundFiles = {"elysium:flute.ogg"};
 
     @ForgeSubscribe
     public void onSoundLoad(SoundLoadEvent event) {
 
-        for (String soundFile : soundFiles) {
-            try {
-                event.manager.addStreaming(SOUND_RESOURCE_LOCATION + soundFile);
-                System.out.println("Sound file loaded: " + soundFile);
+//        for (String soundFile : soundFiles) {
+//            try {
+//                event.manager.addStreaming(SOUND_RESOURCE_LOCATION + soundFile);
+            	event.manager.soundPoolSounds.addSound("elysium:flute.ogg");
+                System.out.println("Sound file loaded: " + "elysium:flute.ogg");
 
-            }
-            catch (Exception e) {
-                System.out.println("Failed loading sound file: " + soundFile);
-            }
-        }
+//            }
+//            catch (Exception e) {
+//                System.out.println("Failed loading sound file: " + soundFile);
+//            }
+//        }
     }
 }
