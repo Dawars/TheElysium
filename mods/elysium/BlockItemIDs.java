@@ -18,10 +18,6 @@ public class BlockItemIDs
 	public static int idRiltBlock = 204;
 	public static int idWaterFlowingBlock = 205;
 	public static int idWaterBlock = 206;
-//	public static int idWaterBlock = 205;
-//	public static int idWaterBlock = 205;
-//	public static int idWaterBlock = 205;
-//	public static int idWaterBlock = 205;
 	
 	public static int idPortalCoreBlock = 210;
 	
@@ -65,8 +61,6 @@ public class BlockItemIDs
 	public static int idBlockTourmaline = 2049;
 	public static int idBlockBeryl = 2050;
 	
-	public static int idBlockCrystal = 2051;
-
 	//Items
 	public static int idGracePrismItem = 5000;
 	public static int idWhistleItem = 5001;

@@ -7,45 +7,15 @@ import java.util.Date;
 import mods.elysium.api.Plants;
 import mods.elysium.api.temperature.RangedTemperature;
 import mods.elysium.api.temperature.TemperatureManager;
-import mods.elysium.block.ElysianBlock;
-import mods.elysium.block.ElysianBlockCrystal;
-import mods.elysium.block.ElysianBlockDirt;
-import mods.elysium.block.ElysianBlockExpeller;
-import mods.elysium.block.ElysianBlockGastroShell;
-import mods.elysium.block.ElysianBlockGrass;
-import mods.elysium.block.ElysianBlockHeatable;
-import mods.elysium.block.ElysianBlockLeavesFostimber;
-import mods.elysium.block.ElysianBlockLeucosand;
-import mods.elysium.block.ElysianBlockLogFostimber;
-import mods.elysium.block.ElysianBlockOre;
-import mods.elysium.block.ElysianBlockPalestone;
-import mods.elysium.block.ElysianBlockPalestonePillar;
-import mods.elysium.block.ElysianBlockRilt;
-import mods.elysium.block.ElysianBlockSaplingFostimber;
-import mods.elysium.block.ElysianBlockShell;
-import mods.elysium.block.ElysianBlockTallgrass;
-import mods.elysium.block.ElysianWaterBlock;
-import mods.elysium.block.ElysiumFlowerBlock;
+import mods.elysium.block.*;
 import mods.elysium.entity.EntityCatorPillar;
 import mods.elysium.entity.EntityGerbil;
 import mods.elysium.fluids.ElysianWaterFluid;
-import mods.elysium.handlers.ElysianBonemealHandler;
-import mods.elysium.handlers.ElysianCreatureSpawnHandler;
-import mods.elysium.handlers.ElysianFuelHandler;
-import mods.elysium.item.ElysianBucket;
-import mods.elysium.item.ElysianItem;
-import mods.elysium.item.ElysianItemAxe;
-import mods.elysium.item.ElysianItemDebug;
-import mods.elysium.item.ElysianItemGracePrism;
-import mods.elysium.item.ElysianItemHoe;
-import mods.elysium.item.ElysianItemOverkill;
-import mods.elysium.item.ElysianItemPickaxe;
-import mods.elysium.item.ElysianItemShovel;
-import mods.elysium.item.ElysianItemSword;
-import mods.elysium.item.ElysianItemWhistle;
+import mods.elysium.handlers.*;
+import mods.elysium.item.*;
 import mods.elysium.network.PacketHandler;
 import mods.elysium.proxy.CommonProxy;
-import mods.elysium.world.ElysiumWorldProvider;
+import mods.elysium.world.*;
 import mods.elysium.world.biome.ElysiumBiomeGenOcean;
 import mods.elysium.world.biome.ElysiumBiomeGenPlain;
 import mods.elysium.world.gen.WorldGenElysium;
@@ -56,7 +26,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -126,10 +95,6 @@ public class Elysium
 	public static int MaxDragon;
 
 	//Rendering ids
-	public static int fancyWorkbenchRenderID;
-	public static int fancyTankRenderID;
-	public static int crystalBlockRenderID;
-	public static int fostimberLeavesRenderID;
 
 	//Fluids
 	public static Fluid elysianWaterFluid;
@@ -415,11 +380,6 @@ public class Elysium
 			Property idBlockTourmaline = Elysium.config.getBlock("idBlockTourmaline.id", BlockItemIDs.idBlockTourmaline);
 			blockTourmaline = new ElysianBlock(idBlockTourmaline.getInt(), Material.iron).setHardness(3F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("blockTourmaline");
 			registerBlock(blockTourmaline, "Tourmaline Block");
-
-			Property idCrystalBlock = Elysium.config.getBlock("idCrystalBlock.id", BlockItemIDs.idBlockCrystal);
-			blockCrystal = new ElysianBlockCrystal(idCrystalBlock.getInt()).setHardness(2F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("crystalBlock");
-			registerBlock(blockCrystal, "Crystal block");
-
 			
 			
 			

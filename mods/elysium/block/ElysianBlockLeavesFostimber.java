@@ -26,20 +26,12 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
 {
     @SideOnly(Side.CLIENT)
     public Icon[] iconArray = new Icon[2];
-    @SideOnly(Side.CLIENT)
-    public Icon glowing;
 	int[] adjacentTreeBlocks;
 
 	public ElysianBlockLeavesFostimber(int id, Material mat)
 	{
 		super(id, mat);
         this.setTickRandomly(true);
-	}
-	
-	@Override
-	public int getRenderType()
-	{
-		return Elysium.fostimberLeavesRenderID;
 	}
 
 	@Override
@@ -341,9 +333,8 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
      */
     public void registerIcons(IconRegister registerIcon)
     {
-    	this.iconArray[0] = registerIcon.registerIcon(BlockItemIDs.modId + ":fostimber_leaves_fast");
-		this.iconArray[1] = registerIcon.registerIcon(BlockItemIDs.modId + ":fostimber_leaves");
-		this.glowing = registerIcon.registerIcon(CraftingPillars.id + ":ChristmasTreeLeavesOverlay");
+    	this.iconArray[0] = registerIcon.registerIcon(Elysium.id + ":fostimber_leaves_fast");
+		this.iconArray[1] = registerIcon.registerIcon(Elysium.id + ":fostimber_leaves");
     }
     
     @Override
