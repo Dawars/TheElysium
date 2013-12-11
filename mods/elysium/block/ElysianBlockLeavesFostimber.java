@@ -24,7 +24,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ElysianBlockLeavesFostimber extends ElysianBlock implements IShearable
 {
-    @SideOnly(Side.CLIENT)
+//    @SideOnly(Side.CLIENT)
     public Icon[] iconArray = new Icon[2];
 	int[] adjacentTreeBlocks;
 
@@ -34,10 +34,11 @@ public class ElysianBlockLeavesFostimber extends ElysianBlock implements ISheara
         this.setTickRandomly(true);
 	}
 
-	@Override
 	/**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
-     */
+     */ 
+	@Override
+	@SideOnly(Side.CLIENT)
     public Icon getIcon(int par1, int par2)
     {
 		return FMLClientHandler.instance().getClient().isFancyGraphicsEnabled() ? this.iconArray[1] : this.iconArray[0];
