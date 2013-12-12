@@ -66,12 +66,11 @@ public class ElysianItemWhistle extends ElysianItem
     {
     	if(!world.isRemote)
     	{
-    		if((System.currentTimeMillis() - lastPlay) / 1000 > 9D)
+    		if((System.currentTimeMillis() - lastPlay) / 1000 > this.getMaxItemUseDuration(itemStack)/20)
     		{
 	    		lastPlay = System.currentTimeMillis();
     			
 				world.playSoundAtEntity(entity, "elysium:flute", 1F, 1F);
-				System.out.println("playing whistle sound");
 		    	if(world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd )
 		    	{
 		    		if(isDragonAlive(world) >= Elysium.MaxDragon)
@@ -83,12 +82,6 @@ public class ElysianItemWhistle extends ElysianItem
 		    	}
     		}
 		}
-//    	else {
-//			if((System.currentTimeMillis() - lastPlay) / 1000 > 9D)
-//			{
-//	    		lastPlay = System.currentTimeMillis();
-//			}
-//		}
     	entity.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
         return itemStack;
     }
@@ -114,11 +107,14 @@ public class ElysianItemWhistle extends ElysianItem
 	    {
     		if(world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd )
 	    	{
-	    		itemStack.damageItem(2, entity);
-	    		
-	    		EntityDragon entitydragon = new EntityDragon(world);
-				entitydragon.setLocationAndAngles(0.0D, 128.0D, 0.0D, rand.nextFloat() * 360.0F, 0.0F);
-				world.spawnEntityInWorld(entitydragon);
+    			if(isDragonAlive(world) < Elysium.MaxDragon)
+    			{
+					itemStack.damageItem(2, entity);
+		    		
+		    		EntityDragon entitydragon = new EntityDragon(world);
+					entitydragon.setLocationAndAngles(0.0D, 128.0D, 0.0D, rand.nextFloat() * 360.0F, 0.0F);
+					world.spawnEntityInWorld(entitydragon);
+    			}
 	    	}
 	    }
 		return itemStack;
