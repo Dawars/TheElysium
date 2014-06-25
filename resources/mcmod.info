@@ -1,0 +1,16 @@
+[
+{
+  "modid": "elysium",
+  "name": "The Elysium",
+  "description": "A dimension mod for heroes!",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["Dawars", "FBalazs"],
+  "credits": "HunDevelopers team",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

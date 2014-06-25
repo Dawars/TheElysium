@@ -1,0 +1,52 @@
+itemGroup.elysium=The Elysium
+
+cave.elysium.name=Elysium Höhle
+
+tile.palestone.name=Palestein
+tile.elysium_dirt.name=Elysium Boden
+tile.elysium_grass.name=Elysium Graß
+tile.leucosand.name=Leucosand
+tile.rilt.name=Rilt
+
+tile.elysium_sapling.fostimber.name=Fostimber Sapling
+tile.elysium_log.fostimber.name=Fostimber Log
+tile.elysium_leaves.fostimber.name=Fostimber Leaves
+tile.elysium_planks.fostimber.name=Fostimber Planks
+tile.elysium_flower.asphodel.name=Asphodel Flower
+tile.elysium_tallgrass.curlgrass.name=Curlgraß
+
+tile.oreSulphur.name=Sulphur Erz
+tile.oreBeryl.name=Beryl Erz
+tile.oreCobalt.name=Cobalt Erz
+tile.oreIridium.name=Iridium Erz
+tile.oreSilicon.name=Silicon Erz
+tile.oreJade.name=Jade Erz
+tile.oreTourmaline.name=Tourmaline Erz
+
+tile.elysium_water.name=Elysium Wasser
+tile.floating_block_conch.name=Floating Conch
+tile.floating_block_shell.name=Floating Shell
+
+tile.blockSulphur.name=Sulphur Block
+tile.blockBeryl.name=Beryl Block
+tile.blockCobalt.name=Cobalt Block
+tile.blockIridium.name=Iridium Block
+tile.blockSilicon.name=Silicon Block
+tile.blockJade.name=Jade Block
+tile.blockTourmaline.name=Tourmaline Block
+
+
+item.prism.name=Grace Prism
+item.seeds_pepper.name=Pepper Seed
+item.overkill.name=Overkill Waffe - NOT BALLANCED!
+item.asphodelpetal.name=Asphodel Petal
+item.debug.name=Teleporter (Shift + Right Click)
+item.beryl.name=Beryl
+item.ingotCobalt.name=Cobalt Bar
+item.ingotIridium.name=Iridium Bar
+item.jade.name=Jade
+item.siliconchunk.name=Silicon Chunk
+item.elysium_sulphur.name=Sulphur
+item.tourmaline.name=Tourmaline
+item.sturdyHide.name=Sturdy Hide
+item.elysium_bucket_water.name=Elysium Wasser Bucket
