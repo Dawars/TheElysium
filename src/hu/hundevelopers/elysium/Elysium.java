@@ -2,6 +2,7 @@ package hu.hundevelopers.elysium;
 
 import hu.hundevelopers.elysium.api.Plants;
 import hu.hundevelopers.elysium.block.*;
+import hu.hundevelopers.elysium.event.ElysiumFuelHandler;
 import hu.hundevelopers.elysium.event.ElysiumHandler;
 import hu.hundevelopers.elysium.item.*;
 import hu.hundevelopers.elysium.proxy.CommonProxy;
@@ -89,8 +90,10 @@ public class Elysium
 
 	//Fluids
 	public static Fluid fluidElysiumWater;
+	public static Fluid fluidElysiumEnergy;
 
 	private static Fluid elysiumFluidWater;
+	private static Fluid elysiumFluidEnergy;
 
 	//Rendering Ids
 	public static int pipeStoneReinderingID;
@@ -119,6 +122,7 @@ public class Elysium
 	public static Block oreBeryl;
 
 	public static Block blockElysiumWater;
+	public static Block blockElysiumEnergy;
 
 	public static Block blockFloatingShell;
 	public static Block blockFloatingConch;
@@ -217,6 +221,23 @@ public class Elysium
 			registerItem(itemWaterBucket);
 			FluidContainerRegistry.registerFluidContainer(FluidRegistry.getFluidStack("elysium_water", FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(itemWaterBucket), new ItemStack(Items.bucket));
 		}
+		
+//
+
+    	elysiumFluidEnergy= new Fluid("elysium_energy");
+		FluidRegistry.registerFluid(elysiumFluidEnergy);
+		fluidElysiumEnergy = FluidRegistry.getFluid("elysium_energy");
+		
+		if (fluidElysiumEnergy.getBlock() == null)
+		{
+			blockElysiumEnergy = new ElysiumEnergyLiquid(fluidElysiumEnergy, Material.water).setHardness(100.0F).setLightOpacity(3).setBlockName("elysium_water");
+			registerBlock(blockElysiumEnergy);
+			fluidElysiumWater.setBlock(blockElysiumEnergy);
+		} else {
+			blockElysiumEnergy = fluidElysiumWater.getBlock();
+		}
+		
+		//
 		
 		ElysiumHandler.INSTANCE.buckets.put(blockElysiumWater, itemWaterBucket);
 
@@ -553,7 +574,7 @@ public class Elysium
 		GameRegistry.addSmelting(this.oreIridium, new ItemStack(this.itemIngotIridium), 1.0F);
 
 		//Handlers
-//		GameRegistry.registerFuelHandler(new ElysiumFuelHandler());
+		GameRegistry.registerFuelHandler(new ElysiumFuelHandler());
 		
 		
 		//Entity Registering
