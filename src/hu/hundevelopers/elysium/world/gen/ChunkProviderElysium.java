@@ -338,7 +338,7 @@ public class ChunkProviderElysium implements IChunkProvider
                         
                         if(y >= Configs.labyrinthBottom && y <= Configs.labyrinthTop)
                         {
-                        	if(y == Configs.labyrinthBottom)
+                        	if(y == Configs.labyrinthBottom || y == Configs.labyrinthTop || z == 0 || x == 0 || z == 15 || x == 15 || (x % 3 == 0 && z % 3 == 0))
                         		blockArray[index] = Configs.labyrinthWall;
                         	else
                         		blockArray[index] = null;

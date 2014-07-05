@@ -37,8 +37,6 @@ public class WorldGenElysium implements IWorldGenerator {
 		new ElysiumGenLakes(Elysium.blockElysiumWater).generate(world, random, x, y, z);
 	}
 
-	ElysiumGenMazeBase mazeBase = new ElysiumGenMazeBase(Blocks.quartz_block);
-	
 	private void generateElysium(World world, Random random, int blockX, int blockZ)
 	{
 		
@@ -88,8 +86,6 @@ public class WorldGenElysium implements IWorldGenerator {
 //					if(world.getBlockId(blockX+i, j, blockZ+k) == Elysium.blockPalestone.blockID)
 //						world.setBlockMetadataWithNotify(blockX+i, j, blockZ+k, meta, 0);
 //		}
-		
-//		mazeBase.generate(world, random, blockX, 10, blockZ);
 
 	}
 
