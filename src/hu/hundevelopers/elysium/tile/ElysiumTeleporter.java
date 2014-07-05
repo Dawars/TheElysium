@@ -1,7 +1,7 @@
 package hu.hundevelopers.elysium.tile;
 
 import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.Ids;
+import hu.hundevelopers.elysium.Configs;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -44,7 +44,7 @@ public class ElysiumTeleporter extends Teleporter
 		int i;
 		for(i=0; i<portals.size(); i++)
 		{
-			if((portals.get(i).dim == entity.dimension) && (Math.abs(portals.get(i).posX-x) < Ids.maxportaldistance) && (Math.abs(portals.get(i).posZ-z) < Ids.maxportaldistance))
+			if((portals.get(i).dim == entity.dimension) && (Math.abs(portals.get(i).posX-x) < Configs.maxportaldistance) && (Math.abs(portals.get(i).posZ-z) < Configs.maxportaldistance))
 			{
 				entity.motionX = entity.motionY = entity.motionZ = 0.0D;
 				int dx = random.nextInt(2);
@@ -66,8 +66,8 @@ public class ElysiumTeleporter extends Teleporter
 		boolean canBuild = false;
 
 		while(true){
-			x = MathHelper.floor_double(entity.posX) + random.nextInt(Ids.maxportaldistance+1) - Ids.maxportaldistance/2;
-			z = MathHelper.floor_double(entity.posZ) + random.nextInt(Ids.maxportaldistance+1) - Ids.maxportaldistance/2;
+			x = MathHelper.floor_double(entity.posX) + random.nextInt(Configs.maxportaldistance+1) - Configs.maxportaldistance/2;
+			z = MathHelper.floor_double(entity.posZ) + random.nextInt(Configs.maxportaldistance+1) - Configs.maxportaldistance/2;
 			y = worldServer.getTopSolidOrLiquidBlock(x, z)-1;
 
 			//check if can build

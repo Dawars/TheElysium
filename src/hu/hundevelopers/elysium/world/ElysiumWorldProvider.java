@@ -176,7 +176,7 @@ public class ElysiumWorldProvider extends WorldProvider
 		f3 *= (f2 * 0.0F + 0.15F);
 		f4 *= (f2 * 0.0F + 0.15F);
 		f5 *= (f2 * 0.0F + 0.15F);
-		return this.worldObj.getWorldVec3Pool().getVecFromPool(f3, f4, f5);
+		return Vec3.createVectorHelper(f3, f4, f5);
 	}
 
 	@Override
@@ -184,6 +184,6 @@ public class ElysiumWorldProvider extends WorldProvider
 	public Vec3 getSkyColor(Entity cameraEntity, float partialTicks)
 	{
 		double bright = 1D;
-		return this.worldObj.getWorldVec3Pool().getVecFromPool(1.17D*bright, 2.27D*bright, 2.55D*bright);
+		return Vec3.createVectorHelper(1.17D*bright, 2.27D*bright, 2.55D*bright);
 	}
 }

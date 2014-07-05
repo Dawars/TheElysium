@@ -4,7 +4,6 @@ import static org.lwjgl.opengl.GL11.*;
 import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.block.ElysiumPipeBlock;
 import hu.hundevelopers.elysium.tile.TilePipe;
-import me.dawars.CraftingPillars.tiles.TileEntityAnvilPillar;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;

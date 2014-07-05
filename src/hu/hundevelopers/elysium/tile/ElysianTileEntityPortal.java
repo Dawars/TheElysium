@@ -1,7 +1,7 @@
 package hu.hundevelopers.elysium.tile;
 
 import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.Ids;
+import hu.hundevelopers.elysium.Configs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -50,7 +50,7 @@ public class ElysianTileEntityPortal extends TileEntity
 		}
 
 		tick++;
-		if(tick >= Ids.ticksbeforeportalcheck)
+		if(tick >= Configs.ticksbeforeportalcheck)
 		{
 			tick = 0;
 			canstay = canStayPortal();

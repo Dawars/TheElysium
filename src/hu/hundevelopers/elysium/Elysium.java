@@ -10,14 +10,9 @@ import hu.hundevelopers.elysium.tile.ElysianTileEntityPortal;
 import hu.hundevelopers.elysium.world.ElysiumWorldProvider;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenOcean;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlain;
-import hu.hundevelopers.elysium.world.gen.CaveTypeElysium;
 import hu.hundevelopers.elysium.world.gen.WorldGenElysium;
 
 import java.io.File;
-
-import buildcraft.core.proxy.CoreProxy;
-import buildcraft.energy.BlockBuildcraftFluid;
-import buildcraft.energy.ItemBucketBuildcraft;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -225,16 +220,17 @@ public class Elysium
 //
 
     	elysiumFluidEnergy= new Fluid("elysium_energy");
+    	elysiumFluidEnergy.setDensity(2000).setLuminosity(15).setTemperature(500);
 		FluidRegistry.registerFluid(elysiumFluidEnergy);
 		fluidElysiumEnergy = FluidRegistry.getFluid("elysium_energy");
 		
 		if (fluidElysiumEnergy.getBlock() == null)
 		{
-			blockElysiumEnergy = new ElysiumEnergyLiquid(fluidElysiumEnergy, Material.water).setHardness(100.0F).setLightOpacity(3).setBlockName("elysium_water");
+			blockElysiumEnergy = new ElysiumEnergyLiquid(fluidElysiumEnergy, Material.water).setHardness(100.0F).setLightOpacity(3).setBlockName("elysium_energy").setCreativeTab(tabElysium);
 			registerBlock(blockElysiumEnergy);
-			fluidElysiumWater.setBlock(blockElysiumEnergy);
+			fluidElysiumEnergy.setBlock(blockElysiumEnergy);
 		} else {
-			blockElysiumEnergy = fluidElysiumWater.getBlock();
+			blockElysiumEnergy = fluidElysiumEnergy.getBlock();
 		}
 		
 		//
@@ -250,13 +246,13 @@ public class Elysium
 		{
 			config.load();
 
-			Property ELYSIUM_PLAINS = Elysium.config.get("biomeIds", "ELYSIUM_PLAINS", Ids.BIOME_PLAIN);
+			Property ELYSIUM_PLAINS = Elysium.config.get("biomeIds", "ELYSIUM_PLAINS", Configs.BIOME_PLAIN);
 			biomeIdPlains = ELYSIUM_PLAINS.getInt();
 			
-			Property ELYSIUM_OCEAN = Elysium.config.get("biomeIds", "ELYSIUM_OCEAN", Ids.BIOME_OCEAN);
+			Property ELYSIUM_OCEAN = Elysium.config.get("biomeIds", "ELYSIUM_OCEAN", Configs.BIOME_OCEAN);
 			biomeIdOcean = ELYSIUM_OCEAN.getInt();
 			
-			Property MAX_DRAGON_IN_END = Elysium.config.get("other", "MAX_DRAGON_IN_END", Ids.MAX_DRAGON_IN_END, "How many dragons can be spawned to the End at the same time!");
+			Property MAX_DRAGON_IN_END = Elysium.config.get("other", "MAX_DRAGON_IN_END", Configs.MAX_DRAGON_IN_END, "How many dragons can be spawned to the End at the same time!");
 			maxDragon = MAX_DRAGON_IN_END.getInt();
 			
 	    }
@@ -275,6 +271,7 @@ public class Elysium
 		if (event.map.getTextureType() == 0)
 		{
 			elysiumFluidWater.setIcons(blockElysiumWater.getBlockTextureFromSide(1), blockElysiumWater.getBlockTextureFromSide(2));
+			elysiumFluidEnergy.setIcons(blockElysiumEnergy.getBlockTextureFromSide(1), blockElysiumEnergy.getBlockTextureFromSide(2));
 		}
 	}
     

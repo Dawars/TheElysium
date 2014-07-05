@@ -1,6 +1,9 @@
 package hu.hundevelopers.elysium;
 
-public class Ids {
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+
+public class Configs {
 
 	public static final int MAX_DRAGON_IN_END = 1;
 
@@ -12,4 +15,8 @@ public class Ids {
 	public static final byte ticksbeforeportalcheck = 5;
 	public static final byte ticksbeforeportalteleport = 20 * 5;
 
+	public static final byte labyrinthBottom = 5;
+	public static final byte labyrinthTop = labyrinthBottom + 4;
+
+	public static final Block labyrinthWall = Blocks.quartz_block;
 }

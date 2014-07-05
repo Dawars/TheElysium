@@ -1,7 +1,7 @@
 package hu.hundevelopers.elysium.block;
 
 import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.Ids;
+import hu.hundevelopers.elysium.Configs;
 import hu.hundevelopers.elysium.tile.ElysianTileEntityPortal;
 import hu.hundevelopers.elysium.tile.ElysiumTeleporter;
 import net.minecraft.block.material.Material;
@@ -53,7 +53,7 @@ public class ElysiumBlockPortalCore extends ElysiumBlockContainer
 				EntityPlayerMP player = (EntityPlayerMP) entity;
 				ElysianTileEntityPortal tile = (ElysianTileEntityPortal)world.getTileEntity(x, y, z);
 
-				if((!world.isRemote) && (tile.timebeforetp == Ids.ticksbeforeportalteleport-1))
+				if((!world.isRemote) && (tile.timebeforetp == Configs.ticksbeforeportalteleport-1))
 				{
 					player.addChatMessage(new ChatComponentText(getWorldMessage(player)));
 				}
@@ -74,7 +74,7 @@ public class ElysiumBlockPortalCore extends ElysiumBlockContainer
 				else if(player.prevPosY == player.posY)
 				{
 					tile.wasCollided = true;
-					if(tile.timebeforetp == -1) tile.timebeforetp = Ids.ticksbeforeportalteleport;
+					if(tile.timebeforetp == -1) tile.timebeforetp = Configs.ticksbeforeportalteleport;
 				}
 			}
 		}

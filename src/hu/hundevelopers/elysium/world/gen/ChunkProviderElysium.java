@@ -1,12 +1,7 @@
 package hu.hundevelopers.elysium.world.gen;
 
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.CAVE;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.MINESHAFT;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.RAVINE;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.SCATTERED_FEATURE;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.STRONGHOLD;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.VILLAGE;
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE;
+import hu.hundevelopers.elysium.Configs;
 import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.world.gen.features.ElysiumGenCrystalSpikes;
 import hu.hundevelopers.elysium.world.gen.features.ElysiumGenFostimber;
@@ -55,7 +50,7 @@ public class ChunkProviderElysium implements IChunkProvider
     private NoiseGeneratorOctaves field_147431_j;
     private NoiseGeneratorOctaves field_147432_k;
     private NoiseGeneratorOctaves field_147429_l;
-    private NoiseGeneratorPerlin field_147430_m;
+    private NoiseGeneratorPerlin perlinNoise;
     /** A NoiseGeneratorOctaves used in generating terrain */
     public NoiseGeneratorOctaves noiseGen5;
     /** A NoiseGeneratorOctaves used in generating terrain */
@@ -114,7 +109,7 @@ public class ChunkProviderElysium implements IChunkProvider
         this.field_147431_j = new NoiseGeneratorOctaves(this.rand, 16);
         this.field_147432_k = new NoiseGeneratorOctaves(this.rand, 16);
         this.field_147429_l = new NoiseGeneratorOctaves(this.rand, 8);
-        this.field_147430_m = new NoiseGeneratorPerlin(this.rand, 4);
+        this.perlinNoise = new NoiseGeneratorPerlin(this.rand, 4);
         this.noiseGen5 = new NoiseGeneratorOctaves(this.rand, 10);
         this.noiseGen6 = new NoiseGeneratorOctaves(this.rand, 16);
         this.mobSpawnerNoise = new NoiseGeneratorOctaves(this.rand, 8);
@@ -130,12 +125,12 @@ public class ChunkProviderElysium implements IChunkProvider
             }
         }
 
-        NoiseGenerator[] noiseGens = {field_147431_j, field_147432_k, field_147429_l, field_147430_m, noiseGen5, noiseGen6, mobSpawnerNoise};
+        NoiseGenerator[] noiseGens = {field_147431_j, field_147432_k, field_147429_l, perlinNoise, noiseGen5, noiseGen6, mobSpawnerNoise};
         noiseGens = TerrainGen.getModdedNoiseGenerators(par1World, this.rand, noiseGens);
         this.field_147431_j = (NoiseGeneratorOctaves)noiseGens[0];
         this.field_147432_k = (NoiseGeneratorOctaves)noiseGens[1];
         this.field_147429_l = (NoiseGeneratorOctaves)noiseGens[2];
-        this.field_147430_m = (NoiseGeneratorPerlin)noiseGens[3];
+        this.perlinNoise = (NoiseGeneratorPerlin)noiseGens[3];
         this.noiseGen5 = (NoiseGeneratorOctaves)noiseGens[4];
         this.noiseGen6 = (NoiseGeneratorOctaves)noiseGens[5];
         this.mobSpawnerNoise = (NoiseGeneratorOctaves)noiseGens[6];
@@ -222,14 +217,28 @@ public class ChunkProviderElysium implements IChunkProvider
         }
     }
 
-    public void replaceBlocksForBiome(int par1, int par2, Block[] blockArray, byte[] mapArray, BiomeGenBase[] paramBiomeGenBase)
+    public void replaceBlocksForBiome(int chunkX, int chunkZ, Block[] blockArray, byte[] mapArray, BiomeGenBase[] paramBiomeGenBase)
     {
-        ChunkProviderEvent.ReplaceBiomeBlocks event = new ChunkProviderEvent.ReplaceBiomeBlocks(this, par1, par2, blockArray, mapArray, paramBiomeGenBase);
+    	//walls, bottom, sets
+    	byte[] sets = new byte[25];
+    	boolean bottom[] = new boolean[20];//5*(5-1)
+    	boolean right[] = new boolean[20];//(5-1)*5
+    	
+    	for(byte i = 0; i < sets.length; i++)
+    	{
+    		sets[i] = (byte) (i+1);
+    		if(i < 20)
+    		{
+    			bottom[i] = right[i] = false;
+    		}
+    	}
+    	
+        ChunkProviderEvent.ReplaceBiomeBlocks event = new ChunkProviderEvent.ReplaceBiomeBlocks(this, chunkX, chunkZ, blockArray, mapArray, paramBiomeGenBase);
         MinecraftForge.EVENT_BUS.post(event);
         if (event.getResult() == Result.DENY) return;
 
         double d0 = 0.03125D;
-        this.stoneNoise = this.field_147430_m.func_151599_a(this.stoneNoise, (double)(par1 * 16), (double)(par2 * 16), 16, 16, d0 * 2.0D, d0 * 2.0D, 1.0D);
+        this.stoneNoise = this.perlinNoise.func_151599_a(this.stoneNoise, (double)(chunkX * 16), (double)(chunkZ * 16), 16, 16, d0 * 2.0D, d0 * 2.0D, 1.0D);
 
         for (int z = 0; z < 16; ++z)
         {
@@ -246,21 +255,21 @@ public class ChunkProviderElysium implements IChunkProvider
                 Block fillerBlock = biomegenbase.fillerBlock;
                 int k = -1;
                 int l = (int)(this.stoneNoise[x + z * 16] / 3.0D + 3.0D + this.rand.nextDouble() * 0.25D);
-                int i1 = par1 * 16 + z & 15;
-                int j1 = par2 * 16 + x & 15;
+                int i1 = chunkX * 16 + z & 15;
+                int j1 = chunkZ * 16 + x & 15;
                 int k1 = blockArray.length / 256;
 
-                for (int l1 = 255; l1 >= 0; --l1)
+                for (int y = 255; y >= 0; --y)
                 {
-                    int i2 = (j1 * 16 + i1) * k1 + l1;
+                    int index = (j1 * 16 + i1) * k1 + y;
 
-                    if (l1 <= 1)
+                    if (y <= 1)
                     {
-                        blockArray[i2] = Blocks.bedrock;//TODO: magma
+                        blockArray[index] = Blocks.lava;//TODO: magma
                     }
                     else
                     {
-                        Block block2 = blockArray[i2];
+                        Block block2 = blockArray[index];
 
                         if (block2 != null && block2.getMaterial() != Material.air)
                         {
@@ -274,16 +283,16 @@ public class ChunkProviderElysium implements IChunkProvider
                                         b0 = 0;
                                         fillerBlock = Elysium.blockPalestone;
                                     }
-                                    else if (l1 >= 59 && l1 <= 64)
+                                    else if (y >= 59 && y <= 64)
                                     {
                                         topBlock = biomegenbase.topBlock;
                                         b0 = (byte)(biomegenbase.field_150604_aj & 255);
                                         fillerBlock = biomegenbase.fillerBlock;
                                     }
 
-                                    if (l1 < 63 && (topBlock == null || topBlock.getMaterial() == Material.air))
+                                    if (y < 63 && (topBlock == null || topBlock.getMaterial() == Material.air))
                                     {
-                                        if (biomegenbase.getFloatTemperature(par1 * 16 + z, l1, par2 * 16 + x) < 0.15F)
+                                        if (biomegenbase.getFloatTemperature(chunkX * 16 + z, y, chunkZ * 16 + x) < 0.15F)
                                         {
                                             topBlock = Blocks.ice;
                                             b0 = 0;
@@ -297,32 +306,26 @@ public class ChunkProviderElysium implements IChunkProvider
 
                                     k = l;
 
-                                    if (l1 >= 62)
+                                    if (y >= 62)
                                     {
-                                        blockArray[i2] = topBlock;
-                                        mapArray[i2] = b0;
+                                        blockArray[index] = topBlock;
+                                        mapArray[index] = b0;
                                     }
-                                    else if (l1 < 56 - l)
+                                    else if (y < 56 - l)
                                     {
                                         topBlock = null;
                                         fillerBlock = Elysium.blockPalestone;
-                                        blockArray[i2] = Elysium.blockSand;//gravel
+                                        blockArray[index] = Elysium.blockSand;//gravel
                                     }
                                     else
                                     {
-                                        blockArray[i2] = fillerBlock;
+                                        blockArray[index] = fillerBlock;
                                     }
                                 }
                                 else if (k > 0)
                                 {
                                     --k;
-                                    blockArray[i2] = fillerBlock;
-
-                                    if (k == 0 && fillerBlock == Elysium.blockSand)
-                                    {
-                                        k = this.rand.nextInt(4) + Math.max(0, l1 - 63);
-                                        fillerBlock = Elysium.blockSand;//sandstone
-                                    }
+                                    blockArray[index] = fillerBlock;
                                 }
                             }
                         }
@@ -330,13 +333,26 @@ public class ChunkProviderElysium implements IChunkProvider
                         {
                             k = -1;
                         }
+                        
+                        //maze start
+                        
+                        if(y >= Configs.labyrinthBottom && y <= Configs.labyrinthTop)
+                        {
+                        	if(y == Configs.labyrinthBottom)
+                        		blockArray[index] = Configs.labyrinthWall;
+                        	else
+                        		blockArray[index] = null;
+                        }
+                        
+                        //maze end
+                        
                     }
                 }
             }
         }
     }
 
-    /**
+	/**
      * loads or generates the chunk at the chunk location specified
      */
     @Override
@@ -350,16 +366,16 @@ public class ChunkProviderElysium implements IChunkProvider
      * specified chunk from the map seed and chunk seed
      */
     @Override
-    public Chunk provideChunk(int par1, int par2)
+    public Chunk provideChunk(int chunkX, int chunkY)
     {
-        this.rand.setSeed((long)par1 * 341873128712L + (long)par2 * 132897987541L);
+        this.rand.setSeed((long)chunkX * 341873128712L + (long)chunkY * 132897987541L);
         Block[] ablock = new Block[65536];
         byte[] abyte = new byte[65536];
-        this.generateTerrain(par1, par2, ablock);
-        this.biomesForGeneration = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(this.biomesForGeneration, par1 * 16, par2 * 16, 16, 16);
-        this.replaceBlocksForBiome(par1, par2, ablock, abyte, this.biomesForGeneration);
-        this.caveGenerator.func_151539_a(this, this.worldObj, par1, par2, ablock);
-        this.ravineGenerator.func_151539_a(this, this.worldObj, par1, par2, ablock);
+        this.generateTerrain(chunkX, chunkY, ablock);
+        this.biomesForGeneration = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(this.biomesForGeneration, chunkX * 16, chunkY * 16, 16, 16);
+        this.replaceBlocksForBiome(chunkX, chunkY, ablock, abyte, this.biomesForGeneration);
+        this.caveGenerator.func_151539_a(this, this.worldObj, chunkX, chunkY, ablock);
+        this.ravineGenerator.func_151539_a(this, this.worldObj, chunkX, chunkY, ablock);
 
 //        if (this.mapFeaturesEnabled)
 //        {
@@ -369,7 +385,7 @@ public class ChunkProviderElysium implements IChunkProvider
 //            this.scatteredFeatureGenerator.func_151539_a(this, this.worldObj, par1, par2, ablock);
 //        }
 
-        Chunk chunk = new Chunk(this.worldObj, ablock, abyte, par1, par2);
+        Chunk chunk = new Chunk(this.worldObj, ablock, abyte, chunkX, chunkY);
         byte[] abyte1 = chunk.getBiomeArray();
 
         for (int k = 0; k < abyte1.length; ++k)
