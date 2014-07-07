@@ -1,4 +1,4 @@
-package hu.hundevelopers.elysium.tile;
+package hu.hundevelopers.elysium.world;
 
 import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.Configs;
@@ -89,8 +89,8 @@ public class ElysiumTeleporter extends Teleporter
 				canBuild = true;
 			//check end
 
-			if(y<63-7)
-				y=63-7;
+			if(y<63)
+				y=63-1;
 
 			//get lowest air block underneath
 			int lowest = -1;

@@ -216,22 +216,13 @@ public class ChunkProviderElysium implements IChunkProvider
             }
         }
     }
+    
+	private int[] sets = new int[5];
+	private boolean right[] = new boolean[4];
+	private boolean bottom[] = new boolean[5];
 
     public void replaceBlocksForBiome(int chunkX, int chunkZ, Block[] blockArray, byte[] mapArray, BiomeGenBase[] paramBiomeGenBase)
     {
-    	//walls, bottom, sets
-    	byte[] sets = new byte[25];
-    	boolean bottom[] = new boolean[20];//5*(5-1)
-    	boolean right[] = new boolean[20];//(5-1)*5
-    	
-    	for(byte i = 0; i < sets.length; i++)
-    	{
-    		sets[i] = (byte) (i+1);
-    		if(i < 20)
-    		{
-    			bottom[i] = right[i] = false;
-    		}
-    	}
     	
         ChunkProviderEvent.ReplaceBiomeBlocks event = new ChunkProviderEvent.ReplaceBiomeBlocks(this, chunkX, chunkZ, blockArray, mapArray, paramBiomeGenBase);
         MinecraftForge.EVENT_BUS.post(event);
@@ -240,10 +231,20 @@ public class ChunkProviderElysium implements IChunkProvider
         double d0 = 0.03125D;
         this.stoneNoise = this.perlinNoise.func_151599_a(this.stoneNoise, (double)(chunkX * 16), (double)(chunkZ * 16), 16, 16, d0 * 2.0D, d0 * 2.0D, 1.0D);
 
-        for (int z = 0; z < 16; ++z)
+        boolean genMazeInThisChunk = this.rand.nextInt(Configs.mazeRoomRarity) != 0;
+    	
+        Maze maze = new Maze(this.rand);
+        
+        if(genMazeInThisChunk)//if normal maze
+        {
+        	maze.generate();
+        }
+        
+    	for (int z = 0; z < 16; ++z)
         {
             for (int x = 0; x < 16; ++x)
             {
+            	
                 BiomeGenBase biomegenbase = paramBiomeGenBase[x + z * 16];
                 //biomegenbase.genTerrainBlocks(this.worldObj, this.rand, blockArray, mapArray, par1 * 16 + z, par2 * 16 + x, this.stoneNoise[x + z * 16]);
     //										World p_150560_1_, Random p_150560_2_, Block[] p_150560_3_, byte[] p_150560_4_, int p_150560_5_, int p_150560_6_, double p_150560_7_
@@ -335,23 +336,66 @@ public class ChunkProviderElysium implements IChunkProvider
                         }
                         
                         //maze start
-                        
-                        if(y >= Configs.labyrinthBottom && y <= Configs.labyrinthTop)
-                        {
-                        	if(y == Configs.labyrinthBottom || y == Configs.labyrinthTop || z == 0 || x == 0 || z == 15 || x == 15 || (x % 3 == 0 && z % 3 == 0))
-                        		blockArray[index] = Configs.labyrinthWall;
-                        	else
-                        		blockArray[index] = null;
-                        }
+            			if(y <= Configs.labyrinthTop)
+                    	{
+                			if(y < Configs.labyrinthTop && y > Configs.labyrinthBottom)
+	                    	{//TODO: add other chambers
+	                    		
+	            				if((x % 3 == 1 || x % 3 == 2) && (z % 3 == 1 || z % 3 == 2))
+	                    		{
+	                    			blockArray[index] = null;
+
+	                    		} else if((x == 0 || x == 15) && (z == 8 || z == 7) || (z == 0 || z == 15) && (x == 8 || x == 7))
+	                    		{
+	                    			blockArray[index] = null;
+	                    		} else {
+	            					blockArray[index] = Configs.labyrinthWall;
+	                    		}
+	                    	} else {
+            					blockArray[index] = Configs.labyrinthWall;
+	                    	}
+                    	}
+            			
                         
                         //maze end
-                        
                     }
                 }
             }
         }
+
+        /*
+        if(!genMazeInThisChunk)
+        {
+        	//event handler, api
+        }*/
     }
 
+    private int setSizeWithBottomWall(int a)
+    {
+    	int res = 0;
+    	for(int i = 0; i < 5; i++)
+    	{
+    		if(bottom[i] && sets[i] == sets[a])
+    			res++;
+    	}
+		return res;
+	}
+
+	private void union(int a, int b)
+    {
+    	int aid = sets[a];
+    	int bid = sets[b];
+    	for(int i = 0; i < sets.length; i++)
+    	{
+    		if(sets[i] == aid) sets[i] = bid;
+    	}
+    }
+    
+    private boolean connected(int a, int b)
+    {
+    	return sets[a] == sets[b];
+    }
+    
 	/**
      * loads or generates the chunk at the chunk location specified
      */

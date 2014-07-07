@@ -189,15 +189,8 @@ public class SkyRendererElysium extends IRenderHandler
 				tessellator1.addVertex((double)f8, (double)f10, (double)(-f8));
 				tessellator1.draw();
 			}
-
-			if(world.provider.isSkyColored())
-			{
-				GL11.glColor3f(f1 * 0.2F + 0.04F, f2 * 0.2F + 0.04F, f3 * 0.6F + 0.1F);
-			}
-			else
-			{
-				GL11.glColor3f(f1, f2, f3);
-			}
+			
+			GL11.glColor3f(f1, f2, f3);
 
 			GL11.glEnable(GL11.GL_TEXTURE_2D);
 			GL11.glDepthMask(true);

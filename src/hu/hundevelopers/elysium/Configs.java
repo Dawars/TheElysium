@@ -19,4 +19,6 @@ public class Configs {
 	public static final byte labyrinthTop = labyrinthBottom + 4;
 
 	public static final Block labyrinthWall = Blocks.quartz_block;
+
+	public static final int mazeRoomRarity = 5;
 }

@@ -1,7 +1,11 @@
 package hu.hundevelopers.elysium.block;
 
+import java.util.Random;
+
 import hu.hundevelopers.elysium.Elysium;
+import hu.hundevelopers.elysium.render.EntityDropParticleFX;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -13,6 +17,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -70,4 +75,24 @@ public class ElysiumWaterBlock extends BlockFluidClassic
          return super.displaceIfPossible(world, x, y, z);
      }
 
+     /**
+      * A randomly called display update to be able to add particles or other items for display
+      */
+     @SideOnly(Side.CLIENT)
+     @Override
+     public void randomDisplayTick(World world, int x, int y, int z, Random rand)
+     {
+    	 super.randomDisplayTick(world, x, y, z, rand);
+    	 
+    	 if (rand.nextInt(10) == 0 	&& World.doesBlockHaveSolidTopSurface(world, x, y - 1, z)
+				&& !world.getBlock(x, y - 2, z).getMaterial().blocksMovement()) {
+
+    		 double px = x + rand.nextFloat();
+    		 double py = y - 1.05D;
+    		 double pz = z + rand.nextFloat();
+
+    		 EntityFX fx = new EntityDropParticleFX(world, px, py, pz, 70, 204, 234);//light blue
+    		 FMLClientHandler.instance().getClient().effectRenderer.addEffect(fx);
+    	 }
+     }
 }

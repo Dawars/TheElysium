@@ -3,7 +3,7 @@ package hu.hundevelopers.elysium.block;
 import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.Configs;
 import hu.hundevelopers.elysium.tile.ElysianTileEntityPortal;
-import hu.hundevelopers.elysium.tile.ElysiumTeleporter;
+import hu.hundevelopers.elysium.world.ElysiumTeleporter;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

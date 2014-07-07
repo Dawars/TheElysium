@@ -68,6 +68,39 @@ public class ElysiumWorldProvider extends WorldProvider
 	{
 		return true;
 	}
+	
+    /**
+     * returns true if this dimension is supposed to display void particles and pull in the far plane based on the
+     * user's Y offset.
+     */
+    @SideOnly(Side.CLIENT)
+    @Override
+	public boolean getWorldHasVoidParticles()
+    {
+        return false;
+    }
+
+    /**
+     * Returns a double value representing the Y value relative to the top of the map at which void fog is at its
+     * maximum. The default factor of 0.03125 relative to 256, for example, means the void fog will be at its maximum at
+     * (256*0.03125), or 8.
+     */
+    @SideOnly(Side.CLIENT)
+    @Override
+	public double getVoidFogYFactor()
+    {
+        return 0.03125;
+    }
+    
+    /**
+     * Returns true if the given X,Z coordinate should show environmental fog.
+     */
+    @SideOnly(Side.CLIENT)
+    @Override
+	public boolean doesXZShowFog(int par1, int par2)
+    {
+        return false;
+    }
 
 	/**
      * Will check if the x, z position specified is alright to be set as the map spawn point
@@ -158,26 +191,50 @@ public class ElysiumWorldProvider extends WorldProvider
         return f1;
     }
 
-	@Override
+
+    /**
+     * Return Vec3D with biome specific fog color
+     */
 	@SideOnly(Side.CLIENT)
-	public Vec3 getFogColor(float par1, float par2)
-	{
-		int i = 10518688;
-		float f2 = MathHelper.cos(par1 * 3.141593F * 2.0F) * 2.0F + 0.5F;
-		if (f2 < 0.0F) {
-			f2 = 0.0F;
-		}
-		if (f2 > 1.0F) {
-			f2 = 1.0F;
-		}
-		float f3 = (i >> 16 & 0xFF) / 255.0F;
-		float f4 = (i >> 8 & 0xFF) / 255.0F;
-		float f5 = (i & 0xFF) / 255.0F;
-		f3 *= (f2 * 0.0F + 0.15F);
-		f4 *= (f2 * 0.0F + 0.15F);
-		f5 *= (f2 * 0.0F + 0.15F);
-		return Vec3.createVectorHelper(f3, f4, f5);
-	}
+	@Override
+	public Vec3 getFogColor(float celsianAngle, float tick)
+    {
+        float f2 = MathHelper.cos(celsianAngle * (float)Math.PI * 2.0F) * 2.0F + 0.5F;
+
+        if (f2 < 0.0F)
+        {
+            f2 = 0.0F;
+        }
+
+        if (f2 > 1.0F)
+        {
+            f2 = 1.0F;
+        }
+
+        float f3 = 0.7529412F;
+        float f4 = 0.84705883F;
+        float f5 = 1.0F;
+        f3 *= f2 * 0.94F + 0.06F;
+        f4 *= f2 * 0.94F + 0.06F;
+        f5 *= f2 * 0.91F + 0.09F;
+//        
+//		int i = 0xeff1f2;
+//		float f2 = MathHelper.cos(celsianAngle * 3.141593F * 2.0F) * 2.0F + 0.5F;
+//		if (f2 < 0.0F) {
+//			f2 = 0.0F;
+//		}
+//		if (f2 > 1.0F) {
+//			f2 = 1.0F;
+//		}
+//		float f3 = (i >> 16 & 0xFF) / 255.0F;
+//		float f4 = (i >> 8 & 0xFF) / 255.0F;
+//		float f5 = (i & 0xFF) / 255.0F;
+//		f3 *= (f2 * 0.0F + 0.15F);
+//		f4 *= (f2 * 0.0F + 0.15F);
+//		f5 *= (f2 * 0.0F + 0.15F);
+		
+        return Vec3.createVectorHelper((double)f3, (double)f4, (double)f5);
+    }
 
 	@Override
 	@SideOnly(Side.CLIENT)

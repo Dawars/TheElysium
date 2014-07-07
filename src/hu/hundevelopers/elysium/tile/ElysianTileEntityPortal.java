@@ -2,6 +2,8 @@ package hu.hundevelopers.elysium.tile;
 
 import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.Configs;
+import hu.hundevelopers.elysium.world.ElysiumPortalPosition;
+import hu.hundevelopers.elysium.world.ElysiumTeleporter;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;

@@ -1,4 +1,4 @@
-package hu.hundevelopers.elysium.tile;
+package hu.hundevelopers.elysium.world;
 
 public class ElysiumPortalPosition
 {

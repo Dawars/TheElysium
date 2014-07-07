@@ -1,7 +1,7 @@
 package hu.hundevelopers.elysium.item;
 
 import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.tile.ElysiumTeleporter;
+import hu.hundevelopers.elysium.world.ElysiumTeleporter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
