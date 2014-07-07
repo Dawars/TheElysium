@@ -231,12 +231,13 @@ public class ChunkProviderElysium implements IChunkProvider
         double d0 = 0.03125D;
         this.stoneNoise = this.perlinNoise.func_151599_a(this.stoneNoise, (double)(chunkX * 16), (double)(chunkZ * 16), 16, 16, d0 * 2.0D, d0 * 2.0D, 1.0D);
 
-        boolean genMazeInThisChunk = this.rand.nextInt(Configs.mazeRoomRarity) != 0;
+        boolean genMazeInThisChunk = this.rand.nextInt(Configs.mazeRoomRarity) != 0;//if normal maze
     	
-        Maze maze = new Maze(this.rand);
-        
+        Maze maze = null;
         if(genMazeInThisChunk)//if normal maze
         {
+        	maze = new Maze(this.rand);
+        
         	maze.generate();
         }
         
@@ -340,21 +341,31 @@ public class ChunkProviderElysium implements IChunkProvider
                     	{
                 			if(y < Configs.labyrinthTop && y > Configs.labyrinthBottom)
 	                    	{//TODO: add other chambers
-	                    		
-	            				if((x % 3 == 1 || x % 3 == 2) && (z % 3 == 1 || z % 3 == 2))
+	                    		if(!genMazeInThisChunk)
+	                    		{
+	                    			blockArray[index] = null;
+	                    		} else if((x % 3 == 1 || x % 3 == 2) && (z % 3 == 1 || z % 3 == 2))
 	                    		{
 	                    			blockArray[index] = null;
 
 	                    		} else if((x == 0 || x == 15) && (z == 8 || z == 7) || (z == 0 || z == 15) && (x == 8 || x == 7))
 	                    		{
 	                    			blockArray[index] = null;
+	                    		} else if(y == Configs.labyrinthBottom + 2)
+	                    		{
+	            					blockArray[index] = Configs.labyrinthLamp;
 	                    		} else {
 	            					blockArray[index] = Configs.labyrinthWall;
+
 	                    		}
 	                    	} else {
             					blockArray[index] = Configs.labyrinthWall;
 	                    	}
                     	}
+            			
+            			//TODO: remove
+//            			if(y >= Configs.labyrinthTop && y < Configs.labyrinthTop+3)
+//                			blockArray[index] = null;
             			
                         
                         //maze end
@@ -362,7 +373,44 @@ public class ChunkProviderElysium implements IChunkProvider
                 }
             }
         }
-
+    	
+    	if(genMazeInThisChunk)
+    	{
+    		//for y 3
+    		for(int z = 0; z < 5; z++)
+    		{
+        		for(int x = 0; x < 5; x++)
+        		{
+        			//walls
+        			if(x < 4)
+        			{
+        				if(!maze.walls[z * 4 + x])
+        				{
+        					for(int y = 1; y <= 3; y++)
+        					{
+        						setBlock(chunkX, chunkZ, (x+1) * 3, Configs.labyrinthBottom + y, z*3+1, blockArray, null);
+        						setBlock(chunkX, chunkZ, (x+1) * 3, Configs.labyrinthBottom + y, z*3+2, blockArray, null);
+        					}
+        				}
+        			}
+        			
+        			//bottom
+        			if(z < 4)
+        			{
+        				if(!maze.bottom[z * 5 + x])
+        				{
+        					for(int y = 1; y <= 3; y++)
+        					{
+        						setBlock(chunkX, chunkZ, x * 3+1, Configs.labyrinthBottom + y, (z+1)*3, blockArray, null);
+        						setBlock(chunkX, chunkZ, x * 3+2, Configs.labyrinthBottom + y, (z+1)*3, blockArray, null);
+        					}
+        				}
+        			}
+        		}
+    		}
+    	}
+    	maze = null;
+    	
         /*
         if(!genMazeInThisChunk)
         {
@@ -370,7 +418,18 @@ public class ChunkProviderElysium implements IChunkProvider
         }*/
     }
 
-    private int setSizeWithBottomWall(int a)
+    private void setBlock(int chunkX, int chunkZ, int x, int y, int z, Block[] blockArray, Block block)
+    {
+    	 int i1 = chunkX * 16 + z & 15;
+         int j1 = chunkZ * 16 + x & 15;
+         int k1 = blockArray.length / 256;
+
+         int index = (j1 * 16 + i1) * k1 + y;
+         
+         blockArray[index] = block;
+	}
+
+	private int setSizeWithBottomWall(int a)
     {
     	int res = 0;
     	for(int i = 0; i < 5; i++)
