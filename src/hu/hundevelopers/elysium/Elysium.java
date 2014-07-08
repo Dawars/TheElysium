@@ -2,6 +2,9 @@ package hu.hundevelopers.elysium;
 
 import hu.hundevelopers.elysium.api.Plants;
 import hu.hundevelopers.elysium.block.*;
+import hu.hundevelopers.elysium.entity.EntityCatorPillar;
+import hu.hundevelopers.elysium.entity.EntityDeer;
+import hu.hundevelopers.elysium.entity.EntitySwan;
 import hu.hundevelopers.elysium.event.ElysiumFuelHandler;
 import hu.hundevelopers.elysium.event.ElysiumHandler;
 import hu.hundevelopers.elysium.item.*;
@@ -44,6 +47,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -144,7 +148,10 @@ public class Elysium
 	public static Block blockJade;
 	public static Block blockTourmaline;
 	public static Block blockBeryl;
+	
 	public static Block blockPipe;
+
+	public static Block blockQuartzGem;
 
 //	public static Block blockFancyWorkbench;
 //	public static Block blockFancyTank;
@@ -169,6 +176,8 @@ public class Elysium
 	public static Item itemSturdyHide;
 	public static Item itemSulphur;
 	public static Item itemTourmaline;
+
+	public static Item itemStaff;
 
 	public static Item itemSwordFostimber;
 	public static Item itemPickaxeFostimber;
@@ -348,15 +357,6 @@ public class Elysium
 
 		Blocks.dragon_egg.setCreativeTab(tabElysium);
 
-		
-
-		blockTiberium = new ElysiumTiberiumBlock(Material.glass).setHardness(0.3F).setStepSound(Block.soundTypeGlass).setLightLevel(1.0F).setBlockTextureName("energy_crystal_rough5").setBlockName("energy_crystal");
-		registerBlock(blockTiberium);
-		
-		blockPipe = new ElysiumPipeBlock(Material.rock).setHardness(0.3F).setStepSound(Block.soundTypeStone).setBlockTextureName("palestone").setBlockName("stone_pipe");
-		registerBlock(blockPipe);
-
-		
 		/*
 		blockPalestoneBrick = (new ElysiumBlockHeatable(idPalestoneBrickBlock.getInt(), Material.rock, -273, 300)).setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("palestone_brick");
 		registerBlock(blockPalestoneBrick, "Palestone Brick");
@@ -396,7 +396,16 @@ public class Elysium
 		blockTourmaline = new ElysiumBlock(Material.iron).setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeStone).setBlockTextureName("blockTourmaline").setBlockName("blockTourmaline");
 		registerBlock(blockTourmaline);
 
+
+		blockTiberium = new ElysiumTiberiumBlock(Material.glass).setHardness(0.3F).setStepSound(Block.soundTypeGlass).setLightLevel(1.0F).setBlockTextureName("energy_crystal_rough5").setBlockName("energy_crystal");
+		registerBlock(blockTiberium);
 		
+		blockPipe = new ElysiumPipeBlock(Material.rock).setHardness(0.3F).setStepSound(Block.soundTypeStone).setBlockTextureName("palestone").setBlockName("stone_pipe");
+		registerBlock(blockPipe);
+
+
+		blockQuartzGem = new ElysiumBlock(Material.rock).setHardness(3F).setResistance(5F).setLightLevel(1F).setStepSound(Block.soundTypeStone).setBlockTextureName("quartz_block_gem").setBlockName("quartz_block_gem");
+		registerBlock(blockQuartzGem);
 		
 		//Items
 		itemPrism = new ElysiumItemPrism().setTextureName("gracecrystal").setUnlocalizedName("prism");
@@ -441,6 +450,11 @@ public class Elysium
 		itemSturdyHide = new ElysiumItem().setTextureName("sturdyHide").setUnlocalizedName("sturdyHide");
 		registerItem(itemSturdyHide);
 
+
+		itemStaff = new ElysiumItem().setTextureName("staff").setUnlocalizedName("staff");
+		registerItem(itemStaff);
+
+		
 		//Tool Registering
 
 		Item.ToolMaterial FOSTIMBER_MAT = EnumHelper.addToolMaterial("FOSTIMBER", 0, 59, 2.0F, 0, 15);
@@ -575,7 +589,20 @@ public class Elysium
 		
 		
 		//Entity Registering
+		int catorPillarID = EntityRegistry.findGlobalUniqueEntityId();
+		EntityRegistry.registerGlobalEntityID(EntityCatorPillar.class, "CatorPillar", catorPillarID, 0x646464, 0x3A3A3A);
+        EntityRegistry.registerModEntity(EntityCatorPillar.class, "CatorPillar", catorPillarID, this, 160, 1, true);
 
+        int swanID = EntityRegistry.findGlobalUniqueEntityId();
+		EntityRegistry.registerGlobalEntityID(EntitySwan.class, "Swan", swanID, 0x626464, 0x3A2A3A);
+        EntityRegistry.registerModEntity(EntitySwan.class, "Swan", swanID, this, 160, 1, true);
+
+        int deerID = EntityRegistry.findGlobalUniqueEntityId();
+		EntityRegistry.registerGlobalEntityID(EntityDeer.class, "Deer", deerID, 0x626464, 0x3A2A3A);
+        EntityRegistry.registerModEntity(EntityDeer.class, "Deer", deerID, this, 160, 1, true);
+        
+        
+		//TileEntity
 		GameRegistry.registerTileEntity(ElysianTileEntityPortal.class, "ElysianTileEntityPortal");
 
 		/** Register WorldProvider for Dimension **/
