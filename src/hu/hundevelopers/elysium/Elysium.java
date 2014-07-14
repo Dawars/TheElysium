@@ -5,6 +5,7 @@ import hu.hundevelopers.elysium.block.*;
 import hu.hundevelopers.elysium.entity.EntityCatorPillar;
 import hu.hundevelopers.elysium.entity.EntityDeer;
 import hu.hundevelopers.elysium.entity.EntitySwan;
+import hu.hundevelopers.elysium.event.ElysiumEventHandler;
 import hu.hundevelopers.elysium.event.ElysiumFuelHandler;
 import hu.hundevelopers.elysium.event.ElysiumHandler;
 import hu.hundevelopers.elysium.item.*;
@@ -247,6 +248,7 @@ public class Elysium
 		ElysiumHandler.INSTANCE.buckets.put(blockElysiumWater, itemWaterBucket);
 
 		MinecraftForge.EVENT_BUS.register(ElysiumHandler.INSTANCE);
+		MinecraftForge.EVENT_BUS.register(new ElysiumEventHandler());
 		
     	//Config
 		config = new Configuration(new File(event.getModConfigurationDirectory(), "Elysium.cfg"));

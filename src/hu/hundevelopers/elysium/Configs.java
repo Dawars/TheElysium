@@ -22,4 +22,6 @@ public class Configs {
 	public static final Block labyrinthLamp = Elysium.blockQuartzGem;
 
 	public static final int mazeRoomRarity = 10;
+	
+	public static final boolean customGui = true;
 }
