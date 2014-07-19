@@ -1,5 +1,7 @@
 package hu.hundevelopers.elysium.model;
 
+import static org.lwjgl.opengl.GL11.*;
+
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -222,8 +224,8 @@ public class ModelDeer extends ModelBase {
 		leg3BR.mirror = false;
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3,
-			float f4, float f5) {
+	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
+	{
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(entity, f, f1, f2, f3, f4, f5);
 		body3.render(f5);
@@ -231,7 +233,16 @@ public class ModelDeer extends ModelBase {
 		body1.render(f5);
 		body2.render(f5);
 		tail.render(f5);
+		
+		glPushMatrix();
+		glEnable(GL_BLEND);
+		glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		Gem.render(f5);
+		
+		glDisable(GL_BLEND);
+		glPopMatrix();
+		
+		
 		earR.render(f5);
 		head4.render(f5);
 		head2.render(f5);

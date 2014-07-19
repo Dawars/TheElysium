@@ -1,7 +1,9 @@
 package hu.hundevelopers.elysium.entity;
 
 import hu.hundevelopers.elysium.Elysium;
+import hu.hundevelopers.elysium.api.ElysiumApi;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIControlledByPlayer;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -45,6 +47,12 @@ public class EntityCatorPillar extends EntityAmbientCreature
 		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(32.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(0.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.25D);
+	}
+    
+    @Override
+    public EnumCreatureAttribute getCreatureAttribute()
+	{
+		return ElysiumApi.MOB;
 	}
     
     @SideOnly(Side.CLIENT)
