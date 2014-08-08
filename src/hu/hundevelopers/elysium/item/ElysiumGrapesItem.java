@@ -13,16 +13,32 @@ import net.minecraft.util.MathHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ElysiumStaffItem extends ElysiumItem
+public class ElysiumGrapesItem extends ElysiumItem
 {
-	public ElysiumStaffItem()
+	public ElysiumGrapesItem()
 	{
-		this.setMaxStackSize(1);
+		this.setMaxStackSize(16);
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
 	}
 	
-    public static final String[] names = new String[] { "earth", "ice", "ender", "fire" };
+
+    @SideOnly(Side.CLIENT)
+    private IIcon[] icons;
+ 
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerIcons(IIconRegister par1IconRegister)
+    {
+        icons = new IIcon[2];
+ 
+        for (int i = 0; i < icons.length; i++)
+        {
+            icons[i] = par1IconRegister.registerIcon(this.iconString + "_" + names[i]);
+        }
+    }
+ 
+    public static final String[] names = new String[] { "blue", "white"};
     
  /**
      * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
@@ -34,8 +50,14 @@ public class ElysiumStaffItem extends ElysiumItem
         int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, 15);
         return super.getUnlocalizedName() + "." + names[i];
     }
-
-    /**
+ 
+    @Override
+    public IIcon getIconFromDamage(int par1)
+    {
+        return icons[par1];
+    }
+    
+	/**
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })

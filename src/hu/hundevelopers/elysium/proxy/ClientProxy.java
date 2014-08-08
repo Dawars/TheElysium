@@ -5,12 +5,14 @@ import hu.hundevelopers.elysium.entity.EntityCatorPillar;
 import hu.hundevelopers.elysium.entity.EntityDeer;
 import hu.hundevelopers.elysium.entity.EntityPinkUnicorn;
 import hu.hundevelopers.elysium.entity.EntitySwan;
+import hu.hundevelopers.elysium.entity.EntityVoidSpecter;
 import hu.hundevelopers.elysium.model.ModelPinkUnicorn;
 import hu.hundevelopers.elysium.render.ElysiumTileEntityPortalRenderer;
 import hu.hundevelopers.elysium.render.RenderCaterPillar;
 import hu.hundevelopers.elysium.render.RenderDeer;
 import hu.hundevelopers.elysium.render.RenderPinkUnicorn;
 import hu.hundevelopers.elysium.render.RenderSwan;
+import hu.hundevelopers.elysium.render.RenderVoidSpecter;
 import hu.hundevelopers.elysium.render.StaffRenderer;
 import hu.hundevelopers.elysium.tile.ElysianTileEntityPortal;
 import net.minecraft.network.Packet;
@@ -50,6 +52,7 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntitySwan.class, new RenderSwan());
 		RenderingRegistry.registerEntityRenderingHandler(EntityDeer.class, new RenderDeer());
 		RenderingRegistry.registerEntityRenderingHandler(EntityPinkUnicorn.class, new RenderPinkUnicorn(new ModelPinkUnicorn()));
+		RenderingRegistry.registerEntityRenderingHandler(EntityVoidSpecter.class, new RenderVoidSpecter());
 
 //		TickRegistry.registerTickHandler(new ElysianClientTickHandler(), Side.CLIENT);
 	

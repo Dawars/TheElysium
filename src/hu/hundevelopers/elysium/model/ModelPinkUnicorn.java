@@ -1,5 +1,13 @@
 	package hu.hundevelopers.elysium.model;
 
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
 import hu.hundevelopers.elysium.entity.EntityPinkUnicorn;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -53,11 +61,20 @@ public class ModelPinkUnicorn extends ModelBase
 	private ModelRenderer horseLeftSaddleMetal;
 	private ModelRenderer horseRightSaddleMetal;
 	private ModelRenderer horseRightSaddleRope;
+	private ModelRenderer Gem;
 
     public ModelPinkUnicorn()
     {
         this.textureWidth = 128;
         this.textureHeight = 128;
+        
+
+        Gem = new ModelRenderer(this, 17, 0);
+        Gem.addBox(-1F, -22F, 1F, 2, 2, 2);
+        Gem.setRotationPoint(0F, 4F, -10F);
+        Gem.setTextureSize(128, 128);
+        Gem.mirror = true;
+        setBoxRotation(Gem, 0.5235988F, 0F, 0F);
         
         this.horn = new ModelRenderer(this, 0, 68);
         this.horn.addBox(-1F, -15F, 1F, 2, 5, 2);
@@ -191,7 +208,7 @@ public class ModelPinkUnicorn extends ModelBase
         this.horseFaceRopes.setRotationPoint(0.0F, 4.0F, -10.0F);
         this.setBoxRotation(this.horseFaceRopes, 0.5235988F, 0.0F, 0.0F);
     }
-
+    
     /**
      * Sets the models various rotation angles then renders the model.
      */
@@ -281,6 +298,15 @@ public class ModelPinkUnicorn extends ModelBase
         this.horseLeftEar.render(f5);
         this.horseRightEar.render(f5);
 
+        glPushMatrix();
+		glEnable(GL_BLEND);
+		glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
+		Gem.render(f5);
+		
+		glDisable(GL_BLEND);
+		glPopMatrix();
+        
         this.horn.render(f5);
         this.horn2.render(f5);
         this.head.render(f5);
@@ -384,6 +410,10 @@ public class ModelPinkUnicorn extends ModelBase
 //        this.muleRightChest.rotationPointZ = f9 * 15.0F + f10 * this.muleRightChest.rotationPointZ;
         this.body.rotateAngleX = f9 * -((float)Math.PI / 4F) + f10 * this.body.rotateAngleX;
         
+
+        this.Gem.rotateAngleX = this.head.rotateAngleX;
+        this.Gem.rotateAngleY = this.head.rotateAngleY;
+        this.Gem.rotateAngleZ = this.head.rotateAngleZ;
 
         this.horn.rotateAngleX = this.head.rotateAngleX;
         this.horn.rotateAngleY = this.head.rotateAngleY;

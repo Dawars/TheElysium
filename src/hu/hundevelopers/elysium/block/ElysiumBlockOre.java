@@ -4,8 +4,11 @@ import hu.hundevelopers.elysium.Elysium;
 
 import java.util.Random;
 
+import buildcraft.energy.BlockBuildcraftFluid;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
@@ -79,31 +82,20 @@ public class ElysiumBlockOre extends ElysiumBlockHeatable
 		}
 	}
 	
-	/**
-     * Called when fire is updating, checks if a block face can catch fire.
-     *
-     *
-     * @param world The current world
-     * @param x The blocks X position
-     * @param y The blocks Y position
-     * @param z The blocks Z position
-     * @param face The face that the fire is coming from
-     * @return True if the face can be on fire, false otherwise.
-     */
-	@Override
-	public boolean isFlammable(IBlockAccess world, int x, int y, int z, ForgeDirection face)
-    {
-        return this == Elysium.oreSulphure;
-    }
-	
 	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
 	{
 		super.onNeighborBlockChange(world, x, y, z, block);
-		if (block.isFlammable(world, x, y, z, ForgeDirection.UNKNOWN))
+		for(int i = 0; i < ForgeDirection.VALID_DIRECTIONS.length; i++)
 		{
-			world.newExplosion(null, x, y, z, 4F, true, true);
-			world.setBlockToAir(x, y, z);
+			Block blockN = world.getBlock(x + ForgeDirection.getOrientation(i).offsetX, y + ForgeDirection.getOrientation(i).offsetY, z + ForgeDirection.getOrientation(i).offsetZ);
+			
+			if (blockN == Blocks.fire || blockN == Blocks.lava ||
+					block.isBurning(world, x + ForgeDirection.getOrientation(i).offsetX, y + ForgeDirection.getOrientation(i).offsetY, z + ForgeDirection.getOrientation(i).offsetZ))
+			{
+				world.newExplosion(null, x, y, z, 4F, true, true);
+				world.setBlockToAir(x, y, z);
+			}
 		}
 	}
 }

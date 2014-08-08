@@ -1,5 +1,6 @@
 package hu.hundevelopers.elysium.entity;
 
+import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.api.ElysiumApi;
 
 import java.util.Iterator;
@@ -57,7 +58,7 @@ public class EntityDeer extends EntityAnimal
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIPanic(this, 1.2D));
         this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
-        this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityPlayer.class, 16.0F, 0.4D, 0.8D));
+        this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityPlayer.class, 24.0F, 0.4D, 0.8D));
         this.tasks.addTask(4, new EntityAIFollowParent(this, 1.0D));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 0.6D));
         this.tasks.addTask(6, new EntityAIWander(this, 0.7D));
@@ -78,6 +79,31 @@ public class EntityDeer extends EntityAnimal
 	{
 		return ElysiumApi.MOB;
 	}
+
+	@Override
+    protected Item getDropItem()
+    {
+        return Elysium.itemAntler;
+    }
+
+    /**
+     * Drop 0-2 items of this living's type. 
+     * @param par1 - Whether this entity has recently been hit by a player. 
+     * @param par2 - Level of Looting used to kill this mob.
+     */
+    @Override
+    protected void dropFewItems(boolean par1, int par2)
+    {
+        int j = this.rand.nextInt(3) + this.rand.nextInt(1 + par2);
+
+        for (int k = 0; k < j; ++k)
+        {
+            this.dropItem(Elysium.itemDeerPelt, 1);
+        }
+        
+        this.dropItem(Item.getItemFromBlock(Elysium.blockEnergyCrystal), 1);
+        this.dropItem(Elysium.itemAntler, 1);
+    }
     
 	@Override
 	public EntityAgeable createChild(EntityAgeable var1)

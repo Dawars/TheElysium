@@ -29,9 +29,11 @@ import hu.hundevelopers.elysium.entity.EntityCatorPillar;
 import hu.hundevelopers.elysium.entity.EntityDeer;
 import hu.hundevelopers.elysium.entity.EntityPinkUnicorn;
 import hu.hundevelopers.elysium.entity.EntitySwan;
+import hu.hundevelopers.elysium.entity.EntityVoidSpecter;
 import hu.hundevelopers.elysium.event.ElysiumFuelHandler;
 import hu.hundevelopers.elysium.event.ElysiumHandler;
 import hu.hundevelopers.elysium.item.ElysiumBucket;
+import hu.hundevelopers.elysium.item.ElysiumGrapesItem;
 import hu.hundevelopers.elysium.item.ElysiumItem;
 import hu.hundevelopers.elysium.item.ElysiumItemAxe;
 import hu.hundevelopers.elysium.item.ElysiumItemDebug;
@@ -42,6 +44,7 @@ import hu.hundevelopers.elysium.item.ElysiumItemPrism;
 import hu.hundevelopers.elysium.item.ElysiumItemShovel;
 import hu.hundevelopers.elysium.item.ElysiumItemSword;
 import hu.hundevelopers.elysium.item.ElysiumItemWhistle;
+import hu.hundevelopers.elysium.item.ElysiumStaffItem;
 import hu.hundevelopers.elysium.proxy.CommonProxy;
 import hu.hundevelopers.elysium.tile.ElysianTileEntityPortal;
 import hu.hundevelopers.elysium.world.ElysiumWorldProvider;
@@ -215,6 +218,12 @@ public class Elysium
 
 	public static Item itemStaff;
 
+	public static Item itemDeerPelt;
+	public static Item itemAntler;
+	public static Item itemGrapes;
+	public static Item itemRaspberry;
+	public static Item itemHardPaw;
+	
 	public static Item itemSwordFostimber;
 	public static Item itemPickaxeFostimber;
 	public static Item itemAxeFostimber;
@@ -497,8 +506,23 @@ public class Elysium
 		registerItem(itemSturdyHide);
 
 
-		itemStaff = new ElysiumItem().setTextureName("staff").setUnlocalizedName("staff");
+		itemStaff = new ElysiumStaffItem().setTextureName("staff").setUnlocalizedName("staff");
 		registerItem(itemStaff);
+
+		itemAntler = new ElysiumItem().setTextureName("antler").setUnlocalizedName("antler");
+		registerItem(itemAntler);
+
+		itemDeerPelt = new ElysiumItem().setTextureName("deer_pelt").setUnlocalizedName("deer_pelt");
+		registerItem(itemDeerPelt);
+
+		itemGrapes = new ElysiumGrapesItem().setTextureName("grapes").setUnlocalizedName("grapes");
+		registerItem(itemGrapes);
+
+		itemRaspberry = new ElysiumItem().setTextureName("raspberry").setUnlocalizedName("raspberry");
+		registerItem(itemRaspberry);
+		
+		itemHardPaw = new ElysiumItem().setTextureName("hard_paw").setUnlocalizedName("hard_paw");
+		registerItem(itemHardPaw);
 
 		
 		//Tool Registering
@@ -668,10 +692,13 @@ public class Elysium
 		EntityRegistry.registerGlobalEntityID(EntityDeer.class, "Deer", deerID, 0x626464, 0x3A2A3A);
         EntityRegistry.registerModEntity(EntityDeer.class, "Deer", deerID, this, 160, 1, true);
         
+        int unicornID = EntityRegistry.findGlobalUniqueEntityId();
+		EntityRegistry.registerGlobalEntityID(EntityPinkUnicorn.class, "Unicorn", unicornID, 0x623464, 0x3A2A3A);//TODO: remove egg
+        EntityRegistry.registerModEntity(EntityPinkUnicorn.class, "Unicorn", unicornID, this, 160, 1, true);
 
-        int unicorn = EntityRegistry.findGlobalUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(EntityPinkUnicorn.class, "Unicorn", unicorn, 0x623464, 0x3A2A3A);//TODO: remove egg
-        EntityRegistry.registerModEntity(EntityPinkUnicorn.class, "Unicorn", unicorn, this, 160, 1, true);
+        int voidspecterID = EntityRegistry.findGlobalUniqueEntityId();
+		EntityRegistry.registerGlobalEntityID(EntityVoidSpecter.class, "VoidSpecter", voidspecterID, 0x623464, 0x3A2A3A);//TODO: remove egg
+        EntityRegistry.registerModEntity(EntityVoidSpecter.class, "VoidSpecter", voidspecterID, this, 160, 1, true);
         
         
         //Entity Spawn

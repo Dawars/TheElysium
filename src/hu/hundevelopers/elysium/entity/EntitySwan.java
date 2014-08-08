@@ -57,6 +57,12 @@ public class EntitySwan extends EntityAnimal
 		return this.height / 4F;
 	}
 
+	@Override
+    protected Item getDropItem()
+    {
+        return Items.feather;
+    }
+
     /**
      * Drop 0-2 items of this living's type. @param par1 - Whether this entity has recently been hit by a player. @param
      * par2 - Level of Looting used to kill this mob.
@@ -194,11 +200,6 @@ public class EntitySwan extends EntityAnimal
     protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
     {
         this.playSound("mob.chicken.step", 0.15F, 1.0F);
-    }
-
-    protected Item getDropItem()
-    {
-        return Items.feather;
     }
 
     public EntitySwan createChild(EntityAgeable par1EntityAgeable)

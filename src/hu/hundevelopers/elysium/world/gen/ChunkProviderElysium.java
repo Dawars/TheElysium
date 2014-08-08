@@ -35,13 +35,16 @@ import net.minecraft.world.gen.MapGenRavine;
 import net.minecraft.world.gen.NoiseGenerator;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
+import net.minecraft.world.gen.feature.WorldGenBlockBlob;
 import net.minecraft.world.gen.feature.WorldGenFlowers;
+import net.minecraft.world.gen.feature.WorldGenLiquids;
 import net.minecraft.world.gen.structure.MapGenMineshaft;
 import net.minecraft.world.gen.structure.MapGenScatteredFeature;
 import net.minecraft.world.gen.structure.MapGenStronghold;
 import net.minecraft.world.gen.structure.MapGenVillage;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.ChunkProviderEvent;
+import net.minecraftforge.event.terraingen.InitMapGenEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 import cpw.mods.fml.common.eventhandler.Event.Result;
@@ -93,15 +96,16 @@ public class ChunkProviderElysium implements IChunkProvider
 	ElysiumGenSand riltgenerator = new ElysiumGenSand(Elysium.blockRilt, 3);
 	ElysiumGenFostimber treegenerator = new ElysiumGenFostimber(Elysium.blockLeaves, Elysium.blockLog, false);
 	ElysiumGenDarkFostimber darktreegenerator = new ElysiumGenDarkFostimber(Elysium.blockLeaves, Elysium.blockLog, 1, 1, false);
+
 	WorldGenFlowers flowergenerator = new WorldGenFlowers(Elysium.blockFlower);
 	
     {
     	flowergenerator.func_150550_a(Elysium.blockFlower, 0);
-//        caveGenerator = TerrainGen.getModdedMapGen(caveGenerator, CAVE);
+        caveGenerator = TerrainGen.getModdedMapGen(caveGenerator, InitMapGenEvent.EventType.CAVE);
 //        strongholdGenerator = (MapGenStronghold) TerrainGen.getModdedMapGen(strongholdGenerator, STRONGHOLD);
 //        villageGenerator = (MapGenVillage) TerrainGen.getModdedMapGen(villageGenerator, VILLAGE);
 //        mineshaftGenerator = (MapGenMineshaft) TerrainGen.getModdedMapGen(mineshaftGenerator, MINESHAFT);
-//        scatteredFeatureGenerator = (MapGenScatteredFeature) TerrainGen.getModdedMapGen(scatteredFeatureGenerator, SCATTERED_FEATURE);
+        scatteredFeatureGenerator = (MapGenScatteredFeature) TerrainGen.getModdedMapGen(scatteredFeatureGenerator, InitMapGenEvent.EventType.SCATTERED_FEATURE);
 //        ravineGenerator = TerrainGen.getModdedMapGen(ravineGenerator, RAVINE);
     }    
 
@@ -490,7 +494,7 @@ public class ChunkProviderElysium implements IChunkProvider
 //            this.mineshaftGenerator.func_151539_a(this, this.worldObj, par1, par2, ablock);
 //            this.villageGenerator.func_151539_a(this, this.worldObj, par1, par2, ablock);
 //            this.strongholdGenerator.func_151539_a(this, this.worldObj, par1, par2, ablock);
-//            this.scatteredFeatureGenerator.func_151539_a(this, this.worldObj, par1, par2, ablock);
+//            this.scatteredFeatureGenerator.func_151539_a(this, this.worldObj, chunkX, chunkY, ablock);
 //        }
 
         Chunk chunk = new Chunk(this.worldObj, ablock, abyte, chunkX, chunkY);

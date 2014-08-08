@@ -1,30 +1,18 @@
 package hu.hundevelopers.elysium.event;
 
-import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.api.ElysiumApi;
-import hu.hundevelopers.elysium.api.Plants;
-import hu.hundevelopers.elysium.world.ElysiumWorldProvider;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
-
-import cpw.mods.fml.common.eventhandler.Event.Result;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent.CheckSpawn;
-import net.minecraftforge.event.entity.player.BonemealEvent;
+import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
+import cpw.mods.fml.common.eventhandler.Event.Result;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class ElysiumHandler
 {
@@ -57,4 +45,11 @@ public class ElysiumHandler
         } else
                 return null;
     }
+    
+    @SubscribeEvent
+	public void onEntityConstructing(EntityConstructing event)
+	{
+		if (event.entity instanceof EntityPlayer && ElysiumExtendedPlayer.get((EntityPlayer) event.entity) == null)
+			ElysiumExtendedPlayer.register((EntityPlayer) event.entity);
+	}
 }
