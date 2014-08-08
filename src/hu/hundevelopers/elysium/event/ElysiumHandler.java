@@ -1,7 +1,9 @@
 package hu.hundevelopers.elysium.event;
 
 import hu.hundevelopers.elysium.Elysium;
+import hu.hundevelopers.elysium.api.ElysiumApi;
 import hu.hundevelopers.elysium.api.Plants;
+import hu.hundevelopers.elysium.world.ElysiumWorldProvider;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +21,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent.CheckSpawn;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 

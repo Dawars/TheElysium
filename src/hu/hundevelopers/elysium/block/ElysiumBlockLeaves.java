@@ -23,13 +23,27 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ElysiumBlockLeaves extends BlockLeaves
 {
+    public static final String[] name = new String[] {"fostimber", "forest"};
+    
 	public ElysiumBlockLeaves()
     {
 		super();
 		this.setCreativeTab(Elysium.tabElysium);
 		
     }
-
+	
+	/**
+     * Returns true if the given side of this block type should be rendered, if the adjacent block is at the given
+     * coordinates.  Args: blockAccess, x, y, z, side
+     */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side)
+    {
+        Block block = world.getBlock(x, y, z);
+        return FMLClientHandler.instance().getClient().isFancyGraphicsEnabled()? true : super.shouldSideBeRendered(world, x, y, z, side);
+    }
+    
 	@Override
     public Block setBlockTextureName(String texture)
     {
@@ -37,7 +51,6 @@ public class ElysiumBlockLeaves extends BlockLeaves
         return this;
     }
 	
-    public static final String[] name = new String[] {"fostimber"};
 	private IIcon[][] icon = new IIcon[2][name.length];
 
 	/**

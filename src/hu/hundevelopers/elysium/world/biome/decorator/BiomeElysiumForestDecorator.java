@@ -1,4 +1,4 @@
-package hu.hundevelopers.elysium.world.biome;
+package hu.hundevelopers.elysium.world.biome.decorator;
 
 import hu.hundevelopers.elysium.Elysium;
 import net.minecraft.world.biome.BiomeDecorator;
@@ -9,12 +9,12 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
-public class BiomeElysiumPlainDecorator extends BiomeDecorator
+public class BiomeElysiumForestDecorator extends BiomeDecorator
 {
 	 /** Field that holds one of the plantYellow WorldGenFlowers */
    public WorldGenerator plantAsphodelGen;
    
-	public BiomeElysiumPlainDecorator(BiomeGenBase biomeGenBase)
+	public BiomeElysiumForestDecorator(BiomeGenBase biomeGenBase)
 	{
 		super();
        this.plantAsphodelGen = new WorldGenFlowers(Elysium.blockFlower);
@@ -27,7 +27,7 @@ public class BiomeElysiumPlainDecorator extends BiomeDecorator
 	@Override
     protected void genDecorations(BiomeGenBase p_150513_1_)
 	{
-		System.out.println("Elysium Plain decorator");
+//		System.out.println("Elysium Forest decorator");
 		
 		int i;
 		int j;

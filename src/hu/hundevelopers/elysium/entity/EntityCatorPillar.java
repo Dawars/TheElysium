@@ -2,41 +2,58 @@ package hu.hundevelopers.elysium.entity;
 
 import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.api.ElysiumApi;
+import hu.hundevelopers.elysium.entity.ai.EntityAIEatStone;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIControlledByPlayer;
+import net.minecraft.entity.ai.EntityAIAvoidEntity;
+import net.minecraft.entity.ai.EntityAIEatGrass;
+import net.minecraft.entity.ai.EntityAIFollowGolem;
+import net.minecraft.entity.ai.EntityAIFollowParent;
+import net.minecraft.entity.ai.EntityAILookAtTradePlayer;
 import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIMate;
+import net.minecraft.entity.ai.EntityAIMoveIndoors;
+import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
+import net.minecraft.entity.ai.EntityAIOpenDoor;
 import net.minecraft.entity.ai.EntityAIPanic;
+import net.minecraft.entity.ai.EntityAIPlay;
+import net.minecraft.entity.ai.EntityAIRestrictOpenDoor;
 import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAITempt;
+import net.minecraft.entity.ai.EntityAITradePlayer;
+import net.minecraft.entity.ai.EntityAIVillagerMate;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.passive.EntityAmbientCreature;
+import net.minecraft.entity.ai.EntityAIWatchClosest2;
+import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class EntityCatorPillar extends EntityAmbientCreature
+public class EntityCatorPillar extends EntityAnimal
 {
-    /** AI task for player control. */
-    private final EntityAIControlledByPlayer aiControlledByPlayer;
 
+	private int eatingCooldown = 80;
+	
     public EntityCatorPillar(World world)
     {
         super(world);
-        this.setSize(0.9F, 0.9F);
+        this.setSize(0.9F, 0.5F);
+        
         this.getNavigator().setAvoidsWater(true);
-        float f = 0.25F;
         this.tasks.addTask(0, new EntityAISwimming(this));
-//        this.tasks.addTask(1, new EntityAIPanic(this, 0.38F));
-        this.tasks.addTask(2, this.aiControlledByPlayer = new EntityAIControlledByPlayer(this, 0.34F));
-//        this.tasks.addTask(4, new EntityAITempt(this, 0.3F, Item.carrotOnAStick.itemID, false));
-//        this.tasks.addTask(4, new EntityAITempt(this, 0.3F, Item.carrot.itemID, false));
-//        this.tasks.addTask(6, new EntityAIWander(this, f));
-        this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
-        this.tasks.addTask(8, new EntityAILookIdle(this));
+        this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
+        this.tasks.addTask(3, new EntityAITempt(this, 1.25D, Item.getItemFromBlock(Elysium.blockPalestone), false));
+        this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
+        this.tasks.addTask(7, new EntityAILookIdle(this));
     }
     
     @Override
@@ -44,8 +61,7 @@ public class EntityCatorPillar extends EntityAmbientCreature
 	{
 		super.applyEntityAttributes();
 		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(5.0D);
-		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(32.0D);
-		this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(0.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(1.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.25D);
 	}
     
@@ -58,16 +74,6 @@ public class EntityCatorPillar extends EntityAmbientCreature
     @SideOnly(Side.CLIENT)
     public float protationYaw = 0F;
     
-    @Override
-    public void onUpdate()
-    {
-    	if(this.worldObj.isRemote)
-    	{
-    		this.protationYaw = this.rotationYaw;
-    	}
-    	super.onUpdate();
-    }
-
     /**
      * Returns true if the newer Entity AI code should be run
      */
@@ -76,98 +82,76 @@ public class EntityCatorPillar extends EntityAmbientCreature
     {
         return true;
     }
-    
-    @Override
+
+    /**
+     * Called to update the entity's position/logic.
+     */
+    public void onUpdate()
+    {
+    	if(this.worldObj.isRemote)
+    	{
+    		this.protationYaw = this.rotationYaw;
+    	}
+    	
+        super.onUpdate();
+
+    }
+
     protected void updateAITasks()
     {
         super.updateAITasks();
-    }
 
-    /**
-     * returns true if all the conditions for steering the entity are met. For pigs, this is true if it is being ridden
-     * by a player and the player is holding a carrot-on-a-stick
-     */
-//    public boolean canBeSteered()
-//    {
-//        ItemStack itemstack = ((EntityPlayer)this.riddenByEntity).getHeldItem();
-//        return itemstack != null && itemstack.itemID == Item.carrotOnAStick.itemID;
-//    }
-    @Override
-    protected void entityInit()
-    {
-        super.entityInit();
-        this.dataWatcher.addObject(16, Byte.valueOf((byte)0));
-    }
-
-//    /**
-//     * (abstract) Protected helper method to write subclass entity data to NBT.
-//     */
-//    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
-//    {
-//        super.writeEntityToNBT(par1NBTTagCompound);
-//        par1NBTTagCompound.setBoolean("Saddle", this.getSaddled());
-//    }
-
-//    /**
-//     * (abstract) Protected helper method to read subclass entity data from NBT.
-//     */
-//    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
-//    {
-//        super.readEntityFromNBT(par1NBTTagCompound);
-//        this.setSaddled(par1NBTTagCompound.getBoolean("Saddle"));
-//    }
-
-//    /**
-//     * Returns the sound this mob makes while it's alive.
-//     */
-//    protected String getLivingSound()
-//    {
-//        return "mob.pig.say";
-//    }
-//
-//    /**
-//     * Returns the sound this mob makes when it is hurt.
-//     */
-//    protected String getHurtSound()
-//    {
-//        return "mob.pig.say";
-//    }
-//
-//    /**
-//     * Returns the sound this mob makes on death.
-//     */
-//    protected String getDeathSound()
-//    {
-//        return "mob.pig.death";
-//    }
-
-//    /**
-//     * Plays step sound at given x, y, z for the entity
-//     */
-//    protected void playStepSound(int par1, int par2, int par3, int par4)
-//    {
-//        this.playSound("mob.pig.step", 0.15F, 1.0F);
-//    }
-
-//    /**
-//     * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
-//     */
-//    public boolean interact(EntityPlayer par1EntityPlayer)
-//    {
-//        if (super.interact(par1EntityPlayer))
+//        if (this.eatingCooldown > 0)
 //        {
-//            return true;
-//        }
-//        else if (this.getSaddled() && !this.worldObj.isRemote && (this.riddenByEntity == null || this.riddenByEntity == par1EntityPlayer))
-//        {
-//            par1EntityPlayer.mountEntity(this);
-//            return true;
+//        	this.eatingCooldown--;
+//            if (!this.worldObj.getBlock(MathHelper.floor_double(this.posX), (int)this.posY + 1, MathHelper.floor_double(this.posZ)).isNormalCube())
+//            {
+//                this.setIsBatHanging(false);
+//                this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1015, (int)this.posX, (int)this.posY, (int)this.posZ, 0);
+//            }
+//            else
+//            {
+//                if (this.rand.nextInt(200) == 0)
+//                {
+//                    this.rotationYawHead = (float)this.rand.nextInt(360);
+//                }
+//
+//                if (this.worldObj.getClosestPlayerToEntity(this, 4.0D) != null)
+//                {
+//                    this.setIsBatHanging(false);
+//                    this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1015, (int)this.posX, (int)this.posY, (int)this.posZ, 0);
+//                }
+//            }
 //        }
 //        else
 //        {
-//            return false;
+//            if (this.spawnPosition != null && (!this.worldObj.isAirBlock(this.spawnPosition.posX, this.spawnPosition.posY, this.spawnPosition.posZ) || this.spawnPosition.posY < 1))
+//            {
+//                this.spawnPosition = null;
+//            }
+//
+//            if (this.spawnPosition == null || this.rand.nextInt(30) == 0 || this.spawnPosition.getDistanceSquared((int)this.posX, (int)this.posY, (int)this.posZ) < 4.0F)
+//            {
+//                this.spawnPosition = new ChunkCoordinates((int)this.posX + this.rand.nextInt(7) - this.rand.nextInt(7), (int)this.posY + this.rand.nextInt(6) - 2, (int)this.posZ + this.rand.nextInt(7) - this.rand.nextInt(7));
+//            }
+//
+//            double d0 = (double)this.spawnPosition.posX + 0.5D - this.posX;
+//            double d1 = (double)this.spawnPosition.posY + 0.1D - this.posY;
+//            double d2 = (double)this.spawnPosition.posZ + 0.5D - this.posZ;
+//            this.motionX += (Math.signum(d0) * 0.5D - this.motionX) * 0.10000000149011612D;
+////            this.motionY += (Math.signum(d1) * 0.699999988079071D - this.motionY) * 0.10000000149011612D;
+//            this.motionZ += (Math.signum(d2) * 0.5D - this.motionZ) * 0.10000000149011612D;
+//            float f = (float)(Math.atan2(this.motionZ, this.motionX) * 180.0D / Math.PI) - 90.0F;
+//            float f1 = MathHelper.wrapAngleTo180_float(f - this.rotationYaw);
+//            this.moveForward = 0.5F;
+//            this.rotationYaw += f1;
+//
+//            if (this.rand.nextInt(100) == 0 && this.worldObj.getBlock(MathHelper.floor_double(this.posX), (int)this.posY + 1, MathHelper.floor_double(this.posZ)).isNormalCube())
+//            {
+//                this.setIsBatHanging(true);
+//            }
 //        }
-//    }
+    }
     
     /**
      * Returns the item ID for the item the mob drops on death.
@@ -177,102 +161,49 @@ public class EntityCatorPillar extends EntityAmbientCreature
     {
         return Item.getItemFromBlock(Elysium.blockPalestone);
     }
-
+    
     /**
      * Drop 0-2 items of this living's type. @param par1 - Whether this entity has recently been hit by a player. @param
      * par2 - Level of Looting used to kill this mob.
      */
-//    protected void dropFewItems(boolean par1, int par2)
-//    {
-//        int j = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + par2);
-//
-//        for (int k = 0; k < j; ++k)
-//        {
-//            if (this.isBurning())
-//            {
-//                this.dropItem(Item.porkCooked.itemID, 1);
-//            }
-//            else
-//            {
-//                this.dropItem(Item.porkRaw.itemID, 1);
-//            }
-//        }
-//
-//        if (this.getSaddled())
-//        {
-//            this.dropItem(Item.saddle.itemID, 1);
-//        }
-//    }
+    protected void dropFewItems(boolean par1, int par2)
+    {
+        int j = this.rand.nextInt(3) + this.rand.nextInt(1 + par2);
 
-//    /**
-//     * Returns true if the pig is saddled.
-//     */
-//    public boolean getSaddled()
-//    {
-//        return (this.dataWatcher.getWatchableObjectByte(16) & 1) != 0;
-//    }
-
-//    /**
-//     * Set or remove the saddle of the pig.
-//     */
-//    public void setSaddled(boolean par1)
-//    {
-//        if (par1)
-//        {
-//            this.dataWatcher.updateObject(16, Byte.valueOf((byte)1));
-//        }
-//        else
-//        {
-//            this.dataWatcher.updateObject(16, Byte.valueOf((byte)0));
-//        }
-//    }
-
-//    /**
-//     * Called when a lightning bolt hits the entity.
-//     */
-//    public void onStruckByLightning(EntityLightningBolt par1EntityLightningBolt)
-//    {
-//        if (!this.worldObj.isRemote)
-//        {
-//            EntityPigZombie entitypigzombie = new EntityPigZombie(this.worldObj);
-//            entitypigzombie.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
-//            this.worldObj.spawnEntityInWorld(entitypigzombie);
-//            this.setDead();
-//        }
-//    }
-
+        for (int k = 0; k < j; ++k)
+        {
+            this.dropItem(this.getDropItem(), 1);
+        }
+        this.dropItem(Item.getItemFromBlock(Elysium.blockEnergyCrystal), 1);
+    }
+    
     /**
-     * Called when the mob is falling. Calculates and applies fall damage.
+     * returns if this entity triggers Block.onEntityWalking on the blocks they walk on. used for spiders and wolves to
+     * prevent them from trampling crops
      */
-//    protected void fall(float par1)
-//    {
-//        super.fall(par1);
-//
-//        if (par1 > 5.0F && this.riddenByEntity instanceof EntityPlayer)
-//        {
-//            ((EntityPlayer)this.riddenByEntity).triggerAchievement(AchievementList.flyPig);
-//        }
-//    }
+    protected boolean canTriggerWalking()
+    {
+        return false;
+    }
+    
+    /**
+     * Checks if the entity's current position is a valid location to spawn this entity.
+     */
+    @Override
+    /**
+     * Checks if the entity's current position is a valid location to spawn this entity.
+     */
+    public boolean getCanSpawnHere()
+    {
+        int i = MathHelper.floor_double(this.posX);
+        int j = MathHelper.floor_double(this.boundingBox.minY);
+        int k = MathHelper.floor_double(this.posZ);
+        return this.worldObj.getBlock(i, j - 1, k) == Elysium.blockGrass && super.getCanSpawnHere();
+    }
 
-//    /**
-//     * This function is used when two same-species animals in 'love mode' breed to generate the new baby animal.
-//     */
-//    public EntityCatorPillar spawnBabyAnimal(EntityAgeable par1EntityAgeable)
-//    {
-//        return new EntityCatorPillar(this.worldObj);
-//    }
-//
-//    /**
-//     * Checks if the parameter is an item which this animal can be fed to breed it (wheat, carrots or seeds depending on
-//     * the animal type)
-//     */
-//    public boolean isBreedingItem(ItemStack par1ItemStack)
-//    {
-//        return par1ItemStack != null && par1ItemStack.itemID == Item.carrot.itemID;
-//    }
-
-//    public EntityAgeable createChild(EntityAgeable par1EntityAgeable)
-//    {
-//        return this.spawnBabyAnimal(par1EntityAgeable);
-//    }
+	@Override
+	public EntityAgeable createChild(EntityAgeable var1)
+	{
+		return new EntityCatorPillar(worldObj);
+	}
 }

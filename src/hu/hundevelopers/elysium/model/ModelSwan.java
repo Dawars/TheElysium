@@ -1,8 +1,20 @@
 package hu.hundevelopers.elysium.model;
 
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
 
 public class ModelSwan extends ModelBase
 {
@@ -31,6 +43,7 @@ public class ModelSwan extends ModelBase
 	ModelRenderer neck3;
 	ModelRenderer neck4;
 	ModelRenderer head1;
+	ModelRenderer Gem;
 
 	public ModelSwan()
 	{
@@ -181,12 +194,28 @@ public class ModelSwan extends ModelBase
 		head1.setTextureSize(64, 32);
 		head1.mirror = true;
 		setRotation(head1, 0F, 0F, 0F);
+		
+		Gem = new ModelRenderer(this, 26, 3);
+		Gem.addBox(-1F, -1F, -1F, 2, 2, 2);
+		Gem.setRotationPoint(0F, 14F, 0F);
+		Gem.setTextureSize(64, 32);
+		Gem.mirror = true;
+		setRotation(Gem, 0.7853982F, 0.7853982F, 0.7853982F);
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3,
-			float f4, float f5) {
+	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
+	{
 		super.render(entity, f, f1, f2, f3, f4, f5);
-		setRotationAngles(entity, f, f1, f2, f3, f4, f5);
+		this.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+		
+		if(this.isChild)
+		{
+			GL11.glPushMatrix();
+	        float f6 = 2F;
+	        GL11.glScalef(1.0F / f6 , 1.0F / f6, 1.0F / f6);
+            GL11.glTranslatef(0.0F, 1.5F, 0);
+
+		}
 		lfoot2.render(f5);
 		tail3.render(f5);
 		lfoot1.render(f5);
@@ -211,6 +240,19 @@ public class ModelSwan extends ModelBase
 		neck3.render(f5);
 		neck4.render(f5);
 		head1.render(f5);
+
+		glPushMatrix();
+		glEnable(GL_BLEND);
+		glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
+		Gem.render(f5);
+		
+		glDisable(GL_BLEND);
+		glPopMatrix();
+		
+		
+		if(this.isChild)
+			GL11.glPopMatrix();
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z) {
@@ -218,10 +260,28 @@ public class ModelSwan extends ModelBase
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
-
-	public void setRotationAngles(Entity entity, float f, float f1, float f2, float f3,
-			float f4, float f5) {
-		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-	}
+	
+	/**
+     * Sets the model's various rotation angles. For bipeds, par1 and par2 are used for animating the movement of arms
+     * and legs, where par1 represents the time(so that arms and legs swing back and forth) and par2 represents how
+     * "far" arms and legs can swing at most.
+     */
+	@Override
+    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity)
+    {
+//        this.head1.rotateAngleX = par5 / (180F / (float)Math.PI);
+//        this.head1.rotateAngleY = par4 / (180F / (float)Math.PI);
+//        this.bill.rotateAngleX = this.head1.rotateAngleX;
+//        this.bill.rotateAngleY = this.head1.rotateAngleY;
+//        this.chin.rotateAngleX = this.head1.rotateAngleX;
+//        this.chin.rotateAngleY = this.head1.rotateAngleY;
+//        this.body.rotateAngleX = ((float)Math.PI / 2F);
+        this.rfoot1.rotateAngleX = MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
+        this.lfoot1.rotateAngleX = MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 1.4F * par2;
+        this.rfoot2.rotateAngleX = MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
+        this.lfoot2.rotateAngleX = MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 1.4F * par2;
+        this.rwing1.rotateAngleZ = this.rwing2.rotateAngleZ = this.rwing3.rotateAngleZ = this.rwing4.rotateAngleZ = this.rwing5.rotateAngleZ = -par3;
+        this.lwing1.rotateAngleZ = this.lwing2.rotateAngleZ = this.lwing3.rotateAngleZ = this.lwing4.rotateAngleZ = this.lwing5.rotateAngleZ = par3;
+    }
 
 }

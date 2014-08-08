@@ -1,5 +1,6 @@
 package hu.hundevelopers.elysium.block;
 
+import java.util.List;
 import java.util.Random;
 
 import cpw.mods.fml.relauncher.Side;
@@ -11,11 +12,14 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 public class ElysiumBlockLog extends ElysiumBlock
 {
+	public static final String[] names = new String[] {"fostimber", "forest"};
+	
 	public ElysiumBlockLog()
 	{
 		super(Material.wood);
@@ -71,8 +75,6 @@ public class ElysiumBlockLog extends ElysiumBlock
         this.textureName = Elysium.MODID  + ":" + texture;
         return this;
     }
-	
-	public static final String[] names = new String[] {"fostimber"};
 
 	@SideOnly(Side.CLIENT)
     protected IIcon[] iconSide;
@@ -156,5 +158,15 @@ public class ElysiumBlockLog extends ElysiumBlock
         int l = p_149691_2_ & 3;
         return k == 0 && (p_149691_1_ == 1 || p_149691_1_ == 0) ? this.getTopIcon(l) : (k == 4 && (p_149691_1_ == 5 || p_149691_1_ == 4) ? this.getTopIcon(l) : (k == 8 && (p_149691_1_ == 2 || p_149691_1_ == 3) ? this.getTopIcon(l) : this.getSideIcon(l)));
     }
-
+    
+    /**
+     * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
+     */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void getSubBlocks(Item item, CreativeTabs p_149666_2_, List list)
+    {
+    	for(int i = 0; i < names.length; i++)
+    		list.add(new ItemStack(item, 1, i));
+    }
 }

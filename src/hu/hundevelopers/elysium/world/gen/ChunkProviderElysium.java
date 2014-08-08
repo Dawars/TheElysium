@@ -3,7 +3,10 @@ package hu.hundevelopers.elysium.world.gen;
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE;
 import hu.hundevelopers.elysium.Configs;
 import hu.hundevelopers.elysium.Elysium;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenForest;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlain;
 import hu.hundevelopers.elysium.world.gen.features.ElysiumGenCrystalSpikes;
+import hu.hundevelopers.elysium.world.gen.features.ElysiumGenDarkFostimber;
 import hu.hundevelopers.elysium.world.gen.features.ElysiumGenFostimber;
 import hu.hundevelopers.elysium.world.gen.features.ElysiumGenLakes;
 import hu.hundevelopers.elysium.world.gen.features.ElysiumGenSand;
@@ -83,11 +86,13 @@ public class ChunkProviderElysium implements IChunkProvider
     int[][] field_73219_j = new int[32][32];
 
 
-    ElysiumGenCrystalSpikes crystalSpikeGen = new ElysiumGenCrystalSpikes();
+    ElysiumGenCrystalSpikes crystalPureGen = new ElysiumGenCrystalSpikes();
+    ElysiumGenCrystalSpikes crystalCorruptedGen = new ElysiumGenCrystalSpikes(1);
 	ElysiumGenLakes lakegenerator = new ElysiumGenLakes(Elysium.blockElysiumWater);
 	ElysiumGenSand sandgenerator = new ElysiumGenSand(Elysium.blockSand, 7);
 	ElysiumGenSand riltgenerator = new ElysiumGenSand(Elysium.blockRilt, 3);
 	ElysiumGenFostimber treegenerator = new ElysiumGenFostimber(Elysium.blockLeaves, Elysium.blockLog, false);
+	ElysiumGenDarkFostimber darktreegenerator = new ElysiumGenDarkFostimber(Elysium.blockLeaves, Elysium.blockLog, 1, 1, false);
 	WorldGenFlowers flowergenerator = new WorldGenFlowers(Elysium.blockFlower);
 	
     {
@@ -265,7 +270,7 @@ public class ChunkProviderElysium implements IChunkProvider
                 {
                     int index = (j1 * 16 + i1) * k1 + y;
 
-                    if (y <= 1)
+                    if (y < Configs.labyrinthBottom)
                     {
                         blockArray[index] = Blocks.lava;//TODO: magma
                     }
@@ -635,19 +640,22 @@ public class ChunkProviderElysium implements IChunkProvider
 	 * Populates chunk with ores etc etc
 	 */
 	@Override
-	public void populate(IChunkProvider par1IChunkProvider, int par2, int par3)
+	public void populate(IChunkProvider par1IChunkProvider, int chunkX, int chunkZ)
 	{
 		BlockSand.fallInstantly = true;
-		int k = par2 * 16;
-		int l = par3 * 16;
+		int k = chunkX * 16;
+		int l = chunkZ * 16;
 		BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(k + 16, l + 16);
 		this.rand.setSeed(this.worldObj.getSeed());
 		long i1 = this.rand.nextLong() / 2L * 2L + 1L;
 		long j1 = this.rand.nextLong() / 2L * 2L + 1L;
-		this.rand.setSeed((long)par2 * i1 + (long)par3 * j1 ^ this.worldObj.getSeed());
+		this.rand.setSeed((long)chunkX * i1 + (long)chunkZ * j1 ^ this.worldObj.getSeed());
 		boolean flag = false;
 
-		MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Pre(par1IChunkProvider, worldObj, rand, par2, par3, flag));
+		MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Pre(par1IChunkProvider, worldObj, rand, chunkX, chunkZ, flag));
+
+		int i2;
+		boolean doGen = TerrainGen.populate(par1IChunkProvider, worldObj, rand, chunkX, chunkZ, flag, ICE);
 
 		//TODO structures
 		if(biomegenbase != Elysium.biomeOcean)
@@ -655,44 +663,62 @@ public class ChunkProviderElysium implements IChunkProvider
 			this.lakegenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), rand.nextInt(128), l+this.rand.nextInt(16));
 			this.sandgenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), 0, l+this.rand.nextInt(16));
 			this.riltgenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), 0, l+this.rand.nextInt(16));
+								
+			if(this.rand.nextInt(4) == 1)
+				this.crystalPureGen.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), rand.nextInt(128), l+this.rand.nextInt(16));
 
-			
-			
-			if(this.rand.nextInt(4) == 0)
+			if(biomegenbase instanceof ElysiumBiomeGenPlain)
 			{
-				this.crystalSpikeGen.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), rand.nextInt(128), l+this.rand.nextInt(16));
-
+				if(this.rand.nextInt(4) == 0)
+				{
+					int x = k + this.rand.nextInt(16);
+					int z =	l + this.rand.nextInt(16);
+	
+					int generatedTrees = 0;
+					int treeAmount = rand.nextInt(3)+2;
+					for(int j = 0; (j < treeAmount*4) && (generatedTrees < treeAmount); j++)
+					{
+						int cx = x+this.rand.nextInt(15)-8;
+						int cz = z+this.rand.nextInt(15)-8;
+						int y = this.worldObj.getTopSolidOrLiquidBlock(cx, cz);
+						if(this.treegenerator.generate(this.worldObj, this.rand, cx, y, cz))
+							generatedTrees++;
+					}
+	
+					if(rand.nextInt(5-generatedTrees) == 0)
+					{
+						this.flowergenerator.generate(this.worldObj, rand, x, 0, z);
+					}
+				}
+			} else if(biomegenbase instanceof ElysiumBiomeGenForest)
+			{
+				
 				int x = k + this.rand.nextInt(16);
 				int z =	l + this.rand.nextInt(16);
 
+				int treeAmount = 10;
 				int generatedTrees = 0;
-				int treeAmount = rand.nextInt(4)+1;
-				for(int j = 0; (j < treeAmount*4) && (generatedTrees < treeAmount); j++)
+	
+				for(int j = 0; (j < treeAmount*2) && (generatedTrees  < treeAmount); j++)
 				{
-					int cx = x+this.rand.nextInt(9)-4;
-					int cz = z+this.rand.nextInt(9)-4;
+					int cx = x+this.rand.nextInt(15)-8;
+					int cz = z+this.rand.nextInt(15)-8;
 					int y = this.worldObj.getTopSolidOrLiquidBlock(cx, cz);
-
-					if(this.treegenerator.generate(this.worldObj, this.rand, cx, y, cz))
+					if(this.darktreegenerator.generate(this.worldObj, this.rand, cx, y, cz))
 						generatedTrees++;
-				}
-
-				if(rand.nextInt(5-generatedTrees) == 0)
-				{
-					this.flowergenerator.generate(this.worldObj, rand, x, 0, z);
 				}
 			}
 		}
 
 		biomegenbase.decorate(this.worldObj, this.rand, k, l);
-		SpawnerAnimals.performWorldGenSpawning(this.worldObj, biomegenbase, k + 8, l + 8, 16, 16, this.rand);//FIXME: remove
+		SpawnerAnimals.performWorldGenSpawning(this.worldObj, biomegenbase, k + 8, l + 8, 16, 16, this.rand);
 
 		//Snow
+		
 		k += 8;
 		l += 8;
 
-		int i2;
-		boolean doGen = TerrainGen.populate(par1IChunkProvider, worldObj, rand, par2, par3, flag, ICE);
+		
         for (int k1 = 0; doGen && k1 < 16; ++k1)
         {
             for (int l1 = 0; l1 < 16; ++l1)
@@ -706,12 +732,12 @@ public class ChunkProviderElysium implements IChunkProvider
 
                 if (this.worldObj.func_147478_e(k1 + k, i2, l1 + l, true))
                 {
-                	this.worldObj.setBlock(k1 + k, i2, l1 + l, Blocks.snow, 0, 2);
+                	this.worldObj.setBlock(k1 + k, i2, l1 + l, Blocks.snow_layer, 0, 2);
                 }
             }
         }
 
-		MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Post(par1IChunkProvider, worldObj, rand, par2, par3, flag));
+		MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Post(par1IChunkProvider, worldObj, rand, chunkX, chunkZ, flag));
 
 		BlockFalling.fallInstantly = false;
 	}

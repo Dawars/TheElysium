@@ -4,9 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ElysimLogItemBlock extends ItemBlock
+public class ElysiumEnergyCrystalItemBlock extends ItemBlock
 {
-	public ElysimLogItemBlock(Block block)
+	public ElysiumEnergyCrystalItemBlock(Block block)
 	{
 		super(block);
 		setHasSubtypes(true);
@@ -19,7 +19,13 @@ public class ElysimLogItemBlock extends ItemBlock
 		switch (itemstack.getItemDamage())
 		{
 			case 0:
-				name = "fostimber";
+				name = "pure";
+			break;
+			case 1:
+				name = "corrupted";
+			break;
+			case 2:
+				name = "depleted";
 			break;
 			default:
 				name = "error";

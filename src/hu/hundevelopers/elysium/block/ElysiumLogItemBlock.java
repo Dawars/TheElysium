@@ -4,9 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ElysimSaplingItemBlock extends ItemBlock
+public class ElysiumLogItemBlock extends ItemBlock
 {
-	public ElysimSaplingItemBlock(Block block)
+	public ElysiumLogItemBlock(Block block)
 	{
 		super(block);
 		setHasSubtypes(true);
@@ -20,6 +20,9 @@ public class ElysimSaplingItemBlock extends ItemBlock
 		{
 			case 0:
 				name = "fostimber";
+			break;
+			case 1:
+				name = "forest";
 			break;
 			default:
 				name = "error";

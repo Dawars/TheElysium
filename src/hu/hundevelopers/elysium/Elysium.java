@@ -1,19 +1,54 @@
 package hu.hundevelopers.elysium;
 
 import hu.hundevelopers.elysium.api.Plants;
-import hu.hundevelopers.elysium.block.*;
+import hu.hundevelopers.elysium.block.ElysiumEnergyCrystalItemBlock;
+import hu.hundevelopers.elysium.block.ElysiumFlowerItemBlock;
+import hu.hundevelopers.elysium.block.ElysiumLeavesItemBlock;
+import hu.hundevelopers.elysium.block.ElysiumLogItemBlock;
+import hu.hundevelopers.elysium.block.ElysiumPlanksItemBlock;
+import hu.hundevelopers.elysium.block.ElysiumSaplingItemBlock;
+import hu.hundevelopers.elysium.block.ElysiumTallGrassItemBlock;
+import hu.hundevelopers.elysium.block.ElysiumBlock;
+import hu.hundevelopers.elysium.block.ElysiumBlockFalling;
+import hu.hundevelopers.elysium.block.ElysiumBlockFlower;
+import hu.hundevelopers.elysium.block.ElysiumBlockGrass;
+import hu.hundevelopers.elysium.block.ElysiumBlockLeaves;
+import hu.hundevelopers.elysium.block.ElysiumBlockLog;
+import hu.hundevelopers.elysium.block.ElysiumBlockOre;
+import hu.hundevelopers.elysium.block.ElysiumBlockPortalCore;
+import hu.hundevelopers.elysium.block.ElysiumBlockRilt;
+import hu.hundevelopers.elysium.block.ElysiumBlockSapling;
+import hu.hundevelopers.elysium.block.ElysiumBlockTallGrass;
+import hu.hundevelopers.elysium.block.ElysiumBlockWood;
+import hu.hundevelopers.elysium.block.ElysiumEnergyCrystalBlock;
+import hu.hundevelopers.elysium.block.ElysiumEnergyLiquid;
+import hu.hundevelopers.elysium.block.ElysiumFloatingBlock;
+import hu.hundevelopers.elysium.block.ElysiumPipeBlock;
+import hu.hundevelopers.elysium.block.ElysiumWaterBlock;
 import hu.hundevelopers.elysium.entity.EntityCatorPillar;
 import hu.hundevelopers.elysium.entity.EntityDeer;
+import hu.hundevelopers.elysium.entity.EntityPinkUnicorn;
 import hu.hundevelopers.elysium.entity.EntitySwan;
-import hu.hundevelopers.elysium.event.ElysiumEventHandler;
 import hu.hundevelopers.elysium.event.ElysiumFuelHandler;
 import hu.hundevelopers.elysium.event.ElysiumHandler;
-import hu.hundevelopers.elysium.item.*;
+import hu.hundevelopers.elysium.item.ElysiumBucket;
+import hu.hundevelopers.elysium.item.ElysiumItem;
+import hu.hundevelopers.elysium.item.ElysiumItemAxe;
+import hu.hundevelopers.elysium.item.ElysiumItemDebug;
+import hu.hundevelopers.elysium.item.ElysiumItemHoe;
+import hu.hundevelopers.elysium.item.ElysiumItemOverkill;
+import hu.hundevelopers.elysium.item.ElysiumItemPickaxe;
+import hu.hundevelopers.elysium.item.ElysiumItemPrism;
+import hu.hundevelopers.elysium.item.ElysiumItemShovel;
+import hu.hundevelopers.elysium.item.ElysiumItemSword;
+import hu.hundevelopers.elysium.item.ElysiumItemWhistle;
 import hu.hundevelopers.elysium.proxy.CommonProxy;
 import hu.hundevelopers.elysium.tile.ElysianTileEntityPortal;
 import hu.hundevelopers.elysium.world.ElysiumWorldProvider;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenForest;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenOcean;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlain;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenRiver;
 import hu.hundevelopers.elysium.world.gen.WorldGenElysium;
 
 import java.io.File;
@@ -21,15 +56,15 @@ import java.io.File;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -127,7 +162,7 @@ public class Elysium
 	public static Block blockFloatingShell;
 	public static Block blockFloatingConch;
 	
-	public static Block blockTiberium;
+	public static Block blockEnergyCrystal;
 
 //	public static Block blockPalestone;
 //	public static Block blockPalestoneMossy;
@@ -199,9 +234,13 @@ public class Elysium
 	/** Biomes **/
 	public static BiomeGenBase biomePlain = null;
 	public static BiomeGenBase biomeOcean = null;
-	
+	public static BiomeGenBase biomeForest = null;
+	public static BiomeGenBase biomeRiver = null;
+
 	private int biomeIdPlains;
 	private int biomeIdOcean;
+	private int biomeIdForest;
+	private int biomeIdRiver;
 
 	
     @EventHandler
@@ -248,7 +287,7 @@ public class Elysium
 		ElysiumHandler.INSTANCE.buckets.put(blockElysiumWater, itemWaterBucket);
 
 		MinecraftForge.EVENT_BUS.register(ElysiumHandler.INSTANCE);
-		MinecraftForge.EVENT_BUS.register(new ElysiumEventHandler());
+//		MinecraftForge.EVENT_BUS.register(new ElysiumEventHandler());
 		
     	//Config
 		config = new Configuration(new File(event.getModConfigurationDirectory(), "Elysium.cfg"));
@@ -259,9 +298,15 @@ public class Elysium
 
 			Property ELYSIUM_PLAINS = Elysium.config.get("biomeIds", "ELYSIUM_PLAINS", Configs.BIOME_PLAIN);
 			biomeIdPlains = ELYSIUM_PLAINS.getInt();
-			
+
 			Property ELYSIUM_OCEAN = Elysium.config.get("biomeIds", "ELYSIUM_OCEAN", Configs.BIOME_OCEAN);
 			biomeIdOcean = ELYSIUM_OCEAN.getInt();
+
+			Property ELYSIUM_FOREST = Elysium.config.get("biomeIds", "ELYSIUM_FOREST", Configs.BIOME_FOREST);
+			biomeIdForest = ELYSIUM_FOREST.getInt();
+
+			Property ELYSIUM_RIVER = Elysium.config.get("biomeIds", "ELYSIUM_RIVER", Configs.BIOME_RIVER);
+			biomeIdRiver = ELYSIUM_RIVER.getInt();
 			
 			Property MAX_DRAGON_IN_END = Elysium.config.get("other", "MAX_DRAGON_IN_END", Configs.MAX_DRAGON_IN_END, "How many dragons can be spawned to the End at the same time!");
 			maxDragon = MAX_DRAGON_IN_END.getInt();
@@ -307,25 +352,25 @@ public class Elysium
 		registerBlock(blockRilt);
 	
 		blockSapling = (new ElysiumBlockSapling()).setHardness(0F).setBlockTextureName("elysium_sapling").setBlockName("elysium_sapling");
-		GameRegistry.registerBlock(blockSapling, ElysimSaplingItemBlock.class, blockSapling.getUnlocalizedName());
+		registerBlock(blockSapling, ElysiumSaplingItemBlock.class);
 
 		blockLog = (new ElysiumBlockLog()).setHardness(2.0F).setBlockTextureName("elysium_log").setBlockName("elysium_log");
-		GameRegistry.registerBlock(blockLog, ElysimLogItemBlock.class, blockLog.getUnlocalizedName());
+		registerBlock(blockLog, ElysiumLogItemBlock.class);
 
 		blockLeaves = (new ElysiumBlockLeaves()).setLightOpacity(1).setHardness(0.2F).setStepSound(Block.soundTypeGrass).setBlockTextureName("elysium_leaves").setBlockName("elysium_leaves");
-		GameRegistry.registerBlock(blockLeaves, ElysimLeavesItemBlock.class, blockLeaves.getUnlocalizedName());
+		registerBlock(blockLeaves, ElysiumLeavesItemBlock.class);
 
 		blockPlanks = (new ElysiumBlockWood()).setHardness(0.2F).setStepSound(Block.soundTypeWood).setBlockTextureName("elysium_planks").setBlockName("elysium_planks");
-		GameRegistry.registerBlock(blockPlanks, ElysimPlanksItemBlock.class, blockPlanks.getUnlocalizedName());
+		registerBlock(blockPlanks, ElysiumPlanksItemBlock.class);
 
 //		blockGastroShell = (new ElysiumBlockGastroShell(idGastroShellBlock.getInt(), Material.rock)).setHardness(0.2F).setStepSound(Block.soundGrassFootstep).setBlockName("gastroshell");
 //		registerBlock(blockGastroShell, "Gastro Shell");
 
 		blockFlower = (new ElysiumBlockFlower()).setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("elysium_flower").setBlockName("elysium_flower");
-		GameRegistry.registerBlock(blockFlower, ElysimFlowerItemBlock.class, blockFlower.getUnlocalizedName());
+		registerBlock(blockFlower, ElysiumFlowerItemBlock.class);
 
 		blockTallGrass = new ElysiumBlockTallGrass().setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("elysium_tallgrass").setBlockName("elysium_tallgrass");
-		GameRegistry.registerBlock(blockTallGrass, ElysimTallGrassItemBlock.class, blockTallGrass.getUnlocalizedName());
+		registerBlock(blockTallGrass, ElysiumTallGrassItemBlock.class);
 
 		oreSulphure = new ElysiumBlockOre().setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundTypeStone).setBlockTextureName("oreSulphur").setBlockName("oreSulphur");
 		registerBlock(oreSulphure);
@@ -398,10 +443,9 @@ public class Elysium
 		blockTourmaline = new ElysiumBlock(Material.iron).setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeStone).setBlockTextureName("blockTourmaline").setBlockName("blockTourmaline");
 		registerBlock(blockTourmaline);
 
+		blockEnergyCrystal = new ElysiumEnergyCrystalBlock(Material.glass).setHardness(3F).setResistance(4F).setStepSound(Block.soundTypeGlass).setLightLevel(1.0F).setBlockTextureName("energy_crystal").setBlockName("energy_crystal");
+		registerBlock(blockEnergyCrystal, ElysiumEnergyCrystalItemBlock.class);
 
-		blockTiberium = new ElysiumTiberiumBlock(Material.glass).setHardness(0.3F).setStepSound(Block.soundTypeGlass).setLightLevel(1.0F).setBlockTextureName("energy_crystal_rough5").setBlockName("energy_crystal");
-		registerBlock(blockTiberium);
-		
 		blockPipe = new ElysiumPipeBlock(Material.rock).setHardness(0.3F).setStepSound(Block.soundTypeStone).setBlockTextureName("palestone").setBlockName("stone_pipe");
 		registerBlock(blockPipe);
 
@@ -565,9 +609,13 @@ public class Elysium
 		//Ore registry
 		OreDictionary.registerOre("dyePink", itemAsphodelPetals);
         OreDictionary.registerOre("logWood", new ItemStack(blockLog, 1, 0));
+        OreDictionary.registerOre("logWood", new ItemStack(blockLog, 1, 1));
         OreDictionary.registerOre("plankWood", new ItemStack(blockPlanks, 1, 0));
+        OreDictionary.registerOre("plankWood", new ItemStack(blockPlanks, 1, 1));
         OreDictionary.registerOre("treeSapling", new ItemStack(blockSapling, 1, 0));
+        OreDictionary.registerOre("treeSapling", new ItemStack(blockSapling, 1, 1));
         OreDictionary.registerOre("treeLeaves", new ItemStack(blockLeaves, 1, 0));
+        OreDictionary.registerOre("treeLeaves", new ItemStack(blockLeaves, 1, 1));
         
         OreDictionary.registerOre("oreIridium", oreIridium);
         OreDictionary.registerOre("oreSulphure", oreSulphure);
@@ -589,6 +637,23 @@ public class Elysium
 		//Handlers
 		GameRegistry.registerFuelHandler(new ElysiumFuelHandler());
 		
+		//TileEntity
+		GameRegistry.registerTileEntity(ElysianTileEntityPortal.class, "ElysianTileEntityPortal");
+
+		/** Register WorldProvider for Dimension **/
+		DimensionManager.registerProviderType(dimensionID, ElysiumWorldProvider.class, false);
+		DimensionManager.registerDimension(dimensionID, dimensionID);
+
+
+		biomePlain = new ElysiumBiomeGenPlain(biomeIdPlains);
+		biomeOcean = new ElysiumBiomeGenOcean(biomeIdOcean);
+		biomeForest = new ElysiumBiomeGenForest(biomeIdForest);
+		biomeRiver = new ElysiumBiomeGenRiver(biomeIdRiver);
+		
+		GameRegistry.registerWorldGenerator(new WorldGenElysium(), 0);
+
+		proxy.registerRenderers();
+		
 		
 		//Entity Registering
 		int catorPillarID = EntityRegistry.findGlobalUniqueEntityId();
@@ -603,23 +668,29 @@ public class Elysium
 		EntityRegistry.registerGlobalEntityID(EntityDeer.class, "Deer", deerID, 0x626464, 0x3A2A3A);
         EntityRegistry.registerModEntity(EntityDeer.class, "Deer", deerID, this, 160, 1, true);
         
+
+        int unicorn = EntityRegistry.findGlobalUniqueEntityId();
+		EntityRegistry.registerGlobalEntityID(EntityPinkUnicorn.class, "Unicorn", unicorn, 0x623464, 0x3A2A3A);//TODO: remove egg
+        EntityRegistry.registerModEntity(EntityPinkUnicorn.class, "Unicorn", unicorn, this, 160, 1, true);
         
-		//TileEntity
-		GameRegistry.registerTileEntity(ElysianTileEntityPortal.class, "ElysianTileEntityPortal");
+        
+        //Entity Spawn
+        EntityRegistry.addSpawn(EntityCatorPillar.class, 5, 3, 5, EnumCreatureType.creature, biomePlain);
+        EntityRegistry.addSpawn(EntitySwan.class, 10, 3, 5, EnumCreatureType.creature, biomePlain);
+        EntityRegistry.addSpawn(EntityDeer.class, 1, 1, 1, EnumCreatureType.creature, biomeForest);
+        EntityRegistry.addSpawn(EntityPinkUnicorn.class, 1, 1, 1, EnumCreatureType.creature, biomeForest);
 
-		/** Register WorldProvider for Dimension **/
-		DimensionManager.registerProviderType(dimensionID, ElysiumWorldProvider.class, false);
-		DimensionManager.registerDimension(dimensionID, dimensionID);
+        
+        
+        //Fire Info
 
-
-		biomePlain = new ElysiumBiomeGenPlain(biomeIdPlains);
-		biomeOcean = new ElysiumBiomeGenOcean(biomeIdOcean);
-		
-		GameRegistry.registerWorldGenerator(new WorldGenElysium(), 0);
-
-		proxy.registerRenderers();
-		
-		
+        Blocks.fire.setFireInfo(blockLog, 2, 2);
+        Blocks.fire.setFireInfo(blockPlanks, 2, 10);
+        Blocks.fire.setFireInfo(blockLeaves, 15, 30);
+        Blocks.fire.setFireInfo(oreSulphure, 2, 2);
+        Blocks.fire.setFireInfo(blockSulphure, 5, 5);
+        
+        
 //		elysiumCave = new CaveTypeElysium("Elysium Cave", blockPalestone);
     }
 	
@@ -644,6 +715,11 @@ public class Elysium
 		GameRegistry.registerBlock(block, block.getUnlocalizedName());
 	}
     
+	private void registerBlock(Block block, Class<? extends ItemBlock> itemclass)
+	{
+		GameRegistry.registerBlock(block,  itemclass,  block.getUnlocalizedName());
+	}
+
     private void registerItem(Item item)
     {
 		GameRegistry.registerItem(item, item.getUnlocalizedName());

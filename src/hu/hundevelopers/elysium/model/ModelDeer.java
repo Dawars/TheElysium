@@ -6,8 +6,8 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelDeer extends ModelBase {
-	// fields
+public class ModelDeer extends ModelBase
+{
 	ModelRenderer body3;
 	ModelRenderer neck;
 	ModelRenderer body1;
@@ -36,7 +36,8 @@ public class ModelDeer extends ModelBase {
 	ModelRenderer leg2BR;
 	ModelRenderer leg3BR;
 
-	public ModelDeer() {
+	public ModelDeer()
+	{
 		textureWidth = 64;
 		textureHeight = 64;
 
@@ -237,6 +238,7 @@ public class ModelDeer extends ModelBase {
 		glPushMatrix();
 		glEnable(GL_BLEND);
 		glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
 		Gem.render(f5);
 		
 		glDisable(GL_BLEND);

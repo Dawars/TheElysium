@@ -4,9 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ElysimLeavesItemBlock extends ItemBlock
+public class ElysiumFlowerItemBlock extends ItemBlock
 {
-	public ElysimLeavesItemBlock(Block block)
+	public ElysiumFlowerItemBlock(Block block)
 	{
 		super(block);
 		setHasSubtypes(true);
@@ -19,7 +19,7 @@ public class ElysimLeavesItemBlock extends ItemBlock
 		switch (itemstack.getItemDamage())
 		{
 			case 0:
-				name = "fostimber";
+				name = "asphodel";
 			break;
 			default:
 				name = "error";
@@ -30,6 +30,6 @@ public class ElysimLeavesItemBlock extends ItemBlock
 	@Override
 	public int getMetadata(int meta)
 	{
-		return meta & 3;
+		return meta;
 	}
 }

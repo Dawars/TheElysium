@@ -4,10 +4,13 @@ import hu.hundevelopers.elysium.Elysium;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class ElysiumBlockOre extends ElysiumBlockHeatable
 {
@@ -73,6 +76,34 @@ public class ElysiumBlockOre extends ElysiumBlockHeatable
 			}
 
 			this.dropXpOnBlockBreak(world, x, y, z, j1);
+		}
+	}
+	
+	/**
+     * Called when fire is updating, checks if a block face can catch fire.
+     *
+     *
+     * @param world The current world
+     * @param x The blocks X position
+     * @param y The blocks Y position
+     * @param z The blocks Z position
+     * @param face The face that the fire is coming from
+     * @return True if the face can be on fire, false otherwise.
+     */
+	@Override
+	public boolean isFlammable(IBlockAccess world, int x, int y, int z, ForgeDirection face)
+    {
+        return this == Elysium.oreSulphure;
+    }
+	
+	@Override
+	public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
+	{
+		super.onNeighborBlockChange(world, x, y, z, block);
+		if (block.isFlammable(world, x, y, z, ForgeDirection.UNKNOWN))
+		{
+			world.newExplosion(null, x, y, z, 4F, true, true);
+			world.setBlockToAir(x, y, z);
 		}
 	}
 }

@@ -1,9 +1,8 @@
 package hu.hundevelopers.elysium.world.biome;
 
 import hu.hundevelopers.elysium.Elysium;
-import net.minecraft.world.biome.BiomeGenBase;
 
-public class ElysiumBiomeGenOcean extends BiomeGenBase
+public class ElysiumBiomeGenOcean extends ElysiumBiomeBase
 {
 	public ElysiumBiomeGenOcean(int id)
 	{

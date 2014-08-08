@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderCaterPillar extends RenderLiving
 {
-    private static final ResourceLocation TEXTURE_CATER_PILLAR = new ResourceLocation(Elysium.MODID + ":/textures/models/CaterPillar.png");
+    private static final ResourceLocation TEXTURE_CATER_PILLAR = new ResourceLocation(Elysium.MODID + ":/textures/mobs/CaterPillar.png");
 	private ModelCaterPillar model;
 
     public RenderCaterPillar()

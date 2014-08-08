@@ -5,6 +5,7 @@ import hu.hundevelopers.elysium.block.ElysiumBlock;
 
 import java.util.Random;
 
+import me.dawars.CraftingPillars.CraftingPillars;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -196,7 +197,7 @@ public class ElysiumGenLakes extends WorldGenerator
 				int c = random.nextInt(5);
 				for(i = 0; i < c; i++)
 				{
-					new ElysiumGenLakePillar(Elysium.blockRilt).generate(world, random, x+random.nextInt(16)-8, y+4, z+random.nextInt(16)-8);
+					new ElysiumGenLakePillar(CraftingPillars.blockBasePillar).generate(world, random, x+random.nextInt(16)-8, y+4, z+random.nextInt(16)-8);
 				}
 			}
 			//System.out.println("Generated lake on surface at: " + (x+8) + " " + (y+4) + " " + (z+8));

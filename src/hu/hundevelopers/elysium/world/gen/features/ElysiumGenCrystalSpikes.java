@@ -13,6 +13,18 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 public class ElysiumGenCrystalSpikes extends WorldGenerator
 {
 
+	private int meta;
+
+	public ElysiumGenCrystalSpikes(int meta)
+	{
+		this.meta = meta;
+	}
+	
+	public ElysiumGenCrystalSpikes()
+	{
+		this(0);
+	}
+	
 	@Override
 	public boolean generate(World world, Random rand, int x, int y, int z)
 	{
@@ -22,7 +34,7 @@ public class ElysiumGenCrystalSpikes extends WorldGenerator
 			return false;
 		}
 
-		System.out.println("gen crystal");
+//		System.out.println("gen crystal");
 
 		int directionX = 0;
 		int directionZ = 0;
@@ -46,11 +58,15 @@ public class ElysiumGenCrystalSpikes extends WorldGenerator
 					{
 						Block old = world.getBlock(x + i + directionX * j, y+j, z + k + directionZ * j);
 						if(old != Blocks.quartz_block && old != Blocks.gold_block && old != Elysium.blockPortalCore)
-							world.setBlock(x + i + directionX * j, y+j, z + k + directionZ * j, Elysium.blockTiberium);
-
+						{
+							world.setBlock(x + i + directionX * j, y+j, z + k + directionZ * j, Elysium.blockEnergyCrystal, meta, 2);
+						}
+						
 						old = world.getBlock(x - i - directionX * j, y-j, z - k - directionZ * j);
 						if(old != Blocks.quartz_block && old != Blocks.gold_block && old != Elysium.blockPortalCore)
-							world.setBlock(x - i - directionX * j, y-j, z - k - directionZ * j, Elysium.blockTiberium);
+						{
+							world.setBlock(x - i - directionX * j, y-j, z - k - directionZ * j, Elysium.blockEnergyCrystal, meta, 2);
+						}
 					}
 				}
 			}

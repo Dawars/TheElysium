@@ -4,9 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ElysimTallGrassItemBlock extends ItemBlock
+public class ElysiumTallGrassItemBlock extends ItemBlock
 {
-	public ElysimTallGrassItemBlock(Block block)
+	public ElysiumTallGrassItemBlock(Block block)
 	{
 		super(block);
 		setHasSubtypes(true);

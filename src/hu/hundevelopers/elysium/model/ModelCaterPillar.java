@@ -1,8 +1,17 @@
 package hu.hundevelopers.elysium.model;
 
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
 
 public class ModelCaterPillar extends ModelBase
 {
@@ -30,6 +39,7 @@ public class ModelCaterPillar extends ModelBase
 	ModelRenderer Head;
 	ModelRenderer Antenna1;
 	ModelRenderer Antenna2;
+	ModelRenderer Gem;
 
 	public ModelCaterPillar()
 	{
@@ -180,12 +190,19 @@ public class ModelCaterPillar extends ModelBase
 		Antenna2.setTextureSize(128, 64);
 		Antenna2.mirror = true;
 		setRotation(Antenna2, 0.6320361F, 0F, -0.4961273F);
+		
+		Gem = new ModelRenderer(this, 24, 0);
+		Gem.addBox(-1F, -1F, -1F, 2, 2, 2);
+		Gem.setRotationPoint(0F, 22F, -5F);
+		Gem.setTextureSize(128, 64);
+		Gem.mirror = true;
+		setRotation(Gem, 0.7853982F, 0.7853982F, 0.7853982F);
 	}
 
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
 	{
-		setRotationAngles(entity, f, f1, f2, f3, f4, f5);
+		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 		Segment1.render(f5);
 		Segment2.render(f5);
 		Segment3.render(f5);
@@ -210,6 +227,15 @@ public class ModelCaterPillar extends ModelBase
 		Head.render(f5);
 		Antenna1.render(f5);
 		Antenna2.render(f5);
+		
+		glPushMatrix();
+		glEnable(GL_BLEND);
+		glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
+		Gem.render(f5);
+		
+		glDisable(GL_BLEND);
+		glPopMatrix();
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z)
@@ -219,8 +245,19 @@ public class ModelCaterPillar extends ModelBase
 		model.rotateAngleZ = z;
 	}
 
-	public void setRotationAngles(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
-	{
-		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-	}
+	/**
+     * Sets the model's various rotation angles. For bipeds, par1 and par2 are used for animating the movement of arms
+     * and legs, where par1 represents the time(so that arms and legs swing back and forth) and par2 represents how
+     * "far" arms and legs can swing at most.
+     */
+	@Override
+    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity)
+    {
+		this.PawR1.rotateAngleX = this.PawR3.rotateAngleX = this.PawR5.rotateAngleX = this.PawR7.rotateAngleX = MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
+		this.PawR2.rotateAngleX = this.PawR4.rotateAngleX = this.PawR6.rotateAngleX = this.PawR8.rotateAngleX = -MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
+		
+		this.PawL1.rotateAngleX = this.PawL3.rotateAngleX = this.PawL5.rotateAngleX = this.PawL7.rotateAngleX = MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 1.4F * par2;
+		this.PawL2.rotateAngleX = this.PawL4.rotateAngleX = this.PawL6.rotateAngleX = this.PawL8.rotateAngleX = -MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 1.4F * par2;
+    }
+
 }

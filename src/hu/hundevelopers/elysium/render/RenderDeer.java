@@ -19,7 +19,7 @@ public class RenderDeer extends RenderLiving
     
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return new ResourceLocation(Elysium.MODID + ":/textures/models/deer.png");
+		return new ResourceLocation(Elysium.MODID + ":/textures/mobs/Deer.png");
 	}
 
 }

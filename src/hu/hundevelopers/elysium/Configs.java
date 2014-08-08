@@ -9,6 +9,8 @@ public class Configs {
 
 	public static final int BIOME_PLAIN = 25;
 	public static final int BIOME_OCEAN = 26;
+	public static final int BIOME_FOREST = 27;
+	public static final int BIOME_RIVER = 28;
 
 	//Settings
 	public static final int maxportaldistance = 64;
@@ -24,4 +26,5 @@ public class Configs {
 	public static final int mazeRoomRarity = 10;
 	
 	public static final boolean customGui = true;
+
 }

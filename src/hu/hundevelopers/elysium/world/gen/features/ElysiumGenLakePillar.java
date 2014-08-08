@@ -32,13 +32,13 @@ public class ElysiumGenLakePillar extends WorldGenerator
 		for(j = y; world.getBlock(x, j, z) == Elysium.blockElysiumWater; j--)
 		{
 			world.setBlock(x, j, z, pillarBlock);
-			world.setBlockMetadataWithNotify(x, j, z, 2, 0);
+			world.setBlockMetadataWithNotify(x, j, z, 0, 1);
 		}
 
 		for(j = y+1; world.isAirBlock(x, j, z) && (j <= h); j++)
 		{
 			world.setBlock(x, j, z, pillarBlock);
-			world.setBlockMetadataWithNotify(x, j, z, 2, 0);
+			world.setBlockMetadataWithNotify(x, j, z, 0, 1);
 		}
 
 		if(j == h+1)
@@ -52,13 +52,13 @@ public class ElysiumGenLakePillar extends WorldGenerator
 				for(int i = 1; (i <= w1) && world.isAirBlock(x+i, j, z); i++)
 				{
 					world.setBlock(x+i, j, z, pillarBlock);
-					world.setBlockMetadataWithNotify(x+i, j, z, 3, 0);
+					world.setBlockMetadataWithNotify(x+i, j, z, 2, 1);
 				}
 
 				for(int i = 0; (i <= w2) && world.isAirBlock(x-i, j, z); i++)
 				{
 					world.setBlock(x-i, j, z, pillarBlock);
-					world.setBlockMetadataWithNotify(x-i, j, z, 3, 0);
+					world.setBlockMetadataWithNotify(x-i, j, z, 2, 1);
 				}
 			}
 			else
@@ -66,17 +66,19 @@ public class ElysiumGenLakePillar extends WorldGenerator
 				for(int i = 1; (i <= w1) && world.isAirBlock(x, j, z+i); i++)
 				{
 					world.setBlock(x, j, z+i, pillarBlock);
-					world.setBlockMetadataWithNotify(x, j, z+i, 4, 0);
+					world.setBlockMetadataWithNotify(x, j, z+i, 1, 1);
 				}
 
 				for(int i = 0; (i <= w2) && world.isAirBlock(x, j, z-i); i++)
 				{
 					world.setBlock(x, j, z-i, pillarBlock);
-					world.setBlockMetadataWithNotify(x, j, z-i, 4, 0);
+					world.setBlockMetadataWithNotify(x, j, z-i, 1, 1);
 				}
 			}
 		}
 
+		//spawn mobs
+		
 		System.out.println("Generated pillar at: " + (x) + " " + (j+1) + " " + (z));
 		return true;
 	}
