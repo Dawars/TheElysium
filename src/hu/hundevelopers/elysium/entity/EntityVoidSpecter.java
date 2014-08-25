@@ -1,247 +1,243 @@
 package hu.hundevelopers.elysium.entity;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityLargeFireball;
+import net.minecraft.stats.AchievementList;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
-public class EntityVoidSpecter extends EntityLiving
+public class EntityVoidSpecter extends EntityFlying implements IMob
 {
-    public double targetX;
-    public double targetY;
-    public double targetZ;
-    private Entity target;
-    
-    public EntityVoidSpecter(World par1World)
-    {
-        super(par1World);
-        this.setSize(2.0F, 2.0F);
-        this.isImmuneToFire = true;
-        this.targetY = 100.0D;
-        this.targetX = this.posX + this.rand.nextGaussian() * 2.0F;
-        this.targetZ = this.posZ + this.rand.nextGaussian() * 2.0F;
-        this.noClip = true;
 
+	public int courseChangeCooldown;
+	public double waypointX;
+	public double waypointY;
+	public double waypointZ;
+	
+	public Entity targetedEntity;
+	/** Cooldown time between target loss and new target aquirement. */
+	private int aggroCooldown;
+	public int prevAttackCounter;
+	public int spawnCounter;
+
+	public EntityVoidSpecter(World par1World)
+	{
+		super(par1World);
+		this.setSize(2.0F, 2.0F);
+		this.isImmuneToFire = true;
+
+        this.ignoreFrustumCheck = true;
+	}
+
+	@Override
+	protected void applyEntityAttributes()
+	{
+		super.applyEntityAttributes();
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public boolean func_110182_bF()
+	{
+        return this.dataWatcher.getWatchableObjectByte(16) != 0;
     }
 
+	@Override
+	protected void entityInit()
+    {
+        super.entityInit();
+        this.dataWatcher.addObject(16, Byte.valueOf((byte)0));
+    }
+	
     @Override
-    protected void applyEntityAttributes()
+	protected void updateEntityActionState()
     {
-        super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20.0D);
-    }
+        if (!this.worldObj.isRemote && this.worldObj.difficultySetting == EnumDifficulty.PEACEFUL)
+        {
+            this.setDead();
+        }
 
-    /**
-     * returns if this entity triggers Block.onEntityWalking on the blocks they walk on. used for spiders and wolves to
-     * prevent them from trampling crops
-     */
-    @Override
-    protected boolean canTriggerWalking()
-    {
-        return false;
-    }
-    
-    /**
-     * Return whether this entity should NOT trigger a pressure plate or a tripwire.
-     */
-    @Override
-    public boolean doesEntityNotTriggerPressurePlate()
-    {
-        return true;
-    }
-    /**
-     * Sets a new target for the flight AI. It can be a random coordinate or a nearby player.
-     */
-    private void setNewTarget()
-    {
-        if (this.rand.nextInt(2) == 0 && !this.worldObj.playerEntities.isEmpty())//TODO: add heroes
-        {
-            this.target = (Entity)this.worldObj.playerEntities.get(this.rand.nextInt(this.worldObj.playerEntities.size()));
-        }
-        else
-        {
-            this.targetX = this.posX + this.rand.nextInt(20) - 1;
-            this.targetZ = this.posZ + this.rand.nextInt(20) - 1;
-            this.targetY = this.worldObj.getTopSolidOrLiquidBlock((int) this.targetX, (int) this.targetZ) + 20.0F + this.rand.nextInt(10);
-//            double dx = this.posX - this.targetX;
-//            double dy = this.posY - this.targetY;
-//            double dz = this.posZ - this.targetZ;
+        this.despawnEntity();
+        this.prevAttackCounter = this.spawnCounter;
+        double d0 = this.waypointX - this.posX;
+        double d1 = this.waypointY - this.posY;
+        double d2 = this.waypointZ - this.posZ;
+        double d3 = d0 * d0 + d1 * d1 + d2 * d2;
 
-            this.target = null;
-        }
-    }
-    
-    /**
-     * Basic mob attack. Default to touch of death in EntityCreature. Overridden by each mob to define their attack.
-     */
-    protected void attackEntity(Entity par1Entity, float par2)
-    {
-        if (this.attackTime <= 0 && par2 < 1.2F && par1Entity.boundingBox.maxY > this.boundingBox.minY && par1Entity.boundingBox.minY < this.boundingBox.maxY)
+        if (d3 < 1.0D || d3 > 3600.0D)
         {
-            this.attackTime = 20;
-            this.attackEntityAsMob(par1Entity);
+            this.waypointX = this.posX + (double)((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+            this.waypointY = this.posY + (double)((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+            this.waypointZ = this.posZ + (double)((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
         }
-    }
-    
-    /**
-     * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
-     * use this to react to sunlight and start to burn.
-     */
-    public void onLivingUpdate()
-    {
-    	double dx;
-    	double dy;
-    	double dz;
-    	double dist;
-         
-    	if (this.worldObj.isRemote)
+
+        if (this.courseChangeCooldown-- <= 0)
         {
-            if (this.newPosRotationIncrements > 0)
+            this.courseChangeCooldown += this.rand.nextInt(5) + 2;
+            d3 = (double)MathHelper.sqrt_double(d3);
+
+            if (this.isCourseTraversable(this.waypointX, this.waypointY, this.waypointZ, d3))
             {
-                dx = this.posX + (this.newPosX - this.posX) / (double)this.newPosRotationIncrements;
-                dy = this.posY + (this.newPosY - this.posY) / (double)this.newPosRotationIncrements;
-                dz = this.posZ + (this.newPosZ - this.posZ) / (double)this.newPosRotationIncrements;
-                dist = MathHelper.wrapAngleTo180_double(this.newRotationYaw - (double)this.rotationYaw);
-                this.rotationYaw = (float)((double)this.rotationYaw + dist / (double)this.newPosRotationIncrements);
-                this.rotationPitch = (float)((double)this.rotationPitch + (this.newRotationPitch - (double)this.rotationPitch) / (double)this.newPosRotationIncrements);
-                --this.newPosRotationIncrements;
-                this.setPosition(dx, dy, dz);
-                this.setRotation(this.rotationYaw, this.rotationPitch);
-            }
-        }
-        else
-        {
-            dx = this.targetX - this.posX;
-            dy = this.targetY - this.posY;
-            dz = this.targetZ - this.posZ;
-            dist = dx * dx + dy * dy + dz * dz;
-
-            if (this.target != null)
-            {
-                this.targetX = this.target.posX;
-                this.targetZ = this.target.posZ;
-                double d3 = this.targetX - this.posX;
-                double d5 = this.targetZ - this.posZ;
-                double d7 = Math.sqrt(d3 * d3 + d5 * d5);
-                double d8 = 0.4000000059604645D + d7 / 80.0D - 1.0D;
-
-                if (d8 > 10.0D)
-                {
-                    d8 = 10.0D;
-                }
-
-                this.targetY = this.target.boundingBox.minY + d8;
+                this.motionX += d0 / d3 * 0.1D;
+                this.motionY += d1 / d3 * 0.1D;
+                this.motionZ += d2 / d3 * 0.1D;
             }
             else
             {
-                this.targetX += this.rand.nextGaussian() * 2.0D;
-                this.targetZ += this.rand.nextGaussian() * 2.0D;
+                this.waypointX = this.posX;
+                this.waypointY = this.posY;
+                this.waypointZ = this.posZ;
             }
+        }
 
-            if (dist < 2 || dist > 16*16.0D || this.isCollidedHorizontally || this.isCollidedVertically)
+        if (this.targetedEntity != null && this.targetedEntity.isDead)
+        {
+            this.targetedEntity = null;
+        }
+
+        if (this.targetedEntity == null || this.aggroCooldown-- <= 0)
+        {
+            this.targetedEntity = this.worldObj.getClosestVulnerablePlayerToEntity(this, 100.0D);
+
+            if (this.targetedEntity != null)
             {
-                this.setNewTarget();
+//            	spawnX = (int) (this.targetedEntity.posX + this.rand.nextInt(16) - 8);
+//            	spawnZ = (int) (this.targetedEntity.posZ + this.rand.nextInt(16) - 8);
+//                 
+//            	spawnY = this.worldObj.getTopSolidOrLiquidBlock((int) spawnX, (int) spawnZ);
+      
+                this.aggroCooldown = 20;
             }
-            
+        }
 
-            dx /= (double)MathHelper.sqrt_double(dx * dx + dy * dy);
-            float f12 = 0.6F;
+        double d4 = 32.0D;
 
-            if (dy < (double)(-f12))
+        if (this.targetedEntity != null && this.targetedEntity.getDistanceSqToEntity(this) < d4 * d4)
+        {
+ 
+//           this.renderYawOffset = this.rotationYaw = -((float)Math.atan2(spawnX, spawnZ)) * 180.0F / (float)Math.PI;
+
+            if (this.canEntityBeSeen(this.targetedEntity))
             {
-                dy = (double)(-f12);
-            }
+                if (this.spawnCounter == 10)
+                {
+                    this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1007, (int)this.posX, (int)this.posY, (int)this.posZ, 0);
+                }
 
-            if (dy > (double)f12)
+                ++this.spawnCounter;
+
+                if (this.spawnCounter == 20)
+                {
+                	//TODO: spawn ground mobs
+//                    this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1008, (int)this.posX, (int)this.posY, (int)this.posZ, 0);
+//                    EntityLargeFireball entitylargefireball = new EntityLargeFireball(this.worldObj, this, d5, d6, d7);
+//                    entitylargefireball.field_92057_e = this.explosionStrength;
+//                    double d8 = 4.0D;
+//                    Vec3 vec3 = this.getLook(1.0F);
+//                    entitylargefireball.posX = this.posX + vec3.xCoord * d8;
+//                    entitylargefireball.posY = this.posY + (double)(this.height / 2.0F) + 0.5D;
+//                    entitylargefireball.posZ = this.posZ + vec3.zCoord * d8;
+                	EntityEnderman entity = new EntityEnderman(worldObj);
+//                	entity.setPosition(spawnX, spawnY, spawnZ);
+                    this.worldObj.spawnEntityInWorld(entity);
+                    this.spawnCounter = -40;
+                }
+            }
+            else if (this.spawnCounter > 0)
             {
-                dy = (double)f12;
+                --this.spawnCounter;
             }
+        }
+        else
+        {
+            this.renderYawOffset = this.rotationYaw = -((float)Math.atan2(this.motionX, this.motionZ)) * 180.0F / (float)Math.PI;
 
-            this.motionY += dy * 0.10000000149011612D;
-            this.rotationYaw = MathHelper.wrapAngleTo180_float(this.rotationYaw);
-            double d4 = 90.0D - Math.atan2(dx, dz) * 180.0D / Math.PI;
-            double d6 = MathHelper.wrapAngleTo180_double(d4 - (double)this.rotationYaw);
-
-            if (d6 > 50.0D)
+            if (this.spawnCounter > 0)
             {
-                d6 = 50.0D;
+                --this.spawnCounter;
             }
+        }
 
-            if (d6 < -50.0D)
+        if (!this.worldObj.isRemote)
+        {
+            byte b1 = this.dataWatcher.getWatchableObjectByte(16);
+            byte b0 = (byte)(this.spawnCounter > 10 ? 1 : 0);
+
+            if (b1 != b0)
             {
-                d6 = -50.0D;
+                this.dataWatcher.updateObject(16, Byte.valueOf(b0));
             }
-
-            Vec3 vec3 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.targetX - this.posX, this.targetY - this.posY, this.targetZ - this.posZ).normalize();
-            Vec3 vec32 = this.worldObj.getWorldVec3Pool().getVecFromPool((double)MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F), this.motionY, (double)(-MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F))).normalize();
-            float f5 = (float)(vec32.dotProduct(vec3) + 0.5D) / 1.5F;
-
-            if (f5 < 0.0F)
-            {
-                f5 = 0.0F;
-            }
-
-            this.randomYawVelocity *= 0.8F;
-            float f6 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ) * 1.0F + 1.0F;
-            double d9 = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ) * 1.0D + 1.0D;
-
-            if (d9 > 40.0D)
-            {
-                d9 = 40.0D;
-            }
-
-            this.randomYawVelocity = (float)((double)this.randomYawVelocity + d6 * (0.699999988079071D / d9 / (double)f6));
-            this.rotationYaw += this.randomYawVelocity * 0.1F;
-            float f7 = (float)(2.0D / (d9 + 1.0D));
-            float f8 = 0.06F;
-            this.moveFlying(0.0F, -1.0F, f8 * (f5 * f7 + (1.0F - f7)));
-
-            this.moveEntity(this.motionX, this.motionY, this.motionZ);
-
-            Vec3 vec31 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.motionX, this.motionY, this.motionZ).normalize();
-            float f9 = (float)(vec31.dotProduct(vec32) + 1.0D) / 2.0F;
-            f9 = 0.8F + 0.15F * f9;
-            this.motionX *= (double)f9;
-            this.motionZ *= (double)f9;
-            this.motionY *= 0.9100000262260437D;
         }
     }
 
-    /**
-     * Simplifies the value of a number by adding/subtracting 180 to the point that the number is between -180 and 180.
-     */
-    private float simplifyAngle(double par1)
-    {
-        return (float)MathHelper.wrapAngleTo180_double(par1);
-    }
+	/**
+	 * True if the ghast has an unobstructed line of travel to the waypoint.
+	 */
+	private boolean isCourseTraversable(double par1, double par3, double par5, double par7)
+	{
+		double d4 = (this.waypointX - this.posX) / par7;
+		double d5 = (this.waypointY - this.posY) / par7;
+		double d6 = (this.waypointZ - this.posZ) / par7;
+		AxisAlignedBB axisalignedbb = this.boundingBox.copy();
 
+		for (int i = 1; (double) i < par7; ++i)
+		{
+			axisalignedbb.offset(d4, d5, d6);
 
-    /**
-     * Returns the sound this mob makes while it's alive.
-     */
-    @Override
-    protected String getLivingSound()
-    {
-        return "mob.enderdragon.growl";
-    }
+			if (!this.worldObj.getCollidingBoundingBoxes(this, axisalignedbb).isEmpty())
+			{
+				return false;
+			}
+		}
 
-    /**
-     * Returns the sound this mob makes when it is hurt.
-     */
-    @Override
-    protected String getHurtSound()
-    {
-        return "mob.enderdragon.hit";
-    }
+		return true;
+	}
 
-    /**
-     * Returns the volume for the sounds this mob makes.
-     */
-    @Override
-    protected float getSoundVolume()
-    {
-        return 2.0F;
-    }
+	/**
+	 * Simplifies the value of a number by adding/subtracting 180 to the point
+	 * that the number is between -180 and 180.
+	 */
+	private float simplifyAngle(double par1)
+	{
+		return (float) MathHelper.wrapAngleTo180_double(par1);
+	}
+
+	/**
+	 * Returns the sound this mob makes while it's alive.
+	 */
+	@Override
+	protected String getLivingSound()
+	{
+		return "mob.enderdragon.growl";
+	}
+
+	/**
+	 * Returns the sound this mob makes when it is hurt.
+	 */
+	@Override
+	protected String getHurtSound()
+	{
+		return "mob.enderdragon.hit";
+	}
+
+	/**
+	 * Returns the volume for the sounds this mob makes.
+	 */
+	@Override
+	protected float getSoundVolume()
+	{
+		return 2.0F;
+	}
 }

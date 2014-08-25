@@ -1,17 +1,27 @@
 package hu.hundevelopers.elysium.block;
 
+import hu.hundevelopers.elysium.Elysium;
+
 import java.util.List;
+
+import coloredlightscore.src.api.CLApi;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockGlass;
+import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Facing;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 
-public class ElysiumEnergyCrystalBlock extends ElysiumBlock
+public class ElysiumEnergyCrystalBlock extends BlockStainedGlass
 {
 	public static final String[] names = new String[] {"pure", "corrupted", "depleted"};
 	private IIcon[] icons;
@@ -20,21 +30,47 @@ public class ElysiumEnergyCrystalBlock extends ElysiumBlock
 	public ElysiumEnergyCrystalBlock(Material mat) 
 	{
 		super(mat);
-		this.setLightOpacity(1);
+//		this.setLightOpacity(1);
+		this.setCreativeTab(Elysium.tabElysium);
+//		if(Elysium.modLights)
+//		{
+//			System.out.println("setting light");
+//			CLApi.makeRGBLightValue(1F, 1F, 0F);
+//		}
 	}
 	
 	@Override
-	public int getRenderBlockPass()
-	{
-		return 1;
-	}
-	
-	@Override
-	public boolean isOpaqueCube()
-	{
-		return false;
-	}
-	
+    public Block setBlockTextureName(String texture)
+    {
+        this.textureName = Elysium.MODID + ":" + texture;
+        return this;
+    }
+
+//	/**
+//     * Returns true if the given side of this block type should be rendered, if the adjacent block is at the given
+//     * coordinates.  Args: blockAccess, x, y, z, side
+//     */
+//    @SideOnly(Side.CLIENT)
+//    @Override
+//    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_)
+//    {
+//        Block block = p_149646_1_.getBlock(p_149646_2_, p_149646_3_, p_149646_4_);
+//
+//        if (this == Elysium.blockEnergyCrystal)
+//        {
+//            if (p_149646_1_.getBlockMetadata(p_149646_2_, p_149646_3_, p_149646_4_) != p_149646_1_.getBlockMetadata(p_149646_2_ - Facing.offsetsXForSide[p_149646_5_], p_149646_3_ - Facing.offsetsYForSide[p_149646_5_], p_149646_4_ - Facing.offsetsZForSide[p_149646_5_]))
+//            {
+//                return true;
+//            }
+//
+//            if (block == this)
+//            {
+//                return false;
+//            }
+//        }
+//
+//        return block == this ? false : super.shouldSideBeRendered(p_149646_1_, p_149646_2_, p_149646_3_, p_149646_4_, p_149646_5_);
+//    }
 	  /**
      * Gets the block's texture. Args: side, meta
      */

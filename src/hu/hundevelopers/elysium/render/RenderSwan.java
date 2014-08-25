@@ -38,7 +38,7 @@ public class RenderSwan extends RenderLiving
     
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return new ResourceLocation(Elysium.MODID + ":/textures/mobs/Swan.png");
+		return new ResourceLocation(Elysium.MODID + ":textures/mobs/Swan.png");
 	}
 
 }

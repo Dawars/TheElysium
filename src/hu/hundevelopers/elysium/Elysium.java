@@ -1,13 +1,6 @@
 package hu.hundevelopers.elysium;
 
 import hu.hundevelopers.elysium.api.Plants;
-import hu.hundevelopers.elysium.block.ElysiumEnergyCrystalItemBlock;
-import hu.hundevelopers.elysium.block.ElysiumFlowerItemBlock;
-import hu.hundevelopers.elysium.block.ElysiumLeavesItemBlock;
-import hu.hundevelopers.elysium.block.ElysiumLogItemBlock;
-import hu.hundevelopers.elysium.block.ElysiumPlanksItemBlock;
-import hu.hundevelopers.elysium.block.ElysiumSaplingItemBlock;
-import hu.hundevelopers.elysium.block.ElysiumTallGrassItemBlock;
 import hu.hundevelopers.elysium.block.ElysiumBlock;
 import hu.hundevelopers.elysium.block.ElysiumBlockFalling;
 import hu.hundevelopers.elysium.block.ElysiumBlockFlower;
@@ -21,9 +14,16 @@ import hu.hundevelopers.elysium.block.ElysiumBlockSapling;
 import hu.hundevelopers.elysium.block.ElysiumBlockTallGrass;
 import hu.hundevelopers.elysium.block.ElysiumBlockWood;
 import hu.hundevelopers.elysium.block.ElysiumEnergyCrystalBlock;
+import hu.hundevelopers.elysium.block.ElysiumEnergyCrystalItemBlock;
 import hu.hundevelopers.elysium.block.ElysiumEnergyLiquid;
 import hu.hundevelopers.elysium.block.ElysiumFloatingBlock;
+import hu.hundevelopers.elysium.block.ElysiumFlowerItemBlock;
+import hu.hundevelopers.elysium.block.ElysiumLeavesItemBlock;
+import hu.hundevelopers.elysium.block.ElysiumLogItemBlock;
 import hu.hundevelopers.elysium.block.ElysiumPipeBlock;
+import hu.hundevelopers.elysium.block.ElysiumPlanksItemBlock;
+import hu.hundevelopers.elysium.block.ElysiumSaplingItemBlock;
+import hu.hundevelopers.elysium.block.ElysiumTallGrassItemBlock;
 import hu.hundevelopers.elysium.block.ElysiumWaterBlock;
 import hu.hundevelopers.elysium.entity.EntityCatorPillar;
 import hu.hundevelopers.elysium.entity.EntityDeer;
@@ -56,7 +56,10 @@ import hu.hundevelopers.elysium.world.gen.WorldGenElysium;
 
 import java.io.File;
 
+import coloredlightscore.src.api.CLApi;
+
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockOre;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EnumCreatureType;
@@ -78,6 +81,8 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import clickme.nocubes.NoCubes;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -91,7 +96,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid = Elysium.MODID, name=Elysium.NAME, version = Elysium.VERSION)
+@Mod(modid = Elysium.MODID, name=Elysium.NAME, version = Elysium.VERSION, dependencies = "after:easycoloredlights")
 public class Elysium
 {
     public static final String MODID = "elysium";
@@ -106,6 +111,8 @@ public class Elysium
 		return instance;
 	}
 
+	public static boolean modLights = false;
+	
 	@SidedProxy(clientSide = "hu.hundevelopers.elysium.proxy.ClientProxy", serverSide = "hu.hundevelopers.elysium.proxy.CommonProxy")
 	public static CommonProxy proxy;
 
@@ -277,7 +284,7 @@ public class Elysium
 		
 //
 
-    	elysiumFluidEnergy= new Fluid("elysium_energy");
+    	elysiumFluidEnergy = new Fluid("elysium_energy");
     	elysiumFluidEnergy.setDensity(2000).setLuminosity(15).setTemperature(500);
 		FluidRegistry.registerFluid(elysiumFluidEnergy);
 		fluidElysiumEnergy = FluidRegistry.getFluid("elysium_energy");
@@ -384,7 +391,7 @@ public class Elysium
 		oreSulphure = new ElysiumBlockOre().setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundTypeStone).setBlockTextureName("oreSulphur").setBlockName("oreSulphur");
 		registerBlock(oreSulphure);
 
-		oreBeryl = new ElysiumBlockOre().setHardness(3.0F).setResistance(5.0F).setLightLevel(0.5F).setStepSound(Block.soundTypeStone).setBlockTextureName("oreBeryl").setBlockName("oreBeryl");
+		oreBeryl = new ElysiumBlockOre().setHardness(3.0F).setResistance(5.0F).setLightLevel(1F).setStepSound(Block.soundTypeStone).setBlockTextureName("oreBeryl").setBlockName("oreBeryl");
 		registerBlock(oreBeryl);
 
 		oreCobalt = new ElysiumBlockOre().setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundTypeStone).setBlockTextureName("oreCobalt").setBlockName("oreCobalt");
@@ -732,7 +739,36 @@ public class Elysium
 		Plants.addGrassSeed(new ItemStack(itemSeedsPepper), 10);
 	
 		//Modded APIs
+		modLights = Loader.isModLoaded("coloredlightscore");
+		
+		if(modLights)
+		{
+			CLApi.setBlockColorRGB(blockEnergyCrystal, 1F, 1F, 0F);
+			CLApi.setBlockColorRGB(oreBeryl, 0, 8, 15, 1);
+		}
+		
+		if(Loader.isModLoaded("noCubes"))
+		{
+			NoCubes.renderBlockSoft(blockDirt);
+			NoCubes.renderBlockSoft(blockGrass);
+			NoCubes.renderBlockSoft(blockSand);
+			NoCubes.renderBlockSoft(blockPalestone);
+			NoCubes.renderBlockSoft(blockRilt);
 
+			NoCubes.renderBlockSoft(oreBeryl);
+			NoCubes.renderBlockSoft(oreCobalt);
+			NoCubes.renderBlockSoft(oreIridium);
+			NoCubes.renderBlockSoft(oreJade);
+			NoCubes.renderBlockSoft(oreSilicon);
+			NoCubes.renderBlockSoft(oreSulphure);
+			NoCubes.renderBlockSoft(oreTourmaline);
+			
+			NoCubes.registerAsLiquid(blockElysiumWater);
+			NoCubes.registerAsLiquid(blockElysiumEnergy);
+			
+			NoCubes.registerAsLeaves(blockLeaves);
+		}
+		
 //		CavesAPI.registerCaveType(elysiumCave);
 		
 	}

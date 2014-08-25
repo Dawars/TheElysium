@@ -4,8 +4,6 @@ import hu.hundevelopers.elysium.Elysium;
 
 import java.util.Random;
 
-import buildcraft.energy.BlockBuildcraftFluid;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
