@@ -3,8 +3,6 @@ package hu.hundevelopers.elysium.event;
 import java.util.ArrayList;
 
 import cpw.mods.fml.common.FMLCommonHandler;
-import me.dawars.rememberme.Log;
-import me.dawars.rememberme.api.RememberMeAPI.FightStyle;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -23,7 +21,7 @@ public class ElysiumExtendedPlayer implements IExtendedEntityProperties {
 	@Override
 	public void init(Entity entity, World world)
 	{
-		Log.log("Elysium Extended player init " + FMLCommonHandler.instance().getEffectiveSide());
+		
 	}
 	
 	@Override
@@ -47,7 +45,7 @@ public class ElysiumExtendedPlayer implements IExtendedEntityProperties {
 			
 		}
 		
-		Log.log("Extended player load " + FMLCommonHandler.instance().getEffectiveSide());
+		
 	}
 
 	/**

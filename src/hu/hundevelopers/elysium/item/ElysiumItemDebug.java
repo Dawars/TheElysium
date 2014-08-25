@@ -1,6 +1,7 @@
 package hu.hundevelopers.elysium.item;
 
 import hu.hundevelopers.elysium.Elysium;
+import hu.hundevelopers.elysium.heat.HeatManager;
 import hu.hundevelopers.elysium.world.ElysiumTeleporter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -18,11 +19,9 @@ public class ElysiumItemDebug extends ElysiumItem
 
 		if(!world.isRemote)
 		{
-			//player.sendChatToPlayer("Id: "+world.getBlockId(x, y, z));
-			player.addChatMessage(new ChatComponentText(""+world.getBlockMetadata(x, y, z)));
-			//player.sendChatToPlayer("TileEntity: "+world.getBlockTileEntity(x, y, z));
-//			player.addChatMessage("Temperature: "+TemperatureManager.getTemperatureAt(world, x, y, z));
-			//player.sendChatToPlayer("Temperature: "+TemperatureManager.getBlockTemperature(world.getBlockId(x, y, z), world.getBlockMetadata(x, y, z), world.getBlockMaterial(x, y, z)));
+			player.addChatMessage(new ChatComponentText("Block: "+world.getBlock(x, y, z).getUnlocalizedName()));
+			player.addChatMessage(new ChatComponentText("Meta: "+world.getBlockMetadata(x, y, z)));
+			player.addChatMessage(new ChatComponentText("Heat: "+HeatManager.getInstance().getHeatAt(world, x, y, z)));
 		}
 
         return false;

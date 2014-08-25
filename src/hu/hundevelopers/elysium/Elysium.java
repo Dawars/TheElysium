@@ -3,6 +3,7 @@ package hu.hundevelopers.elysium;
 import hu.hundevelopers.elysium.api.Plants;
 import hu.hundevelopers.elysium.block.ElysiumEnergyCrystalItemBlock;
 import hu.hundevelopers.elysium.block.ElysiumFlowerItemBlock;
+import hu.hundevelopers.elysium.block.ElysiumHeatableMetaImpl;
 import hu.hundevelopers.elysium.block.ElysiumLeavesItemBlock;
 import hu.hundevelopers.elysium.block.ElysiumLogItemBlock;
 import hu.hundevelopers.elysium.block.ElysiumPlanksItemBlock;
@@ -345,7 +346,7 @@ public class Elysium
     {
 		//Block Registering
 
-		blockPalestone = (new ElysiumBlock(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("palestone").setBlockTextureName("palestone");
+		blockPalestone = (new ElysiumHeatableMetaImpl(Material.rock, -100F, +100F)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("palestone").setBlockTextureName("palestone");
 		registerBlock(blockPalestone);
 		
 		blockDirt = (new ElysiumBlock(Material.ground)).setHardness(0.5F).setStepSound(Block.soundTypeGravel).setBlockName("elysium_dirt").setBlockTextureName("dirt");
