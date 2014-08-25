@@ -3,6 +3,7 @@ package hu.hundevelopers.elysium.world.gen;
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE;
 import hu.hundevelopers.elysium.Configs;
 import hu.hundevelopers.elysium.Elysium;
+import hu.hundevelopers.elysium.heat.IHeatable;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenForest;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlain;
 import hu.hundevelopers.elysium.world.gen.features.ElysiumGenCrystalSpikes;
@@ -649,6 +650,22 @@ public class ChunkProviderElysium implements IChunkProvider
 		BlockSand.fallInstantly = true;
 		int k = chunkX * 16;
 		int l = chunkZ * 16;
+		
+		Block temp;
+		for(int i = 0; i < 16; i++)
+		{
+			for(int j = 0; j < 16; j++)
+			{
+				for(int y = 0; y < this.worldObj.getActualHeight(); y++)
+				{
+					temp = this.worldObj.getBlock(k + i, y, l + j);
+					if(temp != null && temp instanceof IHeatable)
+					{
+						this.worldObj.setBlockMetadataWithNotify(k + i, y, l + j, 7, 2);
+					}
+				}
+			}
+		}
 		BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(k + 16, l + 16);
 		this.rand.setSeed(this.worldObj.getSeed());
 		long i1 = this.rand.nextLong() / 2L * 2L + 1L;
