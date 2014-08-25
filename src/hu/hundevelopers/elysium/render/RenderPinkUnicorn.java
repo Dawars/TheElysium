@@ -21,7 +21,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderPinkUnicorn extends RenderLiving
 {
-    private static final ResourceLocation pinkUnicornTexture = new ResourceLocation(Elysium.MODID + ":/textures/mobs/Unicorn.png");
+    private static final ResourceLocation pinkUnicornTexture = new ResourceLocation(Elysium.MODID + ":textures/mobs/Unicorn.png");
 
     public RenderPinkUnicorn(ModelBase par1ModelBase)
     {

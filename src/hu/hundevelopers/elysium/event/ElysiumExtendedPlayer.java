@@ -21,7 +21,7 @@ public class ElysiumExtendedPlayer implements IExtendedEntityProperties {
 	@Override
 	public void init(Entity entity, World world)
 	{
-		
+//		Log.log("Elysium Extended player init " + FMLCommonHandler.instance().getEffectiveSide());
 	}
 	
 	@Override
@@ -45,7 +45,7 @@ public class ElysiumExtendedPlayer implements IExtendedEntityProperties {
 			
 		}
 		
-		
+//		Log.log("Extended player load " + FMLCommonHandler.instance().getEffectiveSide());
 	}
 
 	/**
