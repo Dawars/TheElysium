@@ -68,25 +68,6 @@ public class ModelPinkUnicorn extends ModelBase
         this.textureWidth = 128;
         this.textureHeight = 128;
         
-
-        Gem = new ModelRenderer(this, 17, 0);
-        Gem.addBox(-1F, -22F, 1F, 2, 2, 2);
-        Gem.setRotationPoint(0F, 4F, -10F);
-        Gem.setTextureSize(128, 128);
-        Gem.mirror = true;
-        setBoxRotation(Gem, 0.5235988F, 0F, 0F);
-        
-        this.horn = new ModelRenderer(this, 0, 68);
-        this.horn.addBox(-1F, -15F, 1F, 2, 5, 2);
-        this.horn.setRotationPoint(0F, 4F, -10F);
-        this.setBoxRotation(this.horn, 0.5235988F, 0F, 0F);
-        
-        this.horn2 = new ModelRenderer(this, 0, 75);
-        this.horn2.addBox(-0.5F, -20F, 1.5F, 1, 5, 1);
-        this.horn2.setRotationPoint(0F, 3.95F, -10F);
-        this.setBoxRotation(horn2, 0.5235988F, 0F, 0F);
-        
-        
         this.body = new ModelRenderer(this, 0, 34);
         this.body.addBox(-5.0F, -8.0F, -19.0F, 10, 10, 24);
         this.body.setRotationPoint(0.0F, 11.0F, 9.0F);
@@ -142,20 +123,47 @@ public class ModelPinkUnicorn extends ModelBase
         this.head.addBox(-2.5F, -10.0F, -1.5F, 5, 5, 7);
         this.head.setRotationPoint(0.0F, 4.0F, -10.0F);
         this.setBoxRotation(this.head, 0.5235988F, 0.0F, 0.0F);
-        this.mouthTop = new ModelRenderer(this, 24, 18);
-        this.mouthTop.addBox(-2.0F, -10.0F, -7.0F, 4, 3, 6);
-        this.mouthTop.setRotationPoint(0.0F, 3.95F, -10.0F);
-        this.setBoxRotation(this.mouthTop, 0.5235988F, 0.0F, 0.0F);
+        
+        
+        this.Gem = new ModelRenderer(this, 17, 0);
+        this.Gem.addBox(-1F, -26F, 11F, 2, 2, 2);
+        this.Gem.setRotationPoint(0F, 4F, -10F);
+//        this.setBoxRotation(this.Gem, 0.5235988F, 0F, 0F);
+              
+        this.head.addChild(this.Gem);
+
+        this.horn = new ModelRenderer(this, 0, 68);
+        this.horn.addBox(-1F, -19F, 11F, 2, 5, 2);
+        this.horn.setRotationPoint(0F, 4F, -10F);
+//        this.setBoxRotation(this.horn, 0.5235988F, 0F, 0F);
+        
+        this.horn2 = new ModelRenderer(this, 0, 75);
+        this.horn2.addBox(-0.5F, -24F, 11.5F, 1, 5, 1);
+        this.horn2.setRotationPoint(0F, 3.95F, -10F);
+//        this.setBoxRotation(horn2, 0.5235988F, 0F, 0F);
+        
+        this.head.addChild(this.horn);
+        this.head.addChild(this.horn2);
+
         this.mouthBottom = new ModelRenderer(this, 24, 27);
         this.mouthBottom.addBox(-2.0F, -7.0F, -6.5F, 4, 2, 5);
         this.mouthBottom.setRotationPoint(0.0F, 4.0F, -10.0F);
         this.setBoxRotation(this.mouthBottom, 0.5235988F, 0.0F, 0.0F);
+        
+        
+        this.mouthTop = new ModelRenderer(this, 24, 18);
+        this.mouthTop.addBox(-2.0F, -10.0F, -7.0F, 4, 3, 6);
+        this.mouthTop.setRotationPoint(0.0F, 3.95F, -10.0F);
+        this.setBoxRotation(this.mouthTop, 0.5235988F, 0.0F, 0.0F);
+        
         this.head.addChild(this.mouthTop);
         this.head.addChild(this.mouthBottom);
+        
         this.horseLeftEar = new ModelRenderer(this, 0, 0);
         this.horseLeftEar.addBox(0.45F, -12.0F, 4.0F, 2, 3, 1);
         this.horseLeftEar.setRotationPoint(0.0F, 4.0F, -10.0F);
         this.setBoxRotation(this.horseLeftEar, 0.5235988F, 0.0F, 0.0F);
+        
         this.horseRightEar = new ModelRenderer(this, 0, 0);
         this.horseRightEar.addBox(-2.45F, -12.0F, 4.0F, 2, 3, 1);
         this.horseRightEar.setRotationPoint(0.0F, 4.0F, -10.0F);
@@ -214,12 +222,10 @@ public class ModelPinkUnicorn extends ModelBase
      */
     public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float f5)
     {
-        EntityHorse entityhorse = (EntityHorse)par1Entity;
-        int i = entityhorse.getHorseType();
+    	EntityPinkUnicorn entityhorse = (EntityPinkUnicorn)par1Entity;
         float f6 = entityhorse.getGrassEatingAmount(0.0F);
         boolean flag = entityhorse.isAdultHorse();
         boolean flag1 = flag && entityhorse.isHorseSaddled();
-        boolean flag2 = flag && entityhorse.isChested();
         float f7 = entityhorse.getHorseSize();
         boolean flag4 = entityhorse.riddenByEntity != null;
 
@@ -298,27 +304,22 @@ public class ModelPinkUnicorn extends ModelBase
         this.horseLeftEar.render(f5);
         this.horseRightEar.render(f5);
 
-        glPushMatrix();
-		glEnable(GL_BLEND);
-		glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//        glPushMatrix();
+//		glEnable(GL_BLEND);
+//		glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
-		Gem.render(f5);
+//		Gem.render(f5);
 		
-		glDisable(GL_BLEND);
-		glPopMatrix();
-        
-        this.horn.render(f5);
-        this.horn2.render(f5);
+//        this.horn.render(f5);
+//        this.horn2.render(f5);
         this.head.render(f5);
 
+//		glDisable(GL_BLEND);
+//		glPopMatrix();
+        
         if (!flag)
         {
             GL11.glPopMatrix();
-        }
-
-        if (flag2)
-        {
-        	//TODO: chest render
         }
     }
 
@@ -384,7 +385,7 @@ public class ModelPinkUnicorn extends ModelBase
         float f8 = entityhorse.getGrassEatingAmount(par4);
         float f9 = entityhorse.getRearingAmount(par4);
         float f10 = 1.0F - f9;
-        float f11 = entityhorse.func_110201_q(par4);
+        float f11 = entityhorse.getMouthOpennessAmount(par4);
         boolean flag = entityhorse.field_110278_bp != 0;
         boolean flag1 = entityhorse.isHorseSaddled();
         boolean flag2 = entityhorse.riddenByEntity != null;
@@ -411,17 +412,17 @@ public class ModelPinkUnicorn extends ModelBase
         this.body.rotateAngleX = f9 * -((float)Math.PI / 4F) + f10 * this.body.rotateAngleX;
         
 
-        this.Gem.rotateAngleX = this.head.rotateAngleX;
-        this.Gem.rotateAngleY = this.head.rotateAngleY;
-        this.Gem.rotateAngleZ = this.head.rotateAngleZ;
-
-        this.horn.rotateAngleX = this.head.rotateAngleX;
-        this.horn.rotateAngleY = this.head.rotateAngleY;
-        this.horn.rotateAngleZ = this.head.rotateAngleZ;
-
-        this.horn2.rotateAngleX = this.head.rotateAngleX;
-        this.horn2.rotateAngleY = this.head.rotateAngleY;
-        this.horn2.rotateAngleZ = this.head.rotateAngleZ;
+//        this.Gem.rotateAngleX = this.head.rotateAngleX;
+//        this.Gem.rotateAngleY = this.head.rotateAngleY;
+//        this.Gem.rotateAngleZ = this.head.rotateAngleZ;
+//
+//        this.horn.rotateAngleX = this.head.rotateAngleX;
+//        this.horn.rotateAngleY = this.head.rotateAngleY;
+//        this.horn.rotateAngleZ = this.head.rotateAngleZ;
+//
+//        this.horn2.rotateAngleX = this.head.rotateAngleX;
+//        this.horn2.rotateAngleY = this.head.rotateAngleY;
+//        this.horn2.rotateAngleZ = this.head.rotateAngleZ;
         
         
         this.horseLeftEar.rotationPointY = this.head.rotationPointY;
