@@ -16,22 +16,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class ElysiumBlockLog extends ElysiumBlock
+public class ElysiumBlockLog extends BlockLog
 {
 	public static final String[] names = new String[] {"fostimber", "forest"};
 	
 	public ElysiumBlockLog()
 	{
-		super(Material.wood);
 		this.setCreativeTab(Elysium.tabElysium);
 	}
 
-    @Override
-	public boolean canBeReplacedByLake()
-	{
-		return false;
-	}
-	
 	/**
      * The type of render function that is called for this block
      */
@@ -145,7 +138,6 @@ public class ElysiumBlockLog extends ElysiumBlock
     {
         return this.iconTop[p_150161_1_ % this.iconTop.length];
     }
-    
 
     /**
      * Gets the block's texture. Args: side, meta

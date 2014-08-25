@@ -2,32 +2,30 @@ package hu.hundevelopers.elysium.world.gen.features;
 
 import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.block.ElysiumBlock;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenForestCorrupted;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlainCorrupted;
 
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenVines;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class ElysiumGenCrystalSpikes extends WorldGenerator
 {
 
-	private int meta;
-
-	public ElysiumGenCrystalSpikes(int meta)
-	{
-		this.meta = meta;
-	}
-	
-	public ElysiumGenCrystalSpikes()
-	{
-		this(0);
-	}
+	private int meta = 0;
 	
 	@Override
 	public boolean generate(World world, Random rand, int x, int y, int z)
 	{
+		boolean isCorrupted = world.getBiomeGenForCoords(x, z) instanceof ElysiumBiomeGenForestCorrupted || world.getBiomeGenForCoords(x, z) instanceof ElysiumBiomeGenPlainCorrupted;
+		
+		if(isCorrupted)
+			meta = 1;
+		
 		y = world.getTopSolidOrLiquidBlock(x, z);
 		if(world.getBlock(x, y-1, z).getMaterial().isLiquid() || world.getBlock(x, y-1, z) != Elysium.blockGrass)
 		{
@@ -66,6 +64,7 @@ public class ElysiumGenCrystalSpikes extends WorldGenerator
 						if(old != Blocks.quartz_block && old != Blocks.gold_block && old != Elysium.blockPortalCore)
 						{
 							world.setBlock(x - i - directionX * j, y-j, z - k - directionZ * j, Elysium.blockEnergyCrystal, meta, 2);
+
 						}
 					}
 				}

@@ -32,6 +32,13 @@ public class ElysiumBlockLeaves extends BlockLeaves
 		
     }
 	
+	@Override
+    public Block setBlockTextureName(String texture)
+    {
+        this.textureName = Elysium.MODID + ":" + texture;
+        return this;
+    }
+	
 	/**
      * Returns true if the given side of this block type should be rendered, if the adjacent block is at the given
      * coordinates.  Args: blockAccess, x, y, z, side
@@ -44,13 +51,6 @@ public class ElysiumBlockLeaves extends BlockLeaves
         return FMLClientHandler.instance().getClient().isFancyGraphicsEnabled()? true : super.shouldSideBeRendered(world, x, y, z, side);
     }
     
-	@Override
-    public Block setBlockTextureName(String texture)
-    {
-        this.textureName = Elysium.MODID  + ":" + texture;
-        return this;
-    }
-	
 	private IIcon[][] icon = new IIcon[2][name.length];
 
 	/**

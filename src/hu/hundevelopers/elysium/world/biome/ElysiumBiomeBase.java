@@ -5,10 +5,13 @@ import net.minecraft.world.biome.BiomeGenBase;
 
 public class ElysiumBiomeBase extends BiomeGenBase
 {   
-	protected static final BiomeGenBase.Height height_Oceans = new BiomeGenBase.Height(-1.0F, 0.1F);
-	protected static final BiomeGenBase.Height height_Plains = new BiomeGenBase.Height(0.4F, 0.4F);
-	protected static final BiomeGenBase.Height height_Forest = new BiomeGenBase.Height(0.2F, 0.3F);
+	protected static final BiomeGenBase.Height height_Plains = new BiomeGenBase.Height(0.125F, 0.1F);
+	protected static final BiomeGenBase.Height height_Plains_Corrupted = new BiomeGenBase.Height(1.0F, 0.5F);
 
+	protected static final BiomeGenBase.Height height_Forest_Corrupted = new BiomeGenBase.Height(0.1F, 0.3F);
+	protected static final BiomeGenBase.Height height_Forest = new BiomeGenBase.Height(0.2F, 0.2F);
+
+	
 //	protected static final BiomeGenBase.Height height_Default = new BiomeGenBase.Height(0.1F, 0.2F);
 //    protected static final BiomeGenBase.Height height_ShallowWaters = new BiomeGenBase.Height(-0.5F, 0.0F);
 //    protected static final BiomeGenBase.Height height_Oceans = new BiomeGenBase.Height(-1.0F, 0.1F);

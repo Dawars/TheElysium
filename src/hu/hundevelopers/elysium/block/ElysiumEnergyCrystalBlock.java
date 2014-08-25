@@ -97,7 +97,7 @@ public class ElysiumEnergyCrystalBlock extends BlockStainedGlass
     
     @Override
     public int getLightValue(IBlockAccess world, int x, int y, int z) {
-        return getColorLightValue(world.getBlockMetadata(x, y, z));
+        return Elysium.modLights ? getColorLightValue(world.getBlockMetadata(x, y, z)) : 15;
     }
 
     public int getColorLightValue(int meta)

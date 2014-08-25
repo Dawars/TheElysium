@@ -3,11 +3,17 @@ package hu.hundevelopers.elysium.world.gen.features;
 import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.block.ElysiumBlockFlower;
 import hu.hundevelopers.elysium.block.ElysiumBlockSapling;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenForestCorrupted;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlainCorrupted;
 
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Facing;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenVines;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class ElysiumGenFostimber extends WorldGenerator
@@ -35,6 +41,8 @@ public class ElysiumGenFostimber extends WorldGenerator
 	@Override
 	public boolean generate(World world, Random random, int x, int y, int z)
 	{
+		boolean isCorrupted = world.getBiomeGenForCoords(x, z) instanceof ElysiumBiomeGenForestCorrupted || world.getBiomeGenForCoords(x, z) instanceof ElysiumBiomeGenPlainCorrupted;
+		
 		int cap = random.nextInt(2) + 2;
 		int trunk = random.nextInt(3) + 3;
 		int minTreeHeight = 8;
@@ -101,11 +109,36 @@ public class ElysiumGenFostimber extends WorldGenerator
 			{
 				addLeaves(world, x, y+i, z);
 			}
+			
+			for(int l = 0; l < 5; l++)
+			{
+				if(isCorrupted)
+					makeVines(world, random, x + random.nextInt(7) - 3, y+i, z + random.nextInt(7) - 3);
+			}
 		}
 	
 		return true;
 	}
 	
+	private void makeVines(World world, Random random, int i, int j, int k)
+	{
+		if (world.isAirBlock(i, j, k))
+        {
+            for (int j1 = 2; j1 <= 5; ++j1)
+            {
+                if (Blocks.vine.canPlaceBlockOnSide(world, i, j, k, j1))
+                {
+                	for(int l = 0; l < (world.getTopSolidOrLiquidBlock(i, k) - i - random.nextInt(3)); l++)
+                	{
+                		if(world.isAirBlock(i, j - l, k))
+                			world.setBlock(i, j - l, k, Blocks.vine, 1 << Direction.facingToDirection[Facing.oppositeSide[j1]], 2);
+                	}
+                	break;
+                }
+            }
+        }
+	}
+
 	private boolean addLeaves(World world, int x, int y, int z)
 	{
 		Block block = world.getBlock(x, y, z);

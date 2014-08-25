@@ -15,16 +15,14 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType;
 
-public class ElysiumBiomeGenPlain extends ElysiumBiomeBase
+public class ElysiumBiomeGenPlainCorrupted extends ElysiumBiomeBase
 {
-
-	public ElysiumBiomeGenPlain(int id)
+	public ElysiumBiomeGenPlainCorrupted(int id)
 	{
 		super(id);
-		this.setHeight(height_Plains);
-		this.setTemperatureRainfall(0.5F, 0.4F);
-
-		this.setBiomeName("Elysium Plain");
+		this.setHeight(height_Plains_Corrupted);
+		this.setTemperatureRainfall(0.95F, 0.9F);
+		this.setBiomeName("Elysium Plain Corrupted");
 
 //		if(CraftingPillars.winter) FIXME
 //		{
@@ -33,8 +31,8 @@ public class ElysiumBiomeGenPlain extends ElysiumBiomeBase
 //		}
 
 //        this.theBiomeDecorator = new BiomeElysiumPlainDecorator(this);
-//		this.theBiomeDecorator.grassPerChunk = 3;
-//		this.theBiomeDecorator.flowersPerChunk = 1;
+		this.theBiomeDecorator.grassPerChunk = 10;
+		this.theBiomeDecorator.flowersPerChunk = 1;
 		
 		this.setDisableRain();//TODO: new texture
 		
@@ -85,7 +83,6 @@ public class ElysiumBiomeGenPlain extends ElysiumBiomeBase
 			WorldGenFlowers plantAsphodelGen = new WorldGenFlowers(Elysium.blockFlower);
 			plantAsphodelGen.generate(currentWorld, randomGenerator, i, j, k);
 	
-			
 	//       if (this.randomGenerator.nextInt(4) == 0)
 	//       {
 	//       	i = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
@@ -94,7 +91,7 @@ public class ElysiumBiomeGenPlain extends ElysiumBiomeBase
 	//           this.plantRedGen.generate(this.currentWorld, this.randomGenerator, i, j, k);
 	//       }
 	   }
-	
+		
 //		super.decorate(currentWorld, randomGenerator, chunk_X, chunk_Z);
     }
 }

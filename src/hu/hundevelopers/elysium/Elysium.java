@@ -10,8 +10,10 @@ import hu.hundevelopers.elysium.proxy.CommonProxy;
 import hu.hundevelopers.elysium.tile.ElysianTileEntityPortal;
 import hu.hundevelopers.elysium.world.ElysiumWorldProvider;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenForest;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenForestCorrupted;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenOcean;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlain;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlainCorrupted;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenRiver;
 import hu.hundevelopers.elysium.world.gen.WorldGenElysium;
 
@@ -208,13 +210,17 @@ public class Elysium
 	
 	/** Biomes **/
 	public static BiomeGenBase biomePlain = null;
-	public static BiomeGenBase biomeOcean = null;
 	public static BiomeGenBase biomeForest = null;
+	public static BiomeGenBase biomePlainCorrupt = null;
+	public static BiomeGenBase biomeForestCorrupt = null;
+	public static BiomeGenBase biomeOcean = null;
 	public static BiomeGenBase biomeRiver = null;
 
 	private int biomeIdPlains;
-	private int biomeIdOcean;
 	private int biomeIdForest;
+	private int biomeIdPlainsCorrupt;
+	private int biomeIdForestCorrupt;
+	private int biomeIdOcean;
 	private int biomeIdRiver;
 
 	
@@ -274,11 +280,17 @@ public class Elysium
 			Property ELYSIUM_PLAINS = Elysium.config.get("biomeIds", "ELYSIUM_PLAINS", Configs.BIOME_PLAIN);
 			biomeIdPlains = ELYSIUM_PLAINS.getInt();
 
-			Property ELYSIUM_OCEAN = Elysium.config.get("biomeIds", "ELYSIUM_OCEAN", Configs.BIOME_OCEAN);
-			biomeIdOcean = ELYSIUM_OCEAN.getInt();
-
 			Property ELYSIUM_FOREST = Elysium.config.get("biomeIds", "ELYSIUM_FOREST", Configs.BIOME_FOREST);
 			biomeIdForest = ELYSIUM_FOREST.getInt();
+
+			Property ELYSIUM_PLAINS_CORRUPT = Elysium.config.get("biomeIds", "ELYSIUM_PLAINS_CORRUPT", Configs.BIOME_PLAIN_CORRUPT);
+			biomeIdPlainsCorrupt = ELYSIUM_PLAINS_CORRUPT.getInt();
+
+			Property ELYSIUM_FOREST_CORRUPT = Elysium.config.get("biomeIds", "ELYSIUM_FOREST_CORRUPT", Configs.BIOME_FOREST_CORRUPT);
+			biomeIdForestCorrupt = ELYSIUM_FOREST_CORRUPT.getInt();
+
+			Property ELYSIUM_OCEAN = Elysium.config.get("biomeIds", "ELYSIUM_OCEAN", Configs.BIOME_OCEAN);
+			biomeIdOcean = ELYSIUM_OCEAN.getInt();
 
 			Property ELYSIUM_RIVER = Elysium.config.get("biomeIds", "ELYSIUM_RIVER", Configs.BIOME_RIVER);
 			biomeIdRiver = ELYSIUM_RIVER.getInt();
@@ -636,8 +648,10 @@ public class Elysium
 
 
 		biomePlain = new ElysiumBiomeGenPlain(biomeIdPlains);
-		biomeOcean = new ElysiumBiomeGenOcean(biomeIdOcean);
 		biomeForest = new ElysiumBiomeGenForest(biomeIdForest);
+		biomePlainCorrupt = new ElysiumBiomeGenPlainCorrupted(biomeIdPlainsCorrupt);
+		biomeForestCorrupt = new ElysiumBiomeGenForestCorrupted(biomeIdForestCorrupt);
+		biomeOcean = new ElysiumBiomeGenOcean(biomeIdOcean);
 		biomeRiver = new ElysiumBiomeGenRiver(biomeIdRiver);
 		
 		GameRegistry.registerWorldGenerator(new WorldGenElysium(), 0);
