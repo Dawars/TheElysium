@@ -3,6 +3,7 @@ package hu.hundevelopers.elysium.world;
 import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.render.CloudRendererElysium;
 import hu.hundevelopers.elysium.render.SkyRendererElysium;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlain;
 import hu.hundevelopers.elysium.world.gen.ChunkProviderElysium;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -108,7 +109,7 @@ public class ElysiumWorldProvider extends WorldProvider
 	@Override
     public boolean canCoordinateBeSpawn(int par1, int par2)
     {
-        return this.worldObj.getTopBlock(par1, par2) == Elysium.blockGrass;
+        return this.worldObj.getBiomeGenForCoords(par1, par2) instanceof ElysiumBiomeGenPlain && this.worldObj.getTopBlock(par1, par2) == Elysium.blockGrass;
     }
 
 	@Override
