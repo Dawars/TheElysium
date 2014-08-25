@@ -23,7 +23,7 @@ import net.minecraft.world.IBlockAccess;
 
 public class ElysiumEnergyCrystalBlock extends BlockStainedGlass
 {
-	public static final String[] names = new String[] {"pure", "corrupted", "depleted"};
+	public static final String[] names = new String[] {"pure", "corrupted"/*, "depleted"*/};
 	private IIcon[] icons;
 
 
@@ -93,6 +93,20 @@ public class ElysiumEnergyCrystalBlock extends BlockStainedGlass
     public int damageDropped(int meta)
     {
         return meta;
+    }
+    
+    @Override
+    public int getLightValue(IBlockAccess world, int x, int y, int z) {
+        return getColorLightValue(world.getBlockMetadata(x, y, z));
+    }
+
+    public int getColorLightValue(int meta)
+    {
+        if (meta == 0) {
+            return CLApi.makeRGBLightValue(15, 15, 0);
+        } else {
+            return CLApi.makeRGBLightValue(10, 4, 12);
+        }
     }
 
     /**

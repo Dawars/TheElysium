@@ -743,7 +743,7 @@ public class Elysium
 		
 		if(modLights)
 		{
-			CLApi.setBlockColorRGB(blockEnergyCrystal, 1F, 1F, 0F);
+//			CLApi.setBlockColorRGB(blockEnergyCrystal, 1F, 1F, 0F);
 			CLApi.setBlockColorRGB(oreBeryl, 0, 8, 15, 1);
 		}
 		
