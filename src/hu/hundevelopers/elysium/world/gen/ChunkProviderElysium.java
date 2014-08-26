@@ -7,6 +7,7 @@ import hu.hundevelopers.elysium.heat.IHeatable;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenForest;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlain;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlainCorrupted;
+import hu.hundevelopers.elysium.world.gen.features.ElysiumGenCorruptFostimber;
 import hu.hundevelopers.elysium.world.gen.features.ElysiumGenCrystalSpikes;
 import hu.hundevelopers.elysium.world.gen.features.ElysiumGenDarkFostimber;
 import hu.hundevelopers.elysium.world.gen.features.ElysiumGenFostimber;
@@ -89,12 +90,15 @@ public class ChunkProviderElysium implements IChunkProvider
     int[][] field_73219_j = new int[32][32];
 
 
-    ElysiumGenCrystalSpikes crystalGen = new ElysiumGenCrystalSpikes();
+    ElysiumGenCrystalSpikes crystalEnergyGen = new ElysiumGenCrystalSpikes(0);
+    ElysiumGenCrystalSpikes crystalCorruptGen = new ElysiumGenCrystalSpikes(1);
 	ElysiumGenLakes lakegenerator = new ElysiumGenLakes(Elysium.blockElysiumWater);
 	ElysiumGenSand sandgenerator = new ElysiumGenSand(Elysium.blockSand, 7);
 	ElysiumGenSand riltgenerator = new ElysiumGenSand(Elysium.blockRilt, 3);
 	ElysiumGenFostimber treegenerator = new ElysiumGenFostimber(Elysium.blockLeaves, Elysium.blockLog, false);
-	ElysiumGenDarkFostimber darktreegenerator = new ElysiumGenDarkFostimber(Elysium.blockLeaves, Elysium.blockLog, 1, 1, false);
+	ElysiumGenCorruptFostimber corrupttreegenerator = new ElysiumGenCorruptFostimber(Elysium.blockLog, 2);
+//	ElysiumGenDarkFostimber darktreegenerator = new ElysiumGenDarkFostimber(Elysium.blockLeaves, Elysium.blockLog, 1, 1, false, false);
+	ElysiumGenDarkFostimber darkcorruptedtreegenerator = new ElysiumGenDarkFostimber(Elysium.blockLeaves, Elysium.blockLog, 1, 1, false, true);
 
 	WorldGenFlowers flowergenerator = new WorldGenFlowers(Elysium.blockFlower);
 	
@@ -677,17 +681,17 @@ public class ChunkProviderElysium implements IChunkProvider
 		boolean doGen = TerrainGen.populate(par1IChunkProvider, worldObj, rand, chunkX, chunkZ, flag, ICE);
 
 		//TODO structures
-		if(biomegenbase != Elysium.biomeOcean && biomegenbase != Elysium.biomeRiver)
+		if(biomegenbase != Elysium.biomeOcean && biomegenbase != Elysium.biomeDeepOcean && biomegenbase != Elysium.biomeRiver)
 		{
 			this.lakegenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), rand.nextInt(128), l+this.rand.nextInt(16));
 			this.sandgenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), 0, l+this.rand.nextInt(16));
 			this.riltgenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), 0, l+this.rand.nextInt(16));
 								
-			if(this.rand.nextInt(3) == 1)
-				this.crystalGen.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), rand.nextInt(128), l+this.rand.nextInt(16));
-
-			if(biomegenbase instanceof ElysiumBiomeGenPlain || biomegenbase instanceof ElysiumBiomeGenPlainCorrupted)
+			if(biomegenbase instanceof ElysiumBiomeGenPlainCorrupted)
 			{
+				if(this.rand.nextInt(3) == 1)
+					this.crystalCorruptGen.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), rand.nextInt(128), l+this.rand.nextInt(16));
+
 				if(this.rand.nextInt(4) == 0)
 				{
 					int x = k + this.rand.nextInt(16);
@@ -700,6 +704,35 @@ public class ChunkProviderElysium implements IChunkProvider
 						int cx = x+this.rand.nextInt(15)-8;
 						int cz = z+this.rand.nextInt(15)-8;
 						int y = this.worldObj.getTopSolidOrLiquidBlock(cx, cz);
+						
+						
+						if(rand.nextInt(3) == 0)
+						{
+							if(this.corrupttreegenerator.generate(this.worldObj, this.rand, cx, y, cz))
+								generatedTrees++;
+						} else if(this.darkcorruptedtreegenerator.generate(this.worldObj, this.rand, cx, y, cz))
+							generatedTrees++;
+					}
+				}
+				
+			} else if(biomegenbase instanceof ElysiumBiomeGenPlain)
+			{
+				if(this.rand.nextInt(3) == 1)
+				this.crystalEnergyGen.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), rand.nextInt(128), l+this.rand.nextInt(16));
+				
+				if(this.rand.nextInt(4) == 0)
+				{
+					int x = k + this.rand.nextInt(16);
+					int z =	l + this.rand.nextInt(16);
+	
+					int generatedTrees = 0;
+					int treeAmount = rand.nextInt(2)+4;
+					for(int j = 0; (j < treeAmount*4) && (generatedTrees < treeAmount); j++)
+					{
+						int cx = x+this.rand.nextInt(15)-8;
+						int cz = z+this.rand.nextInt(15)-8;
+						int y = this.worldObj.getTopSolidOrLiquidBlock(cx, cz);
+						
 						if(this.treegenerator.generate(this.worldObj, this.rand, cx, y, cz))
 							generatedTrees++;
 					}
@@ -709,22 +742,32 @@ public class ChunkProviderElysium implements IChunkProvider
 						this.flowergenerator.generate(this.worldObj, rand, x, 0, z);
 					}
 				}
-			} else if(biomegenbase instanceof ElysiumBiomeGenForest/* || biomegenbase instanceof ElysiumBiomeGenForestCorrupted*/)
+			} else if(biomegenbase instanceof ElysiumBiomeGenPlain)
 			{
+				if(this.rand.nextInt(3) == 1)
+				this.crystalEnergyGen.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), rand.nextInt(128), l+this.rand.nextInt(16));
 				
-				int x = k + this.rand.nextInt(16);
-				int z =	l + this.rand.nextInt(16);
-
-				int treeAmount = 10;
-				int generatedTrees = 0;
-	
-				for(int j = 0; (j < treeAmount*2) && (generatedTrees  < treeAmount); j++)
+				if(this.rand.nextInt(4) == 0)
 				{
-					int cx = x+this.rand.nextInt(15)-8;
-					int cz = z+this.rand.nextInt(15)-8;
-					int y = this.worldObj.getTopSolidOrLiquidBlock(cx, cz);
-					if(this.darktreegenerator.generate(this.worldObj, this.rand, cx, y, cz))
-						generatedTrees++;
+					int x = k + this.rand.nextInt(16);
+					int z =	l + this.rand.nextInt(16);
+	
+					int generatedTrees = 0;
+					int treeAmount = rand.nextInt(2)+4;
+					for(int j = 0; (j < treeAmount*4) && (generatedTrees < treeAmount); j++)
+					{
+						int cx = x+this.rand.nextInt(15)-8;
+						int cz = z+this.rand.nextInt(15)-8;
+						int y = this.worldObj.getTopSolidOrLiquidBlock(cx, cz);
+						
+						if(this.treegenerator.generate(this.worldObj, this.rand, cx, y, cz))
+							generatedTrees++;
+					}
+	
+					if(rand.nextInt(6-generatedTrees) == 0)
+					{
+						this.flowergenerator.generate(this.worldObj, rand, x, 0, z);
+					}
 				}
 			}
 		}

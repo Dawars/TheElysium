@@ -43,7 +43,7 @@ public class ElysiumRaspberryBush extends ElysiumBlockBush  implements IGrowable
     {
         super.updateTick(world, x, y, z, random);
         
-        if(world.getBlockMetadata(x, y, z) == 0 && random.nextInt(200) == 0)
+        if(world.getBlockMetadata(x, y, z) == 0 && random.nextInt(20) == 0)
         {
         	world.setBlockMetadataWithNotify(x, y, z, 1, 3);
         }
@@ -103,7 +103,7 @@ public class ElysiumRaspberryBush extends ElysiumBlockBush  implements IGrowable
      * is the block grass, dirt or farmland
      */
 	@Override
-    protected boolean canPlaceBlockOn(Block block)
+    public boolean canPlaceBlockOn(Block block)
     {
         return block == Elysium.blockGrass || block == Elysium.blockDirt;
     }

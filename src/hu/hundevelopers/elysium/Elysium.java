@@ -505,7 +505,7 @@ public class Elysium
 		itemGrapes = new ElysiumGrapesItem().setTextureName("grapes").setUnlocalizedName("grapes");
 		registerItem(itemGrapes);
 
-		itemRaspberry = new ElysiumItem().setTextureName("raspberry").setUnlocalizedName("raspberry");
+		itemRaspberry = new ElysiumEdibleItem(1).setTextureName("raspberry").setUnlocalizedName("raspberry");
 		registerItem(itemRaspberry);
 		
 		itemHardPaw = new ElysiumItem().setTextureName("hard_paw").setUnlocalizedName("hard_paw");
@@ -656,12 +656,12 @@ public class Elysium
 		DimensionManager.registerDimension(dimensionID, dimensionID);
 
 
-		biomePlain = new ElysiumBiomeGenPlain(biomeIdPlains).setHeight(new Height(0.4F, 0.3F)).setColor(2250012).setBiomeName("Elysium Plain");
-		biomeForest = new ElysiumBiomeGenForest(biomeIdForest).setHeight(new Height(0.2F, 0.4F)).setColor(2250012).setBiomeName("Elysium Forest");
-		biomePlainCorrupt = new ElysiumBiomeGenPlainCorrupted(biomeIdPlainsCorrupt).setHeight(new Height(0.5F, 0.3F)).setColor(522674).func_76733_a(9154376).setTemperatureRainfall(0.8F, 0.9F).setBiomeName("Elysium Plain Corrupted");
+		biomePlain = new ElysiumBiomeGenPlain(biomeIdPlains).setHeight(new Height(0.125F, 0.05F)).setColor(2250012).setBiomeName("Elysium Plain");
+		biomeForest = new ElysiumBiomeGenForest(biomeIdForest).setHeight(new Height(0.2F, 0.2F)).setColor(2250012).setBiomeName("Elysium Forest");
+		biomePlainCorrupt = new ElysiumBiomeGenPlainCorrupted(biomeIdPlainsCorrupt).setHeight(new Height(0.45F, 0.3F)).setColor(522674).func_76733_a(9154376).setTemperatureRainfall(0.8F, 0.9F).setBiomeName("Elysium Plain Corrupted");
 		
 		biomeOcean = new ElysiumBiomeGenOcean(biomeIdOcean).setHeight(new Height(-1.0F, 0.1F)).setBiomeName("Elysium Ocean");
-		biomeDeepOcean = new ElysiumBiomeGenOcean(biomeIdOcean).setHeight(new Height(-1.3F, 0.1F)).setBiomeName("Elysium Deep Ocean");
+//		biomeDeepOcean = new ElysiumBiomeGenOcean(biomeIdOcean).setHeight(new Height(-1.3F, 0.1F)).setBiomeName("Elysium Deep Ocean");
 		biomeRiver = new ElysiumBiomeGenRiver(biomeIdRiver).setHeight(new Height(-0.5F, 0.0F)).setColor(255).setBiomeName("Elysium River");
 		biomeDesert = new ElysiumBiomeGenDesert(biomeIdDesert).setHeight(new Height(0.125F, 0.05F)).setTemperatureRainfall(2.0F, 0.2F).setColor(16421912).setBiomeName("Elysium Desert");
 		biomeBeach = new ElysiumBiomeGenBeach(biomeIdBeach).setHeight(new Height(0.0F, 0.025F)).setColor(16440917).setTemperatureRainfall(0.8F, 0.4F).setBiomeName("Elysium Beach");

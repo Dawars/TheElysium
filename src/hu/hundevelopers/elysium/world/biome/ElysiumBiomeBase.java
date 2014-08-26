@@ -1,10 +1,13 @@
 package hu.hundevelopers.elysium.world.biome;
 
 import hu.hundevelopers.elysium.Elysium;
+import hu.hundevelopers.elysium.world.gen.features.ElysiumGenDoublePlant;
+import hu.hundevelopers.elysium.world.gen.features.ElysiumGenPlants;
 
 import java.util.Random;
 
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.gen.feature.WorldGenPumpkin;
 import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
@@ -31,9 +34,18 @@ public class ElysiumBiomeBase extends BiomeGenBase
      * Gets a WorldGen appropriate for this biome.
      */
 	@Override
-    public WorldGenerator getRandomWorldGenForGrass(Random par1Random)
+    public WorldGenerator getRandomWorldGenForGrass(Random rand)
     {
-        return new WorldGenTallGrass(Elysium.blockTallGrass, 0);
+		int r = rand.nextInt(10);
+		if(r == 0)
+		{
+			return new WorldGenTallGrass(Elysium.blockRaspberryBush, 0);
+		} else if(r == 1)
+		{
+			return new ElysiumGenDoublePlant(Elysium.blockGrapesBush, 0, 1);
+		} else 
+		{
+			return new WorldGenTallGrass(Elysium.blockTallGrass, 0);
+		}
     }
-
 }

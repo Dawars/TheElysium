@@ -1,6 +1,7 @@
 package hu.hundevelopers.elysium.world.biome;
 
 import hu.hundevelopers.elysium.Elysium;
+import hu.hundevelopers.elysium.world.gen.features.ElysiumGenPlants;
 
 import java.util.Random;
 
@@ -19,7 +20,7 @@ public class ElysiumBiomeGenDesert extends ElysiumBiomeBase
         this.theBiomeDecorator.deadBushPerChunk = -10;
         this.theBiomeDecorator.reedsPerChunk = -10;
         this.theBiomeDecorator.cactiPerChunk = 10;
-		
+        this.theBiomeDecorator.cactusGen = new ElysiumGenPlants(Elysium.blockCactus);
 	}
 
 	@Override

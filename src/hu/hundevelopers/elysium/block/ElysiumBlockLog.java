@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 public class ElysiumBlockLog extends BlockLog
 {
-	public static final String[] names = new String[] {"fostimber", "forest"};
+	public static final String[] names = new String[] {"fostimber", "forest", "corrupt"};
 	
 	public ElysiumBlockLog()
 	{

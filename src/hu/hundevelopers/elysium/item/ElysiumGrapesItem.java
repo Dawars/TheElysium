@@ -13,10 +13,11 @@ import net.minecraft.util.MathHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ElysiumGrapesItem extends ElysiumItem
+public class ElysiumGrapesItem extends ElysiumEdibleItem
 {
 	public ElysiumGrapesItem()
 	{
+		super(2);
 		this.setMaxStackSize(16);
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);

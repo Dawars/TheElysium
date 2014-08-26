@@ -29,7 +29,7 @@ public class ElysiumCactus extends ElysiumBlockBush
      * is the block grass, dirt or farmland
      */
 	@Override
-    protected boolean canPlaceBlockOn(Block block)
+    public boolean canPlaceBlockOn(Block block)
     {
         return block == Elysium.blockSand;
     }

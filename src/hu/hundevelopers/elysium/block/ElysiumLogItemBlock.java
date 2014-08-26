@@ -24,6 +24,9 @@ public class ElysiumLogItemBlock extends ItemBlock
 			case 1:
 				name = "forest";
 			break;
+			case 2:
+				name = "corrupt";
+			break;
 			default:
 				name = "error";
 		}
