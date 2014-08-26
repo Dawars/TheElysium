@@ -1,10 +1,7 @@
 package hu.hundevelopers.elysium.world.gen.features;
 
 import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.block.ElysiumBlockFlower;
 import hu.hundevelopers.elysium.block.ElysiumBlockSapling;
-import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenForestCorrupted;
-import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlainCorrupted;
 
 import java.util.Random;
 
@@ -13,7 +10,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Facing;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenVines;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class ElysiumGenFostimber extends WorldGenerator
@@ -41,8 +37,7 @@ public class ElysiumGenFostimber extends WorldGenerator
 	@Override
 	public boolean generate(World world, Random random, int x, int y, int z)
 	{
-		boolean isCorrupted = world.getBiomeGenForCoords(x, z) instanceof ElysiumBiomeGenForestCorrupted || world.getBiomeGenForCoords(x, z) instanceof ElysiumBiomeGenPlainCorrupted;
-		
+		boolean isCorrupted = true;
 		int cap = random.nextInt(2) + 2;
 		int trunk = random.nextInt(3) + 3;
 		int minTreeHeight = 8;

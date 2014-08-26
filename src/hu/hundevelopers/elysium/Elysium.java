@@ -9,8 +9,9 @@ import hu.hundevelopers.elysium.item.*;
 import hu.hundevelopers.elysium.proxy.CommonProxy;
 import hu.hundevelopers.elysium.tile.ElysianTileEntityPortal;
 import hu.hundevelopers.elysium.world.ElysiumWorldProvider;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenBeach;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenDesert;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenForest;
-import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenForestCorrupted;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenOcean;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlain;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlainCorrupted;
@@ -30,6 +31,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.BiomeGenBase.Height;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
@@ -135,18 +137,7 @@ public class Elysium
 	
 	public static Block blockEnergyCrystal;
 
-//	public static Block blockPalestone;
-//	public static Block blockPalestoneMossy;
-
-//	public static Block blockPalestoneBrick;
-//	public static Block blockPalestoneBrickCracked;
-//	public static Block blockPalestoneBrickMossy;
-//	public static Block blockPalestonePillar;
-//	public static Block blockPalestoneBrickChiseld;
-
 	public static Block blockPortalCore;
-
-//	public static Block expeller;
 
 	public static Block blockSulphure;
 	public static Block blockCobalt;
@@ -158,12 +149,10 @@ public class Elysium
 	
 	public static Block blockPipe;
 
-	public static Block blockQuartzGem;
+	public static Block blockCactus;
+	public static Block blockRaspberryBush;
+	public static Block blockGrapesBush;
 
-//	public static Block blockFancyWorkbench;
-//	public static Block blockFancyTank;
-
-//	public static Block blockCrystal;
 	
 	
 
@@ -215,13 +204,19 @@ public class Elysium
 	public static BiomeGenBase biomeForestCorrupt = null;
 	public static BiomeGenBase biomeOcean = null;
 	public static BiomeGenBase biomeRiver = null;
+	public static BiomeGenBase biomeDesert = null;
+	public static BiomeGenBase biomeBeach = null;
+	public static BiomeGenBase biomeDeepOcean = null;
 
 	private int biomeIdPlains;
 	private int biomeIdForest;
 	private int biomeIdPlainsCorrupt;
 	private int biomeIdForestCorrupt;
 	private int biomeIdOcean;
+	private int biomeIdDeepOcean;
 	private int biomeIdRiver;
+	private int biomeIdDesert;
+	private int biomeIdBeach;
 
 	
     @EventHandler
@@ -286,14 +281,21 @@ public class Elysium
 			Property ELYSIUM_PLAINS_CORRUPT = Elysium.config.get("biomeIds", "ELYSIUM_PLAINS_CORRUPT", Configs.BIOME_PLAIN_CORRUPT);
 			biomeIdPlainsCorrupt = ELYSIUM_PLAINS_CORRUPT.getInt();
 
-			Property ELYSIUM_FOREST_CORRUPT = Elysium.config.get("biomeIds", "ELYSIUM_FOREST_CORRUPT", Configs.BIOME_FOREST_CORRUPT);
-			biomeIdForestCorrupt = ELYSIUM_FOREST_CORRUPT.getInt();
+			Property ELYSIUM_DEEP_OCEAN = Elysium.config.get("biomeIds", "ELYSIUM_DEEP_OCEAN", Configs.ELYSIUM_DEEP_OCEAN);
+			biomeIdDeepOcean = ELYSIUM_DEEP_OCEAN.getInt();
 
 			Property ELYSIUM_OCEAN = Elysium.config.get("biomeIds", "ELYSIUM_OCEAN", Configs.BIOME_OCEAN);
 			biomeIdOcean = ELYSIUM_OCEAN.getInt();
 
 			Property ELYSIUM_RIVER = Elysium.config.get("biomeIds", "ELYSIUM_RIVER", Configs.BIOME_RIVER);
 			biomeIdRiver = ELYSIUM_RIVER.getInt();
+
+			Property ELYSIUM_DESERT = Elysium.config.get("biomeIds", "ELYSIUM_DESERT", Configs.BIOME_DESERT);
+			biomeIdDesert = ELYSIUM_DESERT.getInt();
+
+			Property ELYSIUM_BEACH = Elysium.config.get("biomeIds", "ELYSIUM_BEACH", Configs.BIOME_BEACH);
+			biomeIdBeach = ELYSIUM_BEACH.getInt();
+			
 			
 			Property MAX_DRAGON_IN_END = Elysium.config.get("other", "MAX_DRAGON_IN_END", Configs.MAX_DRAGON_IN_END, "How many dragons can be spawned to the End at the same time!");
 			maxDragon = MAX_DRAGON_IN_END.getInt();
@@ -433,12 +435,19 @@ public class Elysium
 		blockEnergyCrystal = new ElysiumEnergyCrystalBlock(Material.glass).setHardness(3F).setResistance(4F).setStepSound(Block.soundTypeGlass).setLightLevel(1.0F).setBlockTextureName("energy_crystal").setBlockName("energy_crystal");
 		registerBlock(blockEnergyCrystal, ElysiumEnergyCrystalItemBlock.class);
 
-		blockPipe = new ElysiumPipeBlock(Material.rock).setHardness(0.3F).setStepSound(Block.soundTypeStone).setBlockTextureName("palestone").setBlockName("stone_pipe");
+		blockPipe = new ElysiumPipeBlock(Material.rock).setHardness(0.3F).setStepSound(Block.soundTypeStone).setBlockTextureName("palestone").setBlockName("stone_pipe").setCreativeTab(null);
 		registerBlock(blockPipe);
 
+		blockCactus = new ElysiumCactus().setHardness(0F).setResistance(1F).setStepSound(Block.soundTypeGrass).setBlockTextureName("hallowedcactus").setBlockName("blockCactus");
+		registerBlock(blockCactus);
 
-		blockQuartzGem = new ElysiumBlock(Material.rock).setHardness(3F).setResistance(5F).setLightLevel(1F).setStepSound(Block.soundTypeStone).setBlockTextureName("quartz_block_gem").setBlockName("quartz_block_gem");
-		registerBlock(blockQuartzGem);
+		blockRaspberryBush = new ElysiumRaspberryBush().setHardness(0F).setResistance(1F).setStepSound(Block.soundTypeGrass).setBlockTextureName("raspberrybushwithoutberries").setBlockName("blockRaspberryBush");
+		registerBlock(blockRaspberryBush);
+
+
+		blockGrapesBush = new ElysiumGrapesBush().setHardness(0F).setResistance(1F).setStepSound(Block.soundTypeGrass).setBlockTextureName("grapes_empty").setBlockName("blockGrapes");
+		registerBlock(blockGrapesBush);
+
 		
 		//Items
 		itemPrism = new ElysiumItemPrism().setTextureName("gracecrystal").setUnlocalizedName("prism");
@@ -647,13 +656,16 @@ public class Elysium
 		DimensionManager.registerDimension(dimensionID, dimensionID);
 
 
-		biomePlain = new ElysiumBiomeGenPlain(biomeIdPlains);
-		biomeForest = new ElysiumBiomeGenForest(biomeIdForest);
-		biomePlainCorrupt = new ElysiumBiomeGenPlainCorrupted(biomeIdPlainsCorrupt);
-		biomeForestCorrupt = new ElysiumBiomeGenForestCorrupted(biomeIdForestCorrupt);
-		biomeOcean = new ElysiumBiomeGenOcean(biomeIdOcean);
-		biomeRiver = new ElysiumBiomeGenRiver(biomeIdRiver);
+		biomePlain = new ElysiumBiomeGenPlain(biomeIdPlains).setHeight(new Height(0.4F, 0.3F)).setColor(2250012).setBiomeName("Elysium Plain");
+		biomeForest = new ElysiumBiomeGenForest(biomeIdForest).setHeight(new Height(0.2F, 0.4F)).setColor(2250012).setBiomeName("Elysium Forest");
+		biomePlainCorrupt = new ElysiumBiomeGenPlainCorrupted(biomeIdPlainsCorrupt).setHeight(new Height(0.5F, 0.3F)).setColor(522674).func_76733_a(9154376).setTemperatureRainfall(0.8F, 0.9F).setBiomeName("Elysium Plain Corrupted");
 		
+		biomeOcean = new ElysiumBiomeGenOcean(biomeIdOcean).setHeight(new Height(-1.0F, 0.1F)).setBiomeName("Elysium Ocean");
+		biomeDeepOcean = new ElysiumBiomeGenOcean(biomeIdOcean).setHeight(new Height(-1.3F, 0.1F)).setBiomeName("Elysium Deep Ocean");
+		biomeRiver = new ElysiumBiomeGenRiver(biomeIdRiver).setHeight(new Height(-0.5F, 0.0F)).setColor(255).setBiomeName("Elysium River");
+		biomeDesert = new ElysiumBiomeGenDesert(biomeIdDesert).setHeight(new Height(0.125F, 0.05F)).setTemperatureRainfall(2.0F, 0.2F).setColor(16421912).setBiomeName("Elysium Desert");
+		biomeBeach = new ElysiumBiomeGenBeach(biomeIdBeach).setHeight(new Height(0.0F, 0.025F)).setColor(16440917).setTemperatureRainfall(0.8F, 0.4F).setBiomeName("Elysium Beach");
+
 		GameRegistry.registerWorldGenerator(new WorldGenElysium(), 0);
 
 		proxy.registerRenderers();
@@ -677,7 +689,7 @@ public class Elysium
         EntityRegistry.registerModEntity(EntityPinkUnicorn.class, "Unicorn", unicornID, this, 160, 1, true);
 
         int voidspecterID = EntityRegistry.findGlobalUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(EntityVoidSpecter.class, "VoidSpecter", voidspecterID, 0x623464, 0x3A2A3A);//TODO: remove egg
+		EntityRegistry.registerGlobalEntityID(EntityVoidSpecter.class, "VoidSpecter", voidspecterID, 0x623464, 0x3A2A3A);
         EntityRegistry.registerModEntity(EntityVoidSpecter.class, "VoidSpecter", voidspecterID, this, 160, 1, true);
         
         

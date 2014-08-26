@@ -5,7 +5,6 @@ import hu.hundevelopers.elysium.Configs;
 import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.heat.IHeatable;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenForest;
-import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenForestCorrupted;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlain;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlainCorrupted;
 import hu.hundevelopers.elysium.world.gen.features.ElysiumGenCrystalSpikes;
@@ -38,9 +37,7 @@ import net.minecraft.world.gen.MapGenRavine;
 import net.minecraft.world.gen.NoiseGenerator;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
-import net.minecraft.world.gen.feature.WorldGenBlockBlob;
 import net.minecraft.world.gen.feature.WorldGenFlowers;
-import net.minecraft.world.gen.feature.WorldGenLiquids;
 import net.minecraft.world.gen.structure.MapGenMineshaft;
 import net.minecraft.world.gen.structure.MapGenScatteredFeature;
 import net.minecraft.world.gen.structure.MapGenStronghold;
@@ -712,7 +709,7 @@ public class ChunkProviderElysium implements IChunkProvider
 						this.flowergenerator.generate(this.worldObj, rand, x, 0, z);
 					}
 				}
-			} else if(biomegenbase instanceof ElysiumBiomeGenForest || biomegenbase instanceof ElysiumBiomeGenForestCorrupted)
+			} else if(biomegenbase instanceof ElysiumBiomeGenForest/* || biomegenbase instanceof ElysiumBiomeGenForestCorrupted*/)
 			{
 				
 				int x = k + this.rand.nextInt(16);

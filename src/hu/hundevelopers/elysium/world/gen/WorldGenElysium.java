@@ -22,19 +22,15 @@ public class WorldGenElysium implements IWorldGenerator {
 		{
 			generateElysium(world, rand, chunkX * 16, chunkZ * 16);
 		}
-		if(world.provider.dimensionId == 0)
-		{
-			//generateOverworld(world, rand, chunkX * 16, chunkZ * 16);
-		}
+//		if(world.provider.dimensionId == 0)
+//		{
+//			generateOverworld(world, rand, chunkX * 16, chunkZ * 16);
+//		}
 	}
 
 	private void generateOverworld(World world, Random random, int blockX, int blockZ)
 	{
-		int x = blockX + random.nextInt(16);
-		int z = blockX + random.nextInt(16);
-		int y = world.getTopSolidOrLiquidBlock(x, z);
-
-		new ElysiumGenLakes(Elysium.blockElysiumWater).generate(world, random, x, y, z);
+		
 	}
 
 	private void generateElysium(World world, Random random, int blockX, int blockZ)
@@ -76,6 +72,16 @@ public class WorldGenElysium implements IWorldGenerator {
 			{
 				world.setBlock(x, y, z, Elysium.oreBeryl);
 			}
+		}
+		
+		if(random.nextInt(3) == 0)
+		{
+			int x = blockX + random.nextInt(16);
+			int z = blockX + random.nextInt(16);
+			int y = world.getTopSolidOrLiquidBlock(x, z);
+	
+			
+			new ElysiumGenLakes(Elysium.blockElysiumEnergy).generate(world, random, x, y, z);
 		}
 
 //		for(int j = 0; j < 256; j++) FIXME TODO

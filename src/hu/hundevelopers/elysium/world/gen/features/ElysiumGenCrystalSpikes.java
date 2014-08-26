@@ -1,16 +1,12 @@
 package hu.hundevelopers.elysium.world.gen.features;
 
 import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.block.ElysiumBlock;
-import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenForestCorrupted;
-import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlainCorrupted;
 
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenVines;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class ElysiumGenCrystalSpikes extends WorldGenerator
@@ -21,8 +17,7 @@ public class ElysiumGenCrystalSpikes extends WorldGenerator
 	@Override
 	public boolean generate(World world, Random rand, int x, int y, int z)
 	{
-		boolean isCorrupted = world.getBiomeGenForCoords(x, z) instanceof ElysiumBiomeGenForestCorrupted || world.getBiomeGenForCoords(x, z) instanceof ElysiumBiomeGenPlainCorrupted;
-		
+		boolean isCorrupted = false;
 		if(isCorrupted)
 			meta = 1;
 		

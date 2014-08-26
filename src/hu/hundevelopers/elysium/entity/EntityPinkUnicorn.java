@@ -445,8 +445,9 @@ public class EntityPinkUnicorn extends EntityHorse
         {
         	this.setRearing(false);
         	this.setHorseSaddled(true);
+        	this.setTamedBy(player);
         	if(!player.capabilities.isCreativeMode)
-        		itemstack = null;//TODO: check
+        		itemstack.stackSize--;
             return true;
         }
 
@@ -498,7 +499,6 @@ public class EntityPinkUnicorn extends EntityHorse
         {
             if (itemstack == null && this.isSaddled())
             {
-                System.out.println("mount");
                 this.func_110237_h(player);
                 return true;
             }
