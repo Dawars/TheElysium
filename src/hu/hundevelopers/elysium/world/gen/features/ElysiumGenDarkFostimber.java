@@ -21,25 +21,26 @@ public class ElysiumGenDarkFostimber extends ElysiumGenFostimber
 	
 	private WorldGenVines vines = new WorldGenVines();
 
-	public ElysiumGenDarkFostimber(Block leaves, Block log, boolean fromSapling)
+	public ElysiumGenDarkFostimber(Block leaves, Block log, boolean fromSapling, boolean isCorrupted)
 	{
 		super(leaves, log, fromSapling);
 		this.leaves = leaves;
 		this.log = log;
 		this.fromSapling = fromSapling;
+		this.isCorrupted = isCorrupted;
 	}
 	
-	public ElysiumGenDarkFostimber(Block leaves, Block log, int leavesMeta, int logMeta, boolean fromSapling)
+	public ElysiumGenDarkFostimber(Block leaves, Block log, int leavesMeta, int logMeta, boolean fromSapling, boolean isCorrupted)
 	{
-		this(leaves, log, fromSapling);
+		this(leaves, log, fromSapling, isCorrupted);
 		this.leavesMeta = leavesMeta;
 		this.logMeta = logMeta;
 	}
-	
+	boolean isCorrupted = false;
+
 	@Override
 	public boolean generate(World world, Random random, int x, int y, int z)
 	{
-		boolean isCorrupted = false;
 		int cap = random.nextInt(2) + 2;
 		int trunk = 3;
 		int minTreeHeight = 6;
@@ -139,7 +140,7 @@ public class ElysiumGenDarkFostimber extends ElysiumGenFostimber
 				addLeaves(world, x, y+i, z);
 			}
 			
-			for(int l = 0; l < 5; l++)
+			for(int l = 0; l < 50; l++)
 			{
 				if(isCorrupted)
 					makeVines(world, random, x + random.nextInt(7) - 3, y+i, z + random.nextInt(7) - 3);

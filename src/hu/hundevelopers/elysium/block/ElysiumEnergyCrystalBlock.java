@@ -3,6 +3,7 @@ package hu.hundevelopers.elysium.block;
 import hu.hundevelopers.elysium.Elysium;
 
 import java.util.List;
+import java.util.Random;
 
 import coloredlightscore.src.api.CLApi;
 
@@ -46,6 +47,15 @@ public class ElysiumEnergyCrystalBlock extends BlockStainedGlass
         return this;
     }
 
+
+    /**
+     * Returns the quantity of items to drop on block destruction.
+     */
+    public int quantityDropped(Random p_149745_1_)
+    {
+        return 1;
+    }
+    
 //	/**
 //     * Returns true if the given side of this block type should be rendered, if the adjacent block is at the given
 //     * coordinates.  Args: blockAccess, x, y, z, side

@@ -23,7 +23,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ElysiumBlockLeaves extends BlockLeaves
 {
-    public static final String[] name = new String[] {"fostimber", "forest"};
+    public static final String[] name = new String[] {"fostimber", "gilbensilv"};
     
 	public ElysiumBlockLeaves()
     {
@@ -59,7 +59,7 @@ public class ElysiumBlockLeaves extends BlockLeaves
 	@Override
     public int quantityDropped(Random rand)
     {
-        return rand.nextInt(20) == 0 ? 1 : 0;
+        return rand.nextInt(15) == 0 ? 1 : 0;
     }
 
 	@Override
@@ -106,7 +106,7 @@ public class ElysiumBlockLeaves extends BlockLeaves
     @Override
     public int damageDropped(int meta)
     {
-        return super.damageDropped(meta) + 4;
+        return meta & 3;
     }
 
     /**

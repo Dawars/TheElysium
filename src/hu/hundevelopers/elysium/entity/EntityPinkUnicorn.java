@@ -94,11 +94,13 @@ public class EntityPinkUnicorn extends EntityHorse
         }
     }
 
+    @Override
     public boolean isAdultHorse()
     {
         return !this.isChild();
     }
 
+    @Override
     public boolean isTame()
     {
         return this.getHorseWatchableBoolean(2);
@@ -109,16 +111,19 @@ public class EntityPinkUnicorn extends EntityHorse
         return this.getHorseWatchableBoolean(4);
     }
 
+    @Override
     public String getOwnerName()
     {
         return this.dataWatcher.getWatchableObjectString(21);
     }
 
+    @Override
     public void setOwnerName(String par1Str)
     {
         this.dataWatcher.updateObject(21, par1Str);
     }
 
+    @Override
     public float getHorseSize()
     {
         int i = this.getGrowingAge();
@@ -141,16 +146,19 @@ public class EntityPinkUnicorn extends EntityHorse
         }
     }
 
+    @Override
     public boolean isHorseJumping()
     {
         return this.horseJumping;
     }
 
+    @Override
     public void setHorseTamed(boolean par1)
     {
         this.setHorseWatchableBoolean(2, par1);
     }
 
+    @Override
     public void setHorseJumping(boolean par1)
     {
         this.horseJumping = par1;
@@ -171,26 +179,31 @@ public class EntityPinkUnicorn extends EntityHorse
         }
     }
 
+    @Override
     public boolean isEatingHaystack()
     {
         return this.getHorseWatchableBoolean(32);
     }
 
+    @Override
     public boolean isRearing()
     {
         return this.getHorseWatchableBoolean(64);
     }
 
+    @Override
     public boolean getHasReproduced()
     {
         return this.hasReproduced;
     }
 
+    @Override
     public void setHasReproduced(boolean par1)
     {
         this.hasReproduced = par1;
     }
 
+    @Override
     public void setHorseSaddled(boolean par1)
     {
         this.setHorseWatchableBoolean(4, par1);
@@ -215,6 +228,7 @@ public class EntityPinkUnicorn extends EntityHorse
         return this.riddenByEntity == null;
     }
 
+    @Override
     public boolean prepareChunkForSpawn()
     {
         int i = MathHelper.floor_double(this.posX);
@@ -266,9 +280,9 @@ public class EntityPinkUnicorn extends EntityHorse
      */
     @Override
     public boolean getCanSpawnHere()
-    {
-        this.prepareChunkForSpawn();
-        return super.getCanSpawnHere();
+    {    
+    	this.prepareChunkForSpawn();
+        return super.getCanSpawnHere() && this.rand.nextInt(1000) == 0;
     }
     
     private static final IEntitySelector horseBreedingSelector = new IEntitySelector()
@@ -283,6 +297,7 @@ public class EntityPinkUnicorn extends EntityHorse
         }
     };
 
+    @Override
     protected EntityPinkUnicorn getClosestHorse(Entity par1Entity, double par2)
     {
         double d1 = Double.MAX_VALUE;
@@ -338,6 +353,7 @@ public class EntityPinkUnicorn extends EntityHorse
         return "mob.horse.hit";
     }
 
+    @Override
     public boolean isHorseSaddled()
     {
         return this.getHorseWatchableBoolean(4);
@@ -403,6 +419,7 @@ public class EntityPinkUnicorn extends EntityHorse
     /**
      * Will return how many at most can spawn in a chunk at once.
      */
+    @Override
     public int getMaxSpawnedInChunk()
     {
         return 6;
@@ -730,11 +747,13 @@ public class EntityPinkUnicorn extends EntityHorse
         this.setHorseWatchableBoolean(32, par1);
     }
 
+    @Override
     public void setEatingHaystack(boolean par1)
     {
         this.setEating(par1);
     }
 
+    @Override
     public void setRearing(boolean par1)
     {
         if (par1)
@@ -754,6 +773,7 @@ public class EntityPinkUnicorn extends EntityHorse
         }
     }
 
+    @Override
     public void makeHorseRearWithSound()
     {
         this.makeHorseRear();
@@ -761,6 +781,7 @@ public class EntityPinkUnicorn extends EntityHorse
     }
 
 
+    @Override
     public boolean setTamedBy(EntityPlayer par1EntityPlayer)
     {
         this.setOwnerName(par1EntityPlayer.getCommandSenderName());
@@ -1004,6 +1025,20 @@ public class EntityPinkUnicorn extends EntityHorse
             }
         }
     }
+    
+    /**
+     * Drop 0-2 items of this living's type. 
+     * @param par1 - Whether this entity has recently been hit by a player. 
+     * @param par2 - Level of Looting used to kill this mob.
+     */
+    @Override
+    protected void dropFewItems(boolean par1, int par2)
+    {
+        this.dropItem(Item.getItemFromBlock(Elysium.blockEnergyCrystal), 1);
+        this.dropItem(Elysium.itemHorn, 1);
+    }
+    
+    
     /**
      * returns true if this entity is by a ladder, false otherwise
      */

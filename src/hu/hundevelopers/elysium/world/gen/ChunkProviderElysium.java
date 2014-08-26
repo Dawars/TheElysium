@@ -1,5 +1,6 @@
 package hu.hundevelopers.elysium.world.gen;
 
+import static net.minecraftforge.common.ChestGenHooks.DUNGEON_CHEST;
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE;
 import hu.hundevelopers.elysium.Configs;
 import hu.hundevelopers.elysium.Elysium;
@@ -23,8 +24,10 @@ import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.IProgressUpdate;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.SpawnerAnimals;
 import net.minecraft.world.World;
@@ -43,6 +46,7 @@ import net.minecraft.world.gen.structure.MapGenMineshaft;
 import net.minecraft.world.gen.structure.MapGenScatteredFeature;
 import net.minecraft.world.gen.structure.MapGenStronghold;
 import net.minecraft.world.gen.structure.MapGenVillage;
+import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.ChunkProviderEvent;
 import net.minecraftforge.event.terraingen.InitMapGenEvent;
@@ -352,10 +356,27 @@ public class ChunkProviderElysium implements IChunkProvider
             			if(y <= Configs.labyrinthTop)
                     	{
                 			if(y < Configs.labyrinthTop && y > Configs.labyrinthBottom)
-	                    	{//TODO: add other chambers
+	                    	{
 	                    		if(!genMazeInThisChunk)
 	                    		{
-	                    			blockArray[index] = null;
+	                    			if(x == 0 || x == 15 || z == 0 || z == 15)
+	                    			{
+	                    				if((x == 0 || x == 15) && (z == 8 || z == 7) || (z == 0 || z == 15) && (x == 8 || x == 7))
+
+		                    				blockArray[index] = null;
+	                    				else
+	                    				{
+		                    					
+	                    					if(y == Configs.labyrinthBottom + 2)
+		    	            					blockArray[index] = Configs.labyrinthLamp;
+		    	                    		else
+		    	            					blockArray[index] = Configs.labyrinthWall;
+                						}
+	                    			}
+	                    			else
+	                    				blockArray[index] = null;
+	                    			
+	                    				
 	                    		} else if((x % 3 == 1 || x % 3 == 2) && (z % 3 == 1 || z % 3 == 2))
 	                    		{
 	                    			blockArray[index] = null;
@@ -375,11 +396,6 @@ public class ChunkProviderElysium implements IChunkProvider
 	                    	}
                     	}
             			
-            			//TODO: remove
-//            			if(y >= Configs.labyrinthTop && y < Configs.labyrinthTop+3)
-//                			blockArray[index] = null;
-            			
-                        
                         //maze end
                     }
                 }
@@ -420,17 +436,35 @@ public class ChunkProviderElysium implements IChunkProvider
         			}
         		}
     		}
-    	}
-    	maze = null;
-    	
-        /*
-        if(!genMazeInThisChunk)
-        {
+    		maze = null;
+    	} else
+        {//custom room
         	//event handler, api
-        }*/
+        	if(rand.nextInt(3) != 0)
+        	{
+        		generateEntrance(chunkX, chunkZ, blockArray);
+        	} else {
+        		generateTreasure(chunkX, chunkZ, blockArray);
+        	}
+        }
     }
 
-    private void setBlock(int chunkX, int chunkZ, int x, int y, int z, Block[] blockArray, Block block)
+    private void generateEntrance(int chunkX, int chunkZ, Block[] blockArray)
+    {
+		setBlock(chunkX, chunkZ, 15/2, Configs.labyrinthTop, 15/2, blockArray, Blocks.trapdoor);
+		setBlock(chunkX, chunkZ, 15/2+1, Configs.labyrinthTop, 15/2, blockArray, Blocks.trapdoor);
+		setBlock(chunkX, chunkZ, 15/2, Configs.labyrinthTop, 15/2+1, blockArray, Blocks.trapdoor);
+		setBlock(chunkX, chunkZ, 15/2+1, Configs.labyrinthTop, 15/2+1, blockArray, Blocks.trapdoor);
+	}
+
+	private void generateTreasure(int chunkX, int chunkZ, Block[] blockArray)
+	{
+		setBlock(chunkX, chunkZ, 15/2, Configs.labyrinthBottom+1, 15/2, blockArray, Blocks.chest);
+		setBlock(chunkX, chunkZ, 15/2+1, Configs.labyrinthBottom+1, 15/2, blockArray, Blocks.chest);
+
+	}
+
+	private void setBlock(int chunkX, int chunkZ, int x, int y, int z, Block[] blockArray, Block block)
     {
     	 int i1 = chunkX * 16 + z & 15;
          int j1 = chunkZ * 16 + x & 15;
@@ -664,6 +698,14 @@ public class ChunkProviderElysium implements IChunkProvider
 					if(temp != null && temp instanceof IHeatable)
 					{
 						this.worldObj.setBlockMetadataWithNotify(k + i, y, l + j, 7, 2);
+					} else if(temp == Blocks.chest)
+					{
+						TileEntityChest tileentitychest = (TileEntityChest)worldObj.getTileEntity(k + i, y, l + j);
+
+                        if (tileentitychest != null)
+                        {
+                            WeightedRandomChestContent.generateChestContents(rand, Elysium.labyrinthLoot, tileentitychest, rand.nextInt(3)+8);
+                        }
 					}
 				}
 			}

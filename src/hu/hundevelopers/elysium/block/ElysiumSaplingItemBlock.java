@@ -2,13 +2,14 @@ package hu.hundevelopers.elysium.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemBlockWithMetadata;
 import net.minecraft.item.ItemStack;
 
-public class ElysiumSaplingItemBlock extends ItemBlock
+public class ElysiumSaplingItemBlock extends ItemBlockWithMetadata
 {
 	public ElysiumSaplingItemBlock(Block block)
 	{
-		super(block);
+		super(block, block);
 		setHasSubtypes(true);
 	}
 
@@ -20,6 +21,9 @@ public class ElysiumSaplingItemBlock extends ItemBlock
 		{
 			case 0:
 				name = "fostimber";
+			break;
+			case 1:
+				name = "gildensilv";
 			break;
 			default:
 				name = "error";

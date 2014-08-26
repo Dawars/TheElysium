@@ -1,5 +1,7 @@
 package hu.hundevelopers.elysium.world.gen.features;
 
+import hu.hundevelopers.elysium.Elysium;
+
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -16,19 +18,24 @@ public class ElysiumGenPlants extends WorldGenerator
 		this.block = block;
 	}
 
-	public boolean generate(World world, Random rand, int x, int y, int z)
+	 public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
     {
         for (int l = 0; l < 10; ++l)
         {
-            int i = x + rand.nextInt(8) - rand.nextInt(8);
-            int k = z + rand.nextInt(8) - rand.nextInt(8);
-            int j = world.getTopSolidOrLiquidBlock(i, k)+1;
+            int i1 = par3 + par2Random.nextInt(8) - par2Random.nextInt(8);
+            int j1 = par4 + par2Random.nextInt(4) - par2Random.nextInt(4);
+            int k1 = par5 + par2Random.nextInt(8) - par2Random.nextInt(8);
 
-            if (world.isAirBlock(i, j, k))
+            if (par1World.isAirBlock(i1, j1, k1))
             {
-                if (block.canBlockStay(world, i, j, k))
+                int l1 = 1 + par2Random.nextInt(par2Random.nextInt(3) + 1);
+
+                for (int i2 = 0; i2 < l1; ++i2)
                 {
-                    world.setBlock(i, j, k, block, 0, 2);
+                    if (Blocks.cactus.canBlockStay(par1World, i1, j1 + i2, k1))
+                    {
+                        par1World.setBlock(i1, j1 + i2, k1, block, 0, 2);
+                    }
                 }
             }
         }

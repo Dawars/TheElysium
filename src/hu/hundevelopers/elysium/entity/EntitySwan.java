@@ -67,6 +67,7 @@ public class EntitySwan extends EntityAnimal
      * Drop 0-2 items of this living's type. @param par1 - Whether this entity has recently been hit by a player. @param
      * par2 - Level of Looting used to kill this mob.
      */
+	@Override
     protected void dropFewItems(boolean par1, int par2)
     {
         int j = this.rand.nextInt(3) + this.rand.nextInt(1 + par2);
@@ -81,6 +82,7 @@ public class EntitySwan extends EntityAnimal
 	/**
      * Checks if the entity's current position is a valid location to spawn this entity.
      */
+	@Override
     public boolean getCanSpawnHere()
     {
         int i = MathHelper.floor_double(this.posX);
@@ -89,16 +91,10 @@ public class EntitySwan extends EntityAnimal
         
         if(this.worldObj.getFullBlockLightValue(i, j, k) > 8)
         {
-        	for (int y = j + 2; y >= j - 1; y--)
+        	for (int y = j; y >= j - 1; y--)
         	{
-        		for (int x = i + 3; x >= i + 3; x++)
-        		{
-        			for (int z = k + 3; z >= k + 3; z++)
-            		{
-        				if(worldObj.getBlock(x, y, z).getMaterial().isLiquid())
-        					return true;
-            		}
-        		}
+				if(worldObj.getBlock(i, y, k).getMaterial().isLiquid())
+					return true;
         	}
         }
         return false;
@@ -107,17 +103,13 @@ public class EntitySwan extends EntityAnimal
     /**
      * Returns true if the newer Entity AI code should be run
      */
+	@Override
     public boolean isAIEnabled()
     {
         return true;
     }
     
-    @Override
-    public EnumCreatureAttribute getCreatureAttribute()
-	{
-		return ElysiumApi.MOB;
-	}
-    
+	@Override
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
@@ -129,6 +121,7 @@ public class EntitySwan extends EntityAnimal
      * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
      * use this to react to sunlight and start to burn.
      */
+	@Override
     public void onLivingUpdate()
     {
         super.onLivingUpdate();
@@ -171,11 +164,13 @@ public class EntitySwan extends EntityAnimal
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
+	@Override
     protected void fall(float par1) {}
 
     /**
      * Returns the sound this mob makes while it's alive.
      */
+	@Override
     protected String getLivingSound()
     {
         return "mob.chicken.say";
@@ -184,6 +179,7 @@ public class EntitySwan extends EntityAnimal
     /**
      * Returns the sound this mob makes when it is hurt.
      */
+	@Override
     protected String getHurtSound()
     {
         return "mob.chicken.hurt";
@@ -192,16 +188,19 @@ public class EntitySwan extends EntityAnimal
     /**
      * Returns the sound this mob makes on death.
      */
+	@Override
     protected String getDeathSound()
     {
         return "mob.chicken.hurt";
     }
 
+	@Override
     protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
     {
         this.playSound("mob.chicken.step", 0.15F, 1.0F);
     }
 
+	@Override
     public EntitySwan createChild(EntityAgeable par1EntityAgeable)
     {
         return new EntitySwan(this.worldObj);
@@ -211,6 +210,7 @@ public class EntitySwan extends EntityAnimal
      * Checks if the parameter is an item which this animal can be fed to breed it (wheat, carrots or seeds depending on
      * the animal type)
      */
+	@Override
     public boolean isBreedingItem(ItemStack stack)
     {
         return stack != null && stack.getItem() == Elysium.itemSeedsPepper;

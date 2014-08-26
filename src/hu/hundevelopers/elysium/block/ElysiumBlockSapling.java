@@ -6,6 +6,8 @@ import java.util.Random;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import hu.hundevelopers.elysium.Elysium;
+import hu.hundevelopers.elysium.world.gen.features.ElysiumGenCorruptFostimber;
+import hu.hundevelopers.elysium.world.gen.features.ElysiumGenDarkFostimber;
 import hu.hundevelopers.elysium.world.gen.features.ElysiumGenFostimber;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSapling;
@@ -29,7 +31,7 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class ElysiumBlockSapling extends BlockSapling
 {
-	public static final String[] names = new String[] {"fostimber"};
+	public static final String[] names = new String[] {"fostimber", "gildensilv"};
     private static final IIcon[] icons = new IIcon[names.length];
     
 	public ElysiumBlockSapling()
@@ -37,8 +39,8 @@ public class ElysiumBlockSapling extends BlockSapling
 		super();
 		this.setCreativeTab(Elysium.tabElysium);
 		
-		float f = 0.4F;
-        this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
+		float f = 0.2F;
+        this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 1F - f, 0.5F + f);
 	}
 
 	@Override
@@ -118,18 +120,29 @@ public class ElysiumBlockSapling extends BlockSapling
         }
         else
         {
-            this.growTree(world, x, y, z, rand);
+            this.growTree(world, x, y, z, rand, l & 7);
         }
     }
     
-    public void growTree(World world, int x, int y, int z, Random rand)
+    public void growTree(World world, int x, int y, int z, Random rand, int meta)
     {
         if (!net.minecraftforge.event.terraingen.TerrainGen.saplingGrowTree(world, rand, x, y, z)) return;
-        int l = world.getBlockMetadata(x, y, z) & 7;
         int i1 = 0;
         int j1 = 0;
         boolean flag = false;
-        WorldGenerator treeGenerator = new ElysiumGenFostimber(Elysium.blockLeaves, Elysium.blockLog, true);
+        WorldGenerator treeGenerator;
+        switch (meta) {
+	        case 0:
+				treeGenerator = new ElysiumGenFostimber(Elysium.blockLeaves, Elysium.blockLog, true);
+			break;
+	        case 1:
+				treeGenerator = new ElysiumGenDarkFostimber(Elysium.blockLeaves, Elysium.blockLog, 1, 1, true, false);
+			break;
+
+			default:
+				treeGenerator = new ElysiumGenFostimber(Elysium.blockLeaves, Elysium.blockLog, true);
+			break;
+		}
 
 
         Block block = Blocks.air;
@@ -145,20 +158,19 @@ public class ElysiumBlockSapling extends BlockSapling
         {
             world.setBlock(x, y, z, block, 0, 4);
         }
-        System.out.println("growTree");
 
 		if (!((WorldGenerator)treeGenerator).generate(world, rand, x + i1, y, z + j1))
         {
             if (flag)
             {
-                world.setBlock(x + i1, y, z + j1, this, l, 4);
-                world.setBlock(x + i1 + 1, y, z + j1, this, l, 4);
-                world.setBlock(x + i1, y, z + j1 + 1, this, l, 4);
-                world.setBlock(x + i1 + 1, y, z + j1 + 1, this, l, 4);
+                world.setBlock(x + i1, y, z + j1, this, meta, 4);
+                world.setBlock(x + i1 + 1, y, z + j1, this, meta, 4);
+                world.setBlock(x + i1, y, z + j1 + 1, this, meta, 4);
+                world.setBlock(x + i1 + 1, y, z + j1 + 1, this, meta, 4);
             }
             else
             {
-                world.setBlock(x, y, z, this, l, 4);
+                world.setBlock(x, y, z, this, meta, 4);
             }
         }
     }

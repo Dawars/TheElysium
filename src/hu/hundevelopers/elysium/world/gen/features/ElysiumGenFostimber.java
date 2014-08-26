@@ -37,7 +37,7 @@ public class ElysiumGenFostimber extends WorldGenerator
 	@Override
 	public boolean generate(World world, Random random, int x, int y, int z)
 	{
-		boolean isCorrupted = true;
+		boolean isCorrupted = false;
 		int cap = random.nextInt(2) + 2;
 		int trunk = random.nextInt(3) + 3;
 		int minTreeHeight = 8;

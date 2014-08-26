@@ -74,11 +74,14 @@ public class EntityDeer extends EntityAnimal
         return true;
     }
 
+    /**
+     * Checks if the entity's current position is a valid location to spawn this entity.
+     */
     @Override
-    public EnumCreatureAttribute getCreatureAttribute()
-	{
-		return ElysiumApi.MOB;
-	}
+    public boolean getCanSpawnHere()
+    {    
+        return super.getCanSpawnHere() && this.rand.nextInt(100) == 0;
+    }
 
 	@Override
     protected Item getDropItem()

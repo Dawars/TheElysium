@@ -1,16 +1,23 @@
 package hu.hundevelopers.elysium.event;
 
+import hu.hundevelopers.elysium.Configs;
+import hu.hundevelopers.elysium.Elysium;
+import hu.hundevelopers.elysium.world.ElysiumWorldProvider;
+
 import java.util.HashMap;
 import java.util.Map;
 
+import me.dawars.CraftingPillars.blocks.BaseBlockContainer;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -51,5 +58,15 @@ public class ElysiumHandler
 	{
 		if (event.entity instanceof EntityPlayer && ElysiumExtendedPlayer.get((EntityPlayer) event.entity) == null)
 			ElysiumExtendedPlayer.register((EntityPlayer) event.entity);
+	}
+    
+    @SubscribeEvent
+	public void onBreakBlock(BlockEvent.BreakEvent event)
+	{
+		if(!event.getPlayer().capabilities.isCreativeMode &&  event.world.provider instanceof ElysiumWorldProvider && event.y <= Configs.labyrinthTop && event.y >= Configs.labyrinthBottom)
+		{
+			if(event.block == Blocks.quartz_block || event.block == Elysium.blockEnergyCrystal || event.block == Blocks.trapdoor)
+				event.setCanceled(true);
+		}
 	}
 }
