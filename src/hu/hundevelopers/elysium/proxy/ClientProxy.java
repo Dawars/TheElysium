@@ -1,7 +1,7 @@
 package hu.hundevelopers.elysium.proxy;
 
 import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.entity.EntityCatorPillar;
+import hu.hundevelopers.elysium.entity.EntityCaterPillar;
 import hu.hundevelopers.elysium.entity.EntityDeer;
 import hu.hundevelopers.elysium.entity.EntityPinkUnicorn;
 import hu.hundevelopers.elysium.entity.EntitySwan;
@@ -48,7 +48,7 @@ public class ClientProxy extends CommonProxy
 		
 //		RenderingRegistry.registerBlockHandler(new CrystalBlockRendererOBJ());
 
-		RenderingRegistry.registerEntityRenderingHandler(EntityCatorPillar.class, new RenderCaterPillar());
+		RenderingRegistry.registerEntityRenderingHandler(EntityCaterPillar.class, new RenderCaterPillar());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySwan.class, new RenderSwan());
 		RenderingRegistry.registerEntityRenderingHandler(EntityDeer.class, new RenderDeer());
 		RenderingRegistry.registerEntityRenderingHandler(EntityPinkUnicorn.class, new RenderPinkUnicorn(new ModelPinkUnicorn()));

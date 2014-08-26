@@ -26,6 +26,7 @@ import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 
+import me.dawars.CraftingPillars.CraftingPillars;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -60,6 +61,7 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -592,6 +594,13 @@ public class Elysium
 		blockLog.setHarvestLevel("axe", 0);
 		blockPlanks.setHarvestLevel("axe", 0);
 
+		
+		//Thaumcraft
+		FMLInterModComms.sendMessage("Thaumcraft", "harvestClickableCrop", new ItemStack(blockRaspberryBush, 1, OreDictionary.WILDCARD_VALUE));
+		FMLInterModComms.sendMessage("Thaumcraft", "harvestClickableCrop", new ItemStack(blockGrapesBush, 1, 2));
+		FMLInterModComms.sendMessage("Thaumcraft", "harvestClickableCrop", new ItemStack(blockGrapesBush, 1, 3));
+		FMLInterModComms.sendMessage("Thaumcraft", "dimensionBlacklist", dimensionID+":1");
+		
 		//Crafting Registering
 
 		GameRegistry.addRecipe(new ItemStack(itemPrism), new Object[] {"SSS","SDT","TTT", Character.valueOf('S'), Items.sugar, Character.valueOf('T'), Items.ghast_tear, Character.valueOf('D'), Items.diamond});
@@ -640,6 +649,9 @@ public class Elysium
 		GameRegistry.addRecipe(new ItemStack(itemStaff, 1, 3), new Object[] {" CA", " S ", "S  ", Character.valueOf('C'), Items.fire_charge, Character.valueOf('S'), Items.stick, Character.valueOf('A'), itemAntler});
 
 		GameRegistry.addRecipe(new ItemStack(Items.saddle), new Object[] {"HHH", "HSH", " I ", Character.valueOf('H'), itemSturdyHide, Character.valueOf('S'), Items.string, Character.valueOf('I'), Items.iron_ingot});
+
+		GameRegistry.addRecipe(new ItemStack(CraftingPillars.blockBasePillar), new Object[] { "SSS", " S ", "SSS", Character.valueOf('S'), blockPalestone });
+		GameRegistry.addRecipe(new ItemStack(CraftingPillars.blockTrashPillar, 1), new Object[] { "SSS", "SLS", "SSS", Character.valueOf('S'), blockPalestone, Character.valueOf('L'), Items.ender_pearl});
 
 		
 		//Ore registry

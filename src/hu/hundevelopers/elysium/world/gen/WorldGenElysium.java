@@ -81,7 +81,7 @@ public class WorldGenElysium implements IWorldGenerator {
 			int y = world.getTopSolidOrLiquidBlock(x, z);
 	
 			
-			new ElysiumGenLakes(Elysium.blockElysiumEnergy).generate(world, random, x, y, z);
+			new ElysiumGenLakes(Elysium.blockElysiumEnergyLiquid).generate(world, random, x, y, z);
 		}
 
 //		for(int j = 0; j < 256; j++) FIXME TODO
