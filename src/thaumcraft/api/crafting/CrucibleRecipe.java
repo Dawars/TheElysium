@@ -12,11 +12,10 @@ public class CrucibleRecipe {
 
 	private ItemStack recipeOutput;
 	
+
 	public Object catalyst;
 	public AspectList aspects;
 	public String key;
-	
-	public int hash;
 	
 	public CrucibleRecipe(String researchKey, ItemStack result, Object cat, AspectList tags) {
 		recipeOutput = result;
@@ -26,23 +25,8 @@ public class CrucibleRecipe {
 		if (cat instanceof String) {
 			this.catalyst = OreDictionary.getOres((String) cat);
 		}
-		String hc = researchKey + result.toString();
-		for (Aspect tag:tags.getAspects()) {
-			hc += tag.getTag()+tags.getAmount(tag);
-		}
-		if (cat instanceof ItemStack) {
-			hc += ((ItemStack)cat).toString();
-		} else
-		if (cat instanceof ArrayList && ((ArrayList<ItemStack>)catalyst).size()>0) {
-			for (ItemStack is :(ArrayList<ItemStack>)catalyst) {
-				hc += is.toString();
-			}
-		}
-		
-		hash = hc.hashCode();
 	}
 	
-		
 
 	public boolean matches(AspectList itags, ItemStack cat) {
 		if (catalyst instanceof ItemStack &&
@@ -50,8 +34,7 @@ public class CrucibleRecipe {
 			return false;
 		} else 
 		if (catalyst instanceof ArrayList && ((ArrayList<ItemStack>)catalyst).size()>0) {
-			ItemStack[] ores = ((ArrayList<ItemStack>)catalyst).toArray(new ItemStack[]{});
-			if (!ThaumcraftApiHelper.containsMatch(false, new ItemStack[]{cat},ores)) return false;
+			if (!ThaumcraftApiHelper.containsMatch(true, ((ArrayList<ItemStack>)catalyst).toArray(new ItemStack[]{}), cat)) return false;
 		}
 		if (itags==null) return false;
 		for (Aspect tag:aspects.getAspects()) {
@@ -65,8 +48,8 @@ public class CrucibleRecipe {
 			return true;
 		} else 
 		if (catalyst instanceof ArrayList && ((ArrayList<ItemStack>)catalyst).size()>0) {
-			ItemStack[] ores = ((ArrayList<ItemStack>)catalyst).toArray(new ItemStack[]{});
-			if (ThaumcraftApiHelper.containsMatch(false, new ItemStack[]{cat},ores)) return true;
+			if (ThaumcraftApiHelper.containsMatch(true, 
+					((ArrayList<ItemStack>)catalyst).toArray(new ItemStack[]{}), cat)) return true;
 		}
 		return false;
 	}
@@ -88,24 +71,4 @@ public class CrucibleRecipe {
 		return recipeOutput;
 	}
 	
-	
-//	@Override
-//	public int hashCode() {
-//		String hash = "";
-//		if (catalyst instanceof ItemStack) {
-//			hash += ((ItemStack)catalyst).toString();
-//		} else if (catalyst instanceof ArrayList && ((ArrayList<ItemStack>)catalyst).size()>0) {
-//			for (ItemStack s:(ArrayList<ItemStack>)catalyst) {
-//				hash += s.toString();
-//			} 
-//		} else {
-//			hash += catalyst.hashCode();
-//		}
-//		hash += getRecipeOutput().toString();
-//		for (Aspect a:aspects.getAspectsSorted()) {
-//			hash += a.getTag() + aspects.getAmount(a);
-//		}
-//		return hash.hashCode();
-//	}
-
 }

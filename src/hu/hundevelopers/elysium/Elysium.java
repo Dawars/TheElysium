@@ -601,6 +601,74 @@ public class Elysium
 		FMLInterModComms.sendMessage("Thaumcraft", "harvestClickableCrop", new ItemStack(blockGrapesBush, 1, 3));
 		FMLInterModComms.sendMessage("Thaumcraft", "dimensionBlacklist", dimensionID+":1");
 		
+		SANCTUS = new Aspect("Sanctus", 0xffffff, new Aspect[]{Aspect.LIGHT, Aspect.AURA}, new ResourceLocation(MODID + ":textures/aspects/sanctus.png"), 1);
+		
+		//Entites
+	    ThaumcraftApi.registerEntityTag("Unicorn", new AspectList().add(Aspect.MAGIC, 2).add(Aspect.CRYSTAL, 2).add(Aspect.BEAST, 4).add(SANCTUS, 5), new ThaumcraftApi.EntityTagsNBT[0]);
+	    ThaumcraftApi.registerEntityTag("Deer", new AspectList().add(Aspect.MAGIC, 2).add(Aspect.CLOTH, 1).add(Aspect.BEAST, 4).add(SANCTUS, 1), new ThaumcraftApi.EntityTagsNBT[0]);
+	    ThaumcraftApi.registerEntityTag("CaterPillar", new AspectList().add(Aspect.TRAVEL, 2).add(Aspect.EARTH, 2).add(Aspect.LIFE, 2).add(SANCTUS, 1), new ThaumcraftApi.EntityTagsNBT[0]);
+	    ThaumcraftApi.registerEntityTag("Swan", new AspectList().add(Aspect.FLIGHT, 2).add(Aspect.WATER, 2).add(Aspect.BEAST, 2).add(SANCTUS, 1), new ThaumcraftApi.EntityTagsNBT[0]);
+
+	    ThaumcraftApi.registerEntityTag("VoidSpecter", new AspectList().add(Aspect.DARKNESS, 4).add(Aspect.ELDRITCH, 4), new ThaumcraftApi.EntityTagsNBT[0]);
+	    ThaumcraftApi.registerEntityTag("EnderMage", new AspectList().add(Aspect.MAGIC, 4).add(Aspect.ELDRITCH, 4), new ThaumcraftApi.EntityTagsNBT[0]);
+
+	    ThaumcraftApi.registerEntityTag("Hero", new AspectList().add(Aspect.MAN, 4).add(Aspect.MIND, 4).add(SANCTUS, 1), new ThaumcraftApi.EntityTagsNBT[0]);
+
+	    
+	    //Items
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemPrism), new AspectList().add(SANCTUS, 5).add(Aspect.LIGHT, 2).add(Aspect.CRYSTAL, 1).add(Aspect.SENSES, 3));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemSeedsPepper), new AspectList().add(Aspect.PLANT, 1).add(Aspect.ENTROPY, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemSeedsPepper), new AspectList().add(Aspect.SENSES, 1).add(SANCTUS, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemBeryl), new AspectList().add(Aspect.METAL, 1).add(Aspect.CRYSTAL, 2));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemIngotIridium), new AspectList().add(Aspect.METAL, 4).add(Aspect.SENSES, 2));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemIngotCobalt), new AspectList().add(Aspect.METAL, 4).add(Aspect.TOOL, 2));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemJade), new AspectList().add(Aspect.GREED, 1).add(Aspect.MIND, 1).add(Aspect.CRYSTAL, 2));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemSiliconChunk), new AspectList().add(Aspect.EARTH, 1).add(Aspect.CRYSTAL, 4));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemSulphur), new AspectList().add(Aspect.FIRE, 2).add(Aspect.ENTROPY, 1).add(Aspect.EARTH, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemTourmaline), new AspectList().add(Aspect.CRYSTAL, 4).add(Aspect.SENSES, 2));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemDeerPelt), new AspectList().add(Aspect.CLOTH, 2).add(Aspect.BEAST, 2));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemGrapes, 1, 0), new AspectList().add(Aspect.PLANT, 1).add(Aspect.HEAL, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemGrapes, 1, 1), new AspectList().add(Aspect.PLANT, 1).add(Aspect.HEAL, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemRaspberry), new AspectList().add(Aspect.PLANT, 1).add(Aspect.LIFE, 1));
+	    
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemStaff, 1, 0), new AspectList().add(Aspect.EARTH, 4).add(Aspect.MAGIC, 4));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemStaff, 1, 1), new AspectList().add(Aspect.COLD, 4).add(Aspect.MAGIC, 4));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemStaff, 1, 2), new AspectList().add(Aspect.ELDRITCH, 4).add(Aspect.MAGIC, 4));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemStaff, 1, 3), new AspectList().add(Aspect.FIRE, 4).add(Aspect.MAGIC, 4));
+	    
+	    //Blocks
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockElysiumWater), new AspectList().add(Aspect.WATER, 4).add(SANCTUS, 2));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockElysiumEnergyLiquid), new AspectList().add(Aspect.ENERGY, 2).add(Aspect.WATER, 2).add(SANCTUS, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockPalestone), new AspectList().add(Aspect.EARTH, 2).add(SANCTUS, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockGrass), new AspectList().add(Aspect.EARTH, 1).add(Aspect.PLANT, 1).add(SANCTUS, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockDirt), new AspectList().add(Aspect.EARTH, 1).add(SANCTUS, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockSand), new AspectList().add(Aspect.EARTH, 1).add(SANCTUS, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockRilt), new AspectList().add(Aspect.EARTH, 1).add(Aspect.HUNGER, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockSapling, 1, 0), new AspectList().add(Aspect.PLANT, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockSapling, 1, 1), new AspectList().add(Aspect.PLANT, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockLog, 1, 0), new AspectList().add(Aspect.TREE, 1).add(SANCTUS, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockLog, 1, 1), new AspectList().add(Aspect.TREE, 1).add(SANCTUS, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockLog, 1, 2), new AspectList().add(Aspect.TREE, 1).add(Aspect.ELDRITCH, 1).add(Aspect.TAINT, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockLeaves, 1, 0), new AspectList().add(Aspect.PLANT, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockLeaves, 1, 1), new AspectList().add(Aspect.PLANT, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockPlanks, 1, 0), new AspectList().add(Aspect.TREE, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockPlanks, 1, 1), new AspectList().add(Aspect.TREE, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockFlower), new AspectList().add(Aspect.SENSES, 1).add(Aspect.LIFE, 1).add(Aspect.PLANT, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockTallGrass), new AspectList().add(Aspect.AIR, 1).add(Aspect.PLANT, 1));
+
+	    ThaumcraftApi.registerObjectTag(new ItemStack(oreBeryl), new AspectList().add(Aspect.EARTH, 2).add(Aspect.METAL, 1).add(Aspect.CRYSTAL, 2));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(oreCobalt), new AspectList().add(Aspect.EARTH, 2).add(Aspect.METAL, 1).add(Aspect.TOOL, 2));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(oreIridium), new AspectList().add(Aspect.EARTH, 2).add(Aspect.METAL, 1).add(Aspect.SENSES, 2));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(oreJade), new AspectList().add(Aspect.EARTH, 2).add(Aspect.MIND, 1).add(Aspect.CRYSTAL, 2));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(oreSilicon), new AspectList().add(Aspect.EARTH, 2).add(Aspect.CRYSTAL, 4));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(oreSulphure), new AspectList().add(Aspect.EARTH, 2).add(Aspect.FIRE, 2).add(Aspect.ENTROPY, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(oreTourmaline), new AspectList().add(Aspect.EARTH, 2).add(Aspect.CRYSTAL, 2).add(Aspect.SENSES, 2));
+
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockFloatingConch), new AspectList().add(Aspect.ARMOR, 1).add(Aspect.DEATH, 1).add(SANCTUS, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockFloatingShell), new AspectList().add(Aspect.ARMOR, 1).add(Aspect.DEATH, 1).add(SANCTUS, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockEnergyCrystal), new AspectList().add(Aspect.EARTH, 1).add(Aspect.ENERGY, 1).add(Aspect.CRYSTAL, 1));
+
+		
 		//Crafting Registering
 
 		GameRegistry.addRecipe(new ItemStack(itemPrism), new Object[] {"SSS","SDT","TTT", Character.valueOf('S'), Items.sugar, Character.valueOf('T'), Items.ghast_tear, Character.valueOf('D'), Items.diamond});
@@ -789,76 +857,9 @@ public class Elysium
 		modLights = Loader.isModLoaded("coloredlightscore");
 		modThaumcraft = Loader.isModLoaded("thaumcraft");
 		
-		if(modThaumcraft)
-		{
-			SANCTUS = new Aspect("Sanctus", 0xffffff, new Aspect[]{Aspect.LIGHT, Aspect.AURA}, new ResourceLocation(MODID + ":textures/aspects/sanctus.png"), 1);
-			
-			//Entites
-		    ThaumcraftApi.registerEntityTag("Unicorn", new AspectList().add(Aspect.MAGIC, 2).add(Aspect.CRYSTAL, 2).add(Aspect.BEAST, 4).add(SANCTUS, 5), new ThaumcraftApi.EntityTagsNBT[0]);
-		    ThaumcraftApi.registerEntityTag("Deer", new AspectList().add(Aspect.MAGIC, 2).add(Aspect.CLOTH, 1).add(Aspect.BEAST, 4).add(SANCTUS, 1), new ThaumcraftApi.EntityTagsNBT[0]);
-		    ThaumcraftApi.registerEntityTag("CaterPillar", new AspectList().add(Aspect.TRAVEL, 2).add(Aspect.EARTH, 2).add(Aspect.LIFE, 2).add(SANCTUS, 1), new ThaumcraftApi.EntityTagsNBT[0]);
-		    ThaumcraftApi.registerEntityTag("Swan", new AspectList().add(Aspect.FLIGHT, 2).add(Aspect.WATER, 2).add(Aspect.BEAST, 2).add(SANCTUS, 1), new ThaumcraftApi.EntityTagsNBT[0]);
-
-		    ThaumcraftApi.registerEntityTag("VoidSpecter", new AspectList().add(Aspect.DARKNESS, 4).add(Aspect.ELDRITCH, 4), new ThaumcraftApi.EntityTagsNBT[0]);
-		    ThaumcraftApi.registerEntityTag("EnderMage", new AspectList().add(Aspect.MAGIC, 4).add(Aspect.ELDRITCH, 4), new ThaumcraftApi.EntityTagsNBT[0]);
-
-		    ThaumcraftApi.registerEntityTag("Hero", new AspectList().add(Aspect.MAN, 4).add(Aspect.MIND, 4).add(SANCTUS, 1), new ThaumcraftApi.EntityTagsNBT[0]);
-
-		    
-		    //Items
-		    ThaumcraftApi.registerObjectTag(new ItemStack(itemPrism), new AspectList().add(SANCTUS, 5).add(Aspect.LIGHT, 2).add(Aspect.CRYSTAL, 1).add(Aspect.SENSES, 3));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(itemSeedsPepper), new AspectList().add(Aspect.PLANT, 1).add(Aspect.ENTROPY, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(itemSeedsPepper), new AspectList().add(Aspect.SENSES, 1).add(SANCTUS, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(itemBeryl), new AspectList().add(Aspect.METAL, 1).add(Aspect.CRYSTAL, 2));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(itemIngotIridium), new AspectList().add(Aspect.METAL, 4).add(Aspect.SENSES, 2));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(itemIngotCobalt), new AspectList().add(Aspect.METAL, 4).add(Aspect.TOOL, 2));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(itemJade), new AspectList().add(Aspect.GREED, 1).add(Aspect.MIND, 1).add(Aspect.CRYSTAL, 2));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(itemSiliconChunk), new AspectList().add(Aspect.EARTH, 1).add(Aspect.CRYSTAL, 4));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(itemSulphur), new AspectList().add(Aspect.FIRE, 2).add(Aspect.ENTROPY, 1).add(Aspect.EARTH, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(itemTourmaline), new AspectList().add(Aspect.CRYSTAL, 4).add(Aspect.SENSES, 2));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(itemDeerPelt), new AspectList().add(Aspect.CLOTH, 2).add(Aspect.BEAST, 2));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(itemGrapes, 1, 0), new AspectList().add(Aspect.PLANT, 1).add(Aspect.HEAL, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(itemGrapes, 1, 1), new AspectList().add(Aspect.PLANT, 1).add(Aspect.HEAL, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(itemRaspberry), new AspectList().add(Aspect.PLANT, 1).add(Aspect.LIFE, 1));
-		    
-		    ThaumcraftApi.registerObjectTag(new ItemStack(itemStaff, 1, 0), new AspectList().add(Aspect.EARTH, 4).add(Aspect.MAGIC, 4));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(itemStaff, 1, 1), new AspectList().add(Aspect.ELDRITCH, 4).add(Aspect.MAGIC, 4));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(itemStaff, 1, 2), new AspectList().add(Aspect.FIRE, 4).add(Aspect.MAGIC, 4));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(itemStaff, 1, 3), new AspectList().add(Aspect.COLD, 4).add(Aspect.MAGIC, 4));
-		    
-		    //Blocks
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockElysiumWater), new AspectList().add(Aspect.WATER, 4).add(SANCTUS, 2));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockElysiumEnergyLiquid), new AspectList().add(Aspect.ENERGY, 2).add(Aspect.WATER, 2).add(SANCTUS, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockPalestone), new AspectList().add(Aspect.EARTH, 2).add(SANCTUS, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockGrass), new AspectList().add(Aspect.EARTH, 1).add(Aspect.PLANT, 1).add(SANCTUS, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockDirt), new AspectList().add(Aspect.EARTH, 1).add(SANCTUS, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockSand), new AspectList().add(Aspect.EARTH, 1).add(SANCTUS, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockRilt), new AspectList().add(Aspect.EARTH, 1).add(Aspect.HUNGER, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockSapling, 1, 0), new AspectList().add(Aspect.PLANT, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockSapling, 1, 1), new AspectList().add(Aspect.PLANT, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockLog, 1, 0), new AspectList().add(Aspect.TREE, 1).add(SANCTUS, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockLog, 1, 1), new AspectList().add(Aspect.TREE, 1).add(SANCTUS, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockLog, 1, 2), new AspectList().add(Aspect.TREE, 1).add(Aspect.ELDRITCH, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockLog, 1, 2), new AspectList().add(Aspect.TREE, 1).add(Aspect.ELDRITCH, 1).add(Aspect.TAINT, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockLeaves, 1, 0), new AspectList().add(Aspect.PLANT, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockLeaves, 1, 1), new AspectList().add(Aspect.PLANT, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockPlanks, 1, 0), new AspectList().add(Aspect.TREE, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockPlanks, 1, 1), new AspectList().add(Aspect.TREE, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockFlower), new AspectList().add(Aspect.SENSES, 1).add(Aspect.LIFE, 1).add(Aspect.PLANT, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockTallGrass), new AspectList().add(Aspect.AIR, 1).add(Aspect.PLANT, 1));
-
-		    ThaumcraftApi.registerObjectTag(new ItemStack(oreBeryl), new AspectList().add(Aspect.EARTH, 2).add(Aspect.METAL, 1).add(Aspect.CRYSTAL, 2));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(oreCobalt), new AspectList().add(Aspect.EARTH, 2).add(Aspect.METAL, 1).add(Aspect.TOOL, 2));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(oreIridium), new AspectList().add(Aspect.EARTH, 2).add(Aspect.METAL, 1).add(Aspect.SENSES, 2));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(oreJade), new AspectList().add(Aspect.EARTH, 2).add(Aspect.MIND, 1).add(Aspect.CRYSTAL, 2));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(oreSilicon), new AspectList().add(Aspect.EARTH, 2).add(Aspect.CRYSTAL, 4));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(oreSulphure), new AspectList().add(Aspect.EARTH, 2).add(Aspect.FIRE, 2).add(Aspect.ENTROPY, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(oreTourmaline), new AspectList().add(Aspect.EARTH, 2).add(Aspect.CRYSTAL, 2).add(Aspect.SENSES, 2));
-
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockFloatingConch), new AspectList().add(Aspect.ARMOR, 1).add(Aspect.DEATH, 1).add(SANCTUS, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockFloatingShell), new AspectList().add(Aspect.ARMOR, 1).add(Aspect.DEATH, 1).add(SANCTUS, 1));
-		    ThaumcraftApi.registerObjectTag(new ItemStack(blockEnergyCrystal), new AspectList().add(Aspect.EARTH, 1).add(Aspect.ENERGY, 1).add(Aspect.CRYSTAL, 1));
-}
+//		if(modThaumcraft)
+//		{
+//		}
 		
 		if(modLights)
 		{
