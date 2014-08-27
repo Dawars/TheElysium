@@ -58,6 +58,14 @@ public class ElysiumGrapesBush extends ElysiumBlockBush implements IGrowable
 		{   
     		int meta = world.getBlockMetadata(x, y, z);
 
+    		if(meta == 0)
+    		{
+    			Block top = world.getBlock(x, y+1, z);
+    			if(top != null && top == this)
+    			{
+    				top.onBlockActivated(world, x, y+1, z, player, side, hitX, hitY, hitZ);
+    			}
+    		}
     		if(meta > 1 && player.getCurrentEquippedItem() == null)
     		{
 	        	world.setBlockMetadataWithNotify(x, y, z, 1, 3);

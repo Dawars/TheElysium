@@ -1,8 +1,10 @@
 package hu.hundevelopers.elysium;
 
 import hu.hundevelopers.elysium.api.Plants;
+import hu.hundevelopers.elysium.api.Staff;
 import hu.hundevelopers.elysium.block.*;
 import hu.hundevelopers.elysium.entity.*;
+import hu.hundevelopers.elysium.event.ElysiumClientHandler;
 import hu.hundevelopers.elysium.event.ElysiumFuelHandler;
 import hu.hundevelopers.elysium.event.ElysiumHandler;
 import hu.hundevelopers.elysium.item.*;
@@ -276,7 +278,7 @@ public class Elysium
 		ElysiumHandler.INSTANCE.buckets.put(blockElysiumWater, itemWaterBucket);
 
 		MinecraftForge.EVENT_BUS.register(ElysiumHandler.INSTANCE);
-//		MinecraftForge.EVENT_BUS.register(new ElysiumEventHandler());
+		MinecraftForge.EVENT_BUS.register(new ElysiumClientHandler());
 		
     	//Config
 		config = new Configuration(new File(event.getModConfigurationDirectory(), "Elysium.cfg"));
@@ -596,12 +598,11 @@ public class Elysium
 
 		
 		//Thaumcraft
-		FMLInterModComms.sendMessage("Thaumcraft", "harvestClickableCrop", new ItemStack(blockRaspberryBush, 1, OreDictionary.WILDCARD_VALUE));
-		FMLInterModComms.sendMessage("Thaumcraft", "harvestClickableCrop", new ItemStack(blockGrapesBush, 1, 2));
-		FMLInterModComms.sendMessage("Thaumcraft", "harvestClickableCrop", new ItemStack(blockGrapesBush, 1, 3));
-		FMLInterModComms.sendMessage("Thaumcraft", "dimensionBlacklist", dimensionID+":1");
+		FMLInterModComms.sendMessage("Thaumcraft", "harvestClickableCrop", new ItemStack(blockRaspberryBush, 1, 1));
+		FMLInterModComms.sendMessage("Thaumcraft", "harvestClickableCrop", new ItemStack(blockGrapesBush, 1, OreDictionary.WILDCARD_VALUE));
+//		FMLInterModComms.sendMessage("Thaumcraft", "dimensionBlacklist", dimensionID+":1");
 		
-		SANCTUS = new Aspect("Sanctus", 0xffffff, new Aspect[]{Aspect.LIGHT, Aspect.AURA}, new ResourceLocation(MODID + ":textures/aspects/sanctus.png"), 1);
+		SANCTUS = new Aspect("Sanctus", 0xffffff, new Aspect[]{Aspect.SOUL, Aspect.AURA}, new ResourceLocation(MODID + ":textures/aspects/sanctus.png"), 1);
 		
 		//Entites
 	    ThaumcraftApi.registerEntityTag("Unicorn", new AspectList().add(Aspect.MAGIC, 2).add(Aspect.CRYSTAL, 2).add(Aspect.BEAST, 4).add(SANCTUS, 5), new ThaumcraftApi.EntityTagsNBT[0]);
@@ -627,9 +628,11 @@ public class Elysium
 	    ThaumcraftApi.registerObjectTag(new ItemStack(itemSulphur), new AspectList().add(Aspect.FIRE, 2).add(Aspect.ENTROPY, 1).add(Aspect.EARTH, 1));
 	    ThaumcraftApi.registerObjectTag(new ItemStack(itemTourmaline), new AspectList().add(Aspect.CRYSTAL, 4).add(Aspect.SENSES, 2));
 	    ThaumcraftApi.registerObjectTag(new ItemStack(itemDeerPelt), new AspectList().add(Aspect.CLOTH, 2).add(Aspect.BEAST, 2));
-	    ThaumcraftApi.registerObjectTag(new ItemStack(itemGrapes, 1, 0), new AspectList().add(Aspect.PLANT, 1).add(Aspect.HEAL, 1));
-	    ThaumcraftApi.registerObjectTag(new ItemStack(itemGrapes, 1, 1), new AspectList().add(Aspect.PLANT, 1).add(Aspect.HEAL, 1));
-	    ThaumcraftApi.registerObjectTag(new ItemStack(itemRaspberry), new AspectList().add(Aspect.PLANT, 1).add(Aspect.LIFE, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemAntler), new AspectList().add(Aspect.WEAPON, 2).add(Aspect.BEAST, 2));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemHorn), new AspectList().add(SANCTUS, 2).add(Aspect.BEAST, 2));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemGrapes, 1, 0), new AspectList().add(Aspect.PLANT, 1).add(Aspect.AIR, 1).add(Aspect.LIFE, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemGrapes, 1, 1), new AspectList().add(Aspect.PLANT, 1).add(Aspect.AIR, 1).add(Aspect.LIFE, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(itemRaspberry), new AspectList().add(Aspect.PLANT, 1).add(Aspect.ENTROPY, 1).add(Aspect.LIFE, 1));
 	    
 	    ThaumcraftApi.registerObjectTag(new ItemStack(itemStaff, 1, 0), new AspectList().add(Aspect.EARTH, 4).add(Aspect.MAGIC, 4));
 	    ThaumcraftApi.registerObjectTag(new ItemStack(itemStaff, 1, 1), new AspectList().add(Aspect.COLD, 4).add(Aspect.MAGIC, 4));
@@ -666,8 +669,14 @@ public class Elysium
 
 	    ThaumcraftApi.registerObjectTag(new ItemStack(blockFloatingConch), new AspectList().add(Aspect.ARMOR, 1).add(Aspect.DEATH, 1).add(SANCTUS, 1));
 	    ThaumcraftApi.registerObjectTag(new ItemStack(blockFloatingShell), new AspectList().add(Aspect.ARMOR, 1).add(Aspect.DEATH, 1).add(SANCTUS, 1));
-	    ThaumcraftApi.registerObjectTag(new ItemStack(blockEnergyCrystal), new AspectList().add(Aspect.EARTH, 1).add(Aspect.ENERGY, 1).add(Aspect.CRYSTAL, 1));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockEnergyCrystal, 1, 0), new AspectList().add(SANCTUS, 2).add(Aspect.ENERGY, 2).add(Aspect.CRYSTAL, 2));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockEnergyCrystal, 1, 1), new AspectList().add(Aspect.ELDRITCH, 2).add(Aspect.TAINT, 2).add(Aspect.CRYSTAL, 1));
 
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockRaspberryBush), new AspectList().add(Aspect.PLANT, 2));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockGrapesBush), new AspectList().add(Aspect.PLANT, 2));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockGrapesBush), new AspectList().add(Aspect.PLANT, 2));
+	    ThaumcraftApi.registerObjectTag(new ItemStack(blockCactus), new AspectList().add(Aspect.PLANT, 1).add(SANCTUS, 1).add(Aspect.ENTROPY, 1));
+	    
 		
 		//Crafting Registering
 
@@ -708,6 +717,7 @@ public class Elysium
 		GameRegistry.addShapelessRecipe(new ItemStack(itemTourmaline, 9), new Object[] {blockTourmaline});
 
 		GameRegistry.addShapelessRecipe(new ItemStack(itemAsphodelPetals, 2), new Object[] {new ItemStack(blockFlower, 1, 0)});
+		GameRegistry.addShapelessRecipe(new ItemStack(Items.gold_nugget, 2), new Object[] {new ItemStack(blockFlower, 1, 1)});
 		GameRegistry.addShapelessRecipe(new ItemStack(blockPlanks, 4, 0), new Object[] {new ItemStack(blockLog, 1, 0)});
 		GameRegistry.addShapelessRecipe(new ItemStack(blockPlanks, 4, 1), new Object[] {new ItemStack(blockLog, 1, 1)});
 
@@ -762,14 +772,14 @@ public class Elysium
 		DimensionManager.registerDimension(dimensionID, dimensionID);
 
 
-		biomePlain = new ElysiumBiomeGenPlain(biomeIdPlains).setHeight(new Height(0.125F, 0.05F)).setColor(2250012).setBiomeName("Elysium Plain");
-		biomeForest = new ElysiumBiomeGenForest(biomeIdForest).setHeight(new Height(0.2F, 0.2F)).setColor(2250012).setBiomeName("Elysium Forest");
-		biomePlainCorrupt = new ElysiumBiomeGenPlainCorrupted(biomeIdPlainsCorrupt).setHeight(new Height(0.45F, 0.3F)).setColor(522674)/*.func_76733_a(9154376)*/.setTemperatureRainfall(0.8F, 0.9F).setBiomeName("Elysium Plain Corrupted");
+		biomePlain = new ElysiumBiomeGenPlain(biomeIdPlains).setHeight(new Height(0.25F, 0.2F)).setColor(2250012).setBiomeName("Elysium Plain");
+		biomeForest = new ElysiumBiomeGenForest(biomeIdForest).setHeight(new Height(0.125F, 0.1F)).setColor(2250012).setBiomeName("Elysium Forest");
+		biomePlainCorrupt = new ElysiumBiomeGenPlainCorrupted(biomeIdPlainsCorrupt).setHeight(new Height(0.45F, 0.05F)).setColor(522674)/*.func_76733_a(9154376)*/.setTemperatureRainfall(0.8F, 0.9F).setBiomeName("Elysium Plain Corrupted");
 		
 		biomeOcean = new ElysiumBiomeGenOcean(biomeIdOcean).setHeight(new Height(-1.0F, 0.1F)).setBiomeName("Elysium Ocean");
 //		biomeDeepOcean = new ElysiumBiomeGenOcean(biomeIdOcean).setHeight(new Height(-1.3F, 0.1F)).setBiomeName("Elysium Deep Ocean");
 		biomeRiver = new ElysiumBiomeGenRiver(biomeIdRiver).setHeight(new Height(-0.5F, 0.0F)).setColor(255).setBiomeName("Elysium River");
-		biomeDesert = new ElysiumBiomeGenDesert(biomeIdDesert).setHeight(new Height(0.125F, 0.05F)).setTemperatureRainfall(2.0F, 0.2F).setColor(16421912).setBiomeName("Elysium Desert");
+		biomeDesert = new ElysiumBiomeGenDesert(biomeIdDesert).setHeight(new Height(0.15F, 0.1F)).setTemperatureRainfall(2.0F, 0.2F).setColor(16421912).setBiomeName("Elysium Desert");
 		biomeBeach = new ElysiumBiomeGenBeach(biomeIdBeach).setHeight(new Height(0.0F, 0.025F)).setColor(16440917).setTemperatureRainfall(0.8F, 0.4F).setBiomeName("Elysium Beach");
 
 		GameRegistry.registerWorldGenerator(new WorldGenElysium(), 0);
@@ -823,19 +833,19 @@ public class Elysium
 
 	public static final WeightedRandomChestContent[] labyrinthLoot = new WeightedRandomChestContent[]
 			{
-				new WeightedRandomChestContent(itemGrapes, 0, 1, 1, 5),
-				new WeightedRandomChestContent(itemGrapes, 1, 1, 1, 5),
-				new WeightedRandomChestContent(itemRaspberry, 0, 1, 1, 10),
+				new WeightedRandomChestContent(itemGrapes, 0, 1, 3, 5),
+				new WeightedRandomChestContent(itemGrapes, 1, 1, 3, 5),
+				new WeightedRandomChestContent(itemRaspberry, 0, 1, 3, 10),
 				new WeightedRandomChestContent(Item.getItemFromBlock(blockEnergyCrystal), 0, 1, 4, 10),
-				new WeightedRandomChestContent(Item.getItemFromBlock(blockEnergyCrystal), 1, 1, 1, 10), 
+				new WeightedRandomChestContent(Item.getItemFromBlock(blockEnergyCrystal), 1, 1, 4, 10), 
 				new WeightedRandomChestContent(Item.getItemFromBlock(blockRaspberryBush), 0, 1, 4, 10), 
 				new WeightedRandomChestContent(Item.getItemFromBlock(blockGrapesBush), 0, 1, 4, 10),
 				new WeightedRandomChestContent(Item.getItemFromBlock(blockSulphure), 0, 1, 4, 10),
-				new WeightedRandomChestContent(itemDeerPelt, 0, 1, 1, 4),
-				new WeightedRandomChestContent(itemHardPaw, 0, 1, 1, 3),
+				new WeightedRandomChestContent(itemDeerPelt, 0, 1, 2, 4),
+				new WeightedRandomChestContent(itemHardPaw, 0, 1, 3, 3),
 				new WeightedRandomChestContent(itemPrism, 0, 1, 1, 3),
 				new WeightedRandomChestContent(Item.getItemFromBlock(Blocks.dragon_egg), 0, 1, 1, 1),
-				new WeightedRandomChestContent(itemAntler, 0, 1, 1, 2),
+				new WeightedRandomChestContent(itemAntler, 0, 1, 3, 2),
 				new WeightedRandomChestContent(itemHorn, 0, 1, 1, 5),
 				new WeightedRandomChestContent(itemStaff, 0, 1, 1, 2),
 				new WeightedRandomChestContent(itemStaff, 1, 1, 1, 1),
@@ -853,6 +863,22 @@ public class Elysium
 		Plants.addGrassPlant(blockFlower, 0, 10);
 		Plants.addGrassSeed(new ItemStack(itemSeedsPepper), 10);
 	
+		//Vanilla
+		Staff.registerThrowableBlock(Blocks.dirt, 1F);
+		Staff.registerThrowableBlock(Blocks.grass, 1F);
+		Staff.registerThrowableBlock(Blocks.sand, 1F);
+		Staff.registerThrowableBlock(Blocks.gravel, 1F);
+		Staff.registerThrowableBlock(Blocks.cobblestone, 2F);
+		Staff.registerThrowableBlock(Blocks.stone, 2F);
+		Staff.registerThrowableBlock(Blocks.obsidian, 4F);
+		
+		//Elysium
+		Staff.registerThrowableBlock(Elysium.blockDirt, 1F);
+		Staff.registerThrowableBlock(Elysium.blockGrass, 1F);
+		Staff.registerThrowableBlock(Elysium.blockRilt, 1F);
+		Staff.registerThrowableBlock(Elysium.blockSand, 1F);
+		Staff.registerThrowableBlock(Elysium.blockPalestone, 2F);
+		
 		//Modded APIs
 		modLights = Loader.isModLoaded("coloredlightscore");
 		modThaumcraft = Loader.isModLoaded("thaumcraft");
@@ -863,7 +889,7 @@ public class Elysium
 		
 		if(modLights)
 		{
-//			CLApi.setBlockColorRGB(blockEnergyCrystal, 1F, 1F, 0F);
+			CLApi.setBlockColorRGB(blockElysiumEnergyLiquid, 1F, 1F, 0F);
 			CLApi.setBlockColorRGB(oreBeryl, 0, 8, 15, 1);
 		}
 		

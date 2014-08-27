@@ -9,10 +9,16 @@ tile.leucosand.name=Leucosand
 tile.rilt.name=Rilt
 
 tile.elysium_sapling.fostimber.name=Fostimber Sapling
+tile.elysium_sapling.gildensilv.name=Gilded Silvertree Sapling
 tile.elysium_log.fostimber.name=Fostimber Log
+tile.elysium_log.gildensilv.name=Gildensilv Log
+tile.elysium_log.corrupt.name=Corrupted Log
 tile.elysium_leaves.fostimber.name=Fostimber Leaves
+tile.elysium_leaves.gildensilv.name=Gildensilv Leaves
 tile.elysium_planks.fostimber.name=Fostimber Planks
+tile.elysium_planks.gildensilv.name=Gilded Silver Planks
 tile.elysium_flower.asphodel.name=Asphodel Flower
+tile.elysium_flower.midas.name=Midas Flower
 tile.elysium_tallgrass.curlgrass.name=Curlgrass
 
 tile.oreSulphur.name=Sulphur Ore
@@ -24,6 +30,7 @@ tile.oreJade.name=Jade Ore
 tile.oreTourmaline.name=Tourmaline Ore
 
 tile.elysium_water.name=Elysium Water
+tile.elysium_energy.name=Energy Liquid
 tile.floating_block_conch.name=Floating Conch
 tile.floating_block_shell.name=Floating Shell
 
@@ -34,6 +41,10 @@ tile.blockIridium.name=Iridium Block
 tile.blockSilicon.name=Silicon Block
 tile.blockJade.name=Jade Block
 tile.blockTourmaline.name=Tourmaline Block
+
+tile.blockCactus.name=Hallowed Cactus
+tile.blockRaspberryBush.name=Raspberry Bush
+tile.blockGrapes.name=Grapes Bush
 
 
 item.prism.name=Grace Prism
@@ -50,3 +61,7 @@ item.elysium_sulphur.name=Sulphur
 item.tourmaline.name=Tourmaline
 item.sturdyHide.name=Sturdy Hide
 item.elysium_bucket_water.name=Elysium Water Bucket
+
+item.horn.name=Horn
+item.antler.name=Antler
+item.hard_paw.name=Tooth

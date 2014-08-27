@@ -10,6 +10,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
@@ -38,7 +39,15 @@ public class ElysiumEnergyLiquid extends BlockFluidClassic
          
          return super.canDisplace(world, x, y, z);
      }
-     
+     /**
+      * Triggered whenever an entity collides with this block (enters into the block). Args: world, x, y, z, entity
+      */
+     @Override
+     public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity)
+     {
+    	 entity.setFire(1);
+     }
+
      @Override
      public boolean displaceIfPossible(World world, int x, int y, int z)
      {

@@ -11,19 +11,17 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Facing;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenVines;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
-public class ElysiumGenDarkFostimber extends ElysiumGenFostimber
+public class ElysiumGenDarkFostimber extends WorldGenerator
 {
 	Block leaves,log;
 	boolean fromSapling;
 	private int logMeta = 0;
 	private int leavesMeta = 0;
 	
-	private WorldGenVines vines = new WorldGenVines();
-
 	public ElysiumGenDarkFostimber(Block leaves, Block log, boolean fromSapling, boolean isCorrupted)
 	{
-		super(leaves, log, fromSapling);
 		this.leaves = leaves;
 		this.log = log;
 		this.fromSapling = fromSapling;

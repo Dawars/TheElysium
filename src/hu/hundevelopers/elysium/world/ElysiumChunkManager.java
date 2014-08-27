@@ -48,7 +48,7 @@ public class ElysiumChunkManager extends WorldChunkManager
 //		this.allowedBiomes.add(Elysium.biomeDeepOcean);
 		this.allowedBiomes.add(Elysium.biomeRiver);
 		this.allowedBiomes.add(Elysium.biomeDesert);
-		this.allowedBiomes.add(Elysium.biomeBeach);
+//		this.allowedBiomes.add(Elysium.biomeBeach);
 		this.biomeCache = new BiomeCache(this);
 		this.biomesToSpawnIn = new ArrayList();
 		this.biomesToSpawnIn.addAll(allowedBiomes);

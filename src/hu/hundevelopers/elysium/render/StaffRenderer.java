@@ -1,21 +1,29 @@
 package hu.hundevelopers.elysium.render;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotatef;
+import static org.lwjgl.opengl.GL11.glScalef;
+import static org.lwjgl.opengl.GL11.glTranslated;
+import static org.lwjgl.opengl.GL11.glTranslatef;
+import hu.hundevelopers.elysium.Elysium;
+import hu.hundevelopers.elysium.item.ElysiumStaffItem;
+import me.dawars.CraftingPillars.renderer.RenderingHelper;
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.client.FMLClientHandler;
-
-import hu.hundevelopers.elysium.Elysium;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.IItemRenderer;
-import net.minecraftforge.client.IItemRenderer.ItemRenderType;
 
 public class StaffRenderer implements IItemRenderer
 {
@@ -43,9 +51,12 @@ public class StaffRenderer implements IItemRenderer
 	{
 
 	};
+	private RenderingHelper.ItemRender itemRenderer;
 	
 	public StaffRenderer()
 	{
+		itemRenderer = new RenderingHelper.ItemRender(false, false);
+
 		model.textureWidth = 64;
 		model.textureHeight = 32;
     
@@ -149,7 +160,7 @@ public class StaffRenderer implements IItemRenderer
 	@Override
 	public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper)
 	{
-		return true;
+		return type != ItemRenderType.EQUIPPED_FIRST_PERSON;
 	}
 	
 	@Override
@@ -186,9 +197,12 @@ public class StaffRenderer implements IItemRenderer
 	            case EQUIPPED_FIRST_PERSON:
 	            	scale = 0.8F;
 	            	glScalef(scale, scale, scale);
-	                glTranslatef(-2F, -28 / 16f, 0.3F);
-	        		glRotatef(-95F, 0F, 1F, 0F);
-
+	                glTranslatef(0.5F, -0.6F, 1.6F);
+	        		glRotatef(-80F, 0F, 1F, 0F);
+	        		glRotatef(-35F, 1F, 0F, 0F);
+	        		scale = 0.8F;
+	            	glScalef(scale, scale, scale);
+	                
 
                 break;
 	            case EQUIPPED:
@@ -211,5 +225,31 @@ public class StaffRenderer implements IItemRenderer
 		GL11.glDisable(GL11.GL_BLEND);
 
 		glPopMatrix();
+		
+		if(type == ItemRenderType.EQUIPPED_FIRST_PERSON)
+		{
+			if(item.getItemDamage() == 0)
+			{
+				Block block = ElysiumStaffItem.getBlockHolding(item); 
+				if(block != null)
+				{
+					glPushMatrix();
+	        		glRotatef(10F, 0F, 0F, 1F);
+						
+						float f = 1.5F;
+						glScalef(f, f, f);
+						glRotatef(-5, 0, 1, 0);
+						glRotatef(25, 0, 0, 1);
+						
+						EntityItem entityitem = new EntityItem(FMLClientHandler.instance().getWorldClient());
+						entityitem.setEntityItemStack(new ItemStack(block));
+						entityitem.hoverStart = 0F;
+						itemRenderer.render(entityitem, 0.5F, 0.3F, -0.62F, false);
+					glPopMatrix();
+				
+				}
+				
+			}
+		}
 	}
 }

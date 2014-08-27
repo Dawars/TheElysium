@@ -77,7 +77,7 @@ public class ChunkProviderElysium implements IChunkProvider
     private double[] stoneNoise = new double[256];
     private MapGenBase caveGenerator = new MapGenCaves();
     /** Holds Stronghold Generator */
-    private MapGenStronghold strongholdGenerator = new MapGenStronghold();
+    private MapGenStronghold strongholdGenerator/* = new MapGenStronghold()*/;
     /** Holds Village Generator */
     private MapGenVillage villageGenerator = new MapGenVillage();
     /** Holds Mineshaft Generator */
@@ -112,7 +112,7 @@ public class ChunkProviderElysium implements IChunkProvider
 //        strongholdGenerator = (MapGenStronghold) TerrainGen.getModdedMapGen(strongholdGenerator, STRONGHOLD);
 //        villageGenerator = (MapGenVillage) TerrainGen.getModdedMapGen(villageGenerator, VILLAGE);
 //        mineshaftGenerator = (MapGenMineshaft) TerrainGen.getModdedMapGen(mineshaftGenerator, MINESHAFT);
-        scatteredFeatureGenerator = (MapGenScatteredFeature) TerrainGen.getModdedMapGen(scatteredFeatureGenerator, InitMapGenEvent.EventType.SCATTERED_FEATURE);
+//        scatteredFeatureGenerator = (MapGenScatteredFeature) TerrainGen.getModdedMapGen(scatteredFeatureGenerator, InitMapGenEvent.EventType.SCATTERED_FEATURE);
 //        ravineGenerator = TerrainGen.getModdedMapGen(ravineGenerator, RAVINE);
     }    
 
@@ -706,6 +706,8 @@ public class ChunkProviderElysium implements IChunkProvider
                         {
                             WeightedRandomChestContent.generateChestContents(rand, Elysium.labyrinthLoot, tileentitychest, rand.nextInt(3)+8);
                         }
+                        
+                        worldObj.setTileEntity(k + i, y, l + j, tileentitychest);
 					}
 				}
 			}
@@ -918,8 +920,8 @@ public class ChunkProviderElysium implements IChunkProvider
         if (this.mapFeaturesEnabled)
         {
             this.mineshaftGenerator.func_151539_a(this, this.worldObj, par1, par2, (Block[])null);
-            this.villageGenerator.func_151539_a(this, this.worldObj, par1, par2, (Block[])null);
-            this.strongholdGenerator.func_151539_a(this, this.worldObj, par1, par2, (Block[])null);
+//            this.villageGenerator.func_151539_a(this, this.worldObj, par1, par2, (Block[])null);
+//            this.strongholdGenerator.func_151539_a(this, this.worldObj, par1, par2, (Block[])null);
             this.scatteredFeatureGenerator.func_151539_a(this, this.worldObj, par1, par2, (Block[])null);
         }
     }

@@ -21,6 +21,9 @@ public class ElysiumFlowerItemBlock extends ItemBlock
 			case 0:
 				name = "asphodel";
 			break;
+			case 1:
+				name = "midas";
+			break;
 			default:
 				name = "error";
 		}

@@ -1,28 +1,28 @@
 package hu.hundevelopers.elysium.block;
 
+import hu.hundevelopers.elysium.Elysium;
+
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import hu.hundevelopers.elysium.Elysium;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
+import net.minecraft.block.BlockFlower;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-public class ElysiumBlockFlower extends BlockBush
+public class ElysiumBlockFlower extends BlockFlower
 {
-	private static final String[] names = {"asphodel"};
+	public static final String[] names = {"asphodel", "midas"};
 	private static final IIcon[] icons = new IIcon[names.length];
 	
 	public ElysiumBlockFlower()
 	{
-		super(Material.plants);
+		super(0);
         float f = 0.2F;
         this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 3.0F, 0.5F + f);
         this.setCreativeTab(Elysium.tabElysium);
@@ -68,6 +68,21 @@ public class ElysiumBlockFlower extends BlockBush
     public int damageDropped(int meta)
     {
         return meta;
+    }
+    
+    public static int getMetaFromName(String name)
+    {
+        int i;
+
+        for (i = 0; i < names.length; ++i)
+        {
+            if (names[i].equals(name))
+            {
+                return i;
+            }
+        }
+        
+        return 0;
     }
 
     /**

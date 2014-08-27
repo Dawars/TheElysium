@@ -2,6 +2,7 @@ package hu.hundevelopers.elysium.world.gen;
 
 import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.world.ElysiumWorldProvider;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlain;
 import hu.hundevelopers.elysium.world.gen.features.ElysiumGenLakes;
 import hu.hundevelopers.elysium.world.gen.features.ElysiumGenMazeBase;
 
@@ -73,8 +74,8 @@ public class WorldGenElysium implements IWorldGenerator {
 				world.setBlock(x, y, z, Elysium.oreBeryl);
 			}
 		}
-		
-		if(random.nextInt(3) == 0)
+
+		if(world.getBiomeGenForCoords(blockX, blockZ) instanceof ElysiumBiomeGenPlain && random.nextInt(3) == 0)
 		{
 			int x = blockX + random.nextInt(16);
 			int z = blockX + random.nextInt(16);
