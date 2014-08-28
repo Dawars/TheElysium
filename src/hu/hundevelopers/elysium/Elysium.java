@@ -807,8 +807,13 @@ public class Elysium
         int voidspecterID = EntityRegistry.findGlobalUniqueEntityId();
 		EntityRegistry.registerGlobalEntityID(EntityVoidSpecter.class, "VoidSpecter", voidspecterID, 0x623464, 0x3A2A3A);
         EntityRegistry.registerModEntity(EntityVoidSpecter.class, "VoidSpecter", voidspecterID, this, 160, 1, true);
-        
-        
+
+        int blockthrowableID = EntityRegistry.findGlobalUniqueEntityId();
+        EntityRegistry.registerModEntity(EntityBlockProjectile.class, "BlockThrowable", blockthrowableID, this, 64, 10, true);
+
+        int iceprojectileID = EntityRegistry.findGlobalUniqueEntityId();
+        EntityRegistry.registerModEntity(EntityIceProjectile.class, "IceProjectile", iceprojectileID, this, 64, 10, true);
+      
         //Entity Spawn
         EntityRegistry.addSpawn(EntityCaterPillar.class, 5, 3, 5, EnumCreatureType.creature, biomePlain);
         EntityRegistry.addSpawn(EntitySwan.class, 10, 3, 5, EnumCreatureType.creature, biomePlain);
@@ -818,7 +823,6 @@ public class Elysium
         
         
         //Fire Info
-
         Blocks.fire.setFireInfo(blockLog, 2, 2);
         Blocks.fire.setFireInfo(blockPlanks, 2, 10);
         Blocks.fire.setFireInfo(blockLeaves, 15, 30);
@@ -864,20 +868,21 @@ public class Elysium
 		Plants.addGrassSeed(new ItemStack(itemSeedsPepper), 10);
 	
 		//Vanilla
-		Staff.registerThrowableBlock(Blocks.dirt, 1F);
-		Staff.registerThrowableBlock(Blocks.grass, 1F);
-		Staff.registerThrowableBlock(Blocks.sand, 1F);
-		Staff.registerThrowableBlock(Blocks.gravel, 1F);
-		Staff.registerThrowableBlock(Blocks.cobblestone, 2F);
-		Staff.registerThrowableBlock(Blocks.stone, 2F);
-		Staff.registerThrowableBlock(Blocks.obsidian, 4F);
+		Staff.registerThrowableBlock(Blocks.dirt, 2F);
+		Staff.registerThrowableBlock(Blocks.grass, 2F);
+		Staff.registerThrowableBlock(Blocks.sand, 2F);
+		Staff.registerThrowableBlock(Blocks.gravel, 2F);
+		Staff.registerThrowableBlock(Blocks.clay, 2F);
+		Staff.registerThrowableBlock(Blocks.cobblestone, 4F);
+		Staff.registerThrowableBlock(Blocks.stone, 4F);
+		Staff.registerThrowableBlock(Blocks.obsidian, 6F);
 		
 		//Elysium
-		Staff.registerThrowableBlock(Elysium.blockDirt, 1F);
-		Staff.registerThrowableBlock(Elysium.blockGrass, 1F);
-		Staff.registerThrowableBlock(Elysium.blockRilt, 1F);
-		Staff.registerThrowableBlock(Elysium.blockSand, 1F);
-		Staff.registerThrowableBlock(Elysium.blockPalestone, 2F);
+		Staff.registerThrowableBlock(Elysium.blockDirt, 2F);
+		Staff.registerThrowableBlock(Elysium.blockGrass, 2F);
+		Staff.registerThrowableBlock(Elysium.blockRilt, 3F);
+		Staff.registerThrowableBlock(Elysium.blockSand, 2F);
+		Staff.registerThrowableBlock(Elysium.blockPalestone, 4F);
 		
 		//Modded APIs
 		modLights = Loader.isModLoaded("coloredlightscore");

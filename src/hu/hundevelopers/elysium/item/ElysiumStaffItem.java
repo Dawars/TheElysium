@@ -1,6 +1,9 @@
 package hu.hundevelopers.elysium.item;
 
 import hu.hundevelopers.elysium.api.Staff;
+import hu.hundevelopers.elysium.entity.EntityBlockProjectile;
+import hu.hundevelopers.elysium.entity.EntityFallingProjectile;
+import hu.hundevelopers.elysium.entity.EntityIceProjectile;
 
 import java.util.List;
 
@@ -15,6 +18,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntitySnowball;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -90,18 +94,28 @@ public class ElysiumStaffItem extends ElysiumItem
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-    	Block block = getBlockHolding(stack);
-
-    	if(block != null)
-		{
-			if(!world.isRemote)
-	    	{
-				EntitySnowball entityprojectile = new EntitySnowball(world, player);
-	            player.worldObj.spawnEntityInWorld(entityprojectile);
-	    	}
-			
-			setBlockHolding(stack, null);
-		}
+    	if(stack.getItemDamage() == 0)
+    	{
+	    	Block block = getBlockHolding(stack);
+	
+	    	if(block != null)
+			{
+//				if(!world.isRemote)
+//		    	{
+				EntityBlockProjectile entityprojectile = new EntityBlockProjectile(world, player, block);
+		            world.spawnEntityInWorld(entityprojectile);
+//		    	}
+				
+				setBlockHolding(stack, null);
+			}
+    	} else if(stack.getItemDamage() == 1)
+    	{
+    		if(!world.isRemote)
+    		{
+				EntityIceProjectile entityprojectile = new EntityIceProjectile(world, player);
+			    world.spawnEntityInWorld(entityprojectile);
+    		}
+    	}
         return stack;
     }
     

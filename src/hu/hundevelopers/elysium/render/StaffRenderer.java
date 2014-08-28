@@ -15,8 +15,11 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 
@@ -46,11 +49,13 @@ public class StaffRenderer implements IItemRenderer
     		new ResourceLocation(Elysium.MODID + ":textures/models/staff3.png"),
     		new ResourceLocation(Elysium.MODID + ":textures/models/staff4.png")
 		};
+    private static final ResourceLocation enderDragonCrystalBeamTextures = new ResourceLocation("textures/entity/endercrystal/endercrystal_beam.png");
 
 	public static ModelBase model = new ModelBase()
 	{
 
 	};
+	
 	private RenderingHelper.ItemRender itemRenderer;
 	
 	public StaffRenderer()
@@ -244,9 +249,8 @@ public class StaffRenderer implements IItemRenderer
 						EntityItem entityitem = new EntityItem(FMLClientHandler.instance().getWorldClient());
 						entityitem.setEntityItemStack(new ItemStack(block));
 						entityitem.hoverStart = 0F;
-						itemRenderer.render(entityitem, 0.5F, 0.3F, -0.62F, false);
+						itemRenderer.render(entityitem, 0.5F, 0.3F + (float)Math.sin(System.currentTimeMillis()/200D)/200F, -0.62F, false);
 					glPopMatrix();
-				
 				}
 				
 			}
