@@ -868,14 +868,22 @@ public class Elysium
 		Plants.addGrassSeed(new ItemStack(itemSeedsPepper), 10);
 	
 		//Vanilla
+		Staff.registerThrowableBlock(Blocks.snow, 1F);
 		Staff.registerThrowableBlock(Blocks.dirt, 2F);
 		Staff.registerThrowableBlock(Blocks.grass, 2F);
+		Staff.registerThrowableBlock(Blocks.mycelium, 2F);
 		Staff.registerThrowableBlock(Blocks.sand, 2F);
+		Staff.registerThrowableBlock(Blocks.soul_sand, 2F);
 		Staff.registerThrowableBlock(Blocks.gravel, 2F);
 		Staff.registerThrowableBlock(Blocks.clay, 2F);
+		Staff.registerThrowableBlock(Blocks.netherrack, 2F);
+		Staff.registerThrowableBlock(Blocks.sandstone, 3F);
+		Staff.registerThrowableBlock(Blocks.mossy_cobblestone, 3F);
+		Staff.registerThrowableBlock(Blocks.stained_hardened_clay, 3F);
 		Staff.registerThrowableBlock(Blocks.cobblestone, 4F);
+		Staff.registerThrowableBlock(Blocks.end_stone, 4F);
 		Staff.registerThrowableBlock(Blocks.stone, 4F);
-		Staff.registerThrowableBlock(Blocks.obsidian, 6F);
+		Staff.registerThrowableBlock(Blocks.obsidian, 8F);
 		
 		//Elysium
 		Staff.registerThrowableBlock(Elysium.blockDirt, 2F);

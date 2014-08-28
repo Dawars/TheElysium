@@ -100,21 +100,15 @@ public class ElysiumStaffItem extends ElysiumItem
 	
 	    	if(block != null)
 			{
-//				if(!world.isRemote)
-//		    	{
 				EntityBlockProjectile entityprojectile = new EntityBlockProjectile(world, player, block);
 		            world.spawnEntityInWorld(entityprojectile);
-//		    	}
 				
 				setBlockHolding(stack, null);
 			}
     	} else if(stack.getItemDamage() == 1)
     	{
-    		if(!world.isRemote)
-    		{
 				EntityIceProjectile entityprojectile = new EntityIceProjectile(world, player);
 			    world.spawnEntityInWorld(entityprojectile);
-    		}
     	}
         return stack;
     }

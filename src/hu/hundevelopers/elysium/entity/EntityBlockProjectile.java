@@ -51,18 +51,34 @@ public class EntityBlockProjectile extends EntityThrowable
         		movingObjPos.entityHit.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) this.thrower), Staff.getDamageForBlock(block));
         	else
         		movingObjPos.entityHit.attackEntityFrom(DamageSource.causeMobDamage(this.thrower), Staff.getDamageForBlock(block));
-
-        }
-
-        if (!this.worldObj.isRemote)
-        {
-        	if (!this.worldObj.setBlock(movingObjPos.blockX, movingObjPos.blockY + 1, movingObjPos.blockZ, block))
-        	{
-                EntityItem entityitem = new EntityItem(this.worldObj);
-                entityitem.setEntityItemStack(new ItemStack(block));
-                entityitem.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
-                this.worldObj.spawnEntityInWorld(entityitem);
-        	}
+        	
+        	EntityItem entityitem = new EntityItem(this.worldObj);
+            entityitem.setEntityItemStack(new ItemStack(block));
+            entityitem.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
+            this.worldObj.spawnEntityInWorld(entityitem);
+        } else {
+	
+	        if (!this.worldObj.isRemote)
+	        {
+	        	if(worldObj.getBlock((int)this.posX, (int)this.posY, (int)this.posZ).isReplaceable(worldObj, movingObjPos.blockX, movingObjPos.blockY, movingObjPos.blockZ))
+	        	{
+	        		if (!this.worldObj.setBlock((int)this.posX, (int)this.posY, (int)this.posZ, block))
+		        	{
+		                EntityItem entityitem = new EntityItem(this.worldObj);
+		                entityitem.setEntityItemStack(new ItemStack(block));
+		                entityitem.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
+		                this.worldObj.spawnEntityInWorld(entityitem);
+		        	}
+	        	} else {
+	        		if (!this.worldObj.setBlock((int)this.posX, (int)this.posY+1, (int)this.posZ, block))
+		        	{
+		                EntityItem entityitem = new EntityItem(this.worldObj);
+		                entityitem.setEntityItemStack(new ItemStack(block));
+		                entityitem.setLocationAndAngles(this.posX, this.posY+1, this.posZ, this.rotationYaw, 0.0F);
+		                this.worldObj.spawnEntityInWorld(entityitem);
+		        	}
+	        	}
+	        }
         }
 
         if (!this.worldObj.isRemote)
