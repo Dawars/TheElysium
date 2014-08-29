@@ -9,14 +9,14 @@ tile.leucosand.name=Leucosand
 tile.rilt.name=Rilt
 
 tile.elysium_sapling.fostimber.name=Fostimber Sapling
-tile.elysium_sapling.gildensilv.name=Gilded Silvertree Sapling
+tile.elysium_sapling.silver.name=Silver Sapling
 tile.elysium_log.fostimber.name=Fostimber Log
-tile.elysium_log.gildensilv.name=Gildensilv Log
+tile.elysium_log.silver.name=Silver Log
 tile.elysium_log.corrupt.name=Corrupted Log
 tile.elysium_leaves.fostimber.name=Fostimber Leaves
-tile.elysium_leaves.gildensilv.name=Gildensilv Leaves
+tile.elysium_leaves.silver.name=Silver Leaves
 tile.elysium_planks.fostimber.name=Fostimber Planks
-tile.elysium_planks.gildensilv.name=Gilded Silver Planks
+tile.elysium_planks.silver.name=Silver Planks
 tile.elysium_flower.asphodel.name=Asphodel Flower
 tile.elysium_flower.midas.name=Midas Flower
 tile.elysium_tallgrass.curlgrass.name=Curlgrass
@@ -31,6 +31,8 @@ tile.oreTourmaline.name=Tourmaline Ore
 
 tile.elysium_water.name=Elysium Water
 tile.elysium_energy.name=Energy Liquid
+tile.energy_crystal.pure.name=Energy Crystal
+tile.energy_crystal.corrupted.name=Corrupted Energy Crystal
 tile.floating_block_conch.name=Floating Conch
 tile.floating_block_shell.name=Floating Shell
 
@@ -62,6 +64,17 @@ item.tourmaline.name=Tourmaline
 item.sturdyHide.name=Sturdy Hide
 item.elysium_bucket_water.name=Elysium Water Bucket
 
+item.deer_pelt.name=Deer Pelt
+item.grapes.white.name=White Grapes
+item.grapes.blue.name=Blue Grapes
+item.raspberry.name=Raspberry
+
+item.staff.earth.name=Earth Staff
+item.staff.ice.name=Ice Staff
+item.staff.ender.name=Ender Staff
+item.staff.fire.name=Fire Staff
+
 item.horn.name=Horn
 item.antler.name=Antler
 item.hard_paw.name=Tooth
+item.knife.name=Knife

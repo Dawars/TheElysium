@@ -24,6 +24,7 @@ import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -74,7 +75,7 @@ public class EntityPinkUnicorn extends EntityHorse
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
     }
-
+    
     private boolean getHorseWatchableBoolean(int par1)
     {
         return (this.dataWatcher.getWatchableObjectInt(16) & par1) != 0;
@@ -163,11 +164,11 @@ public class EntityPinkUnicorn extends EntityHorse
     {
         this.horseJumping = par1;
     }
-
+    
     @Override
     public boolean allowLeashing()
     {
-        return isTame();
+        return true;
     }
 
     @Override
@@ -442,7 +443,9 @@ public class EntityPinkUnicorn extends EntityHorse
     {
         return 400;
     }
-
+    @Override
+    public void openGUI(EntityPlayer par1EntityPlayer) { }
+    
     /**
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
@@ -466,6 +469,9 @@ public class EntityPinkUnicorn extends EntityHorse
         	if(!player.capabilities.isCreativeMode)
         		itemstack.stackSize--;
             return true;
+        } else if (itemstack != null && !itemstack.interactWithEntity(player, this))
+        {
+            return false;
         }
 
         if (itemstack != null)
@@ -502,11 +508,6 @@ public class EntityPinkUnicorn extends EntityHorse
 
             if (!this.isTame())
             {
-                if (itemstack != null && itemstack.interactWithEntity(player, this))
-                {
-                    return true;
-                }
-
                 this.makeHorseRearWithSound();
                 return true;
             }

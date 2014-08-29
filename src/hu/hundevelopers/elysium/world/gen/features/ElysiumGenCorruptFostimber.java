@@ -1,8 +1,11 @@
 package hu.hundevelopers.elysium.world.gen.features;
 
+import hu.hundevelopers.elysium.Elysium;
+
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Facing;
@@ -35,8 +38,11 @@ public class ElysiumGenCorruptFostimber extends WorldGenerator
 	
 		for(int i = 0; i < treeHeight; i++)
 		{
-			world.setBlock(x, y + i, z, log, logMeta, 2);
-			makeVines(world, random, x + random.nextInt(3) - 1, y+i, z + random.nextInt(3) - 1);
+			Block top = world.getBlock(x, y + i, z);
+			Block bottom = world.getBlock(x, y + i - 1, z);
+			if(!top.getMaterial().isLiquid() && top.getMaterial() != Material.air && bottom == Elysium.blockGrass)
+				world.setBlock(x, y + i, z, log, logMeta, 2);
+				makeVines(world, random, x + random.nextInt(3) - 1, y+i, z + random.nextInt(3) - 1);
 		}
 	
 		return true;

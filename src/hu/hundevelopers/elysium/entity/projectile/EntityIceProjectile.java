@@ -1,4 +1,4 @@
-package hu.hundevelopers.elysium.entity;
+package hu.hundevelopers.elysium.entity.projectile;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;

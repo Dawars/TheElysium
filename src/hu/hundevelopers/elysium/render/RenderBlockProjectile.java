@@ -1,6 +1,6 @@
 package hu.hundevelopers.elysium.render;
 
-import hu.hundevelopers.elysium.entity.EntityBlockProjectile;
+import hu.hundevelopers.elysium.entity.projectile.EntityBlockProjectile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAnvil;
 import net.minecraft.block.BlockDragonEgg;

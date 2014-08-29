@@ -1,9 +1,9 @@
 package hu.hundevelopers.elysium.item;
 
 import hu.hundevelopers.elysium.api.Staff;
-import hu.hundevelopers.elysium.entity.EntityBlockProjectile;
-import hu.hundevelopers.elysium.entity.EntityFallingProjectile;
-import hu.hundevelopers.elysium.entity.EntityIceProjectile;
+import hu.hundevelopers.elysium.entity.projectile.EntityBlockProjectile;
+import hu.hundevelopers.elysium.entity.projectile.EntityFireballProjectile;
+import hu.hundevelopers.elysium.entity.projectile.EntityIceProjectile;
 
 import java.util.List;
 
@@ -11,15 +11,12 @@ import com.mojang.authlib.GameProfile;
 
 import me.dawars.CraftingPillars.api.sentry.FakeSentryPlayer;
 import net.minecraft.block.Block;
-import net.minecraft.client.particle.EffectRenderer;
-import net.minecraft.client.particle.EntityBlockDustFX;
-import net.minecraft.client.particle.EntityDiggingFX;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.entity.projectile.EntitySnowball;
+import net.minecraft.entity.projectile.EntityFireball;
+import net.minecraft.entity.projectile.EntitySmallFireball;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -72,20 +69,76 @@ public class ElysiumStaffItem extends ElysiumItem
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
-    	if(stack.getItemDamage() != 0)
-    		return super.onItemUseFirst(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
-    	    	
-    	if(Staff.getDamageForBlock(world.getBlock(x, y, z)) != 0 && getBlockHolding(stack) == null)
+    	if(stack.getItemDamage() == 0)
     	{
-    		System.out.println("Picking up block");
-    		Block block = world.getBlock(x, y, z);
-    		setBlockHolding(stack, block);
-    		if(!world.isRemote)
-    			FMLClientHandler.instance().getClient().effectRenderer.addBlockDestroyEffects(x, y, z, block, world.getBlockMetadata(x, y, z));
-    		world.setBlock(x, y, z, Block.getBlockById(0));
-    		
-    	}
-		return true;
+	    	if(Staff.getDamageForBlock(world.getBlock(x, y, z)) != 0 && getBlockHolding(stack) == null)
+	    	{
+	    		Block block = world.getBlock(x, y, z);
+	    		setBlockHolding(stack, block);
+	    		if(!world.isRemote)
+	    			FMLClientHandler.instance().getClient().effectRenderer.addBlockDestroyEffects(x, y, z, block, world.getBlockMetadata(x, y, z));
+	    		world.setBlock(x, y, z, Block.getBlockById(0));
+	    		return true;
+	    	}
+	    	return false;
+    	} else if(stack.getItemDamage() == 3)
+    	{
+    		if (side == 0)
+            {
+                --y;
+            }
+
+            if (side == 1)
+            {
+                ++y;
+            }
+
+            if (side == 2)
+            {
+                --z;
+            }
+
+            if (side == 3)
+            {
+                ++z;
+            }
+
+            if (side == 4)
+            {
+                --x;
+            }
+
+            if (side == 5)
+            {
+                ++x;
+            }
+
+            if (!player.canPlayerEdit(x, y, z, side, stack))
+            {
+                return false;
+            }
+            else
+            {
+                if (world.isAirBlock(x, y, z))
+                {
+                    world.playSoundEffect((double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, "fire.ignite", 1.0F, itemRand.nextFloat() * 0.4F + 0.8F);
+                    world.setBlock(x, y, z, Blocks.fire);
+                }
+
+                return false;
+            }
+    	} else 
+    		return super.onItemUseFirst(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
+
+    }
+    
+    /**
+     * Returns true if the item can be used on the given entity, e.g. shears on sheep.
+     */
+    @Override
+    public boolean itemInteractionForEntity(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, EntityLivingBase par3EntityLivingBase)
+    {
+        return false;
     }
     
     /**
@@ -94,21 +147,32 @@ public class ElysiumStaffItem extends ElysiumItem
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-    	if(stack.getItemDamage() == 0)
+    	int meta = stack.getItemDamage();
+    	if(meta == 0)
     	{
 	    	Block block = getBlockHolding(stack);
 	
 	    	if(block != null)
 			{
 				EntityBlockProjectile entityprojectile = new EntityBlockProjectile(world, player, block);
-		            world.spawnEntityInWorld(entityprojectile);
+	            world.spawnEntityInWorld(entityprojectile);
 				
 				setBlockHolding(stack, null);
 			}
-    	} else if(stack.getItemDamage() == 1)
+    	} else if(meta == 1)
     	{
 				EntityIceProjectile entityprojectile = new EntityIceProjectile(world, player);
 			    world.spawnEntityInWorld(entityprojectile);
+    	} else if(meta == 2)
+    	{
+				
+    	} else
+    	{
+//    		if(!world.isRemote)
+//    		{
+    			EntityFireballProjectile entityFireball = new EntityFireballProjectile(world, player);
+	    		world.spawnEntityInWorld(entityFireball);
+//    		}
     	}
         return stack;
     }

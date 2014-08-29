@@ -1,25 +1,25 @@
 package hu.hundevelopers.elysium.proxy;
 
 import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.entity.EntityBlockProjectile;
 import hu.hundevelopers.elysium.entity.EntityCaterPillar;
 import hu.hundevelopers.elysium.entity.EntityDeer;
-import hu.hundevelopers.elysium.entity.EntityFallingProjectile;
-import hu.hundevelopers.elysium.entity.EntityIceProjectile;
 import hu.hundevelopers.elysium.entity.EntityPinkUnicorn;
 import hu.hundevelopers.elysium.entity.EntitySwan;
 import hu.hundevelopers.elysium.entity.EntityVoidSpecter;
+import hu.hundevelopers.elysium.entity.projectile.EntityBlockProjectile;
+import hu.hundevelopers.elysium.entity.projectile.EntityFireballProjectile;
+import hu.hundevelopers.elysium.entity.projectile.EntityIceProjectile;
 import hu.hundevelopers.elysium.model.ModelPinkUnicorn;
 import hu.hundevelopers.elysium.render.ElysiumTileEntityPortalRenderer;
 import hu.hundevelopers.elysium.render.RenderBlockProjectile;
 import hu.hundevelopers.elysium.render.RenderCaterPillar;
 import hu.hundevelopers.elysium.render.RenderDeer;
+import hu.hundevelopers.elysium.render.RenderFireballProjectile;
 import hu.hundevelopers.elysium.render.RenderPinkUnicorn;
 import hu.hundevelopers.elysium.render.RenderSwan;
 import hu.hundevelopers.elysium.render.RenderVoidSpecter;
 import hu.hundevelopers.elysium.render.StaffRenderer;
 import hu.hundevelopers.elysium.tile.ElysianTileEntityPortal;
-import net.minecraft.client.renderer.entity.RenderFallingBlock;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.init.Items;
 import net.minecraft.network.Packet;
@@ -62,6 +62,7 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntityVoidSpecter.class, new RenderVoidSpecter());
 		RenderingRegistry.registerEntityRenderingHandler(EntityBlockProjectile.class, new RenderBlockProjectile());
 		RenderingRegistry.registerEntityRenderingHandler(EntityIceProjectile.class, new RenderSnowball(Items.snowball));
+		RenderingRegistry.registerEntityRenderingHandler(EntityFireballProjectile.class, new RenderFireballProjectile(0.5F));
 
 //		TickRegistry.registerTickHandler(new ElysianClientTickHandler(), Side.CLIENT);
 	

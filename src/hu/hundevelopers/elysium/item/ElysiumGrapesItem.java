@@ -1,11 +1,14 @@
 package hu.hundevelopers.elysium.item;
 
 import hu.hundevelopers.elysium.Elysium;
+import hu.hundevelopers.elysium.entity.EntityPinkUnicorn;
 
 import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -38,7 +41,16 @@ public class ElysiumGrapesItem extends ElysiumEdibleItem
             icons[i] = par1IconRegister.registerIcon(this.iconString + "_" + names[i]);
         }
     }
- 
+    
+    /**
+     * Returns true if the item can be used on the given entity, e.g. shears on sheep.
+     */
+    @Override
+    public boolean itemInteractionForEntity(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, EntityLivingBase entity)
+    {
+        return entity instanceof EntityPinkUnicorn;
+    }
+    
     public static final String[] names = new String[] { "blue", "white"};
     
  /**

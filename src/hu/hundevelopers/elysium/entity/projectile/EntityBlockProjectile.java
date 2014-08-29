@@ -1,6 +1,7 @@
-package hu.hundevelopers.elysium.entity;
+package hu.hundevelopers.elysium.entity.projectile;
 
 import hu.hundevelopers.elysium.api.Staff;
+import hu.hundevelopers.elysium.render.ElysiumEffectRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -56,6 +57,9 @@ public class EntityBlockProjectile extends EntityThrowable
             entityitem.setEntityItemStack(new ItemStack(block));
             entityitem.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
             this.worldObj.spawnEntityInWorld(entityitem);
+            
+			ElysiumEffectRenderer.addBlockHitEffect(this.posX, this.posY, this.posZ, block, 0);
+
         } else {
 	
 	        if (!this.worldObj.isRemote)

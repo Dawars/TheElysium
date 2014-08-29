@@ -23,7 +23,7 @@ public class ElysiumSaplingItemBlock extends ItemBlockWithMetadata
 				name = "fostimber";
 			break;
 			case 1:
-				name = "gildensilv";
+				name = "silver";
 			break;
 			default:
 				name = "error";

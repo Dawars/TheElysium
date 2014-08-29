@@ -22,7 +22,7 @@ public class ElysiumPlanksItemBlock extends ItemBlock
 				name = "fostimber";
 			break;
 			case 1:
-				name = "forest";
+				name = "silver";
 			break;
 			default:
 				name = "error";

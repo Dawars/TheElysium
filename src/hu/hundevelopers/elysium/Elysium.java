@@ -4,6 +4,7 @@ import hu.hundevelopers.elysium.api.Plants;
 import hu.hundevelopers.elysium.api.Staff;
 import hu.hundevelopers.elysium.block.*;
 import hu.hundevelopers.elysium.entity.*;
+import hu.hundevelopers.elysium.entity.projectile.*;
 import hu.hundevelopers.elysium.event.ElysiumClientHandler;
 import hu.hundevelopers.elysium.event.ElysiumFuelHandler;
 import hu.hundevelopers.elysium.event.ElysiumHandler;
@@ -193,6 +194,7 @@ public class Elysium
 	public static Item itemRaspberry;
 	public static Item itemHardPaw;
 	public static Item itemHorn;
+	public static Item itemKnife;
 	
 	public static Item itemSwordFostimber;
 	public static Item itemPickaxeFostimber;
@@ -520,14 +522,17 @@ public class Elysium
 		itemGrapes = new ElysiumGrapesItem().setTextureName("grapes").setUnlocalizedName("grapes");
 		registerItem(itemGrapes);
 
-		itemRaspberry = new ElysiumEdibleItem(1).setTextureName("raspberry").setUnlocalizedName("raspberry");
+		itemRaspberry = new ElysiumItemRaspberry(1).setTextureName("raspberry").setUnlocalizedName("raspberry");
 		registerItem(itemRaspberry);
 		
 		itemHardPaw = new ElysiumItem().setTextureName("hard_paw").setUnlocalizedName("hard_paw");
 		registerItem(itemHardPaw);
-		
+
 		itemHorn = new ElysiumItem().setTextureName("horn").setUnlocalizedName("horn");
 		registerItem(itemHorn);
+		
+		itemKnife = new ElysiumItem().setTextureName("knife").setMaxStackSize(1).setUnlocalizedName("knife");
+		registerItem(itemKnife);
 
 		
 		//Tool Registering
@@ -731,6 +736,9 @@ public class Elysium
 		GameRegistry.addRecipe(new ItemStack(CraftingPillars.blockBasePillar), new Object[] { "SSS", " S ", "SSS", Character.valueOf('S'), blockPalestone });
 		GameRegistry.addRecipe(new ItemStack(CraftingPillars.blockTrashPillar, 1), new Object[] { "SSS", "SLS", "SSS", Character.valueOf('S'), blockPalestone, Character.valueOf('L'), Items.ender_pearl});
 
+		GameRegistry.addShapelessRecipe(new ItemStack(itemSturdyHide), new Object[] {new ItemStack(itemDeerPelt), new ItemStack(itemKnife)});
+		GameRegistry.addRecipe(new ItemStack(itemKnife), new Object[] { " I", "S ", Character.valueOf('S'), Items.stick, Character.valueOf('I'), Items.iron_ingot});
+
 		
 		//Ore registry
 		OreDictionary.registerOre("dyePink", itemAsphodelPetals);
@@ -809,10 +817,13 @@ public class Elysium
         EntityRegistry.registerModEntity(EntityVoidSpecter.class, "VoidSpecter", voidspecterID, this, 160, 1, true);
 
         int blockthrowableID = EntityRegistry.findGlobalUniqueEntityId();
-        EntityRegistry.registerModEntity(EntityBlockProjectile.class, "BlockThrowable", blockthrowableID, this, 64, 10, true);
+        EntityRegistry.registerModEntity(EntityBlockProjectile.class, "BlockProjectile", blockthrowableID, this, 64, 10, true);
 
         int iceprojectileID = EntityRegistry.findGlobalUniqueEntityId();
         EntityRegistry.registerModEntity(EntityIceProjectile.class, "IceProjectile", iceprojectileID, this, 64, 10, true);
+
+        int fireprojectileID = EntityRegistry.findGlobalUniqueEntityId();
+        EntityRegistry.registerModEntity(EntityFireballProjectile.class, "FireProjectile", fireprojectileID, this, 64, 10, true);
       
         //Entity Spawn
         EntityRegistry.addSpawn(EntityCaterPillar.class, 5, 3, 5, EnumCreatureType.creature, biomePlain);

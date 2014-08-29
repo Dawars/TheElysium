@@ -22,7 +22,7 @@ public class ElysiumLogItemBlock extends ItemBlock
 				name = "fostimber";
 			break;
 			case 1:
-				name = "forest";
+				name = "silver";
 			break;
 			case 2:
 				name = "corrupt";
