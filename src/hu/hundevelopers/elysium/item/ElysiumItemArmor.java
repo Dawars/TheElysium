@@ -38,12 +38,12 @@ public class ElysiumItemArmor extends ItemArmor
 		int type = ((ItemArmor)itemStack.getItem()).armorType;
 
 	    if (model1 == null) {
-	      model1 = new ModelToothArmor(0.01F);
+	      model1 = new ModelToothArmor(0.5F);
 	    }
 	    if (model2 == null) {
-	      model2 = new ModelToothArmor(0.1F);
+	      model2 = new ModelToothArmor(0.01F);
 	    }
-	    if ((type == 1) || (type == 3))
+	    if (type != 1)
 	      model = model1;
 	    else {
 	      model = model2;
