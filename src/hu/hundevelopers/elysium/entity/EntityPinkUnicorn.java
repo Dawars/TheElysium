@@ -118,11 +118,24 @@ public class EntityPinkUnicorn extends EntityHorse
         return this.dataWatcher.getWatchableObjectString(21);
     }
 
-    @Override
+    @Override 
     public void setOwnerName(String par1Str)
     {
         this.dataWatcher.updateObject(21, par1Str);
     }
+
+
+//    @Override
+//    public String func_152119_ch()
+//    {
+//        return this.dataWatcher.getWatchableObjectString(21);
+//    }
+//
+//    @Override //setOwnerName
+//    public void func_152120_b(String par1Str)
+//    {
+//        this.dataWatcher.updateObject(21, par1Str);
+//    }
 
     @Override
     public float getHorseSize()

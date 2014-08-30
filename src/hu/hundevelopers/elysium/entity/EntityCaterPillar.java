@@ -44,7 +44,6 @@ public class EntityCaterPillar extends EntityAnimal
 		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.25D);
 	}
     
-    @SideOnly(Side.CLIENT)
     public float protationYaw = 0F;
     
     /**

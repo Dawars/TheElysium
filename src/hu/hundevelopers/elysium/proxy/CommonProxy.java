@@ -1,7 +1,6 @@
 package hu.hundevelopers.elysium.proxy;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.network.Packet;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.Loader;
@@ -11,7 +10,7 @@ public class CommonProxy {
 	{
 
 	}
-
+	
 	public String getMinecraftVersion() {
 		return Loader.instance().getMinecraftModContainer().getVersion();
 	}

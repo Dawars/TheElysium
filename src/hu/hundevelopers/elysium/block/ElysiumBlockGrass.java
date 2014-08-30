@@ -1,6 +1,8 @@
 package hu.hundevelopers.elysium.block;
 
+import static net.minecraftforge.common.util.ForgeDirection.UP;
 import hu.hundevelopers.elysium.Elysium;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenCorruption;
 
 import java.util.Random;
 
@@ -16,6 +18,8 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldProviderEnd;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class ElysiumBlockGrass extends ElysiumBlock implements IGrowable
 {
@@ -32,7 +36,15 @@ public class ElysiumBlockGrass extends ElysiumBlock implements IGrowable
         this.setTickRandomly(true);
 	}
 	
-
+	public boolean isFireSource(World world, int x, int y, int z, ForgeDirection side)
+    {
+        if (world.getBiomeGenForCoords(x, z) instanceof ElysiumBiomeGenCorruption && side == UP)
+        {
+            return true;
+        }
+        return false;
+    }
+	
     /**
      * Gets the block's texture. Args: side, meta
      */

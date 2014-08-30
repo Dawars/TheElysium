@@ -18,17 +18,40 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
 
-public class ElysiumHandler
-{
+public class ElysiumHandler implements IFuelHandler {
+
+	@Override
+	public int getBurnTime(ItemStack fuel)
+	{
+		if(fuel.getItem() == Elysium.itemSulphur)
+		{
+			return 1600;
+		}
+		
+		return 0;
+	}
+
 	public static ElysiumHandler INSTANCE = new ElysiumHandler();
     public Map<Block, Item> buckets = new HashMap<Block, Item>();
 
     private ElysiumHandler() {
     }
 
+    @SubscribeEvent
+    public void onWorldTick(WorldTickEvent event)
+    {
+    	if(event.world.provider instanceof ElysiumWorldProvider)
+    	{
+			event.world.setThunderStrength(1F);
+			event.world.setRainStrength(0.5F);
+    	}
+    }
+    
     @SubscribeEvent
     public void onBucketFill(FillBucketEvent event)
     {
@@ -53,12 +76,12 @@ public class ElysiumHandler
                 return null;
     }
     
-    @SubscribeEvent
-	public void onEntityConstructing(EntityConstructing event)
-	{
-		if (event.entity instanceof EntityPlayer && ElysiumExtendedPlayer.get((EntityPlayer) event.entity) == null)
-			ElysiumExtendedPlayer.register((EntityPlayer) event.entity);
-	}
+//    @SubscribeEvent
+//	public void onEntityConstructing(EntityConstructing event)
+//	{
+//		if (event.entity instanceof EntityPlayer && ElysiumExtendedPlayer.get((EntityPlayer) event.entity) == null)
+//			ElysiumExtendedPlayer.register((EntityPlayer) event.entity);
+//	}
     
     @SubscribeEvent
 	public void onBreakBlock(BlockEvent.BreakEvent event)

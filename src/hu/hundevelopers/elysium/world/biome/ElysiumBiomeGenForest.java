@@ -10,6 +10,8 @@ public class ElysiumBiomeGenForest extends ElysiumBiomeBase
 	public ElysiumBiomeGenForest(int id)
 	{
 		super(id);
+//		this.temperature = 1.5F;
+//		this.rainfall = 0.8F;
 	}
 
     @Override

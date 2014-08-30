@@ -58,8 +58,9 @@ public class EntityBlockProjectile extends EntityThrowable
             entityitem.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
             this.worldObj.spawnEntityInWorld(entityitem);
             
-			ElysiumEffectRenderer.addBlockHitEffect(this.posX, this.posY, this.posZ, block, 0);
-
+            if(worldObj.isRemote)
+                ElysiumEffectRenderer.addBlockHitEffect(worldObj, this.posX, this.posY, this.posZ, block, 0);
+			
         } else {
 	
 	        if (!this.worldObj.isRemote)

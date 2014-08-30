@@ -20,7 +20,7 @@ public class ElysiumGrapesItem extends ElysiumEdibleItem
 {
 	public ElysiumGrapesItem()
 	{
-		super(2);
+		super(3);
 		this.setMaxStackSize(16);
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);

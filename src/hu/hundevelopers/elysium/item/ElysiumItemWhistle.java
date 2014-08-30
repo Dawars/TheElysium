@@ -8,14 +8,13 @@ import java.util.Random;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenEnd;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-public class ElysiumItemWhistle extends Item
+public class ElysiumItemWhistle extends ElysiumItem
 {
 	private static Random rand = new Random();
 	

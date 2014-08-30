@@ -28,8 +28,6 @@ public class ElysiumGenCrystalSpikes extends WorldGenerator
 			return false;
 		}
 
-		// System.out.println("gen crystal");
-
 		int directionX = 0;
 		int directionZ = 0;
 		while (directionZ == 0 && directionX == 0) {

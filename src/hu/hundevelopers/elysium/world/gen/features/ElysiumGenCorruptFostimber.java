@@ -32,15 +32,15 @@ public class ElysiumGenCorruptFostimber extends WorldGenerator
 	@Override
 	public boolean generate(World world, Random random, int x, int y, int z)
 	{
-		boolean isCorrupted = true;
-	
+
+		Block top = world.getBlock(x, y + 1, z);
+		if(top.getMaterial().isLiquid())
+			return false;
+		
 		int treeHeight = 5 + random.nextInt(7);
 	
 		for(int i = 0; i < treeHeight; i++)
 		{
-			Block top = world.getBlock(x, y + i, z);
-			Block bottom = world.getBlock(x, y + i - 1, z);
-			if(!top.getMaterial().isLiquid() && top.getMaterial() != Material.air && bottom == Elysium.blockGrass)
 				world.setBlock(x, y + i, z, log, logMeta, 2);
 				makeVines(world, random, x + random.nextInt(3) - 1, y+i, z + random.nextInt(3) - 1);
 		}

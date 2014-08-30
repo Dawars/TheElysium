@@ -10,6 +10,7 @@ import hu.hundevelopers.elysium.entity.projectile.EntityBlockProjectile;
 import hu.hundevelopers.elysium.entity.projectile.EntityFireballProjectile;
 import hu.hundevelopers.elysium.entity.projectile.EntityIceProjectile;
 import hu.hundevelopers.elysium.model.ModelPinkUnicorn;
+import hu.hundevelopers.elysium.model.ModelToothArmor;
 import hu.hundevelopers.elysium.render.ElysiumTileEntityPortalRenderer;
 import hu.hundevelopers.elysium.render.RenderBlockProjectile;
 import hu.hundevelopers.elysium.render.RenderCaterPillar;
@@ -20,6 +21,7 @@ import hu.hundevelopers.elysium.render.RenderSwan;
 import hu.hundevelopers.elysium.render.RenderVoidSpecter;
 import hu.hundevelopers.elysium.render.StaffRenderer;
 import hu.hundevelopers.elysium.tile.ElysianTileEntityPortal;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.init.Items;
 import net.minecraft.network.Packet;
@@ -65,10 +67,8 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntityFireballProjectile.class, new RenderFireballProjectile(0.5F));
 
 //		TickRegistry.registerTickHandler(new ElysianClientTickHandler(), Side.CLIENT);
-	
-
 	}
-
+	
 	/* NETWORKING */
 	@Override
 	public void sendToServer(Packet packet) {

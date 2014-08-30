@@ -32,7 +32,7 @@ public class ElysiumGenPlants extends WorldGenerator
 
                 for (int i2 = 0; i2 < l1; ++i2)
                 {
-                    if (Blocks.cactus.canBlockStay(par1World, i1, j1 + i2, k1))
+                    if (block.canBlockStay(par1World, i1, j1 + i2, k1))
                     {
                         par1World.setBlock(i1, j1 + i2, k1, block, 0, 2);
                     }

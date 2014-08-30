@@ -75,7 +75,7 @@ public class ElysiumStaffItem extends ElysiumItem
 	    	{
 	    		Block block = world.getBlock(x, y, z);
 	    		setBlockHolding(stack, block);
-	    		if(!world.isRemote)
+	    		if(world.isRemote)
 	    			FMLClientHandler.instance().getClient().effectRenderer.addBlockDestroyEffects(x, y, z, block, world.getBlockMetadata(x, y, z));
 	    		world.setBlock(x, y, z, Block.getBlockById(0));
 	    		return true;

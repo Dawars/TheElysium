@@ -79,7 +79,7 @@ public class ElysiumGenLakePillar extends WorldGenerator
 
 		//spawn mobs
 		
-		System.out.println("Generated pillar at: " + (x) + " " + (j+1) + " " + (z));
+//		System.out.println("Generated pillar at: " + (x) + " " + (j+1) + " " + (z));
 		return true;
 	}
 }

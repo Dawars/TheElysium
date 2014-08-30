@@ -21,6 +21,7 @@ public class ElysiumItemDebug extends ElysiumItem
 		{
 			player.addChatMessage(new ChatComponentText("Block: "+world.getBlock(x, y, z).getUnlocalizedName()));
 			player.addChatMessage(new ChatComponentText("Meta: "+world.getBlockMetadata(x, y, z)));
+		} else {
 			player.addChatMessage(new ChatComponentText("Heat: "+HeatManager.getInstance().getHeatAt(world, x, y, z)));
 		}
 
