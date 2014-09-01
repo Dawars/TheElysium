@@ -112,13 +112,13 @@ public class EntityPinkUnicorn extends EntityHorse
         return this.getHorseWatchableBoolean(4);
     }
 
-    @Override
+//    @Override
     public String getOwnerName()
     {
         return this.dataWatcher.getWatchableObjectString(21);
     }
 
-    @Override 
+//    @Override 
     public void setOwnerName(String par1Str)
     {
         this.dataWatcher.updateObject(21, par1Str);
