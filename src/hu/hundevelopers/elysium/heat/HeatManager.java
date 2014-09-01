@@ -1,5 +1,7 @@
 package hu.hundevelopers.elysium.heat;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import hu.hundevelopers.elysium.Elysium;
@@ -15,9 +17,18 @@ public class HeatManager {
 		return instance;
 	}
 	
-	private List<Block> blocks;
+	private HashMap map = new HashMap<Block, Float>();
 	
+	public void registerBlock(Block block, float heat) {
+		this.map.put(block, new Float(heat));
+	}
 	
+	public float getBlockHeat(Block block) {
+		if(this.map.containsKey(block))
+			return ((Float)this.map.get(block)).floatValue();
+		else
+			return 0F;
+	}
 	
 	public void setHeatAt(World world, int x, int y, int z, float heat) {
 		((IHeatable)world.getBlock(x, y, z)).setHeatAt(world, x, y, z, heat);
@@ -28,14 +39,8 @@ public class HeatManager {
 		Block b = blockAccess.getBlock(x, y, z);
 		if(b instanceof IHeatable)
 			heat += ((IHeatable)b).getHeatAt(blockAccess, x, y, z);
-		else if(b == Blocks.lava)
-			heat += 5000F;
-		else if(b == Blocks.water)
-			heat += 10F;
-		else if(b == Blocks.ice)
-			heat -= 10F;
-		else if(b == Blocks.snow)
-			;
+		else
+			heat += this.getBlockHeat(b);
 		return heat;
 	}
 }

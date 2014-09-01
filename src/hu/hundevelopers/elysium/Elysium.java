@@ -7,6 +7,7 @@ import hu.hundevelopers.elysium.entity.*;
 import hu.hundevelopers.elysium.entity.projectile.*;
 import hu.hundevelopers.elysium.event.ElysiumClientHandler;
 import hu.hundevelopers.elysium.event.ElysiumHandler;
+import hu.hundevelopers.elysium.heat.HeatManager;
 import hu.hundevelopers.elysium.item.*;
 import hu.hundevelopers.elysium.proxy.CommonProxy;
 import hu.hundevelopers.elysium.tile.ElysianTileEntityPortal;
@@ -859,6 +860,10 @@ public class Elysium
         Blocks.fire.setFireInfo(oreSulphure, 2, 2);
         Blocks.fire.setFireInfo(blockSulphure, 5, 5);
         
+        HeatManager.getInstance().registerBlock(Blocks.lava, 5000F);
+        HeatManager.getInstance().registerBlock(Blocks.water, 10F);
+        HeatManager.getInstance().registerBlock(Blocks.ice, -10F);
+        HeatManager.getInstance().registerBlock(Blocks.snow, 0F);
         
 //		elysiumCave = new CaveTypeElysium("Elysium Cave", blockPalestone);
     }

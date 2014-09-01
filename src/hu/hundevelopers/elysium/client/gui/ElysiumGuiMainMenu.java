@@ -6,7 +6,9 @@ import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.render.RenderingHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
+import net.minecraft.client.gui.GuiSelectWorld;
 import net.minecraft.util.ResourceLocation;
 import static org.lwjgl.opengl.GL11.*;
 
@@ -90,9 +92,11 @@ public class ElysiumGuiMainMenu extends ElysiumGui {
 			this.subGui.update(mouseX, mouseY, pressed);
 
 		if (this.btnSingle.wasClicked())
-			this.setSubGui(new ElysiumGuiSelectWorld(this, this.subX, this.subY, this.subWidth, this.subHeight));
+			//this.setSubGui(new ElysiumGuiSelectWorld(this, this.subX, this.subY, this.subWidth, this.subHeight));
+			Minecraft.getMinecraft().displayGuiScreen(new GuiSelectWorld(ElysiumGuiEmulator.instance));
 		if (this.btnMulti.wasClicked())
-			this.setSubGui(new ElysiumGuiMultiplayer(this, this.subX, this.subY, this.subWidth, this.subHeight));
+			//this.setSubGui(new ElysiumGuiMultiplayer(this, this.subX, this.subY, this.subWidth, this.subHeight));
+			Minecraft.getMinecraft().displayGuiScreen(new GuiMultiplayer(ElysiumGuiEmulator.instance));
 		if (this.btnMods.wasClicked())
 			Minecraft.getMinecraft().displayGuiScreen(new GuiModList(ElysiumGuiEmulator.instance));
 		if (this.btnOptions.wasClicked())
