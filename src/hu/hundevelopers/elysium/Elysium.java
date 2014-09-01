@@ -573,16 +573,16 @@ public class Elysium
 
 		ArmorMaterial TOOTH_ARMORMAT = EnumHelper.addArmorMaterial("TOOTH", 25, new int[] { 2, 6, 5, 2 }, 25);
 
-		itemArmorToothHelmet = new ElysiumItemArmor(TOOTH_ARMORMAT, 4, 0).setTextureName("hoePalestone").setUnlocalizedName("toothHelmet");
+		itemArmorToothHelmet = new ElysiumItemArmor(TOOTH_ARMORMAT, 4, 0).setTextureName(MODID + ":sceptertoothhelmet").setUnlocalizedName("toothHelmet");
 		registerItem(itemArmorToothHelmet);
 		
-		itemArmorToothChestplate = new ElysiumItemArmor(TOOTH_ARMORMAT, 4, 1).setTextureName("hoePalestone").setUnlocalizedName("toothChestplate");
+		itemArmorToothChestplate = new ElysiumItemArmor(TOOTH_ARMORMAT, 4, 1).setTextureName(MODID + ":sceptertoothchestplate").setUnlocalizedName("toothChestplate");
 		registerItem(itemArmorToothChestplate);
 
-		itemArmorToothLeggings = new ElysiumItemArmor(TOOTH_ARMORMAT, 4, 2).setTextureName("hoePalestone").setUnlocalizedName("toothLeggings");
+		itemArmorToothLeggings = new ElysiumItemArmor(TOOTH_ARMORMAT, 4, 2).setTextureName(MODID + ":sceptertoothlegs").setUnlocalizedName("toothLeggings");
 		registerItem(itemArmorToothLeggings);
 
-		itemArmorToothBoots = new ElysiumItemArmor(TOOTH_ARMORMAT, 4, 3).setTextureName("hoePalestone").setUnlocalizedName("toothBoots");
+		itemArmorToothBoots = new ElysiumItemArmor(TOOTH_ARMORMAT, 4, 3).setTextureName(MODID + ":sceptertoothboots").setUnlocalizedName("toothBoots");
 		registerItem(itemArmorToothBoots);
 		
 //		MinecraftForge.setToolClass(itemPickaxeFostimber, "pickaxe", 0);
@@ -763,6 +763,11 @@ public class Elysium
 		EntityRegistry.registerGlobalEntityID(EntityVoidSpecter.class, "VoidSpecter", voidspecterID, 0x623464, 0x3A2A3A);
         EntityRegistry.registerModEntity(EntityVoidSpecter.class, "VoidSpecter", voidspecterID, this, 160, 1, true);
 
+        int endermageID = EntityRegistry.findGlobalUniqueEntityId();
+		EntityRegistry.registerGlobalEntityID(EntityEnderMage.class, "EnderMage", endermageID, 0x000000, 0x9d8ca0);
+        EntityRegistry.registerModEntity(EntityEnderMage.class, "EnderMage", endermageID, this, 160, 1, true);
+
+        
         int blockthrowableID = EntityRegistry.findGlobalUniqueEntityId();
         EntityRegistry.registerModEntity(EntityBlockProjectile.class, "BlockProjectile", blockthrowableID, this, 64, 10, true);
 

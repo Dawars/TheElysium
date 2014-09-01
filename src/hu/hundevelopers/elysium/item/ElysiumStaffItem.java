@@ -71,10 +71,10 @@ public class ElysiumStaffItem extends ElysiumItem
     {
     	if(stack.getItemDamage() == 0)
     	{
-	    	if(Staff.getDamageForBlock(world.getBlock(x, y, z)) != 0 && getBlockHolding(stack) == null)
+	    	if(Staff.getDamageForBlock(world.getBlock(x, y, z)) != 0 && Staff.getBlockHolding(stack) == null)
 	    	{
 	    		Block block = world.getBlock(x, y, z);
-	    		setBlockHolding(stack, block);
+	    		Staff.setBlockHolding(stack, block);
 	    		if(world.isRemote)
 	    			FMLClientHandler.instance().getClient().effectRenderer.addBlockDestroyEffects(x, y, z, block, world.getBlockMetadata(x, y, z));
 	    		world.setBlock(x, y, z, Block.getBlockById(0));
@@ -150,14 +150,14 @@ public class ElysiumStaffItem extends ElysiumItem
     	int meta = stack.getItemDamage();
     	if(meta == 0)
     	{
-	    	Block block = getBlockHolding(stack);
+	    	Block block = Staff.getBlockHolding(stack);
 	
 	    	if(block != null)
 			{
 				EntityBlockProjectile entityprojectile = new EntityBlockProjectile(world, player, block);
 	            world.spawnEntityInWorld(entityprojectile);
 				
-				setBlockHolding(stack, null);
+				Staff.setBlockHolding(stack, null);
 			}
     	} else if(meta == 1)
     	{
@@ -177,40 +177,6 @@ public class ElysiumStaffItem extends ElysiumItem
         return stack;
     }
     
-    public static Block getBlockHolding(ItemStack staff)
-    {
-    	if(staff.stackTagCompound == null) staff.stackTagCompound = new NBTTagCompound();
-    	
-    	NBTTagList nbtlist = staff.stackTagCompound.getTagList("Items", 10);
-		NBTTagCompound nbtslot = (NBTTagCompound) nbtlist.getCompoundTagAt(0);
-		
-		ItemStack holding = ItemStack.loadItemStackFromNBT(nbtslot);
-		
-		if(holding == null) return null;
-		
-		Block block = Block.getBlockFromItem(holding.getItem());
-		
-		return block;
-    }
-    
-    public static void setBlockHolding(ItemStack staff, Block block)
-    {
-    	NBTTagCompound nbt = staff.stackTagCompound;
-		NBTTagList nbtlist = new NBTTagList();
-		
-		ItemStack projectile = new ItemStack(block);
-		
-		if(projectile != null)
-		{
-			NBTTagCompound nbtslot = new NBTTagCompound();
-			nbtslot.setByte("Slot", (byte) 0);
-			projectile.writeToNBT(nbtslot);
-			nbtlist.appendTag(nbtslot);
-			
-			nbt.setTag("Items", nbtlist);
-		}
-    }
-
     /**
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
      */

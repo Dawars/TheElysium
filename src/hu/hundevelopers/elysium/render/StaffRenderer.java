@@ -6,20 +6,16 @@ import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glRotatef;
 import static org.lwjgl.opengl.GL11.glScalef;
-import static org.lwjgl.opengl.GL11.glTranslated;
 import static org.lwjgl.opengl.GL11.glTranslatef;
 import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.item.ElysiumStaffItem;
+import hu.hundevelopers.elysium.api.Staff;
 import me.dawars.CraftingPillars.renderer.RenderingHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 
@@ -211,11 +207,11 @@ public class StaffRenderer implements IItemRenderer
 
                 break;
 	            case EQUIPPED:
-	            	scale = 2.1F;
-	            	glScalef(scale, scale, scale);
-	            	glTranslatef(-0.4F, -0.2F, -0.9F);
-	            	
-	        		glRotatef(190, 0F, 1F, 0F);
+//	            	scale = 2.1F;
+//	            	glScalef(scale, scale, scale);
+//	            	glTranslatef(-0.4F, -0.2F, -0.9F);
+//	            	
+//	        		glRotatef(190, 0F, 1F, 0F);
 
 	            	
 	                break;
@@ -235,7 +231,7 @@ public class StaffRenderer implements IItemRenderer
 		{
 			if(item.getItemDamage() == 0)
 			{
-				Block block = ElysiumStaffItem.getBlockHolding(item); 
+				Block block = Staff.getBlockHolding(item); 
 				if(block != null)
 				{
 					glPushMatrix();

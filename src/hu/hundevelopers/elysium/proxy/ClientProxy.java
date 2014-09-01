@@ -3,6 +3,7 @@ package hu.hundevelopers.elysium.proxy;
 import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.entity.EntityCaterPillar;
 import hu.hundevelopers.elysium.entity.EntityDeer;
+import hu.hundevelopers.elysium.entity.EntityEnderMage;
 import hu.hundevelopers.elysium.entity.EntityPinkUnicorn;
 import hu.hundevelopers.elysium.entity.EntitySwan;
 import hu.hundevelopers.elysium.entity.EntityVoidSpecter;
@@ -15,6 +16,7 @@ import hu.hundevelopers.elysium.render.ElysiumTileEntityPortalRenderer;
 import hu.hundevelopers.elysium.render.RenderBlockProjectile;
 import hu.hundevelopers.elysium.render.RenderCaterPillar;
 import hu.hundevelopers.elysium.render.RenderDeer;
+import hu.hundevelopers.elysium.render.RenderEnderMage;
 import hu.hundevelopers.elysium.render.RenderFireballProjectile;
 import hu.hundevelopers.elysium.render.RenderPinkUnicorn;
 import hu.hundevelopers.elysium.render.RenderSwan;
@@ -62,6 +64,8 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntityDeer.class, new RenderDeer());
 		RenderingRegistry.registerEntityRenderingHandler(EntityPinkUnicorn.class, new RenderPinkUnicorn(new ModelPinkUnicorn()));
 		RenderingRegistry.registerEntityRenderingHandler(EntityVoidSpecter.class, new RenderVoidSpecter());
+		RenderingRegistry.registerEntityRenderingHandler(EntityEnderMage.class, new RenderEnderMage());
+		
 		RenderingRegistry.registerEntityRenderingHandler(EntityBlockProjectile.class, new RenderBlockProjectile());
 		RenderingRegistry.registerEntityRenderingHandler(EntityIceProjectile.class, new RenderSnowball(Items.snowball));
 		RenderingRegistry.registerEntityRenderingHandler(EntityFireballProjectile.class, new RenderFireballProjectile(0.5F));

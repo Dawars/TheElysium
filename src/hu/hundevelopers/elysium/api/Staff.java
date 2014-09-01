@@ -8,6 +8,8 @@ import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -36,4 +38,42 @@ public class Staff
 	{
 		throwableBlocks.put(block, damage);
 	}
+	
+	public static Block getBlockHolding(ItemStack staff)
+    {
+    	if(staff.stackTagCompound == null) staff.stackTagCompound = new NBTTagCompound();
+    	
+    	NBTTagList nbtlist = staff.stackTagCompound.getTagList("Items", 10);
+		NBTTagCompound nbtslot = (NBTTagCompound) nbtlist.getCompoundTagAt(0);
+		
+		ItemStack holding = ItemStack.loadItemStackFromNBT(nbtslot);
+		
+		if(holding == null) return null;
+		
+		Block block = Block.getBlockFromItem(holding.getItem());
+		
+		return block;
+    }
+    
+    @SuppressWarnings("unused")
+	public static boolean setBlockHolding(ItemStack staff, Block block)
+    {
+    	if(block != null && getDamageForBlock(block) == 0) return false;
+    	NBTTagCompound nbt = staff.stackTagCompound;
+		NBTTagList nbtlist = new NBTTagList();
+		
+		ItemStack projectile = new ItemStack(block);
+		
+		if(projectile != null)
+		{
+			NBTTagCompound nbtslot = new NBTTagCompound();
+			nbtslot.setByte("Slot", (byte) 0);
+			projectile.writeToNBT(nbtslot);
+			nbtlist.appendTag(nbtslot);
+			
+			nbt.setTag("Items", nbtlist);
+			return true;
+		}
+		return false;
+    }
 }
