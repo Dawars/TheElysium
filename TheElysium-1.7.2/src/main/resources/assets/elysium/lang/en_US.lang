@@ -5,7 +5,7 @@ cave.elysium.name=Elysium Cave
 tile.palestone.name=Palestone
 tile.elysium_dirt.name=Elysium Dirt
 tile.elysium_grass.name=Elysium Grass
-tile.leucosand.name=Leucosand
+tile.leucosand.name=Whitesand
 tile.rilt.name=Rilt
 
 tile.elysium_sapling.fostimber.name=Fostimber Sapling
@@ -95,6 +95,12 @@ item.hoePalestone.name=Palestone Hoe
 
 item.enderflute.name=Ender Flute
 
+item.toothIngot.name=Tooth Ingot
+item.toothHelmet.name=Tooth Helmet
+item.toothChestplate.name=Tooth Chestplate
+item.toothLeggings.name=Tooth Leggings
+item.toothBoots.name=Tooth Boots
+
 
 flute.tips.0=Hmm... looks like a musical instrument
 flute.tips.1=Its sound could be heard from a long distance...
@@ -106,7 +112,7 @@ flute.dragonExist.2=There can't be more dragons in this dimension...
 flute.dragonExist.3=There should be a dragon somewhere here...
 
 tc.aspect.sanctus=Sanctus
-tc.aspect.help.sanctus=Of Holy, Heaven, The Elysium
+tc.aspect.help.sanctus=Holiness
 
 
 entity.CaterPillar.name=Cater Pillar

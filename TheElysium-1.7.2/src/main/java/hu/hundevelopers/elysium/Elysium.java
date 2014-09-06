@@ -36,6 +36,7 @@ import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.BiomeGenBase.Height;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -712,8 +713,8 @@ public class Elysium
 
 		//Smelting Registering
 
-		GameRegistry.addSmelting(this.oreCobalt, new ItemStack(this.itemIngotCobalt), 0.7F);
-		GameRegistry.addSmelting(this.oreIridium, new ItemStack(this.itemIngotIridium), 1.0F);
+		GameRegistry.addSmelting(oreCobalt, new ItemStack(itemIngotCobalt), 0.7F);
+		GameRegistry.addSmelting(oreIridium, new ItemStack(itemIngotIridium), 1.0F);
 
 		//Handlers
 		GameRegistry.registerFuelHandler(ElysiumHandler.INSTANCE);
@@ -872,33 +873,32 @@ public class Elysium
         HeatManager.getInstance().registerBlock(Blocks.ice, -10F);
         HeatManager.getInstance().registerBlock(Blocks.snow, 0F);
         
+        
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(itemGrapes, 0, 1, 3, 5));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(itemGrapes, 1, 1, 3, 5));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(itemRaspberry, 0, 1, 3, 10));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(Item.getItemFromBlock(blockEnergyCrystal), 0, 1, 4, 10));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(Item.getItemFromBlock(blockEnergyCrystal), 1, 1, 4, 10));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(Item.getItemFromBlock(blockRaspberryBush), 0, 1, 4, 10));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(Item.getItemFromBlock(blockGrapesBush), 0, 1, 4, 10));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(Item.getItemFromBlock(blockSulphure), 0, 1, 4, 10));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(itemDeerPelt, 0, 1, 2, 4));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(itemHardPaw, 0, 1, 3, 3));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(itemPrism, 0, 1, 1, 3));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(Item.getItemFromBlock(Blocks.dragon_egg), 0, 1, 1, 1));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(itemAntler, 0, 1, 3, 2));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(itemHorn, 0, 1, 1, 5));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(itemStaff, 0, 1, 1, 2));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(itemStaff, 1, 1, 1, 1));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(itemStaff, 2, 1, 1, 2));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(itemStaff, 3, 1, 1, 3));
+        
 //		elysiumCave = new CaveTypeElysium("Elysium Cave", blockPalestone);
     }
 	
 //	public CaveType elysiumCave;
 
-	public static final WeightedRandomChestContent[] labyrinthLoot = new WeightedRandomChestContent[]
-			{
-				new WeightedRandomChestContent(itemGrapes, 0, 1, 3, 5),
-				new WeightedRandomChestContent(itemGrapes, 1, 1, 3, 5),
-				new WeightedRandomChestContent(itemRaspberry, 0, 1, 3, 10),
-				new WeightedRandomChestContent(Item.getItemFromBlock(blockEnergyCrystal), 0, 1, 4, 10),
-				new WeightedRandomChestContent(Item.getItemFromBlock(blockEnergyCrystal), 1, 1, 4, 10), 
-				new WeightedRandomChestContent(Item.getItemFromBlock(blockRaspberryBush), 0, 1, 4, 10), 
-				new WeightedRandomChestContent(Item.getItemFromBlock(blockGrapesBush), 0, 1, 4, 10),
-				new WeightedRandomChestContent(Item.getItemFromBlock(blockSulphure), 0, 1, 4, 10),
-				new WeightedRandomChestContent(itemDeerPelt, 0, 1, 2, 4),
-				new WeightedRandomChestContent(itemHardPaw, 0, 1, 3, 3),
-				new WeightedRandomChestContent(itemPrism, 0, 1, 1, 3),
-				new WeightedRandomChestContent(Item.getItemFromBlock(Blocks.dragon_egg), 0, 1, 1, 1),
-				new WeightedRandomChestContent(itemAntler, 0, 1, 3, 2),
-				new WeightedRandomChestContent(itemHorn, 0, 1, 1, 5),
-				new WeightedRandomChestContent(itemStaff, 0, 1, 1, 2),
-				new WeightedRandomChestContent(itemStaff, 1, 1, 1, 1),
-				new WeightedRandomChestContent(itemStaff, 2, 1, 1, 2),
-				new WeightedRandomChestContent(itemStaff, 3, 1, 1, 3)
-			};
-
+	
 	public static Aspect SANCTUS;
 	
 	@EventHandler

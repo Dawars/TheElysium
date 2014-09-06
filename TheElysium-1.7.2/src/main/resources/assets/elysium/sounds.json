@@ -2,5 +2,6 @@
    "flute": {"category": "master", "sounds": [{"name": "flute","stream": false}]},
    "liquidCrystal": {"category": "master", "sounds": [{"name": "liquidCrystal","stream": false}]},
    "elysiumShadow": {"category": "ambient", "sounds": [{"name": "Elysian-Shadow","stream": true}]},
+   "elysiumForest": {"category": "ambient", "sounds": [{"name": "ForestOfHeaven","stream": true}]},
    "elysium": {"category": "ambient", "sounds": [{"name": "Elysium","stream": true}]}
 }

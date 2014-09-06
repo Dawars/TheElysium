@@ -24,6 +24,7 @@ import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.IProgressUpdate;
 import net.minecraft.util.MathHelper;
@@ -47,6 +48,7 @@ import net.minecraft.world.gen.structure.MapGenScatteredFeature;
 import net.minecraft.world.gen.structure.MapGenStronghold;
 import net.minecraft.world.gen.structure.MapGenVillage;
 import net.minecraftforge.common.ChestGenHooks;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.ChunkProviderEvent;
 import net.minecraftforge.event.terraingen.InitMapGenEvent;
@@ -460,7 +462,7 @@ public class ChunkProviderElysium implements IChunkProvider
 	private void generateTreasure(int chunkX, int chunkZ, Block[] blockArray)
 	{
 		setBlock(chunkX, chunkZ, 15/2, Configs.labyrinthBottom+1, 15/2, blockArray, Blocks.chest);
-//		setBlock(chunkX, chunkZ, 15/2+1, Configs.labyrinthBottom+1, 15/2, blockArray, Blocks.chest);
+		setBlock(chunkX, chunkZ, 15/2+1, Configs.labyrinthBottom+1, 15/2, blockArray, Blocks.chest);
 
 	}
 
@@ -704,7 +706,8 @@ public class ChunkProviderElysium implements IChunkProvider
 
                         if (tileentitychest != null)
                         {
-                            WeightedRandomChestContent.generateChestContents(rand, Elysium.labyrinthLoot, tileentitychest, 8);
+                            ChestGenHooks loot = ChestGenHooks.getInfo(DUNGEON_CHEST);
+                            WeightedRandomChestContent.generateChestContents(rand, loot.getItems(rand), tileentitychest, loot.getCount(this.rand));
                         }
                         
                         worldObj.setTileEntity(k + i, y, l + j, tileentitychest);

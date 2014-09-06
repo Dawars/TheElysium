@@ -13,6 +13,8 @@ import hu.hundevelopers.elysium.client.gui.ElysiumGuiMainMenu;
 import hu.hundevelopers.elysium.item.ElysiumStaffItem;
 import hu.hundevelopers.elysium.world.ElysiumWorldProvider;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenCorruption;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenDesert;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenForest;
 import me.dawars.CraftingPillars.renderer.RenderingHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -25,6 +27,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent17;
@@ -59,17 +62,45 @@ public class ElysiumClientHandler
 //		if(event.category == SoundCategory.ANIMALS || event.category == SoundCategory.BLOCKS || event.category == SoundCategory.MOBS || event.category == SoundCategory.WEATHER) return;
 //		System.out.println("Playing " + event.category + " sound: " + event.name + " class name: " + event.result.getClass().getName() + " " + event.sound.getClass().getName());
 		
-		if(event.category == SoundCategory.AMBIENT || event.category == SoundCategory.MUSIC)
+		
+		World world = FMLClientHandler.instance().getClient().theWorld; 
+		if(world != null && world.provider instanceof ElysiumWorldProvider)
 		{
-			World world = FMLClientHandler.instance().getClient().theWorld; 
-			if(world != null && world.provider instanceof ElysiumWorldProvider)
+			
+			EntityPlayer player = FMLClientHandler.instance().getClientPlayerEntity(); 
+			BiomeGenBase biomeGenBase = world.getBiomeGenForCoords((int) player.posX, (int) player.posZ);
+			
+			if(event.category == SoundCategory.AMBIENT || event.category == SoundCategory.MUSIC)
 			{
-				EntityPlayer player = FMLClientHandler.instance().getClientPlayerEntity(); 
-				if(world.getBiomeGenForCoords((int) player.posX, (int) player.posZ) instanceof ElysiumBiomeGenCorruption)
+				System.out.println("Sound type: " + event.category + " Name: " + event.name);
+			}
+			
+			if(event.category == SoundCategory.AMBIENT)
+			{
+				
+				if(player.posY <= Configs.labyrinthTop)
+				{//TODO: change name
+					event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.MODID + ":elysiumLabyrinth"));
+				}
+				if(biomeGenBase instanceof ElysiumBiomeGenCorruption)
 				{
 					event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.MODID + ":elysiumShadow"));
-				} else {
+				} else if(!(biomeGenBase instanceof ElysiumBiomeGenDesert)){
 					event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.MODID + ":elysium"));
+				} else {
+					event.result = null;
+				}
+			} else if(event.category == SoundCategory.MUSIC)
+			{
+				if(player.posY <= Configs.labyrinthTop)
+				{//TODO: change name
+					event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.MODID + ":elysiumLabyrinth"));
+				} else if(biomeGenBase instanceof ElysiumBiomeGenForest)
+				{
+					event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.MODID + ":elysiumForest"));
+				} else {
+
+					event.result = null;
 				}
 			}
 		}

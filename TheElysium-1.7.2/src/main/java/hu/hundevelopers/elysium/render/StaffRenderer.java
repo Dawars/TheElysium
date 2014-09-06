@@ -161,7 +161,7 @@ public class StaffRenderer implements IItemRenderer
 	@Override
 	public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper)
 	{
-		return type != ItemRenderType.EQUIPPED_FIRST_PERSON;
+		return true;
 	}
 	
 	@Override
@@ -196,22 +196,19 @@ public class StaffRenderer implements IItemRenderer
     	    switch (type)
             {
 	            case EQUIPPED_FIRST_PERSON:
-	            	scale = 0.8F;
-	            	glScalef(scale, scale, scale);
-	                glTranslatef(0.5F, -0.6F, 1.6F);
-	        		glRotatef(-80F, 0F, 1F, 0F);
-	        		glRotatef(-35F, 1F, 0F, 0F);
-	        		scale = 0.8F;
-	            	glScalef(scale, scale, scale);
+	                glTranslatef(0F, -1.2F, -0.5F);
+	        		glRotatef(200F, 0F, 1F, 0F);
+//	        		scale = 0.8F;
+//	            	glScalef(scale, scale, scale);
 	                
 
                 break;
 	            case EQUIPPED:
-//	            	scale = 2.1F;
-//	            	glScalef(scale, scale, scale);
-//	            	glTranslatef(-0.4F, -0.2F, -0.9F);
+	            	scale = 2.1F;
+	            	glScalef(scale, scale, scale);
+	            	glTranslatef(0.35F, -0.2F, -0.35F);
 //	            	
-//	        		glRotatef(190, 0F, 1F, 0F);
+	        		glRotatef(100, 0F, 1F, 0F);
 
 	            	
 	                break;
@@ -235,17 +232,16 @@ public class StaffRenderer implements IItemRenderer
 				if(block != null)
 				{
 					glPushMatrix();
-	        		glRotatef(10F, 0F, 0F, 1F);
+//	        		glRotatef(10F, 0F, 0F, 1F);
 						
 						float f = 1.5F;
 						glScalef(f, f, f);
-						glRotatef(-5, 0, 1, 0);
-						glRotatef(25, 0, 0, 1);
+						glRotatef(-45, 0, 1, 0);
 						
 						EntityItem entityitem = new EntityItem(FMLClientHandler.instance().getWorldClient());
 						entityitem.setEntityItemStack(new ItemStack(block));
 						entityitem.hoverStart = 0F;
-						itemRenderer.render(entityitem, 0.5F, 0.3F + (float)Math.sin(System.currentTimeMillis()/200D)/200F, -0.62F, false);
+						itemRenderer.render(entityitem, -0.453F, 1.0F + (float)Math.sin(System.currentTimeMillis()/200D)/200F, 0.5F, false);
 					glPopMatrix();
 				}
 				

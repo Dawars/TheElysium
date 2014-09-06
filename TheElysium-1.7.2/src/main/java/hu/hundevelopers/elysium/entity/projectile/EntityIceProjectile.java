@@ -46,6 +46,9 @@ public class EntityIceProjectile extends EntityThrowable
             this.worldObj.spawnParticle("snowballpoof", this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
         }
         
+        if(worldObj.getBlock((int) this.posX, (int) this.posY, (int) this.posZ) == Blocks.fire)
+        	worldObj.setBlock((int) this.posX, (int) this.posY, (int) this.posZ, Block.getBlockById(0));
+        
         if (!this.worldObj.isRemote)
         {
             this.setDead();
