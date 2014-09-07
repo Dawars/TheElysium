@@ -5,28 +5,20 @@ import hu.hundevelopers.elysium.api.Staff;
 import hu.hundevelopers.elysium.entity.projectile.EntityBlockProjectile;
 import hu.hundevelopers.elysium.entity.projectile.EntityFireballProjectile;
 import hu.hundevelopers.elysium.entity.projectile.EntityIceProjectile;
-import hu.hundevelopers.elysium.item.ElysiumStaffItem;
 import net.minecraft.block.Block;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIArrowAttack;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIFleeSun;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAIRestrictSun;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -36,25 +28,19 @@ public class EntityEnderMage extends EntityMob implements IRangedAttackMob
 {
 
 	private EntityAIArrowAttack aiArrowAttack = new EntityAIArrowAttack(this, 1.0D, 20, 60, 15.0F);
-    private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
+	private static final double gyok2 = Math.sqrt(2);
     
     public EntityEnderMage(World world)
 	{
 		super(world);
 		
 		this.tasks.addTask(1, new EntityAISwimming(this));
-        this.tasks.addTask(2, new EntityAIRestrictSun(this));
-        this.tasks.addTask(3, new EntityAIFleeSun(this, 1.0D));
-        this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
-        this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        this.tasks.addTask(6, new EntityAILookIdle(this));
+        this.tasks.addTask(3, new EntityAIWander(this, 1.0D));
+        this.tasks.addTask(4, this.aiArrowAttack);
+        this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        this.tasks.addTask(5, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
-
-        if (world != null && !world.isRemote)
-        {
-//            this.setCombatTask();
-        }
 	}
 
     @Override
@@ -62,6 +48,8 @@ public class EntityEnderMage extends EntityMob implements IRangedAttackMob
     {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.25D);
+        this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(4.0D);
+
     }
 
     @Override
@@ -86,8 +74,54 @@ public class EntityEnderMage extends EntityMob implements IRangedAttackMob
 				
 	            Staff.setBlockHolding(entity.getEquipmentInSlot(0), null);
 			} else {
+				System.out.println("Looking for blox");
 				// get throwable block nearby
-//				for(int i = 0; )
+				int i = 0;
+				int radius = 5;
+				
+				boolean canPickup = false;
+				
+				int bX = rand.nextInt(radius);
+				int bZ = rand.nextInt(radius);
+				int bY = worldObj.getTopSolidOrLiquidBlock((int) this.posX + bX, (int) this.posZ + bZ);
+
+				while(i < 20)
+				{
+					//block vector
+					bX = rand.nextInt(radius);
+					bZ = rand.nextInt(radius);
+					bY = worldObj.getTopSolidOrLiquidBlock((int) this.posX + bX, (int) this.posZ + bZ);
+
+					
+					double distSq = (bX)*(bX) + (this.posY-bY)*(this.posY-bY) + (bZ)*(bZ);
+					
+					if(distSq < radius * radius)
+					{
+						//yaw vector
+						double yX = Math.cos(this.rotationYaw);
+						double yZ = Math.sin(this.rotationYaw);
+						
+						double xProduct = (bX)*(yZ)-(bZ)*(yX);
+						xProduct /= Math.sqrt(distSq);
+						
+						xProduct = Math.asin(xProduct);
+						
+						if(Math.abs(xProduct) <= 1/gyok2)
+						{
+							canPickup = true;
+							break;
+						}
+					}
+					i++;
+				}
+				
+				if(canPickup)
+				{
+					System.out.println("could pick up");
+		            Staff.setBlockHolding(entity.getEquipmentInSlot(0), worldObj.getBlock((int) posX + bX, (int) posY + bY, (int) posZ + bZ));
+				} else {
+					System.out.println("could NOT pick up");
+				}
 				
 			}
     	} else if(type == 1)
@@ -132,44 +166,20 @@ public class EntityEnderMage extends EntityMob implements IRangedAttackMob
      */
     protected void addRandomArmor()
     {
-        super.addRandomArmor();
         this.setCurrentItemOrArmor(0, new ItemStack(Elysium.itemStaff, this.getMageType()));
     }
 
     public IEntityLivingData onSpawnWithEgg(IEntityLivingData par1EntityLivingData)
     {
         par1EntityLivingData = super.onSpawnWithEgg(par1EntityLivingData);
-        
-        this.tasks.addTask(4, this.aiArrowAttack);
 
-//        this.tasks.addTask(4, this.aiAttackOnCollide);
-        this.setMageType(this.getRNG().nextInt(4));
-        this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(4.0D);
+        int type = this.getRNG().nextInt(4);
+        System.out.println("Mage type: " + type);
+        this.setMageType(type);
         this.addRandomArmor();
-//        this.enchantEquipment();
 
         return par1EntityLivingData;
     }
-
-    /**
-     * sets this entity's combat AI.
-     */
-    public void setCombatTask()
-    {
-//        this.tasks.removeTask(this.aiAttackOnCollide);
-//        this.tasks.removeTask(this.aiArrowAttack);
-//        ItemStack itemstack = this.getHeldItem();
-//
-//        if (itemstack != null && itemstack.getItem() == Items.bow)
-//        {
-//            this.tasks.addTask(4, this.aiArrowAttack);
-//        }
-//        else
-//        {
-//            this.tasks.addTask(4, this.aiAttackOnCollide);
-//        }
-    }
-
 	
 	 /**
      * Return this skeleton's type.
@@ -208,8 +218,6 @@ public class EntityEnderMage extends EntityMob implements IRangedAttackMob
             byte b0 = par1NBTTagCompound.getByte("MageType");
             this.setMageType(b0);
         }
-
-        this.setCombatTask();
     }
 
     /**
@@ -219,19 +227,6 @@ public class EntityEnderMage extends EntityMob implements IRangedAttackMob
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setByte("MageType", (byte)this.getMageType());
-    }
-
-    /**
-     * Sets the held item, or an armor slot. Slot 0 is held item. Slot 1-4 is armor. Params: Item, slot
-     */
-    public void setCurrentItemOrArmor(int slot, ItemStack item)
-    {
-        super.setCurrentItemOrArmor(slot, item);
-
-        if (!this.worldObj.isRemote && slot == 0)
-        {
-            this.setCombatTask();
-        }
     }
 
 }

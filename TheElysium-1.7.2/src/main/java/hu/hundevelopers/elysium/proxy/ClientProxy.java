@@ -8,6 +8,7 @@ import hu.hundevelopers.elysium.entity.EntityPinkUnicorn;
 import hu.hundevelopers.elysium.entity.EntitySwan;
 import hu.hundevelopers.elysium.entity.EntityVoidSpecter;
 import hu.hundevelopers.elysium.entity.projectile.EntityBlockProjectile;
+import hu.hundevelopers.elysium.entity.projectile.EntityEnderRandomProjectile;
 import hu.hundevelopers.elysium.entity.projectile.EntityFireballProjectile;
 import hu.hundevelopers.elysium.entity.projectile.EntityIceProjectile;
 import hu.hundevelopers.elysium.model.ModelPinkUnicorn;
@@ -24,6 +25,7 @@ import hu.hundevelopers.elysium.render.RenderVoidSpecter;
 import hu.hundevelopers.elysium.render.StaffRenderer;
 import hu.hundevelopers.elysium.tile.ElysianTileEntityPortal;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.particle.EntityRainFX;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.init.Items;
 import net.minecraft.network.Packet;
@@ -69,6 +71,7 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntityBlockProjectile.class, new RenderBlockProjectile());
 		RenderingRegistry.registerEntityRenderingHandler(EntityIceProjectile.class, new RenderSnowball(Items.snowball));
 		RenderingRegistry.registerEntityRenderingHandler(EntityFireballProjectile.class, new RenderFireballProjectile(0.5F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityEnderRandomProjectile.class, new RenderSnowball(Items.ender_pearl));
 
 //		TickRegistry.registerTickHandler(new ElysianClientTickHandler(), Side.CLIENT);
 	}

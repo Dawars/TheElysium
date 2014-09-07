@@ -1,15 +1,15 @@
 package hu.hundevelopers.elysium.entity.projectile;
 
+import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
+
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
-import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -32,41 +32,137 @@ public class EntityEnderRandomProjectile extends EntityThrowable
      */
 	@Override
     protected void onImpact(MovingObjectPosition par1MovingObjectPosition)
-    {//FIXME PLAyer tep TP
+    {
 		if (par1MovingObjectPosition.entityHit != null)
         {
-            par1MovingObjectPosition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0.0F);
-        }
+            par1MovingObjectPosition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, par1MovingObjectPosition.entityHit), 0.0F);
+       
 
-        for (int i = 0; i < 32; ++i)
-        {
-            this.worldObj.spawnParticle("portal", this.posX, this.posY + this.rand.nextDouble() * 2.0D, this.posZ, this.rand.nextGaussian(), 0.0D, this.rand.nextGaussian());
-        }
-
-        if (!this.worldObj.isRemote)
-        {
-            if (this.getThrower() != null && this.getThrower() instanceof EntityPlayerMP)
-            {
-                EntityPlayerMP entityplayermp = (EntityPlayerMP)this.getThrower();
-
-                if (entityplayermp.playerNetServerHandler.func_147362_b().isChannelOpen() && entityplayermp.worldObj == this.worldObj)
-                {
-                    EnderTeleportEvent event = new EnderTeleportEvent(entityplayermp, this.posX, this.posY, this.posZ, 5.0F);
-                    if (!MinecraftForge.EVENT_BUS.post(event))
-                    { // Don't indent to lower patch size
-                    if (this.getThrower().isRiding())
-                    {
-                        this.getThrower().mountEntity((Entity)null);
-                    }
-
-                    this.getThrower().setPositionAndUpdate(event.targetX, event.targetY, event.targetZ);
-                    this.getThrower().fallDistance = 0.0F;
-                    this.getThrower().attackEntityFrom(DamageSource.fall, event.attackDamage);
-                    }
-                }
-            }
-
-            this.setDead();
+	        for (int i = 0; i < 32; ++i)
+	        {
+	            this.worldObj.spawnParticle("portal", this.posX, this.posY + this.rand.nextDouble() * 2.0D, this.posZ, this.rand.nextGaussian(), 0.0D, this.rand.nextGaussian());
+	        }
+	
+//	        if (!this.worldObj.isRemote)
+//	        {
+	            if (par1MovingObjectPosition.entityHit instanceof EntityPlayerMP)
+	            {
+	                EntityPlayerMP entityplayermp = (EntityPlayerMP)par1MovingObjectPosition.entityHit;
+	
+	                if (entityplayermp.playerNetServerHandler.func_147362_b().isChannelOpen() && entityplayermp.worldObj == this.worldObj)
+	                {
+	                    EnderTeleportEvent event = new EnderTeleportEvent(entityplayermp, this.posX, this.posY, this.posZ, 5.0F);
+	                    if (!MinecraftForge.EVENT_BUS.post(event))
+	                    { // Don't indent to lower patch size
+		                    if (entityplayermp.isRiding())
+		                    {
+		                    	entityplayermp.mountEntity((Entity)null);
+		                    }
+		                    double d0 = event.entityLiving.posX + (this.rand.nextDouble() - 0.5D) * 64.0D;
+		    		        double d1 = event.entityLiving.posY + (double)(this.rand.nextInt(64) - 32);
+		    		        double d2 = event.entityLiving.posZ + (this.rand.nextDouble() - 0.5D) * 64.0D;
+		    		        teleportTo(entityplayermp, d0, d1, d2);
+		    		        
+		                    entityplayermp.fallDistance = 0.0F;
+		                    entityplayermp.attackEntityFrom(DamageSource.fall, event.attackDamage);
+	                    }
+	                }
+	            } else if(par1MovingObjectPosition.entityHit instanceof EntityLivingBase)
+	            {
+	            	EntityLivingBase entityplayermp = (EntityLivingBase)par1MovingObjectPosition.entityHit;
+	
+	                EnderTeleportEvent event = new EnderTeleportEvent(entityplayermp, this.posX, this.posY, this.posZ, 5.0F);
+	                if (!MinecraftForge.EVENT_BUS.post(event))
+	                { // Don't indent to lower patch size
+	                    if (entityplayermp.isRiding())
+	                    {
+	                    	entityplayermp.mountEntity((Entity)null);
+	                    }
+	                    
+	                    double d0 = event.entityLiving.posX + (this.rand.nextDouble() - 0.5D) * 64.0D;
+	    		        double d1 = event.entityLiving.posY + (double)(this.rand.nextInt(64) - 32);
+	    		        double d2 = event.entityLiving.posZ + (this.rand.nextDouble() - 0.5D) * 64.0D;
+	    		        teleportTo(entityplayermp, d0, d1, d2);
+	    		        
+	                    entityplayermp.fallDistance = 0.0F;
+	                    entityplayermp.attackEntityFrom(DamageSource.fall, event.attackDamage);
+	                }
+	            }
+	            this.setDead();
+//	    	}
         }
     }
+	
+	/**
+    * Teleport the enderman
+    */
+   protected boolean teleportTo(EntityLivingBase entity, double targetX, double targetY, double targetZ)
+   {
+       double d3 = entity.posX;
+       double d4 = entity.posY;
+       double d5 = entity.posZ;
+       entity.posX = targetX;
+       entity.posY = targetY;
+       entity.posZ = targetZ;
+       boolean flag = false;
+       int i = MathHelper.floor_double(entity.posX);
+       int j = MathHelper.floor_double(entity.posY);
+       int k = MathHelper.floor_double(entity.posZ);
+
+       if (entity.worldObj.blockExists(i, j, k))
+       {
+           boolean flag1 = false;
+
+           while (!flag1 && j > 0)
+           {
+               Block block = entity.worldObj.getBlock(i, j - 1, k);
+
+               if (block.getMaterial().blocksMovement())
+               {
+                   flag1 = true;
+               }
+               else
+               {
+                   --entity.posY;
+                   --j;
+               }
+           }
+
+           if (flag1)
+           {
+        	   entity.setPositionAndUpdate(entity.posX, entity.posY, entity.posZ);
+
+               if (entity.worldObj.getCollidingBoundingBoxes(entity, entity.boundingBox).isEmpty() && !entity.worldObj.isAnyLiquid(entity.boundingBox))
+               {
+                   flag = true;
+               }
+           }
+       }
+
+       if (!flag)
+       {
+       	entity.setPositionAndUpdate(d3, d4, d5);
+           return false;
+       }
+       else
+       {
+           short short1 = 128;
+
+           for (int l = 0; l < short1; ++l)
+           {
+               double d6 = (double)l / ((double)short1 - 1.0D);
+               float f = (this.rand.nextFloat() - 0.5F) * 0.2F;
+               float f1 = (this.rand.nextFloat() - 0.5F) * 0.2F;
+               float f2 = (this.rand.nextFloat() - 0.5F) * 0.2F;
+               double d7 = d3 + (entity.posX - d3) * d6 + (this.rand.nextDouble() - 0.5D) * (double)entity.width * 2.0D;
+               double d8 = d4 + (entity.posY - d4) * d6 + this.rand.nextDouble() * (double)entity.height;
+               double d9 = d5 + (entity.posZ - d5) * d6 + (this.rand.nextDouble() - 0.5D) * (double)entity.width * 2.0D;
+               entity.worldObj.spawnParticle("portal", d7, d8, d9, (double)f, (double)f1, (double)f2);
+           }
+
+           entity.worldObj.playSoundEffect(d3, d4, d5, "mob.endermen.portal", 1.0F, 1.0F);
+           entity.playSound("mob.endermen.portal", 1.0F, 1.0F);
+           return true;
+       }
+   }
 }

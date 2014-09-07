@@ -2,25 +2,20 @@ package hu.hundevelopers.elysium.item;
 
 import hu.hundevelopers.elysium.api.Staff;
 import hu.hundevelopers.elysium.entity.projectile.EntityBlockProjectile;
+import hu.hundevelopers.elysium.entity.projectile.EntityEnderRandomProjectile;
 import hu.hundevelopers.elysium.entity.projectile.EntityFireballProjectile;
 import hu.hundevelopers.elysium.entity.projectile.EntityIceProjectile;
 
 import java.util.List;
 
-import com.mojang.authlib.GameProfile;
-
-import me.dawars.CraftingPillars.api.sentry.FakeSentryPlayer;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityFireball;
-import net.minecraft.entity.projectile.EntitySmallFireball;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import cpw.mods.fml.client.FMLClientHandler;
@@ -165,7 +160,13 @@ public class ElysiumStaffItem extends ElysiumItem
 			    world.spawnEntityInWorld(entityprojectile);
     	} else if(meta == 2)
     	{
-				
+//    		if(!player.isSneaking())
+//			{
+    			EntityEnderRandomProjectile entityprojectile = new EntityEnderRandomProjectile(world, player);
+    			world.spawnEntityInWorld(entityprojectile);
+//			} else {
+//				
+//			}
     	} else
     	{
 //    		if(!world.isRemote)

@@ -779,6 +779,9 @@ public class Elysium
 
         int fireprojectileID = EntityRegistry.findGlobalUniqueEntityId();
         EntityRegistry.registerModEntity(EntityFireballProjectile.class, "FireProjectile", fireprojectileID, this, 64, 10, true);
+
+        int enderrandomprojectileID = EntityRegistry.findGlobalUniqueEntityId();
+        EntityRegistry.registerModEntity(EntityEnderRandomProjectile.class, "EnderRandomProjectile", enderrandomprojectileID, this, 64, 10, true);
       
         //Entity Spawn
         EntityRegistry.addSpawn(EntityCaterPillar.class, 5, 3, 5, EnumCreatureType.creature, biomePlain);
