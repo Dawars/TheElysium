@@ -1,16 +1,8 @@
 package hu.hundevelopers.elysium.world;
 
-import static net.minecraft.world.biome.BiomeGenBase.forest;
-import static net.minecraft.world.biome.BiomeGenBase.forestHills;
-import static net.minecraft.world.biome.BiomeGenBase.jungle;
-import static net.minecraft.world.biome.BiomeGenBase.jungleHills;
-import static net.minecraft.world.biome.BiomeGenBase.plains;
-import static net.minecraft.world.biome.BiomeGenBase.taiga;
-import static net.minecraft.world.biome.BiomeGenBase.taigaHills;
 import hu.hundevelopers.elysium.Elysium;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
