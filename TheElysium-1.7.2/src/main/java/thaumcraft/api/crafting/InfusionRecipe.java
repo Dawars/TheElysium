@@ -75,16 +75,16 @@ public class InfusionRecipe
 		if (stack0!=null && stack1==null) return false;
 		if (stack0==null && stack1==null) return true;
 		boolean t1=false;
-		if (fuzzy) {
-			t1=true;
-			int od = OreDictionary.getOreID(stack0);
-			if (od!=-1) {
-				ItemStack[] ores = OreDictionary.getOres(od).toArray(new ItemStack[]{});
-				if (ThaumcraftApiHelper.containsMatch(false, new ItemStack[]{stack1}, ores))
-					return true;
-			}
-		}
-		else
+//		if (fuzzy) {
+//			t1=true;
+//			int od = OreDictionary.getOreID(stack0);
+//			if (od!=-1) {
+//				ItemStack[] ores = OreDictionary.getOres(od).toArray(new ItemStack[]{});
+//				if (ThaumcraftApiHelper.containsMatch(false, new ItemStack[]{stack1}, ores))
+//					return true;
+//			}
+//		}
+//		else
 			t1=ItemStack.areItemStackTagsEqual(stack0, stack1);		
         return stack0.getItem() != stack1.getItem() ? false : (stack0.getItemDamage() != stack1.getItemDamage() ? false : (stack0.stackSize > stack0.getMaxStackSize() ? false : t1));
     }

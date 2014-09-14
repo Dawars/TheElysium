@@ -205,7 +205,7 @@ public class CraftingPillars
 		blockTrashPillar = (new TrashPillarBlock(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("trashPillar");
 		registerBlock(blockTrashPillar);
 		
-		blockPumpPillar = (new PumpPillarBlock(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("pumpPillar");
+		blockPumpPillar = (new PumpPillarBlock(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("pumpPillar").setCreativeTab(null);
 		registerBlock(blockPumpPillar);
 		
 		
@@ -311,7 +311,7 @@ public class CraftingPillars
 		GameRegistry.registerTileEntity(TileEntityTrashPillar.class, "TileEntityTrashPillar");
 		GameRegistry.registerTileEntity(TileEntityPumpPillar.class, "TileEntityPumpPillar");
 
-		GameRegistry.registerTileEntity(TileEntityChristmasPresent.class, "TileEntityPresent");
+		GameRegistry.registerTileEntity(TileEntityChristmasPresent.class, "TileEntityChristmasPresent");
 		GameRegistry.registerTileEntity(TileEntityLight.class, "TileEntityLight");
 	}
 
