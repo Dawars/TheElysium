@@ -41,10 +41,10 @@ public class ElysiumClientHandler
 {
 	@SubscribeEvent
 	public void guiOpen(GuiOpenEvent event) {
-//		if (event.gui instanceof GuiMainMenu && Configs.customGui) {
-//			Minecraft.getMinecraft().displayGuiScreen(new ElysiumGuiEmulator(new ElysiumGuiMainMenu(null)));
-//			event.setCanceled(true);
-//		}
+		if (event.gui instanceof GuiMainMenu && Configs.customGui) {
+			Minecraft.getMinecraft().displayGuiScreen(new ElysiumGuiEmulator(new ElysiumGuiMainMenu(null)));
+			event.setCanceled(true);
+		}
 	}
 	
 	@SideOnly(Side.CLIENT)

@@ -928,6 +928,8 @@ public class Elysium
 		Staff.registerThrowableBlock(Blocks.cobblestone, 4F);
 		Staff.registerThrowableBlock(Blocks.end_stone, 4F);
 		Staff.registerThrowableBlock(Blocks.stone, 4F);
+		Staff.registerThrowableBlock(Blocks.ice, 4F);
+		Staff.registerThrowableBlock(Blocks.packed_ice, 6F);
 		Staff.registerThrowableBlock(Blocks.obsidian, 8F);
 		
 		//Elysium
