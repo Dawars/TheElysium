@@ -93,7 +93,7 @@ public class ElysiumClientHandler
 			} else if(event.category == SoundCategory.MUSIC)
 			{
 				if(player.posY <= Configs.labyrinthTop)
-				{//TODO: change name
+				{
 					event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.MODID + ":elysiumLabyrinth"));
 				} else if(biomeGenBase instanceof ElysiumBiomeGenForest)
 				{
