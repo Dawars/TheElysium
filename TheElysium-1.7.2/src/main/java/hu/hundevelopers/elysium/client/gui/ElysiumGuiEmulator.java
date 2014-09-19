@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.client.gui;
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import net.minecraft.client.Minecraft;

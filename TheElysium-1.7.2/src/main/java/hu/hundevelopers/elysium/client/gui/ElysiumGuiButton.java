@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.client.gui;
 
-import static org.lwjgl.opengl.GL11.*;
 import hu.hundevelopers.elysium.render.RenderingHelper;
 
 import java.awt.Color;

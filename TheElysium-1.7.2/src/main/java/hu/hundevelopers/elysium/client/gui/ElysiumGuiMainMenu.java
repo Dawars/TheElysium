@@ -1,20 +1,20 @@
 package hu.hundevelopers.elysium.client.gui;
 
 import cpw.mods.fml.client.GuiModList;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.render.RenderingHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiSelectWorld;
 import net.minecraft.util.ResourceLocation;
-import static org.lwjgl.opengl.GL11.*;
+import net.minecraft.util.StatCollector;
 
 public class ElysiumGuiMainMenu extends ElysiumGui {
-	public ResourceLocation imgBackground = new ResourceLocation(Elysium.MODID + ":textures/gui/menu/bg.png");
-	public ResourceLocation imgTitle = new ResourceLocation(Elysium.MODID + ":textures/gui/menu/title.png");
+	public ResourceLocation imgBackground = new ResourceLocation(Elysium.MODID
+			+ ":textures/gui/menu/bg.png");
+	public ResourceLocation imgTitle = new ResourceLocation(Elysium.MODID
+			+ ":textures/gui/menu/title.png");
 	public ElysiumGuiButton btnSingle, btnMulti, btnMods, btnOptions, btnQuit;
 	public ElysiumGui subGui;
 
@@ -66,23 +66,30 @@ public class ElysiumGuiMainMenu extends ElysiumGui {
 		this.subHeight = this.height - this.subY - this.margin;
 		this.btnHeight = this.menuWidth / 5;
 
-		this.btnSingle = new ElysiumGuiButton(this, this.menuX, this.menuY, this.menuWidth, this.btnHeight, LanguageRegistry.instance()
-				.getStringLocalization("menu.singleplayer"));
+		this.btnSingle = new ElysiumGuiButton(this, this.menuX, this.menuY,
+				this.menuWidth, this.btnHeight,
+				StatCollector.translateToLocal("menu.singleplayer"));
 		this.subs.add(this.btnSingle);
-		this.btnMulti = new ElysiumGuiButton(this, this.menuX, this.menuY + this.btnHeight + this.margin, this.menuWidth, this.btnHeight,
-				LanguageRegistry.instance().getStringLocalization("menu.multiplayer"));
+		this.btnMulti = new ElysiumGuiButton(this, this.menuX, this.menuY
+				+ this.btnHeight + this.margin, this.menuWidth, this.btnHeight,
+				StatCollector.translateToLocal("menu.multiplayer"));
 		this.subs.add(this.btnMulti);
-		this.btnMods = new ElysiumGuiButton(this, this.menuX, this.menuY + (this.btnHeight + this.margin) * 2, this.menuWidth, this.btnHeight, "Mods");
+		this.btnMods = new ElysiumGuiButton(this, this.menuX, this.menuY
+				+ (this.btnHeight + this.margin) * 2, this.menuWidth,
+				this.btnHeight, "Mods");
 		this.subs.add(this.btnMods);
-		this.btnOptions = new ElysiumGuiButton(this, this.menuX, this.menuY + (this.btnHeight + this.margin) * 3, this.menuWidth, this.btnHeight,
-				LanguageRegistry.instance().getStringLocalization("menu.options"));
+		this.btnOptions = new ElysiumGuiButton(this, this.menuX, this.menuY
+				+ (this.btnHeight + this.margin) * 3, this.menuWidth,
+				this.btnHeight, StatCollector.translateToLocal("menu.options"));
 		this.subs.add(this.btnOptions);
-		this.btnQuit = new ElysiumGuiButton(this, this.menuX, this.menuY + this.subHeight - this.btnHeight, this.menuWidth, this.btnHeight,
-				LanguageRegistry.instance().getStringLocalization("menu.quit"));
+		this.btnQuit = new ElysiumGuiButton(this, this.menuX, this.menuY
+				+ this.subHeight - this.btnHeight, this.menuWidth,
+				this.btnHeight, StatCollector.translateToLocal("menu.quit"));
 		this.subs.add(this.btnQuit);
-		
-		if(this.subGui != null)
-			this.subGui.setBounds(this.subX, this.subY, this.subWidth, this.subHeight);
+
+		if (this.subGui != null)
+			this.subGui.setBounds(this.subX, this.subY, this.subWidth,
+					this.subHeight);
 	}
 
 	@Override
@@ -92,15 +99,22 @@ public class ElysiumGuiMainMenu extends ElysiumGui {
 			this.subGui.update(mouseX, mouseY, pressed);
 
 		if (this.btnSingle.wasClicked())
-			//this.setSubGui(new ElysiumGuiSelectWorld(this, this.subX, this.subY, this.subWidth, this.subHeight));
-			Minecraft.getMinecraft().displayGuiScreen(new GuiSelectWorld(ElysiumGuiEmulator.instance));
+			// this.setSubGui(new ElysiumGuiSelectWorld(this, this.subX,
+			// this.subY, this.subWidth, this.subHeight));
+			Minecraft.getMinecraft().displayGuiScreen(
+					new GuiSelectWorld(ElysiumGuiEmulator.instance));
 		if (this.btnMulti.wasClicked())
-			//this.setSubGui(new ElysiumGuiMultiplayer(this, this.subX, this.subY, this.subWidth, this.subHeight));
-			Minecraft.getMinecraft().displayGuiScreen(new GuiMultiplayer(ElysiumGuiEmulator.instance));
+			// this.setSubGui(new ElysiumGuiMultiplayer(this, this.subX,
+			// this.subY, this.subWidth, this.subHeight));
+			Minecraft.getMinecraft().displayGuiScreen(
+					new GuiMultiplayer(ElysiumGuiEmulator.instance));
 		if (this.btnMods.wasClicked())
-			Minecraft.getMinecraft().displayGuiScreen(new GuiModList(ElysiumGuiEmulator.instance));
+			Minecraft.getMinecraft().displayGuiScreen(
+					new GuiModList(ElysiumGuiEmulator.instance));
 		if (this.btnOptions.wasClicked())
-			Minecraft.getMinecraft().displayGuiScreen(new GuiOptions(ElysiumGuiEmulator.instance, Minecraft.getMinecraft().gameSettings));
+			Minecraft.getMinecraft().displayGuiScreen(
+					new GuiOptions(ElysiumGuiEmulator.instance, Minecraft
+							.getMinecraft().gameSettings));
 		if (this.btnQuit.wasClicked())
 			Minecraft.getMinecraft().shutdown();
 	}
@@ -109,9 +123,11 @@ public class ElysiumGuiMainMenu extends ElysiumGui {
 	public void render(float partialTick) {
 		RenderingHelper.setColor(1F, 1F, 1F, 1F);
 		RenderingHelper.bindTexture(this.imgBackground);
-		RenderingHelper.Gui.drawTexturedRect(0, 0, this.width, this.height, 0F, 0F, 1F, 1F);
+		RenderingHelper.Gui.drawTexturedRect(0, 0, this.width, this.height, 0F,
+				0F, 1F, 1F);
 		RenderingHelper.bindTexture(this.imgTitle);
-		RenderingHelper.Gui.drawTexturedRect(this.titleX, this.titleY, this.titleWidth, this.titleHeight, 0F, 0F, 1F, 1F);
+		RenderingHelper.Gui.drawTexturedRect(this.titleX, this.titleY,
+				this.titleWidth, this.titleHeight, 0F, 0F, 1F, 1F);
 		RenderingHelper.setColor(0F, 0F, 0F, 0.75F);
 		super.render(partialTick);
 		if (this.subGui != null)

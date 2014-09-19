@@ -1,12 +1,7 @@
 package hu.hundevelopers.elysium.client.gui;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
-import static org.lwjgl.opengl.GL11.*;
 
 public class ElysiumGui {
 	public ElysiumGui parent;
