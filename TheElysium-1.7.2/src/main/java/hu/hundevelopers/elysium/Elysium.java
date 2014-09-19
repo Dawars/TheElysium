@@ -162,6 +162,8 @@ public class Elysium
 	public static Block blockCactus;
 	public static Block blockRaspberryBush;
 	public static Block blockGrapesBush;
+	
+	public static Block blockQuartzFence;
 
 
 	//Items
@@ -464,6 +466,9 @@ public class Elysium
 
 		blockGrapesBush = new ElysiumGrapesBush().setHardness(0F).setResistance(1F).setStepSound(Block.soundTypeGrass).setBlockTextureName("grapes_empty").setBlockName("blockGrapes");
 		registerBlock(blockGrapesBush);
+		
+		blockQuartzFence = new ElysiumQuartzFence(MODID + ":quartz_block_side_mossy2", Material.rock).setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundTypePiston).setBlockName("quartzFence");
+		registerBlock(blockQuartzFence);
 
 		
 		//Items
