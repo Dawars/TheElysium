@@ -1,13 +1,13 @@
 package hu.hundevelopers.elysium.block;
 
-import java.util.Random;
-
 import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.render.EntityDropParticleFX;
+
+import java.util.Random;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;

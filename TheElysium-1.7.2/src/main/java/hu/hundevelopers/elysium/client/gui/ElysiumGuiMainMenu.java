@@ -13,7 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import static org.lwjgl.opengl.GL11.*;
 
 public class ElysiumGuiMainMenu extends ElysiumGui {
-	public ResourceLocation imgBackground = new ResourceLocation(Elysium.MODID + ":textures/gui/menu/bg.png");
+	public ResourceLocation imgBackground = new ResourceLocation(Elysium.MODID + ":textures/gui/menu/menu.png");
 	public ResourceLocation imgTitle = new ResourceLocation(Elysium.MODID + ":textures/gui/menu/title.png");
 	public ElysiumGuiButton btnSingle, btnMulti, btnMods, btnOptions, btnQuit;
 	public ElysiumGui subGui;
@@ -111,7 +111,14 @@ public class ElysiumGuiMainMenu extends ElysiumGui {
 		RenderingHelper.bindTexture(this.imgBackground);
 		RenderingHelper.Gui.drawTexturedRect(0, 0, this.width, this.height, 0F, 0F, 1F, 1F);
 		RenderingHelper.bindTexture(this.imgTitle);
-		RenderingHelper.Gui.drawTexturedRect(this.titleX, this.titleY, this.titleWidth, this.titleHeight, 0F, 0F, 1F, 1F);
+		glPushMatrix();
+		glEnable(GL_BLEND);
+		glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
+			RenderingHelper.Gui.drawTexturedRect(this.titleX, this.titleY, this.titleWidth, this.titleHeight, 0F, 0F, 1F, 1F);
+		glDisable(GL_BLEND);
+		glPopMatrix();
+		
 		RenderingHelper.setColor(0F, 0F, 0F, 0.75F);
 		super.render(partialTick);
 		if (this.subGui != null)

@@ -1,17 +1,17 @@
 package hu.hundevelopers.elysium.block;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlockWithMetadata;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ElysiumFlowerItemBlock extends ItemBlockWithMetadata
+public class ElysiumQuartzItemBlock extends ItemBlock
 {
-	public ElysiumFlowerItemBlock(Block block)
-	{
-		super(block, block);
-		setHasSubtypes(true);
-	}
 
+	public ElysiumQuartzItemBlock(Block block)
+	{
+		super(block);
+	}
+	
 	@Override
 	public String getUnlocalizedName(ItemStack itemstack)
 	{
@@ -19,13 +19,13 @@ public class ElysiumFlowerItemBlock extends ItemBlockWithMetadata
 		switch (itemstack.getItemDamage())
 		{
 			case 0:
-				name = "asphodel";
+				name = "default";
 			break;
 			case 1:
-				name = "midas";
+				name = "chiseled";
 			break;
 			default:
-				name = "error";
+				name = "lines";
 		}
 		return getUnlocalizedName() + "." + name;
 	}
