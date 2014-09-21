@@ -1,32 +1,32 @@
 package hu.hundevelopers.elysium.block;
 
+import hu.hundevelopers.elysium.Elysium;
+
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import hu.hundevelopers.elysium.Elysium;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
-import net.minecraft.block.BlockQuartz;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 
 public class ElysiumQuartzFence extends BlockFence
 {
 
-	public static final String[] texture_names = {"quartz_mossy", "quartz_clean"};
-	public static final IIcon[] fence_icons = new IIcon[texture_names.length];
-
-	public ElysiumQuartzFence(Material mat)
+	public ElysiumQuartzFence(Block block)
 	{
-		super("", mat);
+		super("", block.getMaterial());
+
+        this.setHardness(2);
+        this.setResistance(3.0F);
+        this.setStepSound(block.stepSound);
 		this.setCreativeTab(Elysium.tabElysium);
 	}
-	
 
     /**
      * Gets the block's texture. Args: side, meta
@@ -35,7 +35,7 @@ public class ElysiumQuartzFence extends BlockFence
     @Override
     public IIcon getIcon(int side, int meta)
     {
-        return meta == 0 ? Blocks.quartz_block.getIcon(0, 0) : this.blockIcon;
+        return meta == 1 ? Elysium.blockQuartzBlock.getBlockTextureFromSide(side) : Blocks.quartz_block.getBlockTextureFromSide(side);
     }
 
     /**
@@ -47,22 +47,6 @@ public class ElysiumQuartzFence extends BlockFence
         return meta;
     }
     
-//    @SideOnly(Side.CLIENT)
-//    @Override
-//    public void registerBlockIcons(IIconRegister p_149651_1_)
-//    {
-//    	for(int i = 0; i < texture_names.length; i++)
-//    		fence_icons[i] = p_149651_1_.registerIcon(Elysium.MODID + ":" + texture_names[i]);
-//    }
-//    
-
-	  @SideOnly(Side.CLIENT)
-	  @Override
-	  public void registerBlockIcons(IIconRegister p_149651_1_)
-	  {
-	  		this.blockIcon = p_149651_1_.registerIcon(Elysium.MODID + ":" + fence_icons[0]);
-	  }
-	  
     /**
      * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
      */
@@ -70,7 +54,7 @@ public class ElysiumQuartzFence extends BlockFence
     @Override
     public void getSubBlocks(Item item, CreativeTabs tab, List list)
     {
-        for(int i = 0; i < texture_names.length; i++)
+        for(int i = 0; i < 2; i++)
         	list.add(new ItemStack(item, 1, i));
     }
 }

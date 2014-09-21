@@ -17,8 +17,6 @@ import hu.hundevelopers.elysium.world.gen.WorldGenElysium;
 
 import java.io.File;
 
-import clickme.nocubes.NoCubes;
-
 import me.dawars.CraftingPillars.CraftingPillars;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -50,6 +48,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
+import clickme.nocubes.NoCubes;
 import coloredlightscore.src.api.CLApi;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
@@ -163,9 +162,9 @@ public class Elysium
 	public static Block blockRaspberryBush;
 	public static Block blockGrapesBush;
 
-	public static Block blockQuartzFence;
 	public static Block blockQuartzBlock;
-
+	public static Block blockQuartzFence;
+	public static Block blockQuartzWall;
 
 	//Items
 
@@ -468,11 +467,14 @@ public class Elysium
 		blockGrapesBush = new ElysiumGrapesBush().setHardness(0F).setResistance(1F).setStepSound(Block.soundTypeGrass).setBlockTextureName("grapes_empty").setBlockName("blockGrapes");
 		registerBlock(blockGrapesBush);
 		
-		blockQuartzFence = new ElysiumQuartzFence(Material.rock).setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundTypePiston).setBlockName("quartzFence");
-		registerBlock(blockQuartzFence, ElysiumFenceItemBlock.class);
-		
 		blockQuartzBlock = new ElysiumBlockQuartz().setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundTypePiston).setBlockTextureName(MODID + ":quartz_block").setBlockName("quartz_mossy");
 		registerBlock(blockQuartzBlock, ElysiumQuartzItemBlock.class);
+
+		blockQuartzFence = new ElysiumQuartzFence(blockQuartzBlock).setBlockName("quartzFence");
+		registerBlock(blockQuartzFence, ElysiumFenceItemBlock.class);
+
+		blockQuartzWall = new ElysiumBlockQuartzWall(blockQuartzBlock).setBlockName("quartzWall");
+		registerBlock(blockQuartzWall, ElysiumWallItemBlock.class);
 		
 		
 		//Items
@@ -696,6 +698,14 @@ public class Elysium
 		GameRegistry.addShapelessRecipe(new ItemStack(itemSturdyHide), new Object[] {new ItemStack(Items.leather), new ItemStack(itemKnife)});
 		GameRegistry.addRecipe(new ItemStack(itemKnife), new Object[] { " I", "S ", Character.valueOf('S'), Items.stick, Character.valueOf('I'), Items.iron_ingot});
 
+		GameRegistry.addShapelessRecipe(new ItemStack(blockQuartzBlock, 1, 0), new Object[] {new ItemStack(Blocks.quartz_block, 1, 0), new ItemStack(Blocks.vine)});
+		GameRegistry.addShapelessRecipe(new ItemStack(blockQuartzBlock, 1, 1), new Object[] {new ItemStack(Blocks.quartz_block, 1, 1), new ItemStack(Blocks.vine)});
+		GameRegistry.addShapelessRecipe(new ItemStack(blockQuartzBlock, 1, 2), new Object[] {new ItemStack(Blocks.quartz_block, 1, 2), new ItemStack(Blocks.vine)});
+
+
+		GameRegistry.addShapelessRecipe(new ItemStack(Blocks.quartz_block, 1, 0), new Object[] {new ItemStack(blockQuartzBlock, 1, 0)});
+		GameRegistry.addShapelessRecipe(new ItemStack(Blocks.quartz_block, 1, 1), new Object[] {new ItemStack(blockQuartzBlock, 1, 1)});
+		GameRegistry.addShapelessRecipe(new ItemStack(Blocks.quartz_block, 1, 2), new Object[] {new ItemStack(blockQuartzBlock, 1, 2)});
 		
 		//Ore registry
 		OreDictionary.registerOre("dyePink", itemAsphodelPetals);

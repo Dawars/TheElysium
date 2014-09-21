@@ -2,6 +2,7 @@ package hu.hundevelopers.elysium.world;
 
 import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.Configs;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenCorruption;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -12,6 +13,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.biome.BiomeGenBase;
 
 public class ElysiumTeleporter extends Teleporter
 {
@@ -100,16 +102,28 @@ public class ElysiumTeleporter extends Teleporter
 						lowest = worldServer.getTopSolidOrLiquidBlock(x+i, z+j);
 				}
 			}
+			boolean isCorrupt = false;	
+			BiomeGenBase biomegenbase = worldServer.getBiomeGenForCoords(x, z);
+			if(biomegenbase != null && biomegenbase instanceof ElysiumBiomeGenCorruption)
+				isCorrupt = true;
+			
 			for (int j = y; j >= lowest; j--) {
 				for (int i = -2; i <= 2; i++) {
 					for (int k = -2; k <= 2; k++) {
 						Block block = worldServer.getBlock(x+i, j, z+k);
-						if(block.isAir(worldServer, x+i, j, z+k) || block.canBeReplacedByLeaves(worldServer, x+i, j, z+k)){
-							//worldServer.setBlock(x+i, j, z+k, worldServer.getBiomeGenForCoords(x+i, z+k).fillerBlock); Causes crash!
-							if(worldServer.provider.dimensionId == Elysium.dimensionID)
-								worldServer.setBlock(x+i, j, z+k, Elysium.blockDirt);
+						if(block.isAir(worldServer, x+i, j, z+k) || block.canBeReplacedByLeaves(worldServer, x+i, j, z+k))
+						{
+							if(biomegenbase != null && biomegenbase.fillerBlock != null)
+							{
+								worldServer.setBlock(x+i, j, z+k, biomegenbase.fillerBlock);
+							}
 							else
-								worldServer.setBlock(x+i, j, z+k, Blocks.dirt);
+							{
+								if(worldServer.provider.dimensionId == Elysium.dimensionID)
+									worldServer.setBlock(x+i, j, z+k, Elysium.blockDirt);
+								else
+									worldServer.setBlock(x+i, j, z+k, Blocks.dirt);
+							}
 						}
 					}
 				}
@@ -122,19 +136,19 @@ public class ElysiumTeleporter extends Teleporter
 			{
 				for(int j=-1; j <= 1; j++)
 				{
-					worldServer.setBlock(x+i, y+8, z+j, Blocks.quartz_block);
+					worldServer.setBlock(x+i, y+8, z+j, isCorrupt && this.random.nextInt(3) == 0 ? Elysium.blockQuartzBlock : Blocks.quartz_block);
 					worldServer.setBlockMetadataWithNotify(x+i, y+8, z+j, 1, 0);
 
-					worldServer.setBlock(x+i, y+6, z+j, Blocks.quartz_block);
+					worldServer.setBlock(x+i, y+6, z+j, isCorrupt && this.random.nextInt(3) == 0 ? Elysium.blockQuartzBlock : Blocks.quartz_block);
 					worldServer.setBlockMetadataWithNotify(x+i, y+6, z+j, 2, 0);
-					worldServer.setBlock(x+i, y+5, z+j, Blocks.quartz_block);
+					worldServer.setBlock(x+i, y+5, z+j, isCorrupt && this.random.nextInt(3) == 0 ? Elysium.blockQuartzBlock : Blocks.quartz_block);
 					worldServer.setBlockMetadataWithNotify(x+i, y+5, z+j, 2, 0);
 
 					worldServer.setBlock(x+i, y+4, z+j, Blocks.gold_block);
 
-					worldServer.setBlock(x+i, y+3, z+j, Blocks.quartz_block);
+					worldServer.setBlock(x+i, y+3, z+j, isCorrupt && this.random.nextInt(3) == 0 ? Elysium.blockQuartzBlock : Blocks.quartz_block);
 					worldServer.setBlockMetadataWithNotify(x+i, y+3, z+j, 2, 0);
-					worldServer.setBlock(x+i, y+2, z+j, Blocks.quartz_block);
+					worldServer.setBlock(x+i, y+2, z+j, isCorrupt && this.random.nextInt(3) == 0 ? Elysium.blockQuartzBlock : Blocks.quartz_block);
 					worldServer.setBlockMetadataWithNotify(x+i, y+2, z+j, 2, 0);
 				}
 			}
@@ -142,8 +156,8 @@ public class ElysiumTeleporter extends Teleporter
 			{
 				for(int j=-2; j <= 2; j++)
 				{
-					worldServer.setBlock(x+i, y+7, z+j, Blocks.quartz_block);
-					worldServer.setBlock(x+i, y+1, z+j, Blocks.quartz_block);
+					worldServer.setBlock(x+i, y+7, z+j, isCorrupt && this.random.nextInt(3) == 0 ? Elysium.blockQuartzBlock : Blocks.quartz_block);
+					worldServer.setBlock(x+i, y+1, z+j, isCorrupt && this.random.nextInt(3) == 0 ? Elysium.blockQuartzBlock : Blocks.quartz_block);
 				}
 			}
 

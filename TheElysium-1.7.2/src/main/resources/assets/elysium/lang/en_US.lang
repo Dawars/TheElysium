@@ -48,6 +48,14 @@ tile.blockCactus.name=Hallowed Cactus
 tile.blockRaspberryBush.name=Raspberry Bush
 tile.blockGrapes.name=Grapes Bush
 
+tile.quartzFence.clean.name=Quartz Fence
+tile.quartzFence.mossy.name=Mossy Quartz Fence
+tile.quartzWall.clean.name=Quartz Wall
+tile.quartzWall.mossy.name=Mossy Quartz Wall
+tile.quartz_mossy.default.name=Mossy Quartz Block
+tile.quartz_mossy.chiseled.name=Mossy Chiseled Quartz Block
+tile.quartz_mossy.lines.name=Mossy Pillar Quartz Block
+
 
 item.prism.name=Grace Prism
 item.seeds_pepper.name=Pepper Seed
