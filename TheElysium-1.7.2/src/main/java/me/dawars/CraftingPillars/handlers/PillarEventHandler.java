@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
@@ -53,14 +54,26 @@ public class PillarEventHandler
 		if(event.entity.worldObj.isRemote) return;
 		if(event.entityLiving instanceof EntityPlayer && event.source != DamageSource.fall)
 		{
-			boolean isRing1 = Baubles.isGemInRing(Items.ender_pearl, BaublesApi.getBaubles((EntityPlayer) event.entityLiving).getStackInSlot(1));
-			boolean isRing2 = Baubles.isGemInRing(Items.ender_pearl, BaublesApi.getBaubles((EntityPlayer) event.entityLiving).getStackInSlot(2));
-			if(isRing1 || isRing2)
+			if(BaublesApi.getBaubles((EntityPlayer) event.entityLiving) != null)
 			{
-				double d0 = event.entityLiving.posX + (this.rand.nextDouble() - 0.5D) * 64.0D;
-		        double d1 = event.entityLiving.posY + (double)(this.rand.nextInt(64) - 32);
-		        double d2 = event.entityLiving.posZ + (this.rand.nextDouble() - 0.5D) * 64.0D;
-		        teleportTo(event.entity, d0, d1, d2);
+				ItemStack stack1 = BaublesApi.getBaubles((EntityPlayer) event.entityLiving).getStackInSlot(1);
+				ItemStack stack2 = BaublesApi.getBaubles((EntityPlayer) event.entityLiving).getStackInSlot(2);
+				
+				boolean isRing1 = false;
+				boolean isRing2 = false;
+				
+				if (stack1 != null)
+					isRing1 = Baubles.isGemInRing(Items.ender_pearl, stack1);
+				if (stack2 != null)
+					isRing2 = Baubles.isGemInRing(Items.ender_pearl, stack2);
+				
+				if(isRing1 || isRing2)
+				{
+					double d0 = event.entityLiving.posX + (PillarEventHandler.rand.nextDouble() - 0.5D) * 64.0D;
+			        double d1 = event.entityLiving.posY + (double)(PillarEventHandler.rand.nextInt(64) - 32);
+			        double d2 = event.entityLiving.posZ + (PillarEventHandler.rand.nextDouble() - 0.5D) * 64.0D;
+			        teleportTo(event.entity, d0, d1, d2);
+				}
 			}
 		}
 	}
@@ -123,12 +136,12 @@ public class PillarEventHandler
             for (int l = 0; l < short1; ++l)
             {
                 double d6 = (double)l / ((double)short1 - 1.0D);
-                float f = (this.rand.nextFloat() - 0.5F) * 0.2F;
-                float f1 = (this.rand.nextFloat() - 0.5F) * 0.2F;
-                float f2 = (this.rand.nextFloat() - 0.5F) * 0.2F;
-                double d7 = d3 + (entity.posX - d3) * d6 + (this.rand.nextDouble() - 0.5D) * (double)entity.width * 2.0D;
-                double d8 = d4 + (entity.posY - d4) * d6 + this.rand.nextDouble() * (double)entity.height;
-                double d9 = d5 + (entity.posZ - d5) * d6 + (this.rand.nextDouble() - 0.5D) * (double)entity.width * 2.0D;
+                float f = (PillarEventHandler.rand.nextFloat() - 0.5F) * 0.2F;
+                float f1 = (PillarEventHandler.rand.nextFloat() - 0.5F) * 0.2F;
+                float f2 = (PillarEventHandler.rand.nextFloat() - 0.5F) * 0.2F;
+                double d7 = d3 + (entity.posX - d3) * d6 + (PillarEventHandler.rand.nextDouble() - 0.5D) * (double)entity.width * 2.0D;
+                double d8 = d4 + (entity.posY - d4) * d6 + PillarEventHandler.rand.nextDouble() * (double)entity.height;
+                double d9 = d5 + (entity.posZ - d5) * d6 + (PillarEventHandler.rand.nextDouble() - 0.5D) * (double)entity.width * 2.0D;
                 entity.worldObj.spawnParticle("portal", d7, d8, d9, (double)f, (double)f1, (double)f2);
             }
 
