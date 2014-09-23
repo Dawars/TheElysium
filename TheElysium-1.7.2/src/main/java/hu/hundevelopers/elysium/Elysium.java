@@ -19,6 +19,7 @@ import java.io.File;
 
 import me.dawars.CraftingPillars.CraftingPillars;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFence;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EnumCreatureType;
@@ -165,7 +166,8 @@ public class Elysium
 	public static Block blockQuartzBlock;
 	public static Block blockQuartzFence;
 	public static Block blockQuartzWall;
-
+	public static Block blockQuartzGate;
+	
 	//Items
 
 	public static Item itemPrism;
@@ -470,11 +472,14 @@ public class Elysium
 		blockQuartzBlock = new ElysiumBlockQuartz().setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundTypePiston).setBlockTextureName(MODID + ":quartz_block").setBlockName("quartz_mossy");
 		registerBlock(blockQuartzBlock, ElysiumQuartzItemBlock.class);
 
-		blockQuartzFence = new ElysiumQuartzFence(blockQuartzBlock).setBlockName("quartzFence");
+		blockQuartzFence = new ElysiumBlockQuartzFence(blockQuartzBlock).setBlockName("quartzFence");
 		registerBlock(blockQuartzFence, ElysiumFenceItemBlock.class);
 
 		blockQuartzWall = new ElysiumBlockQuartzWall(blockQuartzBlock).setBlockName("quartzWall");
 		registerBlock(blockQuartzWall, ElysiumWallItemBlock.class);
+		
+		blockQuartzGate = new ElysiumBlockQuartzGate().setBlockName("quartzGate");
+		registerBlock(blockQuartzGate);
 		
 		
 		//Items
@@ -702,10 +707,23 @@ public class Elysium
 		GameRegistry.addShapelessRecipe(new ItemStack(blockQuartzBlock, 1, 1), new Object[] {new ItemStack(Blocks.quartz_block, 1, 1), new ItemStack(Blocks.vine)});
 		GameRegistry.addShapelessRecipe(new ItemStack(blockQuartzBlock, 1, 2), new Object[] {new ItemStack(Blocks.quartz_block, 1, 2), new ItemStack(Blocks.vine)});
 
-
 		GameRegistry.addShapelessRecipe(new ItemStack(Blocks.quartz_block, 1, 0), new Object[] {new ItemStack(blockQuartzBlock, 1, 0)});
 		GameRegistry.addShapelessRecipe(new ItemStack(Blocks.quartz_block, 1, 1), new Object[] {new ItemStack(blockQuartzBlock, 1, 1)});
 		GameRegistry.addShapelessRecipe(new ItemStack(Blocks.quartz_block, 1, 2), new Object[] {new ItemStack(blockQuartzBlock, 1, 2)});
+
+		GameRegistry.addRecipe(new ItemStack(blockQuartzFence, 2), new Object[] { "SSS", "SSS", Character.valueOf('S'), Items.quartz});
+		GameRegistry.addRecipe(new ItemStack(blockQuartzWall, 6, 1), new Object[] { "SSS", "SSS", Character.valueOf('S'), blockQuartzBlock});
+		GameRegistry.addRecipe(new ItemStack(blockQuartzWall, 6, 0), new Object[] { "SSS", "SSS", Character.valueOf('S'), Blocks.quartz_block});
+
+		GameRegistry.addShapelessRecipe(new ItemStack(blockQuartzFence, 1, 1), new Object[] {new ItemStack(blockQuartzFence, 1, 0), new ItemStack(Blocks.vine)});
+		GameRegistry.addShapelessRecipe(new ItemStack(blockQuartzWall, 1, 1), new Object[] {new ItemStack(blockQuartzWall, 1, 0), new ItemStack(Blocks.vine)});
+
+		GameRegistry.addShapelessRecipe(new ItemStack(blockQuartzFence, 1, 0), new Object[] {new ItemStack(blockQuartzFence, 1, 1)});
+		GameRegistry.addShapelessRecipe(new ItemStack(blockQuartzWall, 1, 0), new Object[] {new ItemStack(blockQuartzWall, 1, 1)});
+
+		GameRegistry.addRecipe(new ItemStack(blockQuartzGate, 1), new Object[] { "SQS", "SQS", Character.valueOf('Q'), Blocks.quartz_block, Character.valueOf('S'), Items.quartz});
+		GameRegistry.addRecipe(new ItemStack(blockQuartzGate, 1), new Object[] { "SQS", "SQS", Character.valueOf('Q'), blockQuartzBlock, Character.valueOf('S'), Items.quartz});
+		
 		
 		//Ore registry
 		OreDictionary.registerOre("dyePink", itemAsphodelPetals);
