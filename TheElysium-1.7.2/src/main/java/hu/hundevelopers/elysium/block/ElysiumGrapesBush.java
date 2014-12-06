@@ -44,7 +44,7 @@ public class ElysiumGrapesBush extends ElysiumBlockBush implements IGrowable
 		
 		for (int i = 0; i < this.names.length; ++i)
 		{
-            this.icons[i] = register.registerIcon(Elysium.MODID + ":grapes_" + names[i]);
+            this.icons[i] = register.registerIcon(Elysium.ID + ":grapes_" + names[i]);
         }
 	}
 	

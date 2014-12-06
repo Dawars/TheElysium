@@ -1,14 +1,11 @@
 package hu.hundevelopers.elysium.render;
 
 import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.entity.EntityPinkUnicorn;
 import hu.hundevelopers.elysium.entity.EntitySwan;
-import hu.hundevelopers.elysium.model.ModelCaterPillar;
 import hu.hundevelopers.elysium.model.ModelSwan;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
@@ -21,6 +18,7 @@ public class RenderSwan extends RenderLiving
         super(new ModelSwan(), 1F);
         this.model = (ModelSwan)super.mainModel;
         this.setRenderPassModel(this.model);
+        this.shadowSize = 0.5F;
     }
     
     /**
@@ -38,7 +36,7 @@ public class RenderSwan extends RenderLiving
     
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return new ResourceLocation(Elysium.MODID + ":textures/mobs/Swan.png");
+		return new ResourceLocation(Elysium.ID + ":textures/mobs/Swan.png");
 	}
 
 }

@@ -3,7 +3,7 @@ package me.dawars.CraftingPillars.tiles;
 import java.util.Random;
 
 import me.dawars.CraftingPillars.CraftingPillars;
-//import me.dawars.CraftingPillars.world.gen.ChristmasTreeGen;
+import me.dawars.CraftingPillars.world.gen.ChristmasTreeGen;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
@@ -24,26 +24,15 @@ public class TileEntityPotPillar extends BaseTileEntity implements IInventory, I
 	private ItemStack[] inventory = new ItemStack[this.getSizeInventory()];
 
 	public boolean showNum = false;
-	public int christmasTreeState = 0;
 
 	public void onBlockUpdate(Random rand)
 	{
-//		if(this.getStackInSlot(0) != null && this.getStackInSlot(0).getItem() == Item.getItemFromBlock(CraftingPillars.blockChristmasTreeSapling))
-//		{
-//			if(this.christmasTreeState <= CraftingPillars.maxTreeState)
-//			{
-//				new ChristmasTreeGen(false, this.christmasTreeState).generate(this.worldObj, rand, this.xCoord, this.yCoord, this.zCoord);
-//				this.christmasTreeState++;
-//				this.onInventoryChanged();
-//				if(this.christmasTreeState == 5)
-//					this.decrStackSize(0, 1);
-//			}
-//		}
-//		else if(this.christmasTreeState != 0)
-//		{
-//			this.christmasTreeState = 0;
-//			this.onInventoryChanged();
-//		}
+		if(rand.nextInt(3) == 0&& this.getStackInSlot(0) != null && this.getStackInSlot(0).getItem() == Item.getItemFromBlock(CraftingPillars.blockChristmasTreeSapling))
+		{
+			System.out.println("block update");
+			new ChristmasTreeGen(false).generate(this.worldObj, rand, this.xCoord, this.yCoord, this.zCoord);
+			this.decrStackSize(0, 1);
+		}
 	}
 
 	@Override
@@ -63,7 +52,6 @@ public class TileEntityPotPillar extends BaseTileEntity implements IInventory, I
 		}
 
 		this.showNum = nbt.getBoolean("showNum");
-		this.christmasTreeState = nbt.getInteger("xmasTree");
 	}
 
 	@Override
@@ -83,7 +71,6 @@ public class TileEntityPotPillar extends BaseTileEntity implements IInventory, I
 		}
 		nbt.setTag("Items", nbtlist);
 		nbt.setBoolean("showNum", this.showNum);
-		nbt.setInteger("xmasTree", this.christmasTreeState);
 	}
 
 

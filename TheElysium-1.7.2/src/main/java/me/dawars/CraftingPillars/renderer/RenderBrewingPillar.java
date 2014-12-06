@@ -1,12 +1,22 @@
 package me.dawars.CraftingPillars.renderer;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_ENABLE_BIT;
+import static org.lwjgl.opengl.GL11.GL_LIGHTING;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopAttrib;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushAttrib;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotatef;
+import static org.lwjgl.opengl.GL11.glScalef;
+import static org.lwjgl.opengl.GL11.glTranslated;
+import static org.lwjgl.opengl.GL11.glTranslatef;
 
 import java.awt.Color;
 import java.util.List;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import me.dawars.CraftingPillars.CraftingPillars;
 import me.dawars.CraftingPillars.tiles.TileEntityBrewingPillar;
 import net.minecraft.block.Block;
@@ -15,14 +25,15 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemPotion;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemPotion;
-import net.minecraft.item.ItemStack;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class RenderBrewingPillar extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler
 {
@@ -72,9 +83,9 @@ public class RenderBrewingPillar extends TileEntitySpecialRenderer implements IS
 	public RenderBrewingPillar()
 	{
 		if(CraftingPillars.winter)
-			this.TEXTURE_BREWINGPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/brewingPillarFrozen.png");
+			this.TEXTURE_BREWINGPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/brewingPillarFrozen.png");
 		else
-			this.TEXTURE_BREWINGPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/brewingPillar.png");
+			this.TEXTURE_BREWINGPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/brewingPillar.png");
 
 		this.itemRenderer = new RenderingHelper.ItemRender(false, false);
 

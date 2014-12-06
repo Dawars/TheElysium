@@ -1,11 +1,26 @@
 package me.dawars.CraftingPillars.renderer;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_ENABLE_BIT;
+import static org.lwjgl.opengl.GL11.GL_LIGHTING;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glPopAttrib;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushAttrib;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotatef;
+import static org.lwjgl.opengl.GL11.glScalef;
+import static org.lwjgl.opengl.GL11.glTexCoord2f;
+import static org.lwjgl.opengl.GL11.glTranslated;
+import static org.lwjgl.opengl.GL11.glTranslatef;
+import static org.lwjgl.opengl.GL11.glVertex3f;
 
 import java.awt.Color;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import me.dawars.CraftingPillars.Blobs;
 import me.dawars.CraftingPillars.CraftingPillars;
 import me.dawars.CraftingPillars.api.FreezerRecipes;
@@ -15,17 +30,16 @@ import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class RenderFreezerPillar extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler
 {
@@ -81,7 +95,7 @@ public class RenderFreezerPillar extends TileEntitySpecialRenderer implements IS
 	public RenderFreezerPillar()
 	{
 		// if(CraftingPillars.winter)
-		this.TEXTURE_FREEZERPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/freezerPillarFrozen.png");
+		this.TEXTURE_FREEZERPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/freezerPillarFrozen.png");
 		// else
 		// this.TEXTURE_FREEZERPILLAR = new ResourceLocation(CraftingPillars.id
 		// + ":textures/models/freezerPillar.png");
@@ -276,7 +290,20 @@ public class RenderFreezerPillar extends TileEntitySpecialRenderer implements IS
 
 	public void render(float f)
 	{
-		FMLClientHandler.instance().getClient().renderEngine.bindTexture(new ResourceLocation(CraftingPillars.id + ":textures/models/furnacePillarFrozen.png"));
+		this.pillarbottom.render(f);
+		this.BottomTank.render(f);
+		
+		this.GlassPane1.render(f);
+		this.GlassPane2.render(f);
+		this.GlassPane4.render(f);
+		this.GlassPane3.render(f);
+		
+		this.Corner1.render(f);
+		this.Corner2.render(f);
+		this.Corner3.render(f);
+		this.Corner4.render(f);
+		
+		FMLClientHandler.instance().getClient().renderEngine.bindTexture(new ResourceLocation(CraftingPillars.ID + ":textures/models/furnacePillarFrozen.png"));
 		this.Icicle1A.render(f);
 		this.Icicle1B.render(f);
 		this.Icicle1C.render(f);
@@ -291,19 +318,9 @@ public class RenderFreezerPillar extends TileEntitySpecialRenderer implements IS
 		this.Icicle4B.render(f);
 		FMLClientHandler.instance().getClient().renderEngine.bindTexture(this.TEXTURE_FREEZERPILLAR);
 
-		this.pillarbottom.render(f);
 		this.pillartop.render(f);
-		this.Corner1.render(f);
-		this.Corner2.render(f);
-		this.Corner3.render(f);
-		this.Corner4.render(f);
-		this.BottomTank.render(f);
 		this.TopTank.render(f);
 
-		this.GlassPane1.render(f);
-		this.GlassPane2.render(f);
-		this.GlassPane4.render(f);
-		this.GlassPane3.render(f);
 
 	}
 
@@ -523,11 +540,8 @@ public class RenderFreezerPillar extends TileEntitySpecialRenderer implements IS
 	}
 
 	@Override
-	// No TileEntity here can't use
-			public
-			boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer)
+	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer)
 	{
-
 		return false;
 	}
 

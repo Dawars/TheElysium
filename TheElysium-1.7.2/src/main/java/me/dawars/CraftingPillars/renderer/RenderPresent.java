@@ -1,7 +1,12 @@
 package me.dawars.CraftingPillars.renderer;
 
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_ENABLE_BIT;
 import static org.lwjgl.opengl.GL11.glColor3f;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopAttrib;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushAttrib;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glRotatef;
 import static org.lwjgl.opengl.GL11.glTranslated;
@@ -23,8 +28,8 @@ import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class RenderPresent extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler
 {
-	private ResourceLocation TEXTURE = new ResourceLocation(CraftingPillars.id + ":textures/models/present.png");
-	private ResourceLocation TEXTURE_OVERLAY = new ResourceLocation(CraftingPillars.id + ":textures/models/presentOverlay.png");
+	private ResourceLocation TEXTURE = new ResourceLocation(CraftingPillars.ID + ":textures/models/present.png");
+	private ResourceLocation TEXTURE_OVERLAY = new ResourceLocation(CraftingPillars.ID + ":textures/models/presentOverlay.png");
 
 	public static ModelBase model = new ModelBase()
 	{
@@ -89,6 +94,7 @@ public class RenderPresent extends TileEntitySpecialRenderer implements ISimpleB
 			this.PresentBottom.render(f);
 			this.PresentTop.render(f);
 		}
+		
 		Minecraft.getMinecraft().renderEngine.bindTexture(this.TEXTURE_OVERLAY);
 		glColor3f(color2.getRed()/255F, color2.getGreen()/255F, color2.getBlue()/255F);
 		if(model)
@@ -110,6 +116,7 @@ public class RenderPresent extends TileEntitySpecialRenderer implements ISimpleB
 		glPushMatrix();
 		glTranslated(x + 0.5D, y + 1.5D, z + 0.5D);
 		glRotatef(180F, 1F, 0F, 0F);
+		
 		this.render(0.0625F, new Color(TileEntityChristmasPresent.colors[present.color*2]), new Color(TileEntityChristmasPresent.colors[present.color*2+1]), /*present.model*/present.getBlockMetadata() == 1);
 		glPopMatrix();
 	}
@@ -118,9 +125,14 @@ public class RenderPresent extends TileEntitySpecialRenderer implements ISimpleB
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer)
 	{
 		glPushMatrix();
+		glPushAttrib(GL_ENABLE_BIT);
+		glEnable(GL_DEPTH_TEST);
+		
 		glTranslated(0, 1.0D, 0);
 		glRotatef(180F, 1F, 0F, 0F);
 		this.render(0.0625F, new Color(TileEntityChristmasPresent.colors[0]), new Color(TileEntityChristmasPresent.colors[1]), false);
+
+		glPopAttrib();
 		glPopMatrix();
 	}
 

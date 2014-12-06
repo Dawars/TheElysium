@@ -5,21 +5,19 @@ import hu.hundevelopers.elysium.Elysium;
 import java.util.List;
 import java.util.Random;
 
-import coloredlightscore.src.api.CLApi;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Facing;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+import coloredlightscore.src.api.CLApi;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ElysiumEnergyCrystalBlock extends BlockStainedGlass
 {
@@ -42,7 +40,7 @@ public class ElysiumEnergyCrystalBlock extends BlockStainedGlass
 	@Override
     public Block setBlockTextureName(String texture)
     {
-        this.textureName = Elysium.MODID + ":" + texture;
+        this.textureName = Elysium.ID + ":" + texture;
         return this;
     }
 
@@ -105,8 +103,12 @@ public class ElysiumEnergyCrystalBlock extends BlockStainedGlass
     }
     
     @Override
-    public int getLightValue(IBlockAccess world, int x, int y, int z) {
-        return Elysium.modLights ? getColorLightValue(world.getBlockMetadata(x, y, z)) : 15;
+    public int getLightValue(IBlockAccess world, int x, int y, int z)
+    {
+    	if(FMLCommonHandler.instance().getEffectiveSide().isClient())
+    		return Elysium.modLights ? getColorLightValue(world.getBlockMetadata(x, y, z)) : (world.getBlockMetadata(x, y, z) == 1 ? 15 : 15);
+		else
+    		return 1;	
     }
 
     public int getColorLightValue(int meta)

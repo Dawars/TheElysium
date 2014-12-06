@@ -1,9 +1,6 @@
 package me.dawars.CraftingPillars.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import me.dawars.CraftingPillars.CraftingPillars;
-import me.dawars.CraftingPillars.tiles.TileEntityPumpPillar;
 import me.dawars.CraftingPillars.tiles.TileEntityPumpPillar;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -18,6 +15,8 @@ import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class PumpPillarBlock extends BaseBlockContainer
 {
@@ -135,7 +134,7 @@ public class PumpPillarBlock extends BaseBlockContainer
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister itemIcon)
 	{
-		this.blockIcon = itemIcon.registerIcon(CraftingPillars.id + ":craftingPillar_side");
+		this.blockIcon = itemIcon.registerIcon(CraftingPillars.ID + ":craftingPillar_side");
 	}
 
 	@Override

@@ -54,8 +54,8 @@ public class ElysiumWaterBlock extends BlockFluidClassic
      @Override
      public void registerBlockIcons(IIconRegister register)
      {
-         stillIcon = register.registerIcon(Elysium.MODID + ":elysian_water_still");
-         flowingIcon = register.registerIcon(Elysium.MODID + ":elysian_water_flow");
+         stillIcon = register.registerIcon(Elysium.ID + ":elysian_water_still");
+         flowingIcon = register.registerIcon(Elysium.ID + ":elysian_water_flow");
      }
      
      @Override

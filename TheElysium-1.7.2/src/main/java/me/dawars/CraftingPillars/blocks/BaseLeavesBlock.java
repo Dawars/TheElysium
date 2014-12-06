@@ -2,6 +2,7 @@ package me.dawars.CraftingPillars.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -9,16 +10,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BaseLeavesBlock extends BaseBlock
 {
 
-	/**
-	 * Used to determine how to display leaves based on the graphics level. May also be used in rendering for
-	 * transparency, not sure.
-	 */
-	public boolean graphicsLevel;
-
 	protected BaseLeavesBlock(Material mat, boolean graph)
 	{
 		super(mat);
-		this.graphicsLevel = graph;
 	}
 
 	/**
@@ -28,7 +22,7 @@ public class BaseLeavesBlock extends BaseBlock
 	@Override
 	public boolean isOpaqueCube()
 	{
-		return false;
+		return !Minecraft.isFancyGraphicsEnabled();
 	}
 
 	/**
@@ -40,6 +34,6 @@ public class BaseLeavesBlock extends BaseBlock
 	public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side)
 	{
 		Block block = world.getBlock(x, y, side);
-		return !this.graphicsLevel && block == this ? false : super.shouldSideBeRendered(world, x, y, z, side);
+		return Minecraft.isFancyGraphicsEnabled() && block == this ? false : super.shouldSideBeRendered(world, x, y, z, side);
 	}
 }

@@ -20,17 +20,18 @@ import net.minecraft.entity.ai.EntityAIRunAroundLikeCrazy;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.ai.attributes.IAttribute;
-import net.minecraft.entity.ai.attributes.RangedAttribute;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.AnimalChest;
+import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
@@ -41,8 +42,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntityPinkUnicorn extends EntityHorse
 {
-    private static final IAttribute horseJumpStrength = (new RangedAttribute("horse.jumpStrength", 0.7D, 0.0D, 2.0D)).setDescription("Jump Strength").setShouldWatch(true);
-	
     private int eatingHaystackCounter;
     private int openMouthCounter;
     private int jumpRearingCounter;
@@ -60,6 +59,8 @@ public class EntityPinkUnicorn extends EntityHorse
     private float prevMouthOpenness;
     private int field_110285_bP;
 
+    private AnimalChest horseChest;
+
     public EntityPinkUnicorn(World par1World)
     {
         super(par1World);
@@ -74,7 +75,57 @@ public class EntityPinkUnicorn extends EntityHorse
         this.tasks.addTask(6, new EntityAIWander(this, 0.7D));
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
+        
+        this.initChest();
     }
+    
+    private void initChest()
+    {
+        AnimalChest animalchest = this.horseChest;
+        this.horseChest = new AnimalChest("HorseChest", this.func_110225_cC());
+        this.horseChest.func_110133_a(this.getCommandSenderName());
+
+        if (animalchest != null)
+        {
+            animalchest.func_110132_b(this);
+            int i = Math.min(animalchest.getSizeInventory(), this.horseChest.getSizeInventory());
+
+            for (int j = 0; j < i; ++j)
+            {
+                ItemStack itemstack = animalchest.getStackInSlot(j);
+
+                if (itemstack != null)
+                {
+                    this.horseChest.setInventorySlotContents(j, itemstack.copy());
+                }
+            }
+
+            animalchest = null;
+        }
+
+        this.horseChest.func_110134_a(this);
+        this.func_110232_cE();
+    }
+
+    private int func_110225_cC()
+    {
+        int i = this.getHorseType();
+        return this.isChested() && (i == 1 || i == 2) ? 17 : 2;
+    }
+    
+    private void func_110232_cE()
+    {
+        if (!this.worldObj.isRemote)
+        {
+            this.setHorseSaddled(this.horseChest.getStackInSlot(0) != null);
+
+            if (this.func_110259_cr())
+            {
+                this.func_146086_d(this.horseChest.getStackInSlot(1));
+            }
+        }
+    }
+
     
     private boolean getHorseWatchableBoolean(int par1)
     {
@@ -316,12 +367,12 @@ public class EntityPinkUnicorn extends EntityHorse
     {
         double d1 = Double.MAX_VALUE;
         Entity entity1 = null;
-        List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(par1Entity, par1Entity.boundingBox.addCoord(par2, par2, par2), horseBreedingSelector);
-        Iterator iterator = list.iterator();
+        List<Entity> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(par1Entity, par1Entity.boundingBox.addCoord(par2, par2, par2), horseBreedingSelector);
+        Iterator<Entity> iterator = list.iterator();
 
         while (iterator.hasNext())
         {
-            Entity entity2 = (Entity)iterator.next();
+            Entity entity2 = iterator.next();
             double d2 = entity2.getDistanceSq(par1Entity.posX, par1Entity.posY, par1Entity.posZ);
 
             if (d2 < d1)
@@ -373,6 +424,34 @@ public class EntityPinkUnicorn extends EntityHorse
         return this.getHorseWatchableBoolean(4);
     }
 
+    /**
+     * Called by InventoryBasic.onInventoryChanged() on a array that is never filled.
+     */
+    @Override
+    public void onInventoryChanged(InventoryBasic par1InventoryBasic)
+    {
+        int i = this.func_110241_cb();
+        boolean flag = this.isHorseSaddled();
+        this.func_110232_cE();
+
+        if (this.ticksExisted > 20)
+        {
+            if (i == 0 && i != this.func_110241_cb())
+            {
+                this.playSound("mob.horse.armor", 0.5F, 1.0F);
+            }
+            else if (i != this.func_110241_cb())
+            {
+                this.playSound("mob.horse.armor", 0.5F, 1.0F);
+            }
+
+            if (!flag && this.isHorseSaddled())
+            {
+                this.playSound("mob.horse.leather", 0.5F, 1.0F);
+            }
+        }
+    }
+    
     /**
      * Returns the sound this mob makes while it's alive.
      */
@@ -457,7 +536,14 @@ public class EntityPinkUnicorn extends EntityHorse
         return 400;
     }
     @Override
-    public void openGUI(EntityPlayer par1EntityPlayer) { }
+    public void openGUI(EntityPlayer par1EntityPlayer)
+    { 
+        if (!this.worldObj.isRemote && (this.riddenByEntity == null || this.riddenByEntity == par1EntityPlayer) && this.isTame())
+        {
+            this.horseChest.func_110133_a(this.getCommandSenderName());
+            par1EntityPlayer.displayGUIHorse(this, this.horseChest);
+        }
+    }
     
     /**
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
@@ -465,82 +551,160 @@ public class EntityPinkUnicorn extends EntityHorse
     @Override
     public boolean interact(EntityPlayer player)
     {
-        ItemStack itemstack = player.inventory.getCurrentItem();
+    	ItemStack itemstack = player.inventory.getCurrentItem();
 
-        if(this.isSaddled() && player.isSneaking() && itemstack == null && this.riddenByEntity == null)
+        if (itemstack != null && itemstack.getItem() == Items.spawn_egg)
         {
-        	if(!this.worldObj.isRemote)
-        		this.entityDropItem(new ItemStack(Items.saddle), 0.0F);
-        	this.setHorseSaddled(false);
-            return true;
+            return super.interact(player);
         }
-        else if (this.isAdultHorse() && !player.isSneaking() && !this.isSaddled() && itemstack != null && itemstack.getItem() == Items.saddle)
-        {
-        	this.setRearing(false);
-        	this.setHorseSaddled(true);
-        	this.setTamedBy(player);
-        	if(!player.capabilities.isCreativeMode)
-        		itemstack.stackSize--;
-            return true;
-        } else if (itemstack != null && !itemstack.interactWithEntity(player, this))
+        else if (!this.isTame() && this.func_110256_cu())
         {
             return false;
         }
-
-        if (itemstack != null)
+        else if (this.isTame() && this.isAdultHorse() && player.isSneaking())
         {
-            float f = 0.0F;
-            short short1 = 0;
-            byte b1 = 0;
-
-            if (itemstack.getItem() == Elysium.itemGrapes)
-            {
-                f = 2.0F;
-                short1 = 60;
-                b1 = 3;
-            }
-            else if (itemstack.getItem() == Elysium.itemRaspberry)
-            {
-                f = 1.0F;
-                short1 = 30;
-                b1 = 3;
-            }
-            
-
-            if (this.getHealth() < this.getMaxHealth() && f > 0.0F)
-            {
-                this.heal(f);
-                itemstack.stackSize--;
-                this.func_110266_cB();
-            }
-
-            if (!this.isAdultHorse() && short1 > 0)
-            {
-                this.addGrowth(short1);
-            }
-
-            if (!this.isTame())
-            {
-                this.makeHorseRearWithSound();
-                return true;
-            }
+            this.openGUI(player);
+            return true;
         }
-
-        if (this.isAdultHorse() && this.riddenByEntity == null)
+        else if (this.func_110253_bW() && this.riddenByEntity != null)
         {
-            if (itemstack == null && this.isSaddled())
-            {
-                this.func_110237_h(player);
-                return true;
-            }
-            else
-            {
-            	return true;
-            }
+            return super.interact(player);
         }
         else
         {
-            return super.interact(player);
+            if (itemstack != null)
+            {
+                boolean flag = false;
+
+                if (this.func_110259_cr())
+                {
+                    byte b0 = -1;
+
+                    if (itemstack.getItem() == Items.iron_horse_armor)
+                    {
+                        b0 = 1;
+                    }
+                    else if (itemstack.getItem() == Items.golden_horse_armor)
+                    {
+                        b0 = 2;
+                    }
+                    else if (itemstack.getItem() == Items.diamond_horse_armor)
+                    {
+                        b0 = 3;
+                    }
+
+                    if (b0 >= 0)
+                    {
+                        if (!this.isTame())
+                        {
+                            this.makeHorseRearWithSound();
+                            return true;
+                        }
+
+                        this.openGUI(player);
+                        return true;
+                    }
+                }
+
+                if (!flag && !this.func_110256_cu())
+                {
+                    float f = 0.0F;
+                    short short1 = 0;
+                    byte b1 = 0;
+
+                    if (itemstack.getItem() == Elysium.itemRaspberry)
+                    {
+                        f = 2.0F;
+                        short1 = 60;
+                        b1 = 3;
+                    }
+                    else if (itemstack.getItem() == Elysium.itemGrapes)
+                    {
+                        f = 1.0F;
+                        short1 = 30;
+                        b1 = 3;
+                    }
+                    else if (itemstack.getItem() == Elysium.itemAsphodelPetals)
+                    {
+                        f = 4.0F;
+                        short1 = 60;
+                        b1 = 5;
+
+                        if (this.isTame() && this.getGrowingAge() == 0)
+                        {
+                            flag = true;
+                            this.func_146082_f(player);
+                        }
+                    }
+
+                    if (this.getHealth() < this.getMaxHealth() && f > 0.0F)
+                    {
+                        this.heal(f);
+                        flag = true;
+                    }
+
+                    if (!this.isAdultHorse() && short1 > 0)
+                    {
+                        this.addGrowth(short1);
+                        flag = true;
+                    }
+
+                    if (b1 > 0 && (flag || !this.isTame()) && b1 < this.getMaxTemper())
+                    {
+                        flag = true;
+                        this.increaseTemper(b1);
+                    }
+
+                    if (flag)
+                    {
+                        this.func_110266_cB();
+                    }
+                }
+
+                if (!this.isTame() && !flag)
+                {
+                    if (itemstack != null && itemstack.interactWithEntity(player, this))
+                    {
+                        return true;
+                    }
+
+                    this.makeHorseRearWithSound();
+                    return true;
+                }
+
+                if (!flag && this.func_110253_bW() && !this.isHorseSaddled() && itemstack.getItem() == Items.saddle)
+                {
+                    this.openGUI(player);
+                    return true;
+                }
+
+                if (flag)
+                {
+                    if (!player.capabilities.isCreativeMode && --itemstack.stackSize == 0)
+                    {
+                        player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);
+                    }
+
+                    return true;
+                }
+            }
+
+            if (this.func_110253_bW() && this.riddenByEntity == null)
+            {
+                if (itemstack != null && itemstack.interactWithEntity(player, this))
+                {
+                    return true;
+                }
+                else
+                {
+                    this.func_110237_h(player);
+                    return true;
+                }
+            }
+            else
+            {
+                return super.interact(player);
+            }
         }
     }
 
@@ -560,7 +724,6 @@ public class EntityPinkUnicorn extends EntityHorse
     /**
      * Dead and sleeping entities cannot move
      */
-    @Override
     protected boolean isMovementBlocked()
     {
         return this.riddenByEntity != null && this.isHorseSaddled() ? true : this.isEatingHaystack() || this.isRearing();
@@ -611,7 +774,7 @@ public class EntityPinkUnicorn extends EntityHorse
                 this.heal(1.0F);
             }
 
-            if (!this.isEatingHaystack() && this.riddenByEntity == null && this.rand.nextInt(300) == 0 && this.worldObj.getBlock(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY) - 1, MathHelper.floor_double(this.posZ)) == Blocks.grass)
+            if (!this.isEatingHaystack() && this.riddenByEntity == null && this.rand.nextInt(300) == 0 && this.worldObj.getBlock(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY) - 1, MathHelper.floor_double(this.posZ)) == Elysium.blockGrass)
             {
                 this.setEatingHaystack(true);
             }
@@ -852,6 +1015,7 @@ public class EntityPinkUnicorn extends EntityHorse
                 }
 
                 this.jumpPower = 0.0F;
+                net.minecraftforge.common.ForgeHooks.onLivingJump(this);
             }
 
             this.stepHeight = 1.0F;
@@ -898,9 +1062,44 @@ public class EntityPinkUnicorn extends EntityHorse
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setBoolean("EatingHaystack", this.isEatingHaystack());
+        par1NBTTagCompound.setBoolean("ChestedHorse", this.isChested());
         par1NBTTagCompound.setBoolean("HasReproduced", this.getHasReproduced());
+        par1NBTTagCompound.setBoolean("Bred", this.func_110205_ce());
+        par1NBTTagCompound.setInteger("Type", this.getHorseType());
+        par1NBTTagCompound.setInteger("Variant", this.getHorseVariant());
+        par1NBTTagCompound.setInteger("Temper", this.getTemper());
         par1NBTTagCompound.setBoolean("Tame", this.isTame());
         par1NBTTagCompound.setString("OwnerName", this.getOwnerName());
+
+        if (this.isChested())
+        {
+            NBTTagList nbttaglist = new NBTTagList();
+
+            for (int i = 2; i < this.horseChest.getSizeInventory(); ++i)
+            {
+                ItemStack itemstack = this.horseChest.getStackInSlot(i);
+
+                if (itemstack != null)
+                {
+                    NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+                    nbttagcompound1.setByte("Slot", (byte)i);
+                    itemstack.writeToNBT(nbttagcompound1);
+                    nbttaglist.appendTag(nbttagcompound1);
+                }
+            }
+
+            par1NBTTagCompound.setTag("Items", nbttaglist);
+        }
+
+        if (this.horseChest.getStackInSlot(1) != null)
+        {
+            par1NBTTagCompound.setTag("ArmorItem", this.horseChest.getStackInSlot(1).writeToNBT(new NBTTagCompound()));
+        }
+
+        if (this.horseChest.getStackInSlot(0) != null)
+        {
+            par1NBTTagCompound.setTag("SaddleItem", this.horseChest.getStackInSlot(0).writeToNBT(new NBTTagCompound()));
+        }
 
     }
 
@@ -912,13 +1111,70 @@ public class EntityPinkUnicorn extends EntityHorse
     {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.setEatingHaystack(par1NBTTagCompound.getBoolean("EatingHaystack"));
+        this.func_110242_l(par1NBTTagCompound.getBoolean("Bred"));
+        this.setChested(par1NBTTagCompound.getBoolean("ChestedHorse"));
         this.setHasReproduced(par1NBTTagCompound.getBoolean("HasReproduced"));
+        this.setHorseType(par1NBTTagCompound.getInteger("Type"));
+        this.setHorseVariant(par1NBTTagCompound.getInteger("Variant"));
+        this.setTemper(par1NBTTagCompound.getInteger("Temper"));
         this.setHorseTamed(par1NBTTagCompound.getBoolean("Tame"));
 
         if (par1NBTTagCompound.hasKey("OwnerName", 8))
         {
             this.setOwnerName(par1NBTTagCompound.getString("OwnerName"));
         }
+
+        IAttributeInstance iattributeinstance = this.getAttributeMap().getAttributeInstanceByName("Speed");
+
+        if (iattributeinstance != null)
+        {
+            this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(iattributeinstance.getBaseValue() * 0.25D);
+        }
+
+        if (this.isChested())
+        {
+            NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items", 10);
+            this.initChest();
+
+            for (int i = 0; i < nbttaglist.tagCount(); ++i)
+            {
+                NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
+                int j = nbttagcompound1.getByte("Slot") & 255;
+
+                if (j >= 2 && j < this.horseChest.getSizeInventory())
+                {
+                    this.horseChest.setInventorySlotContents(j, ItemStack.loadItemStackFromNBT(nbttagcompound1));
+                }
+            }
+        }
+
+        ItemStack itemstack;
+
+        if (par1NBTTagCompound.hasKey("ArmorItem", 10))
+        {
+            itemstack = ItemStack.loadItemStackFromNBT(par1NBTTagCompound.getCompoundTag("ArmorItem"));
+
+            if (itemstack != null && func_146085_a(itemstack.getItem()))
+            {
+                this.horseChest.setInventorySlotContents(1, itemstack);
+            }
+        }
+
+        if (par1NBTTagCompound.hasKey("SaddleItem", 10))
+        {
+            itemstack = ItemStack.loadItemStackFromNBT(par1NBTTagCompound.getCompoundTag("SaddleItem"));
+
+            if (itemstack != null && itemstack.getItem() == Items.saddle)
+            {
+                this.horseChest.setInventorySlotContents(0, itemstack);
+            }
+        }
+        else if (par1NBTTagCompound.getBoolean("Saddle"))
+        {
+            this.horseChest.setInventorySlotContents(0, new ItemStack(Items.saddle));
+        }
+
+        this.func_110232_cE();
     }
 
     /**
@@ -1049,7 +1305,7 @@ public class EntityPinkUnicorn extends EntityHorse
     protected void dropFewItems(boolean par1, int par2)
     {
         this.dropItem(Item.getItemFromBlock(Elysium.blockEnergyCrystal), 1);
-        this.dropItem(Elysium.itemHorn, 1);
+        this.dropItem(Elysium.wandCore, 1);
     }
     
     

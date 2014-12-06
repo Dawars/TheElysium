@@ -1,9 +1,9 @@
 package hu.hundevelopers.elysium.model;
 
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
 
 public class ModelEnderMage extends ModelBiped
 {
@@ -22,7 +22,7 @@ public class ModelEnderMage extends ModelBiped
 	ModelRenderer handR;
 	ModelRenderer finger2R;
 	ModelRenderer thumbR;
-	public ModelRenderer rightarm1;
+	ModelRenderer rightarm1;
 	ModelRenderer rightarm2;
 	ModelRenderer finger1R;
 	ModelRenderer head1;
@@ -79,7 +79,7 @@ public class ModelEnderMage extends ModelBiped
 		finger1L = new ModelRenderer(this, 14, 85);
 		finger1L.mirror = true;
 		finger1L.addBox(1F, 13.2F, -0.7F, 2, 4, 2);
-		finger1L.setRotationPoint(8F, -7F, 0F);
+		finger1L.setRotationPoint(0F, 0F, 0F);
 		finger1L.setTextureSize(64, 128);
 		finger1L.mirror = true;
 		setRotation(finger1L, -0.2617994F, 0F, 0F);
@@ -87,7 +87,7 @@ public class ModelEnderMage extends ModelBiped
 		handL = new ModelRenderer(this, 0, 80);
 		handL.mirror = true;
 		handL.addBox(-0.5F, 13F, -0.5F, 3, 2, 4);
-		handL.setRotationPoint(8F, -7F, 0F);
+		handL.setRotationPoint(0F, 0F, 0F);
 		handL.setTextureSize(64, 128);
 		handL.mirror = true;
 		setRotation(handL, -0.2617994F, 0F, 0F);
@@ -103,7 +103,7 @@ public class ModelEnderMage extends ModelBiped
 		leftarm2 = new ModelRenderer(this, 0, 68);
 		leftarm2.mirror = true;
 		leftarm2.addBox(-1.5F, 6F, -1F, 5, 7, 5);
-		leftarm2.setRotationPoint(8F, -7F, 0F);
+		leftarm2.setRotationPoint(0F, 0F, 0F);
 		leftarm2.setTextureSize(64, 128);
 		leftarm2.mirror = true;
 		setRotation(leftarm2, -0.2617994F, 0F, 0F);
@@ -111,7 +111,7 @@ public class ModelEnderMage extends ModelBiped
 		thumbL = new ModelRenderer(this, 14, 80);
 		thumbL.mirror = true;
 		thumbL.addBox(-1F, 13.2F, -1F, 1, 3, 2);
-		thumbL.setRotationPoint(8F, -7F, 0F);
+		thumbL.setRotationPoint(0F, 0F, 0F);
 		thumbL.setTextureSize(64, 128);
 		thumbL.mirror = true;
 		setRotation(thumbL, -0.2617994F, 0F, 0F);
@@ -119,26 +119,26 @@ public class ModelEnderMage extends ModelBiped
 		finger2L = new ModelRenderer(this, 14, 85);
 		finger2L.mirror = true;
 		finger2L.addBox(1F, 13.2F, 1.6F, 2, 4, 2);
-		finger2L.setRotationPoint(8F, -7F, 0F);
+		finger2L.setRotationPoint(0F, 0F, 0F);
 		finger2L.setTextureSize(64, 128);
 		finger2L.mirror = true;
 		setRotation(finger2L, -0.2617994F, 0F, 0F);
 		finger2L.mirror = false;
 		handR = new ModelRenderer(this, 0, 80);
 		handR.addBox(-2.5F, 13F, -0.5F, 3, 2, 4);
-		handR.setRotationPoint(-8F, -7F, 0F);
+		handR.setRotationPoint(0F, 0F, 0F);
 		handR.setTextureSize(64, 128);
 		handR.mirror = true;
 		setRotation(handR, -0.2617994F, 0F, 0F);
 		finger2R = new ModelRenderer(this, 14, 85);
 		finger2R.addBox(-3F, 13.2F, 1.6F, 2, 4, 2);
-		finger2R.setRotationPoint(-8F, -7F, 0F);
+		finger2R.setRotationPoint(0F, 0F, 0F);
 		finger2R.setTextureSize(64, 128);
 		finger2R.mirror = true;
 		setRotation(finger2R, -0.2617994F, 0F, 0F);
 		thumbR = new ModelRenderer(this, 14, 80);
 		thumbR.addBox(0F, 13.2F, -1F, 1, 3, 2);
-		thumbR.setRotationPoint(-8F, -7F, 0F);
+		thumbR.setRotationPoint(0F,0F, 0F);
 		thumbR.setTextureSize(64, 128);
 		thumbR.mirror = true;
 		setRotation(thumbR, -0.2617994F, 0F, 0F);
@@ -147,16 +147,16 @@ public class ModelEnderMage extends ModelBiped
 		rightarm1.setRotationPoint(-8F, -7F, 0F);
 		rightarm1.setTextureSize(64, 128);
 		rightarm1.mirror = true;
-		setRotation(rightarm1, 0F, 0F, 0F);
+		setRotation(rightarm1, -0.8F, 0F, 0F);
 		rightarm2 = new ModelRenderer(this, 0, 68);
 		rightarm2.addBox(-3.5F, 6F, -1F, 5, 7, 5);
-		rightarm2.setRotationPoint(-8F, -7F, 0F);
+		rightarm2.setRotationPoint(0F, 0F, 0F);
 		rightarm2.setTextureSize(64, 128);
 		rightarm2.mirror = true;
-		setRotation(rightarm2, -0.2617994F, 0F, 0F);
+		setRotation(rightarm2, -0.244F, 0F, 0F);
 		finger1R = new ModelRenderer(this, 14, 85);
 		finger1R.addBox(-3F, 13.2F, -0.7F, 2, 4, 2);
-		finger1R.setRotationPoint(-8F, -7F, 0F);
+		finger1R.setRotationPoint(0F, 0F, 0F);
 		finger1R.setTextureSize(64, 128);
 		finger1R.mirror = true;
 		setRotation(finger1R, -0.2617994F, 0F, 0F);
@@ -218,6 +218,18 @@ public class ModelEnderMage extends ModelBiped
 		this.bipedLeftLeg.cubeList.clear();
 		this.bipedRightArm.cubeList.clear();
 		this.bipedRightLeg.cubeList.clear();
+
+		leftarm1.addChild(leftarm2);
+		leftarm1.addChild(handL);
+		leftarm1.addChild(finger1L);
+		leftarm1.addChild(finger2L);
+		leftarm1.addChild(thumbL);
+		
+		rightarm1.addChild(rightarm2);
+		rightarm1.addChild(handR);
+		rightarm1.addChild(finger1R);
+		rightarm1.addChild(finger2R);
+		rightarm1.addChild(thumbR);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
@@ -231,18 +243,8 @@ public class ModelEnderMage extends ModelBiped
 		body4.render(f5);
 		shoulderR.render(f5);
 		shoulderL.render(f5);
-		finger1L.render(f5);
-		handL.render(f5);
 		leftarm1.render(f5);
-		leftarm2.render(f5);
-		thumbL.render(f5);
-		finger2L.render(f5);
-		handR.render(f5);
-		finger2R.render(f5);
-		thumbR.render(f5);
 		rightarm1.render(f5);
-		rightarm2.render(f5);
-		finger1R.render(f5);
 		head1.render(f5);
 		head2.render(f5);
 		head3.render(f5);
@@ -260,18 +262,47 @@ public class ModelEnderMage extends ModelBiped
 	}
 	
 	@Override
-	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
-	{
-		this.head1.rotateAngleY = this.head2.rotateAngleY = this.head3.rotateAngleY = f4 / (180F / (float)Math.PI);
-		this.head1.rotateAngleX = this.head2.rotateAngleX = this.head3.rotateAngleX = f5 / (180F / (float)Math.PI);
-		this.leftleg1.rotateAngleX = this.leftleg2.rotateAngleX = -1.5F * this.func_78172_a(f1, 13.0F) * f2;
-		this.rightleg1.rotateAngleX = this.rightleg2.rotateAngleX = 1.5F * this.func_78172_a(f1, 13.0F) * f2;
-        this.leftleg1.rotateAngleY = this.rightleg2.rotateAngleY = 0.0F;
-        this.rightleg1.rotateAngleY = this.rightleg2.rotateAngleY = 0.0F;
-	}
-	
-	private float func_78172_a(float par1, float par2)
+	/**
+     * Sets the model's various rotation angles. For bipeds, par1 and par2 are used for animating the movement of arms
+     * and legs, where par1 represents the time(so that arms and legs swing back and forth) and par2 represents how
+     * "far" arms and legs can swing at most.
+     */
+    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity)
     {
-        return (Math.abs(par1 % par2 - par2 * 0.5F) - par2 * 0.25F) / (par2 * 0.25F);
+        this.head1.rotateAngleY = par4 / (180F / (float)Math.PI);
+        this.head1.rotateAngleX = par5 / (180F / (float)Math.PI);
+        this.head2.rotateAngleY = this.head1.rotateAngleY;
+        this.head2.rotateAngleX = this.head1.rotateAngleX;
+        this.head3.rotateAngleY = this.head1.rotateAngleY;
+        this.head3.rotateAngleX = this.head1.rotateAngleX;
+        
+        this.rightarm1.rotateAngleX = -0.8F + MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 2.0F * par2 * 0.5F;
+        
+        this.leftarm1.rotateAngleX = MathHelper.cos(par1 * 0.6662F) * 2.0F * par2 * 0.5F;
+        
+        
+        this.rightleg1.rotateAngleX = this.rightleg2.rotateAngleX = MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
+        this.rightleg1.rotateAngleY = this.rightleg2.rotateAngleY = 0.0F;
+        
+        this.leftleg1.rotateAngleX = this.leftleg2.rotateAngleX = MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 1.4F * par2;
+        this.leftleg1.rotateAngleY = this.leftleg2.rotateAngleY = 0.0F;
+
+        if (this.aimedBow)
+        {
+            float f6 = 0.0F;
+            float f7 = 0.0F;
+            this.rightarm1.rotateAngleZ = 0.0F;
+            this.leftarm1.rotateAngleZ = 0.0F;
+            this.rightarm1.rotateAngleY = -(0.1F - f6 * 0.6F) + this.bipedHead.rotateAngleY;
+            this.leftarm1.rotateAngleY = 0.1F - f6 * 0.6F + this.bipedHead.rotateAngleY + 0.4F;
+            this.rightarm1.rotateAngleX = -((float)Math.PI / 2F) + this.bipedHead.rotateAngleX;
+            this.leftarm1.rotateAngleX = -((float)Math.PI / 2F) + this.bipedHead.rotateAngleX;
+            this.rightarm1.rotateAngleX -= f6 * 1.2F - f7 * 0.4F;
+            this.leftarm1.rotateAngleX -= f6 * 1.2F - f7 * 0.4F;
+            this.rightarm1.rotateAngleZ += MathHelper.cos(par3 * 0.09F) * 0.05F + 0.05F;
+            this.leftarm1.rotateAngleZ -= MathHelper.cos(par3 * 0.09F) * 0.05F + 0.05F;
+            this.rightarm1.rotateAngleX += MathHelper.sin(par3 * 0.067F) * 0.05F;
+            this.leftarm1.rotateAngleX -= MathHelper.sin(par3 * 0.067F) * 0.05F;
+        }
     }
 }

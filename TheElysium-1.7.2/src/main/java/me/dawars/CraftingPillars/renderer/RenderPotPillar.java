@@ -87,9 +87,9 @@ public class RenderPotPillar extends TileEntitySpecialRenderer implements ISimpl
 	public RenderPotPillar()
 	{
 		if (CraftingPillars.winter)
-			this.TEXTURE_SHOWOFFPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/showoffPillarFrozen.png");
+			this.TEXTURE_SHOWOFFPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/showoffPillarFrozen.png");
 		else
-			this.TEXTURE_SHOWOFFPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/showoffPillar.png");
+			this.TEXTURE_SHOWOFFPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/showoffPillar.png");
 
 		this.random = new Random();
 		this.itemRenderer = new RenderingHelper.ItemRender(false, true);

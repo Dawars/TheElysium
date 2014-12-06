@@ -15,9 +15,11 @@ import hu.hundevelopers.elysium.world.ElysiumWorldProvider;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenCorruption;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenDesert;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenForest;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlain;
 import me.dawars.CraftingPillars.renderer.RenderingHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -41,7 +43,7 @@ public class ElysiumClientHandler
 {
 	@SubscribeEvent
 	public void guiOpen(GuiOpenEvent event) {
-		if (event.gui instanceof GuiMainMenu && Configs.customGui) {
+		if (event.gui instanceof GuiMainMenu && Elysium.isMenuEnabled) {
 			Minecraft.getMinecraft().displayGuiScreen(new ElysiumGuiEmulator(new ElysiumGuiMainMenu(null)));
 			event.setCanceled(true);
 		}
@@ -55,6 +57,7 @@ public class ElysiumClientHandler
 		if(FMLCommonHandler.instance().getSide() == Side.CLIENT)
 			itemRenderer = new RenderingHelper.ItemRender(false, false);
 	}
+	private static long lastPlayed = System.currentTimeMillis() - 180000;
 
 	@SubscribeEvent
 	public void onSoundPlayed(PlaySoundEvent17 event)
@@ -62,44 +65,70 @@ public class ElysiumClientHandler
 //		if(event.category == SoundCategory.ANIMALS || event.category == SoundCategory.BLOCKS || event.category == SoundCategory.MOBS || event.category == SoundCategory.WEATHER) return;
 //		System.out.println("Playing " + event.category + " sound: " + event.name + " class name: " + event.result.getClass().getName() + " " + event.sound.getClass().getName());
 		
-		
 		World world = FMLClientHandler.instance().getClient().theWorld; 
 		if(world != null && world.provider instanceof ElysiumWorldProvider)
 		{
-			
-			EntityPlayer player = FMLClientHandler.instance().getClientPlayerEntity(); 
-			BiomeGenBase biomeGenBase = world.getBiomeGenForCoords((int) player.posX, (int) player.posZ);
-			
-			if(event.category == SoundCategory.AMBIENT || event.category == SoundCategory.MUSIC)
+			if(System.currentTimeMillis() - lastPlayed >= 18000)
 			{
-				System.out.println("Sound type: " + event.category + " Name: " + event.name);
-			}
-			
-			if(event.category == SoundCategory.AMBIENT)
-			{
+				EntityPlayer player = FMLClientHandler.instance().getClientPlayerEntity(); 
+				BiomeGenBase biomeGenBase = world.getBiomeGenForCoords((int) player.posX, (int) player.posZ);
 				
-				if(player.posY <= Configs.labyrinthTop)
-				{//TODO: change name
-					event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.MODID + ":elysiumLabyrinth"));
-				}
-				if(biomeGenBase instanceof ElysiumBiomeGenCorruption)
+				if(event.category == SoundCategory.AMBIENT || event.category == SoundCategory.MUSIC)
 				{
-					event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.MODID + ":elysiumShadow"));
-				} else if(!(biomeGenBase instanceof ElysiumBiomeGenDesert)){
-					event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.MODID + ":elysium"));
-				} else {
-					event.result = null;
-				}
-			} else if(event.category == SoundCategory.MUSIC)
-			{
-				if(player.posY <= Configs.labyrinthTop)
-				{
-					event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.MODID + ":elysiumLabyrinth"));
-				} else if(biomeGenBase instanceof ElysiumBiomeGenForest)
-				{
-					event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.MODID + ":elysiumForest"));
-				} else {
+					if(player.posY <= Configs.labyrinthTop)
+					{
+						event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.ID + ":elysiumLabyrinth"));
+						lastPlayed = System.currentTimeMillis();
 
+					} else if(biomeGenBase instanceof ElysiumBiomeGenForest)
+					{
+						event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.ID + ":elysiumForest"));
+						lastPlayed = System.currentTimeMillis();
+
+					} else if(biomeGenBase instanceof ElysiumBiomeGenPlain)
+					{
+						if(world.rand.nextInt(3) == 0 )
+							event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.ID + ":elysium"));
+						else
+							event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.ID + ":elysiumMenu"));
+						lastPlayed = System.currentTimeMillis();
+
+					} else if(biomeGenBase instanceof ElysiumBiomeGenCorruption)
+					{
+						event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.ID + ":elysiumShadow"));
+						lastPlayed = System.currentTimeMillis();
+
+					} else if(!(biomeGenBase instanceof ElysiumBiomeGenDesert))
+					{
+						if(world.rand.nextInt(3) == 0 )
+							event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.ID + ":elysiumShadow"));
+						else
+							event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.ID + ":elysiumLabyrinth"));
+						lastPlayed = System.currentTimeMillis();
+
+					} else
+					{
+						event.result = null;
+						lastPlayed = System.currentTimeMillis() - 180000;
+
+					}
+				}
+			} else
+			{
+				event.result = null;
+				//DO NOT RESET TIME HERE!
+			}
+		}
+		else if(world == null && Elysium.isMenuEnabled)
+		{
+			ISound menuSong = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.ID + ":elysiumMenu"));
+			if(event.category == SoundCategory.MUSIC)
+			{
+				if(System.currentTimeMillis() - lastPlayed > 180000)
+				{
+					event.result = menuSong;
+					lastPlayed = System.currentTimeMillis();
+				} else {
 					event.result = null;
 				}
 			}

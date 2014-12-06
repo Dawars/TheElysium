@@ -1,12 +1,24 @@
 package me.dawars.CraftingPillars.renderer;
 
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_ENABLE_BIT;
+import static org.lwjgl.opengl.GL11.GL_LIGHTING;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopAttrib;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushAttrib;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotatef;
+import static org.lwjgl.opengl.GL11.glScalef;
+import static org.lwjgl.opengl.GL11.glTranslated;
+import static org.lwjgl.opengl.GL11.glTranslatef;
+
 import java.awt.Color;
 import java.util.Random;
 
 import me.dawars.CraftingPillars.CraftingPillars;
 import me.dawars.CraftingPillars.tiles.TileEntityAnvilPillar;
-import static org.lwjgl.opengl.GL11.*;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -70,9 +82,9 @@ public class RenderAnvilPillar extends TileEntitySpecialRenderer implements ISim
 		this.itemRenderer = new RenderingHelper.ItemRender(false, true);
 
 		if(CraftingPillars.winter)
-			this.TEXTURE_ANVILPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/anvilPillarFrozen.png");
+			this.TEXTURE_ANVILPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/anvilPillarFrozen.png");
 		else
-			this.TEXTURE_ANVILPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/anvilPillar.png");
+			this.TEXTURE_ANVILPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/anvilPillar.png");
 
 
 		model.textureWidth = 128;

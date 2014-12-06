@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.proxy;
 
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.network.Packet;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.Loader;

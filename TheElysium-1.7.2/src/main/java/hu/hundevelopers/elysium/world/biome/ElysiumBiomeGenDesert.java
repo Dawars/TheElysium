@@ -1,14 +1,12 @@
 package hu.hundevelopers.elysium.world.biome;
 
 import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.world.gen.features.ElysiumGenDoublePlant;
-import hu.hundevelopers.elysium.world.gen.features.ElysiumGenPlants;
+import hu.hundevelopers.elysium.world.gen.structures.ElysiumGenDefenceTowerCorrupted;
 import hu.hundevelopers.elysium.world.gen.structures.ElysiumGenEnderPyramid;
 
 import java.util.Random;
 
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenDesertWells;
 import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
@@ -40,12 +38,20 @@ public class ElysiumBiomeGenDesert extends ElysiumBiomeBase
     {
         super.decorate(world, rand, chunkX, chunkZ);
 
-        if (rand.nextInt(1000) == 0)
+        if (rand.nextInt(100) == 0)
         {
             int k = chunkX + rand.nextInt(16) + 8;
             int l = chunkZ + rand.nextInt(16) + 8;
             ElysiumGenEnderPyramid worldgenpyramid = new ElysiumGenEnderPyramid();
             worldgenpyramid.generate(world, rand, k, world.getHeightValue(k, l)-1, l);
         }
+        if (rand.nextInt(50) == 0)
+        {
+            int k = chunkX + rand.nextInt(16) + 8;
+            int l = chunkZ + rand.nextInt(16) + 8;
+            ElysiumGenDefenceTowerCorrupted worldgenpyramid = new ElysiumGenDefenceTowerCorrupted();
+            worldgenpyramid.generate(world, rand, k, world.getHeightValue(k, l)-1, l);
+        }
+    	
     }
 }

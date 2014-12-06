@@ -1,15 +1,22 @@
 package me.dawars.CraftingPillars.renderer;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_ENABLE_BIT;
+import static org.lwjgl.opengl.GL11.GL_LIGHTING;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopAttrib;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushAttrib;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotatef;
+import static org.lwjgl.opengl.GL11.glScalef;
+import static org.lwjgl.opengl.GL11.glTranslated;
 
 import java.awt.Color;
-import java.util.Random;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import me.dawars.CraftingPillars.CraftingPillars;
 import me.dawars.CraftingPillars.api.CraftingPillarAPI;
-//import me.dawars.CraftingPillars.api.CraftingPillarAPI;
 import me.dawars.CraftingPillars.tiles.TileEntityDiskPlayerPillar;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -23,6 +30,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+//import me.dawars.CraftingPillars.api.CraftingPillarAPI;
 
 public class RenderDiskPillar extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler
 {
@@ -79,24 +89,16 @@ public class RenderDiskPillar extends TileEntitySpecialRenderer implements ISimp
 	private ModelRenderer Icicle11B;
 	private ModelRenderer Icicle11C;
 
-	private Random random;
-	private RenderingHelper.ItemRender itemRenderer;
-	private RenderingHelper.ItemRender resultRenderer;
-
 	public IModelCustom disk;
 
 	public RenderDiskPillar()
 	{
 		if (CraftingPillars.winter)
-			this.TEXTURE_DISKPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/diskPillarFrozen.png");
+			this.TEXTURE_DISKPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/diskPillarFrozen.png");
 		else
-			this.TEXTURE_DISKPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/diskPillar.png");
+			this.TEXTURE_DISKPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/diskPillar.png");
 
-		this.disk = AdvancedModelLoader.loadModel(new ResourceLocation(CraftingPillars.id + ":textures/models/Disk.obj"));
-
-		this.random = new Random();
-		this.itemRenderer = new RenderingHelper.ItemRender(false, true);
-		this.resultRenderer = new RenderingHelper.ItemRender(true, true);
+		this.disk = AdvancedModelLoader.loadModel(new ResourceLocation(CraftingPillars.ID + ":textures/models/Disk.obj"));
 
 		model.textureWidth = 128;
 		model.textureHeight = 64;
@@ -447,7 +449,7 @@ public class RenderDiskPillar extends TileEntitySpecialRenderer implements ISimp
 			glRotatef(workTile.rot, 0, 1, 0);
 			glScalef(0.025F, 0.025F, 0.025F);
 			glDisable(GL_LIGHTING);
-			FMLClientHandler.instance().getClient().renderEngine.bindTexture(new ResourceLocation(CraftingPillarAPI.getDiskTexture(Item.getIdFromItem(workTile.getDisk().getItem()))));
+			FMLClientHandler.instance().getClient().renderEngine.bindTexture(new ResourceLocation(CraftingPillarAPI.getDiskTexture(workTile.getDisk().getItem())));
 			this.disk.renderAll();
 			glEnable(GL_LIGHTING);
 			glPopMatrix();

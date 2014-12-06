@@ -24,7 +24,7 @@ public class ElysiumItemArmor extends ItemArmor
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
 	{
-		return Elysium.MODID + ":textures/models/tooth_armor.png";
+		return Elysium.ID + ":textures/models/tooth_armor_energized.png";
 	}
 
 	@Override
@@ -38,12 +38,12 @@ public class ElysiumItemArmor extends ItemArmor
 		int type = ((ItemArmor)itemStack.getItem()).armorType;
 
 	    if (model1 == null) {
-	      model1 = new ModelToothArmor(0.5F);
+	      model1 = new ModelToothArmor(0.5F);//0.5
 	    }
 	    if (model2 == null) {
-	      model2 = new ModelToothArmor(0.01F);
+	      model2 = new ModelToothArmor(0.01F);//0.01
 	    }
-	    if (type != 1)
+	    if ((entityLiving instanceof EntityPlayer && type == 0) || !(entityLiving instanceof EntityPlayer) && type == 1)
 	      model = model1;
 	    else {
 	      model = model2;
@@ -70,11 +70,12 @@ public class ElysiumItemArmor extends ItemArmor
 	      		{
 	      			EnumAction enumaction = ((EntityPlayer)entityLiving).getEquipmentInSlot(0).getItemUseAction();
 
-	      			if (enumaction == EnumAction.block)
-	      			{
-	      				model.heldItemRight = 3;
-	      			}
-	      			else if (enumaction == EnumAction.bow)
+//	      			if (enumaction == EnumAction.block)
+//	      			{
+//	      				model.heldItemRight = 3;
+//	      			}
+//	      			else
+      				if (enumaction == EnumAction.bow)
 	      			{
 	      				model.aimedBow = true;
 	      			}

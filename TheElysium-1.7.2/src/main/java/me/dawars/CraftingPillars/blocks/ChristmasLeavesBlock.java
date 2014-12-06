@@ -1,15 +1,11 @@
 package me.dawars.CraftingPillars.blocks;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import me.dawars.CraftingPillars.CraftingPillars;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,18 +13,14 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ChristmasLeavesBlock extends BaseLeavesBlock implements IShearable
 {
-	public static final String[] LEAF_TYPES = new String[]  {"spruce", "fostimber"};
-	public static final String[][] field_94396_b = new String[][] {{CraftingPillars.id + ":ChristmasTreeLeaves", "elysium:fostimber_leaves"}, {CraftingPillars.id + ":ChristmasTreeLeavesFast", "elysium:fostimber_leaves_fast"}};
 
-	@SideOnly(Side.CLIENT)
-	/** 1 for fast graphic. 0 for fancy graphics. used in iconArray. */
-	public int iconType;
-	public IIcon[][] iconArray = new IIcon[2][];
-	public IIcon glowing;
-	int[] adjacentTreeBlocks;
+	public static IIcon glowing;
+	Block[] adjacentTreeBlocks;
 
 	public ChristmasLeavesBlock(Material mat)
 	{
@@ -38,7 +30,7 @@ public class ChristmasLeavesBlock extends BaseLeavesBlock implements IShearable
 	@Override
 	public int getRenderType()
 	{
-		return CraftingPillars.christmasLeavesRenderID;
+		return CraftingPillars.winter ? CraftingPillars.christmasLeavesRenderID : super.getRenderType();
 	}
 
 	/**
@@ -54,9 +46,9 @@ public class ChristmasLeavesBlock extends BaseLeavesBlock implements IShearable
 	 * Called on server worlds only when the block has been replaced by a different block ID, or the same block with a
 	 * different metadata value, but before the new metadata value is set. Args: World, x, y, z, old block ID, old
 	 * metadata
-	 */      /*
+	 */
 	@Override
-	public void breakBlock(World world, int par2, int par3, int par4, int par5, int par6)
+	public void breakBlock(World world, int par2, int par3, int par4, Block par5, int par6)
 	{
 		byte b0 = 1;
 		int j1 = b0 + 1;
@@ -69,17 +61,17 @@ public class ChristmasLeavesBlock extends BaseLeavesBlock implements IShearable
 				{
 					for (int i2 = -b0; i2 <= b0; ++i2)
 					{
-						int j2 = world.getBlockId(par2 + k1, par3 + l1, par4 + i2);
+						Block j2 = world.getBlock(par2 + k1, par3 + l1, par4 + i2);
 
-						if (Block.blocksList[j2] != null)
+						if (j2 != null)
 						{
-							Block.blocksList[j2].beginLeavesDecay(world, par2 + k1, par3 + l1, par4 + i2);
+							j2.beginLeavesDecay(world, par2 + k1, par3 + l1, par4 + i2);
 						}
 					}
 				}
 			}
 		}
-	}            */
+	}
 	/**
 	 * Ticks the block if it's been scheduled
 	 */
@@ -235,8 +227,7 @@ public class ChristmasLeavesBlock extends BaseLeavesBlock implements IShearable
 	@Override
 	public Item getItemDropped(int par1, Random par2Random, int par3)
 	{
-		return super.getItemDropped(par1, par2Random, par3);
-//		return Item.getItemFromBlock(CraftingPillars.blockChristmasTreeSapling);
+		return Item.getItemFromBlock(CraftingPillars.blockChristmasTreeSapling);
 	}
 
 	/**
@@ -261,13 +252,13 @@ public class ChristmasLeavesBlock extends BaseLeavesBlock implements IShearable
 
 			if (world.rand.nextInt(chance) == 0)
 			{
-				/*if(world.rand.nextInt(2) == 0)
-				{ */
+				if(world.rand.nextInt(2) == 0)
+				{
 					Item item = this.getItemDropped(meta, world.rand, bonus);
 					this.dropBlockAsItem(world, x, y, z, new ItemStack(item));
-				/*} else {
-					this.dropBlockAsItem_do(world, x, y, z, new ItemStack(CraftingPillars.blockChristmasLight, 1, 0));
-				} */
+				} else {
+					this.dropBlockAsItem(world, x, y, z, new ItemStack(CraftingPillars.blockChristmasLight, 1, 0));
+				} 
 			}
 		}
 	}
@@ -285,8 +276,7 @@ public class ChristmasLeavesBlock extends BaseLeavesBlock implements IShearable
 	@SideOnly(Side.CLIENT)
 	public boolean isOpaqueCube()
 	{
-		FMLClientHandler.instance().getClient();
-		return !Minecraft.isFancyGraphicsEnabled();
+		return false;
 	}
 
 	/**
@@ -297,57 +287,8 @@ public class ChristmasLeavesBlock extends BaseLeavesBlock implements IShearable
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister itemIcon)
 	{
-		for (int i = 0; i < field_94396_b.length; ++i)
-		{
-			this.iconArray[i] = new IIcon[field_94396_b[i].length];
-
-			for (int j = 0; j < field_94396_b[i].length; ++j)
-			{
-				this.iconArray[i][j] = itemIcon.registerIcon(field_94396_b[i][j]);
-			}
-		}
-
-		this.glowing = itemIcon.registerIcon(CraftingPillars.id + ":ChristmasTreeLeavesOverlay");
-
-	}
-	/**
-	 * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
-	 */
-	/*@Override
-	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int id, CreativeTabs tab, List list)
-	{
-		list.add(new ItemStack(id, 1, 0));
-		//list.add(new ItemStack(id, 1, 1));
-	}   */
-
-	/**
-	 * Returns an item stack containing a single instance of the current block type. 'i' is the block's subtype/damage
-	 * and is ignored for blocks which do not support subtypes. Blocks which cannot be harvested should return null.
-	 */
-	/*@Override
-	protected ItemStack createStackedBlock(int meta)
-	{
-		return new ItemStack(this.blockID, 1, meta & 3);
-	}   /*
-	/**
-	 * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
-	 */
-	/*@SideOnly(Side.CLIENT)
-	@Override
-	public IIcon getIcon(int id, int meta)
-	{
-		return (meta & 3) == 1 ? this.iconArray[this.iconType][1] : ((meta & 3) == 3 ? this.iconArray[this.iconType][3] : ((meta & 3) == 2 ? this.iconArray[this.iconType][2] : this.iconArray[this.iconType][0]));
-	}   */
-
-	@SideOnly(Side.CLIENT)
-	/**
-	 * Pass true to draw this block using fancy graphics, or false for fast graphics.
-	 */
-	public void setGraphicsLevel(boolean par1)
-	{
-		this.graphicsLevel = par1;
-		this.iconType = par1 ? 0 : 1;
+		this.blockIcon = itemIcon.registerIcon(CraftingPillars.ID + ":ChristmasTreeLeaves");
+		ChristmasLeavesBlock.glowing = itemIcon.registerIcon(CraftingPillars.ID + ":ChristmasTreeLeavesOverlay");
 	}
 
 	@Override

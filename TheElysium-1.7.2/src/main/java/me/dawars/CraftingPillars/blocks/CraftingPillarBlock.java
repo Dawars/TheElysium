@@ -1,8 +1,5 @@
 package me.dawars.CraftingPillars.blocks;
 
-import cpw.mods.fml.common.FMLLog;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import me.dawars.CraftingPillars.CraftingPillars;
 import me.dawars.CraftingPillars.tiles.TileEntityCraftingPillar;
 import net.minecraft.block.Block;
@@ -17,6 +14,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class CraftingPillarBlock extends BaseBlockContainer
 {
@@ -60,12 +59,15 @@ public class CraftingPillarBlock extends BaseBlockContainer
 			}
 		} else
 		{
-			for (int i = 0; i < 7; ++i)
+			if(CraftingPillars.valentine)
 			{
-				double d0 = world.rand.nextGaussian() * 0.02D;
-				double d1 = world.rand.nextGaussian() * 0.02D;
-				double d2 = world.rand.nextGaussian() * 0.02D;
-				world.spawnParticle("heart", x + (double) (world.rand.nextFloat()), y + 1, z + (double) (world.rand.nextFloat()), d0, d1, d2);
+				for (int i = 0; i < 7; ++i)
+				{
+					double d0 = world.rand.nextGaussian() * 0.02D;
+					double d1 = world.rand.nextGaussian() * 0.02D;
+					double d2 = world.rand.nextGaussian() * 0.02D;
+					world.spawnParticle("heart", x + (double) (world.rand.nextFloat()), y + 1, z + (double) (world.rand.nextFloat()), d0, d1, d2);
+				}
 			}
 		}
 	}
@@ -235,7 +237,7 @@ public class CraftingPillarBlock extends BaseBlockContainer
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister itemIcon)
 	{
-		this.blockIcon = itemIcon.registerIcon(CraftingPillars.id + ":craftingPillar_side");
+		this.blockIcon = itemIcon.registerIcon(CraftingPillars.ID + ":craftingPillar_side");
 	}
 
 	@Override

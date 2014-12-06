@@ -1,6 +1,15 @@
 package me.dawars.CraftingPillars.renderer;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_ENABLE_BIT;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopAttrib;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushAttrib;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotatef;
+import static org.lwjgl.opengl.GL11.glTranslated;
+import static org.lwjgl.opengl.GL11.glTranslatef;
 import me.dawars.CraftingPillars.CraftingPillars;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -8,8 +17,6 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
@@ -75,9 +82,9 @@ public class RenderExtendPillar extends TileEntitySpecialRenderer implements ISi
 	{
 
 		if(CraftingPillars.winter)
-			this.TEXTURE_WORKPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/extendPillarFrozen.png");
+			this.TEXTURE_WORKPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/extendPillarFrozen.png");
 		else
-			this.TEXTURE_WORKPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/extendPillar.png");
+			this.TEXTURE_WORKPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/extendPillar.png");
 
 		model.textureWidth = 128;
 		model.textureHeight = 64;
@@ -348,6 +355,29 @@ public class RenderExtendPillar extends TileEntitySpecialRenderer implements ISi
 
 	public void render(float f, boolean bt, boolean bb, boolean be, boolean bw, boolean bn, boolean bs)
 	{
+		if(bb)
+		{
+			this.pillarBottom.render(f);
+		}
+		else
+		{
+			this.bottom.render(f);
+			this.bottoms.render(f);
+		}
+		
+		
+		this.pillar.render(f);
+		
+
+		if(bw)
+			this.pillarEast.render(f);
+		if(be)
+			this.pillarWest.render(f);
+		if(bs)
+			this.pillarNorth.render(f);
+		if(bn)
+			this.pillarSouth.render(f);
+		
 		if(bt)
 		{
 			this.pillarTop.render(f);
@@ -391,29 +421,10 @@ public class RenderExtendPillar extends TileEntitySpecialRenderer implements ISi
 				this.Icicle11C.render(f);
 			}
 
-			this.top.render(f);
 			this.tops.render(f);
+			this.top.render(f);
 		}
 
-		this.pillar.render(f);
-		if(bb)
-		{
-			this.pillarBottom.render(f);
-		}
-		else
-		{
-			this.bottom.render(f);
-			this.bottoms.render(f);
-		}
-
-		if(bw)
-			this.pillarEast.render(f);
-		if(be)
-			this.pillarWest.render(f);
-		if(bs)
-			this.pillarNorth.render(f);
-		if(bn)
-			this.pillarSouth.render(f);
 	}
 
 	@Override
@@ -494,11 +505,11 @@ public class RenderExtendPillar extends TileEntitySpecialRenderer implements ISi
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer)
 	{
 		glPushMatrix();
+		glPushAttrib(GL_ENABLE_BIT);
+		glEnable(GL_DEPTH_TEST);
 		glTranslated(0, 1.0D, 0);
 		glRotatef(180F, 1F, 0F, 0F);
 		FMLClientHandler.instance().getClient().renderEngine.bindTexture(this.TEXTURE_WORKPILLAR);
-		glPushAttrib(GL_ENABLE_BIT);
-		glEnable(GL_DEPTH_TEST);
 		this.render(0.0625F, false, false, false, false, false, false);
 		glPopAttrib();
 		glPopMatrix();

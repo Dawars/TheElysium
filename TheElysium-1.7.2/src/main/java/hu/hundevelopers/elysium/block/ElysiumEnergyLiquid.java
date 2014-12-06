@@ -28,7 +28,7 @@ public class ElysiumEnergyLiquid extends BlockFluidClassic
 	@Override
 	public void registerBlockIcons(IIconRegister register)
 	{
-		this.blockIcon = register.registerIcon(Elysium.MODID + ":energy_liquid");
+		this.blockIcon = register.registerIcon(Elysium.ID + ":energy_liquid");
 	}
      
      @Override
@@ -78,7 +78,7 @@ public class ElysiumEnergyLiquid extends BlockFluidClassic
     	 if (rand.nextInt(2000) == 0)
     	 {
     		 System.out.println("Sound");
-    		 world.playSound((double)x, (double)y, (double)z, Elysium.MODID + ":liquidCrystal", 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
+    		 world.playSound((double)x, (double)y, (double)z, Elysium.ID + ":liquidCrystal", 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
     	 }
      }
 }

@@ -5,8 +5,6 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 
-import org.lwjgl.opengl.GL11;
-
 public class ModelToothArmor extends ModelBiped
 {
 	ModelRenderer buttonR;
@@ -521,7 +519,10 @@ public class ModelToothArmor extends ModelBiped
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
 	{
 		super.render(entity, f, f1, f2, f3, f4, f5);
-		setRotationAngles(f5, f, f1, f2, f3, f4, entity);
+//		if(entity instanceof EntityHero || entity instanceof EntitySkeleton || entity instanceof EntityZombie)
+//			setRotationAnglesHero(f, f1, f2, f3, f4, f5, entity);
+//		else
+			setRotationAngles(f5, f, f1, f2, f3, f4, entity);
 		
 		float a = MathHelper.abs(f * 0.6662F) * 1.4F * f1;
 		float b = MathHelper.abs(f * 0.6662F + 3.141593F) * 1.4F * f1;

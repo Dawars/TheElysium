@@ -1,19 +1,12 @@
 package hu.hundevelopers.elysium.render;
 
-import org.lwjgl.opengl.GL11;
-
 import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.entity.EntityVoidSpecter;
 import hu.hundevelopers.elysium.model.ModelVoidSpecter;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.boss.BossStatus;
-import net.minecraft.entity.boss.EntityDragon;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderVoidSpecter extends RenderLiving
@@ -102,7 +95,7 @@ public class RenderVoidSpecter extends RenderLiving
     }
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return new ResourceLocation(Elysium.MODID + ":textures/mobs/VoidSpecter.png");
+		return new ResourceLocation(Elysium.ID + ":textures/mobs/VoidSpecter.png");
 	}
 
 }

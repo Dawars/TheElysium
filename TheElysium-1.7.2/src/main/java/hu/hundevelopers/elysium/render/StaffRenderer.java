@@ -40,12 +40,11 @@ public class StaffRenderer implements IItemRenderer
     ModelRenderer gem;
 
     private ResourceLocation TEXTURE_STAFF[] = {
-    		new ResourceLocation(Elysium.MODID + ":textures/models/staff1.png"),
-    		new ResourceLocation(Elysium.MODID + ":textures/models/staff2.png"),
-    		new ResourceLocation(Elysium.MODID + ":textures/models/staff3.png"),
-    		new ResourceLocation(Elysium.MODID + ":textures/models/staff4.png")
+    		new ResourceLocation(Elysium.ID + ":textures/models/staff1.png"),
+    		new ResourceLocation(Elysium.ID + ":textures/models/staff2.png"),
+    		new ResourceLocation(Elysium.ID + ":textures/models/staff3.png"),
+    		new ResourceLocation(Elysium.ID + ":textures/models/staff4.png")
 		};
-    private static final ResourceLocation enderDragonCrystalBeamTextures = new ResourceLocation("textures/entity/endercrystal/endercrystal_beam.png");
 
 	public static ModelBase model = new ModelBase()
 	{
@@ -145,13 +144,6 @@ public class StaffRenderer implements IItemRenderer
 		model.rotateAngleZ = z;
 	}
 	
-	private void addRotation(ModelRenderer model, float x, float y, float z)
-	{
-		model.rotateAngleX += x;
-		model.rotateAngleY += y;
-		model.rotateAngleZ += z;
-	}
-
 	@Override
 	public boolean handleRenderType(ItemStack item, ItemRenderType type)
 	{

@@ -46,7 +46,7 @@ public class ElysiumBlockSapling extends BlockSapling
 	@Override
     public Block setBlockTextureName(String texture)
     {
-        this.textureName = Elysium.MODID  + ":" + texture;
+        this.textureName = Elysium.ID  + ":" + texture;
         return this;
     }
 	

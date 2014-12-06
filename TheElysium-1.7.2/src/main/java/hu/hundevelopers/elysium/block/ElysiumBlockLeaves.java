@@ -5,19 +5,17 @@ import hu.hundevelopers.elysium.Elysium;
 import java.util.List;
 import java.util.Random;
 
+import me.dawars.CraftingPillars.CraftingPillars;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -32,10 +30,17 @@ public class ElysiumBlockLeaves extends BlockLeaves
 		
     }
 	
+
+	@Override
+	public int getRenderType()
+	{
+		return CraftingPillars.winter ? CraftingPillars.christmasLeavesRenderID : super.getRenderType();
+	}
+
 	@Override
     public Block setBlockTextureName(String texture)
     {
-        this.textureName = Elysium.MODID + ":" + texture;
+        this.textureName = Elysium.ID + ":" + texture;
         return this;
     }
 	
@@ -47,8 +52,7 @@ public class ElysiumBlockLeaves extends BlockLeaves
     @Override
     public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side)
     {
-        Block block = world.getBlock(x, y, z);
-        return FMLClientHandler.instance().getClient().isFancyGraphicsEnabled()? true : super.shouldSideBeRendered(world, x, y, z, side);
+		return Minecraft.isFancyGraphicsEnabled()? true : super.shouldSideBeRendered(world, x, y, z, side);
     }
     
 	private IIcon[][] icon = new IIcon[2][name.length];
@@ -67,6 +71,41 @@ public class ElysiumBlockLeaves extends BlockLeaves
     {
         return Item.getItemFromBlock(Elysium.blockSapling);
     }
+	
+	/**
+	 * Drops the block items with a specified chance of dropping the specified items
+	 */
+	@Override
+	public void dropBlockAsItemWithChance(World world, int x, int y, int z, int meta, float par6, int bonus)
+	{
+		if (!world.isRemote)
+		{
+			int chance = 13;
+
+			if (bonus > 0)
+			{
+				chance -= 2 << bonus;
+
+				if (chance < 8)
+				{
+					chance = 8;
+				}
+			}
+
+			if (world.rand.nextInt(chance) == 0)
+			{
+				if(world.rand.nextInt(2) == 0)
+				{
+					Item item = this.getItemDropped(meta, world.rand, bonus);
+					this.dropBlockAsItem(world, x, y, z, new ItemStack(item));
+				} else if(CraftingPillars.winter)
+				{
+					this.dropBlockAsItem(world, x, y, z, new ItemStack(CraftingPillars.blockChristmasLight, 1, 0));
+				} 
+			}
+		}
+	}
+	
     /**
      * Returns the color this block should be rendered. Used by leaves.
      */
@@ -97,7 +136,7 @@ public class ElysiumBlockLeaves extends BlockLeaves
     @Override
     public boolean isOpaqueCube()
     {
-        return !FMLClientHandler.instance().getClient().isFancyGraphicsEnabled();
+		return !Minecraft.isFancyGraphicsEnabled();
     }
     
     /**
@@ -125,7 +164,7 @@ public class ElysiumBlockLeaves extends BlockLeaves
     @Override
     public IIcon getIcon(int side, int meta)
     {
-        return FMLClientHandler.instance().getClient().isFancyGraphicsEnabled() ? this.icon[0][meta & 3] : this.icon[1][meta & 3];
+		return Minecraft.isFancyGraphicsEnabled() ? this.icon[0][meta & 3] : this.icon[1][meta & 3];
     }
 
     /**

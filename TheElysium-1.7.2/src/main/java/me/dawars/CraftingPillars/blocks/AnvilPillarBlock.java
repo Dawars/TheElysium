@@ -1,7 +1,7 @@
 package me.dawars.CraftingPillars.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import me.dawars.CraftingPillars.CraftingPillars;
+import me.dawars.CraftingPillars.tiles.TileEntityAnvilPillar;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -12,16 +12,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import me.dawars.CraftingPillars.CraftingPillars;
-import me.dawars.CraftingPillars.handlers.PillarSoundHandler;
-import me.dawars.CraftingPillars.items.ItemRingBase;
-import me.dawars.CraftingPillars.tiles.TileEntityAnvilPillar;
-import me.dawars.CraftingPillars.tiles.TileEntityAnvilPillar;
-import me.dawars.CraftingPillars.tiles.TileEntityCraftingPillar;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class AnvilPillarBlock extends BaseBlockContainer
 {
@@ -143,7 +138,7 @@ public class AnvilPillarBlock extends BaseBlockContainer
 	    		}
     		}
 		} else {
-			if(CraftingPillars.timeValentine)
+			if(CraftingPillars.valentine)
 			{
 				for (int i = 0; i < 7; ++i)
 				{
@@ -240,7 +235,7 @@ public class AnvilPillarBlock extends BaseBlockContainer
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister itemIcon)
 	{
-		this.blockIcon = itemIcon.registerIcon(CraftingPillars.id + ":craftingPillar_side");
+		this.blockIcon = itemIcon.registerIcon(CraftingPillars.ID + ":craftingPillar_side");
 	}
 
 	@Override

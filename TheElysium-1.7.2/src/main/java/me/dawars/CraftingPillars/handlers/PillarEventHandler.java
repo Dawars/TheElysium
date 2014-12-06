@@ -2,8 +2,7 @@ package me.dawars.CraftingPillars.handlers;
 
 import java.util.Random;
 
-import baubles.api.BaublesApi;
-
+import me.dawars.CraftingPillars.CraftingPillars;
 import me.dawars.CraftingPillars.api.baubles.Baubles;
 import me.dawars.CraftingPillars.blocks.BaseBlockContainer;
 import net.minecraft.block.Block;
@@ -20,10 +19,31 @@ import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import baubles.api.BaublesApi;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 
 public class PillarEventHandler
 {
+	@SubscribeEvent
+	public void onPlayerItemCrafted(PlayerEvent.ItemCraftedEvent event)
+	{
+		if(event.crafting != null && event.crafting.isItemEqual(new ItemStack(CraftingPillars.blockBasePillar)))
+		{
+			event.player.addStat(CraftingPillars.achievementGettingStarted, 1);
+		}
+
+		if(event.crafting != null && event.crafting.isItemEqual(new ItemStack(CraftingPillars.blockTankPillar)))
+		{
+			event.player.addStat(CraftingPillars.achievementCompressingLiquids, 1);
+		}
+		
+		if(event.crafting != null && event.crafting.isItemEqual(new ItemStack(CraftingPillars.blockChristmasTreeSapling)))
+		{
+			event.player.addStat(CraftingPillars.achievementChristmas, 1);
+		}
+	}
+	
 	@SubscribeEvent
 	public void onPlayerInterract(PlayerInteractEvent event)
 	{
@@ -151,8 +171,9 @@ public class PillarEventHandler
         }
     }
 
-	private void setPositionEntity(Entity entity, double posX, double posY, double posZ) {
-	System.out.println("tp");
+	private void setPositionEntity(Entity entity, double posX, double posY, double posZ)
+	{
+//	System.out.println("tp");
     	
     	EntityPlayerMP entityplayermp = (EntityPlayerMP) entity;
 		if (entityplayermp.playerNetServerHandler.func_147362_b().isChannelOpen())

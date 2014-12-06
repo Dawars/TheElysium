@@ -1,7 +1,5 @@
 package me.dawars.CraftingPillars.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import me.dawars.CraftingPillars.CraftingPillars;
 import me.dawars.CraftingPillars.api.FreezerRecipes;
 import me.dawars.CraftingPillars.tiles.TileEntityFreezerPillar;
@@ -11,7 +9,6 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -21,8 +18,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class FreezerPillarBlock extends BaseBlockContainer
 {
@@ -195,7 +193,7 @@ public class FreezerPillarBlock extends BaseBlockContainer
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister itemIcon)
 	{
-		this.blockIcon = itemIcon.registerIcon(CraftingPillars.id + ":craftingPillar_side");
+		this.blockIcon = itemIcon.registerIcon(CraftingPillars.ID + ":craftingPillar_side");
 	}
 
 	@Override

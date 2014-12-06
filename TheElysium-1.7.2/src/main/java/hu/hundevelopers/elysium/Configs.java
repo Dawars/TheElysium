@@ -27,9 +27,10 @@ public class Configs {
 	public static final Block labyrinthWall = Blocks.quartz_block;
 	public static final Block labyrinthLamp = Elysium.blockEnergyCrystal;
 
-	public static final int mazeRoomRarity = 10;
+	public static final int mazeRoomRarity = 6;
 	
 	public static final boolean customGui = true;
+	public static final boolean isMobCrystals = true;
 
 
 

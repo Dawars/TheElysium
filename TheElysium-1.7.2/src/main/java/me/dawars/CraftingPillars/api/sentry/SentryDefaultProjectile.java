@@ -2,12 +2,11 @@ package me.dawars.CraftingPillars.api.sentry;
 
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
-public abstract class SentryDefaultProjectile implements IBehaviorSentryItem
+public abstract class SentryDefaultProjectile implements ISentryBehaviorItem
 {
 
 	/**
@@ -19,7 +18,7 @@ public abstract class SentryDefaultProjectile implements IBehaviorSentryItem
 	 * @return itemstack remaining in the Sentry after a shoot
 	 */
 	@Override
-	public final ItemStack dispense(IBlockSource blockSource,  EntityLiving target, EntityPlayer owner, ItemStack item)
+	public final ItemStack dispense(IBlockSource blockSource,  EntityLivingBase target, EntityLivingBase owner, ItemStack item)
 	{
 		this.playSound(blockSource);
 		this.spawnParticles(blockSource);
@@ -34,7 +33,7 @@ public abstract class SentryDefaultProjectile implements IBehaviorSentryItem
 	 * @param item - the item placed into the pillar
 	 * @return - modified itemstack after shooting
 	 */
-	public ItemStack spawnEntity(IBlockSource sourceblock, EntityLiving target, EntityPlayer owner, ItemStack item)
+	public ItemStack spawnEntity(IBlockSource sourceblock, EntityLivingBase target, EntityLivingBase owner, ItemStack item)
 	{
 		IProjectile iprojectile = this.getProjectileEntity(target, owner, sourceblock, item);
 		if(iprojectile != null)
@@ -63,5 +62,5 @@ public abstract class SentryDefaultProjectile implements IBehaviorSentryItem
 	 * @param blockSource - the Sentry block
 	 * @param item - Weapon or projectile placed into the Sentry (this is registered to the 
 	 */
-	protected abstract IProjectile getProjectileEntity(EntityLiving target, EntityPlayer owner, IBlockSource blockSource, ItemStack item);
+	protected abstract IProjectile getProjectileEntity(EntityLivingBase target, EntityLivingBase owner, IBlockSource blockSource, ItemStack item);
 }

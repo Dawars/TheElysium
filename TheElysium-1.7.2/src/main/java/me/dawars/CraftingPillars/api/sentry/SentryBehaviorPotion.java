@@ -6,9 +6,8 @@ import java.util.List;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemPotion;
@@ -17,8 +16,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-
-import com.mojang.authlib.GameProfile;
 
 public class SentryBehaviorPotion extends SentryDefaultProjectile
 {
@@ -30,7 +27,7 @@ public class SentryBehaviorPotion extends SentryDefaultProjectile
 	 * @param item - Weapon or projectile placed into the Sentry (this is registered to the 
 	 */
 	@Override
-	protected IProjectile getProjectileEntity(EntityLiving target, EntityPlayer owner, IBlockSource blockSource, ItemStack item) {
+	protected IProjectile getProjectileEntity(EntityLivingBase target, EntityLivingBase owner, IBlockSource blockSource, ItemStack item) {
 
 		if(!ItemPotion.isSplash(item.getItemDamage()))
 		{
@@ -44,11 +41,11 @@ public class SentryBehaviorPotion extends SentryDefaultProjectile
 
 		boolean hasPotionEffect = false;
 
-		List list = Items.potionitem.getEffects(item);
+		List<?> list = Items.potionitem.getEffects(item);
 
 		if (list != null && !list.isEmpty())
 		{
-			Iterator iterator1 = list.iterator();
+			Iterator<?> iterator1 = list.iterator();
 
 			while (iterator1.hasNext())
 			{
@@ -71,7 +68,7 @@ public class SentryBehaviorPotion extends SentryDefaultProjectile
 		if(!hasPotionEffect)
 		{
 
-			EntityPotion entitypotion = new EntityPotion(world, new FakeSentryPlayer(world, new GameProfile(null, "Sentry")), item.copy());
+			EntityPotion entitypotion = new EntityPotion(world, new FakeSentryPlayer(world), item.copy());
 			entitypotion.setPosition(x + 0.5F, y + 1.5F, z + 0.5F);
 
 			entitypotion.posY = y + 1.5F;
@@ -103,7 +100,7 @@ public class SentryBehaviorPotion extends SentryDefaultProjectile
 	 * @param item - the item placed into the pillar
 	 */
 	@Override
-	public ItemStack spawnEntity(IBlockSource sourceblock, EntityLiving target, EntityPlayer owner, ItemStack item)
+	public ItemStack spawnEntity(IBlockSource sourceblock, EntityLivingBase target, EntityLivingBase owner, ItemStack item)
 	{
 		IProjectile iprojectile = this.getProjectileEntity(target, owner, sourceblock, item);
 		if(iprojectile != null)

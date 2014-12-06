@@ -3,8 +3,6 @@ package me.dawars.CraftingPillars.blocks;
 import java.util.List;
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import me.dawars.CraftingPillars.CraftingPillars;
 import me.dawars.CraftingPillars.tiles.TileEntityBrewingPillar;
 import net.minecraft.block.Block;
@@ -21,6 +19,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BrewingPillarBlock extends BaseBlockContainer
 {
@@ -213,7 +213,7 @@ public class BrewingPillarBlock extends BaseBlockContainer
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister itemIcon)
 	{
-		this.blockIcon = itemIcon.registerIcon(CraftingPillars.id + ":craftingPillar_side");
+		this.blockIcon = itemIcon.registerIcon(CraftingPillars.ID + ":craftingPillar_side");
 	}
 
 	@Override

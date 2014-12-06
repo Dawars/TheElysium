@@ -3,15 +3,13 @@ package me.dawars.CraftingPillars.api.sentry;
 import java.util.HashMap;
 import java.util.Map;
 
-import me.dawars.CraftingPillars.api.FreezerRecipes.LiquidRecipe;
 import net.minecraft.item.Item;
-
 import cpw.mods.fml.common.FMLLog;
 
 public class SentryBehaviors {
 	
 	/** Registry for all sentry behaviors. */
-	public static Map<String, IBehaviorSentryItem> sentryBehaviorRegistry = new HashMap<String, IBehaviorSentryItem>();
+	public static Map<String, ISentryBehaviorItem> sentryBehaviorRegistry = new HashMap<String, ISentryBehaviorItem>();
 
 	/**
 	 * Use this method to register a new behavior for an item/block.
@@ -20,9 +18,9 @@ public class SentryBehaviors {
 	 */	
 	public static void add(Item item, Object behavior)
 	{
-		if(behavior instanceof IBehaviorSentryItem)
+		if(behavior instanceof ISentryBehaviorItem)
 		{
-			sentryBehaviorRegistry.put(item.getUnlocalizedName(), (IBehaviorSentryItem)behavior);
+			sentryBehaviorRegistry.put(item.getUnlocalizedName(), (ISentryBehaviorItem)behavior);
 		} else {
 			FMLLog.warning("[CraftingPillar]: Couldn't register " + behavior.toString() + "! It has to implement IBehaviorSentryItem!");
 		}
@@ -33,8 +31,8 @@ public class SentryBehaviors {
 	 * @param item - item of the weapon/projectile
 	 * @return - behavior for the weapon/projectile
 	 */
-	public static IBehaviorSentryItem get(Item item)
+	public static ISentryBehaviorItem get(Item item)
 	{
-		return (IBehaviorSentryItem) sentryBehaviorRegistry.get(item.getUnlocalizedName());
+		return (ISentryBehaviorItem) sentryBehaviorRegistry.get(item.getUnlocalizedName());
 	}
 }

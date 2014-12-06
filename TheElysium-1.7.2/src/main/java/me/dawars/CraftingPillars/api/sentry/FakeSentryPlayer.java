@@ -11,8 +11,8 @@ public class FakeSentryPlayer extends EntityPlayer
 {
 
 
-	public FakeSentryPlayer(World world, GameProfile gameProfile) {
-		super(world, gameProfile);
+	public FakeSentryPlayer(World world) {
+		super(world, new GameProfile(null, "Sentry Pillar"));
 	}
 
 	@Override

@@ -15,7 +15,7 @@ public class ElysiumItemAxe extends ItemAxe
 	@Override
     public Item setTextureName(String name)
     {
-        this.iconString = Elysium.MODID + ":" + name;
+        this.iconString = Elysium.ID + ":" + name;
         return this;
     }
 }

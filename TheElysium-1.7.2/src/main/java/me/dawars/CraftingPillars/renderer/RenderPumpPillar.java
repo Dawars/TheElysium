@@ -33,7 +33,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class RenderPumpPillar extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler
 {
-	private static final ResourceLocation TEXTURE_DRILL = new ResourceLocation(CraftingPillars.id + ":textures/models/pump_drill.png");
+	private static final ResourceLocation TEXTURE_DRILL = new ResourceLocation(CraftingPillars.ID + ":textures/models/pump_drill.png");
 
 	private ResourceLocation TEXTURE_PUMPPILLAR;
 
@@ -106,11 +106,11 @@ public class RenderPumpPillar extends TileEntitySpecialRenderer implements ISimp
 	public RenderPumpPillar()
 	{
 		if (CraftingPillars.winter)
-			this.TEXTURE_PUMPPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/freezerPillarFrozen.png");
+			this.TEXTURE_PUMPPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/freezerPillarFrozen.png");
 		else
-			this.TEXTURE_PUMPPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/freezerPillar.png");
+			this.TEXTURE_PUMPPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/freezerPillar.png");
 
-		this.drill = AdvancedModelLoader.loadModel(new ResourceLocation(CraftingPillars.id + ":models/pump_bottom.obj"));
+		this.drill = AdvancedModelLoader.loadModel(new ResourceLocation(CraftingPillars.ID + ":models/pump_bottom.obj"));
 
 		this.random = new Random();
 		this.itemRenderer = new RenderingHelper.ItemRender(false, true);

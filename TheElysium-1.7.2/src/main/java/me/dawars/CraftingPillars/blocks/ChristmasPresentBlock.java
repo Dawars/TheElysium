@@ -12,30 +12,7 @@ import net.minecraft.world.World;
 
 public class ChristmasPresentBlock extends BaseBlockContainer
 {
-	private static ItemStack[] presents;
-
-	public static void init()
-	{
-		// TODO presents
-		presents = new ItemStack[]{
-//				new ItemStack(CraftingPillars.blockChristmasPresent, 1, 0),
-//				new ItemStack(CraftingPillars.blockChristmasPresent, 1, 1),
-//				new ItemStack(CraftingPillars.itemWinterFood2013, 2, 0),
-//				new ItemStack(CraftingPillars.itemWinterFood2013, 3, 1),
-//				new ItemStack(CraftingPillars.itemWinterFood2013, 4, 2),
-//				new ItemStack(CraftingPillars.itemWinterFood2013, 3, 3),
-//				new ItemStack(CraftingPillars.itemWinterFood2013, 5, 4),
-//				new ItemStack(CraftingPillars.itemWinterFood2013, 4, 5),
-//				new ItemStack(CraftingPillars.itemWinterFood2013, 2, 6),
-//				new ItemStack(CraftingPillars.itemWinterFood2013, 1, 7),
-//				new ItemStack(CraftingPillars.itemWinterFood2013, 4, 8),
-//				new ItemStack(CraftingPillars.itemElysiumLoreBook, 1, 0),
-				new ItemStack(CraftingPillars.blockCraftingPillar, 1, 0),
-				new ItemStack(CraftingPillars.blockBasePillar, 3, 0)
-//				new ItemStack(CraftingPillars.itemRibbonDiamond, 2, 0),
-//				new ItemStack(CraftingPillars.itemDiscElysium, 1, 0)
-		};
-	}
+	
 
 	public ChristmasPresentBlock(Material mat)
 	{
@@ -58,18 +35,20 @@ public class ChristmasPresentBlock extends BaseBlockContainer
 	}
 
 	@Override
-	public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player)
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float i, float j, float k)
 	{
-		if(!world.isRemote)
+		if(!world.isRemote && player.getCurrentEquippedItem() == null)
 		{
 			EntityItem item = new EntityItem(world, x+0.5D, y+0.5D, z+0.5D);
-			item.setEntityItemStack(presents[world.rand.nextInt(presents.length)].copy());
-//			if(item.getEntityItem().isItemEqual(new ItemStack(CraftingPillars.blockChristmasPresent)))
-//				player.addStat(CraftingPillars.achievementRecursion3, 1);
+			item.setEntityItemStack(CraftingPillars.present_loot[world.rand.nextInt(CraftingPillars.present_loot.length)].copy());
+			if(item.getEntityItem().isItemEqual(new ItemStack(CraftingPillars.blockChristmasPresent)))
+				player.addStat(CraftingPillars.achievementRecursion3, 1);
 			world.spawnEntityInWorld(item);
 			world.setBlockToAir(x, y, z);
 		}
-	}
+		
+		return super.onBlockActivated(world, x, y, z, player, meta, i, j, k);
+	}		
 
 	@Override
 	public int getRenderType()

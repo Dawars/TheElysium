@@ -18,7 +18,7 @@ public class ElysiumTileEntityPortalRenderer extends TileEntitySpecialRenderer
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		glColor4f(1, 1, 1, tile.alpha);
-		this.bindTexture(new ResourceLocation(Elysium.MODID + ":textures/misc/beam.png"));
+		this.bindTexture(new ResourceLocation(Elysium.ID + ":textures/misc/beam.png"));
 
 		int faces = 16;
 		glBegin(GL_QUADS);

@@ -1,8 +1,6 @@
 package hu.hundevelopers.elysium.world.biome;
 
 import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.world.gen.features.ElysiumGenDoublePlant;
-import hu.hundevelopers.elysium.world.gen.features.ElysiumGenPlants;
 
 import java.util.Random;
 

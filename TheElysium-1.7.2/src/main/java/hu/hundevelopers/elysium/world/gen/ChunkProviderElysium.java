@@ -4,10 +4,10 @@ import static net.minecraftforge.common.ChestGenHooks.DUNGEON_CHEST;
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE;
 import hu.hundevelopers.elysium.Configs;
 import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.heat.IHeatable;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenCorruption;
+import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenDesert;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenForest;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlain;
-import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenCorruption;
 import hu.hundevelopers.elysium.world.gen.features.ElysiumGenCorruptFostimber;
 import hu.hundevelopers.elysium.world.gen.features.ElysiumGenCrystalSpikes;
 import hu.hundevelopers.elysium.world.gen.features.ElysiumGenDarkFostimber;
@@ -24,7 +24,6 @@ import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.IProgressUpdate;
 import net.minecraft.util.MathHelper;
@@ -45,10 +44,7 @@ import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraft.world.gen.feature.WorldGenFlowers;
 import net.minecraft.world.gen.structure.MapGenMineshaft;
 import net.minecraft.world.gen.structure.MapGenScatteredFeature;
-import net.minecraft.world.gen.structure.MapGenStronghold;
-import net.minecraft.world.gen.structure.MapGenVillage;
 import net.minecraftforge.common.ChestGenHooks;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.ChunkProviderEvent;
 import net.minecraftforge.event.terraingen.InitMapGenEvent;
@@ -79,9 +75,9 @@ public class ChunkProviderElysium implements IChunkProvider
     private double[] stoneNoise = new double[256];
     private MapGenBase caveGenerator = new MapGenCaves();
     /** Holds Stronghold Generator */
-    private MapGenStronghold strongholdGenerator/* = new MapGenStronghold()*/;
+//    private MapGenStronghold strongholdGenerator/* = new MapGenStronghold()*/;
     /** Holds Village Generator */
-    private MapGenVillage villageGenerator = new MapGenVillage();
+//    private MapGenVillage villageGenerator = new MapGenVillage();
     /** Holds Mineshaft Generator */
     private MapGenMineshaft mineshaftGenerator = new MapGenMineshaft();
     private MapGenScatteredFeature scatteredFeatureGenerator = new MapGenScatteredFeature();
@@ -234,10 +230,6 @@ public class ChunkProviderElysium implements IChunkProvider
             }
         }
     }
-    
-	private int[] sets = new int[5];
-	private boolean right[] = new boolean[4];
-	private boolean bottom[] = new boolean[5];
 
     public void replaceBlocksForBiome(int chunkX, int chunkZ, Block[] blockArray, byte[] mapArray, BiomeGenBase[] paramBiomeGenBase)
     {
@@ -269,7 +261,6 @@ public class ChunkProviderElysium implements IChunkProvider
     //										World p_150560_1_, Random p_150560_2_, Block[] p_150560_3_, byte[] p_150560_4_, int p_150560_5_, int p_150560_6_, double p_150560_7_
                 //
                 
-                boolean flag = true;
                 Block topBlock = biomegenbase.topBlock;
                 byte b0 = (byte)(biomegenbase.field_150604_aj & 255);
                 Block fillerBlock = biomegenbase.fillerBlock;
@@ -372,7 +363,12 @@ public class ChunkProviderElysium implements IChunkProvider
 	                    					if(y == Configs.labyrinthBottom + 2)
 		    	            					blockArray[index] = Configs.labyrinthLamp;
 		    	                    		else
-		    	            					blockArray[index] = Configs.labyrinthWall;
+		    	                    		{
+		    	            					if(this.rand.nextInt(3) < 2)
+		    	            						blockArray[index] = Elysium.blockQuartzBlock;
+		    	            					else
+		    	            						blockArray[index] = Configs.labyrinthWall;
+		    	                    		}
                 						}
 	                    			}
 	                    			else
@@ -390,11 +386,18 @@ public class ChunkProviderElysium implements IChunkProvider
 	                    		{
 	            					blockArray[index] = Configs.labyrinthLamp;
 	                    		} else {
-	            					blockArray[index] = Configs.labyrinthWall;
 
+	            					if(this.rand.nextInt(3) < 2 && (biomegenbase instanceof ElysiumBiomeGenCorruption || biomegenbase instanceof ElysiumBiomeGenDesert))
+	            						blockArray[index] = Elysium.blockQuartzBlock;
+	            					else
+	            						blockArray[index] = Configs.labyrinthWall;
 	                    		}
 	                    	} else {
-            					blockArray[index] = Configs.labyrinthWall;
+
+            					if(this.rand.nextInt(3) < 2 && (biomegenbase instanceof ElysiumBiomeGenCorruption || biomegenbase instanceof ElysiumBiomeGenDesert))
+            						blockArray[index] = Elysium.blockQuartzBlock;
+            					else
+            						blockArray[index] = Configs.labyrinthWall;
 	                    	}
                     	}
             			
@@ -477,32 +480,6 @@ public class ChunkProviderElysium implements IChunkProvider
          blockArray[index] = block;
 	}
 
-	private int setSizeWithBottomWall(int a)
-    {
-    	int res = 0;
-    	for(int i = 0; i < 5; i++)
-    	{
-    		if(bottom[i] && sets[i] == sets[a])
-    			res++;
-    	}
-		return res;
-	}
-
-	private void union(int a, int b)
-    {
-    	int aid = sets[a];
-    	int bid = sets[b];
-    	for(int i = 0; i < sets.length; i++)
-    	{
-    		if(sets[i] == aid) sets[i] = bid;
-    	}
-    }
-    
-    private boolean connected(int a, int b)
-    {
-    	return sets[a] == sets[b];
-    }
-    
 	/**
      * loads or generates the chunk at the chunk location specified
      */
@@ -550,20 +527,12 @@ public class ChunkProviderElysium implements IChunkProvider
 
     private void func_147423_a(int p_147423_1_, int p_147423_2_, int p_147423_3_)
     {
-        double d0 = 684.412D;
-        double d1 = 684.412D;
-        double d2 = 512.0D;
-        double d3 = 512.0D;
         this.field_147426_g = this.noiseGen6.generateNoiseOctaves(this.field_147426_g, p_147423_1_, p_147423_3_, 5, 5, 200.0D, 200.0D, 0.5D);
         this.field_147427_d = this.field_147429_l.generateNoiseOctaves(this.field_147427_d, p_147423_1_, p_147423_2_, p_147423_3_, 5, 33, 5, 8.555150000000001D, 4.277575000000001D, 8.555150000000001D);
         this.field_147428_e = this.field_147431_j.generateNoiseOctaves(this.field_147428_e, p_147423_1_, p_147423_2_, p_147423_3_, 5, 33, 5, 684.412D, 684.412D, 684.412D);
         this.field_147425_f = this.field_147432_k.generateNoiseOctaves(this.field_147425_f, p_147423_1_, p_147423_2_, p_147423_3_, 5, 33, 5, 684.412D, 684.412D, 684.412D);
-        boolean flag1 = false;
-        boolean flag = false;
         int l = 0;
         int i1 = 0;
-        double d4 = 8.5D;
-
         for (int j1 = 0; j1 < 5; ++j1)
         {
             for (int k1 = 0; k1 < 5; ++k1)
@@ -694,13 +663,14 @@ public class ChunkProviderElysium implements IChunkProvider
 		{
 			for(int j = 0; j < 16; j++)
 			{
-				for(int y = 0; y < this.worldObj.getActualHeight(); y++)
+				for(int y = Configs.labyrinthBottom; y <= Configs.labyrinthTop; y++)
 				{
 					temp = this.worldObj.getBlock(k + i, y, l + j);
-					if(temp != null && temp instanceof IHeatable)
-					{
-						this.worldObj.setBlockMetadataWithNotify(k + i, y, l + j, 7, 2);
-					} else if(temp == Blocks.chest)
+//					if(temp != null && temp instanceof IHeatable)
+//					{
+//						this.worldObj.setBlockMetadataWithNotify(k + i, y, l + j, 7, 2);
+//					} else
+						if(temp == Blocks.chest)
 					{
 						TileEntityChest tileentitychest = (TileEntityChest)worldObj.getTileEntity(k + i, y, l + j);
 
@@ -711,6 +681,12 @@ public class ChunkProviderElysium implements IChunkProvider
                         }
                         
                         worldObj.setTileEntity(k + i, y, l + j, tileentitychest);
+					} else if(worldObj.getBiomeGenForCoords(chunkX * 16, chunkZ * 16) instanceof ElysiumBiomeGenCorruption || worldObj.getBiomeGenForCoords(chunkX * 16, chunkZ * 16) instanceof ElysiumBiomeGenDesert)
+					{
+						if(temp == Elysium.blockEnergyCrystal)
+						{
+							this.worldObj.setBlockMetadataWithNotify(k + i, y, l + j, 1, 2);
+						}
 					}
 				}
 			}
@@ -935,7 +911,8 @@ public class ChunkProviderElysium implements IChunkProvider
     @Override
     public ChunkPosition func_147416_a(World p_147416_1_, String p_147416_2_, int p_147416_3_, int p_147416_4_, int p_147416_5_)
     {
-        return "Stronghold".equals(p_147416_2_) && this.strongholdGenerator != null ? this.strongholdGenerator.func_151545_a(p_147416_1_, p_147416_3_, p_147416_4_, p_147416_5_) : null;
+    	return null;
+//        return "Stronghold".equals(p_147416_2_) && this.strongholdGenerator != null ? this.strongholdGenerator.func_151545_a(p_147416_1_, p_147416_3_, p_147416_4_, p_147416_5_) : null;
     }
 
     @Override

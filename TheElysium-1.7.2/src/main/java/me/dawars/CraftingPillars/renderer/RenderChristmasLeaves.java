@@ -17,7 +17,7 @@ public class RenderChristmasLeaves extends BlockRenderingHelper implements ISimp
 		block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 		renderer.setRenderBoundsFromBlock(block);
 		drawBlock(renderer, block, block.getIcon(0, metadata));
-		drawBlock(renderer, block, ((ChristmasLeavesBlock) block).glowing);
+		drawBlock(renderer, block, ChristmasLeavesBlock.glowing);
 	}
 
 	@Override
@@ -26,13 +26,11 @@ public class RenderChristmasLeaves extends BlockRenderingHelper implements ISimp
 		block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 		renderer.setRenderBoundsFromBlock(block);
 		renderer.renderStandardBlock(block, x, y, z);
-		int bb = setBrightness(world, x, y, z, block);
 
 		Tessellator t = Tessellator.instance;
 		t.setBrightness(160);
 
-
-		IIcon tex = ((ChristmasLeavesBlock) block).glowing;
+		IIcon tex = ChristmasLeavesBlock.glowing;
 
 		renderer.renderFaceXPos(block, x, y, z, tex);
 		renderer.renderFaceXNeg(block, x, y, z, tex);

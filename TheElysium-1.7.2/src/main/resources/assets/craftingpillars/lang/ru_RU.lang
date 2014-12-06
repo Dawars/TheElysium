@@ -8,7 +8,7 @@ tile.diskPillar.name=Столб - Проигрователь
 tile.freezerPillar.name=Столб заморозки
 tile.potPillar.name=Столб - Горшок
 tile.trashPillar.name=Мусорный Столб
-tile.sentryPillar.name=Sentry Pillar
+tile.sentryPillar.name=Сторожевой Столб
 tile.christmas_light.name=Рождественские Гирлянды
 
 itemGroup.CraftingPillars=Crafting Pillars

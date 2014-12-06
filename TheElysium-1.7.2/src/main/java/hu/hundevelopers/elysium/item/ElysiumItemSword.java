@@ -17,7 +17,7 @@ public class ElysiumItemSword extends ItemSword
 	@Override
     public Item setTextureName(String name)
     {
-        this.iconString = Elysium.MODID + ":" + name;
+        this.iconString = Elysium.ID + ":" + name;
         return this;
     }
 }

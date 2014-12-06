@@ -39,7 +39,8 @@ public class ElysiumGenEnderPyramid extends WorldGenerator
 		}
 		
 		world.setBlock(x, y+height, z, Blocks.end_stone);
-		world.setBlock(x, y+1, z, Blocks.mob_spawner);
+		world.setBlock(x, y+1, z, Blocks.diamond_block);
+		world.setBlock(x, y+2, z, Blocks.mob_spawner);
 
 		TileEntityMobSpawner tile = new TileEntityMobSpawner();
         tile.func_145881_a().setEntityName("Enderman");

@@ -103,7 +103,7 @@ public class RenderLight extends TileEntitySpecialRenderer implements ISimpleBlo
 		}
 	}
 
-	ResourceLocation texture = new ResourceLocation(CraftingPillars.id + ":textures/models/christmas_lights.png");
+	ResourceLocation texture = new ResourceLocation(CraftingPillars.ID + ":textures/models/christmas_lights.png");
 	Box b1, b2;
 
 	public RenderLight()

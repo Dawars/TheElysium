@@ -28,7 +28,7 @@ public class ElysiumBlockFlower extends BlockFlower {
 
 	@Override
 	public Block setBlockTextureName(String texture) {
-		this.textureName = Elysium.MODID + ":" + texture;
+		this.textureName = Elysium.ID + ":" + texture;
 		return this;
 	}
 

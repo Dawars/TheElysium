@@ -1,15 +1,12 @@
 package me.dawars.CraftingPillars.api.sentry;
 
 import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-
-import com.mojang.authlib.GameProfile;
 
 public class SentryBehaviorArrow extends SentryDefaultProjectile
 {
@@ -21,7 +18,7 @@ public class SentryBehaviorArrow extends SentryDefaultProjectile
 	 * @param item - Weapon or projectile placed into the Sentry (this is registered to the 
 	 */
 	@Override
-	protected IProjectile getProjectileEntity(EntityLiving target, EntityPlayer owner, IBlockSource blockSource, ItemStack item) {
+	protected IProjectile getProjectileEntity(EntityLivingBase target, EntityLivingBase owner, IBlockSource blockSource, ItemStack item) {
 
 		World world = blockSource.getWorld();
 		int x = blockSource.getXInt();
@@ -30,7 +27,7 @@ public class SentryBehaviorArrow extends SentryDefaultProjectile
 
 
 		//		EntityArrow entityammo = new EntityArrow(world, x + 0.5F, y + 1.5F, z + 0.5F);
-		EntityArrow entityammo = new EntityArrow(world, new FakeSentryPlayer(world, new GameProfile(null, "Sentry")), target, 1.6F, 3F);
+		EntityArrow entityammo = new EntityArrow(world, new FakeSentryPlayer(world), target, 1.6F, 3F);
 		entityammo.setDamage(entityammo.getDamage() + 1);
 
 		entityammo.setPosition(x + 0.5F, y + 1.5F, z + 0.5F);

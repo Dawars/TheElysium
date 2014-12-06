@@ -31,8 +31,8 @@ public class ElysiumRaspberryBush extends ElysiumBlockBush  implements IGrowable
     @Override
     public void registerBlockIcons(IIconRegister register)
     {
-    	icons[0] = register.registerIcon(Elysium.MODID + ":raspberrybushwithoutberries");
-    	icons[1] = register.registerIcon(Elysium.MODID + ":raspberrybushwithberries");
+    	icons[0] = register.registerIcon(Elysium.ID + ":raspberrybushwithoutberries");
+    	icons[1] = register.registerIcon(Elysium.ID + ":raspberrybushwithberries");
     }
 
     /**

@@ -1,10 +1,17 @@
 package me.dawars.CraftingPillars.renderer;
 
-import static org.lwjgl.opengl.GL11.*;
-
-import java.awt.Color;
-import java.util.Random;
-
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_ENABLE_BIT;
+import static org.lwjgl.opengl.GL11.glColor4f;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopAttrib;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushAttrib;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotatef;
+import static org.lwjgl.opengl.GL11.glScalef;
+import static org.lwjgl.opengl.GL11.glTranslated;
+import static org.lwjgl.opengl.GL11.glTranslatef;
 import me.dawars.CraftingPillars.CraftingPillars;
 import me.dawars.CraftingPillars.tiles.TileEntityCraftingPillar;
 import net.minecraft.block.Block;
@@ -19,7 +26,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import cpw.mods.fml.common.FMLLog;
 
 public class RenderCraftingPillar extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler
 {
@@ -79,17 +85,15 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 
 	private ModelRenderer pillarBottom;
 
-	private Random random;
 	private static final RenderingHelper.ItemRender itemRenderer = new RenderingHelper.ItemRender(false, true);
 	private static final RenderingHelper.ItemRender resultRenderer = new RenderingHelper.ItemRender(true, true);
 
 	public RenderCraftingPillar()
 	{
 		if (CraftingPillars.winter)
-			this.TEXTURE_WORKPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/craftingPillarFrozen.png");
+			this.TEXTURE_WORKPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/craftingPillarFrozen.png");
 		else
-			this.TEXTURE_WORKPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/craftingPillar.png");
-		this.random = new Random();
+			this.TEXTURE_WORKPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/craftingPillar.png");
 
 		model.textureWidth = 128;
 		model.textureHeight = 64;
@@ -375,6 +379,10 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 
 	public void render(float f)
 	{
+		this.bottom.render(f);
+		this.pillarbottom.render(f);
+		this.pillar.render(f);
+		
 		if (CraftingPillars.winter)
 		{
 			this.Icicle1A.render(f);
@@ -412,10 +420,8 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 			this.WreathJ.render(f);
 			this.Bow.render(f);
 		}
+		
 
-		this.bottom.render(f);
-		this.pillarbottom.render(f);
-		this.pillar.render(f);
 		this.pillartop.render(f);
 		this.top.render(f);
 	}
@@ -430,7 +436,6 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float f)
 	{
-		System.out.println("renderin");
 		glPushMatrix();
 		glTranslated(x + 0.5D, y + 1.5D, z + 0.5D);
 		glRotatef(180F, 1F, 0F, 0F);
@@ -465,7 +470,7 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 					glPushMatrix();
 					glTranslated(0.1875D + i * 0.3125D, 1D + 0.1875D / 3D, 0.1875D + k * 0.3125D);
 					glScalef(0.5F, 0.5F, 0.5F);
-					this.itemRenderer.render(citem, 0F, 0F, 0F, workTile.showNum);
+					RenderCraftingPillar.itemRenderer.render(citem, 0F, 0F, 0F, workTile.showNum);
 					glPopMatrix();
 				}
 			}
@@ -476,7 +481,7 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 			glPushMatrix();
 			citem.hoverStart = -workTile.rot;
 			citem.setEntityItemStack(workTile.getStackInSlot(workTile.getSizeInventory()));
-			this.resultRenderer.render(citem, 0.5F, 1.5F, 0.5F, workTile.showNum);
+			RenderCraftingPillar.resultRenderer.render(citem, 0.5F, 1.5F, 0.5F, workTile.showNum);
 			glPopMatrix();
 		}
 
@@ -503,7 +508,7 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 			glTranslatef(0, -0.28F, 0);
 
 			citem.setEntityItemStack(workTile.getStackInSlot(10));
-			this.resultRenderer.render(citem, 0F, 0F, 0F, false);
+			RenderCraftingPillar.resultRenderer.render(citem, 0F, 0F, 0F, false);
 
 			glPopMatrix();
 

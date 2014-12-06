@@ -82,9 +82,9 @@ public class RenderSentryPillar extends TileEntitySpecialRenderer implements ISi
 	public RenderSentryPillar()
 	{
 		if (CraftingPillars.winter)
-			this.TEXTURE_SHOWOFFPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/sentryPillarFrozen.png");
+			this.TEXTURE_SHOWOFFPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/sentryPillarFrozen.png");
 		else
-			this.TEXTURE_SHOWOFFPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/sentryPillar.png");
+			this.TEXTURE_SHOWOFFPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/sentryPillar.png");
 
 		this.random = new Random();
 		this.resultRenderer = new RenderingHelper.ItemRender(true, true);

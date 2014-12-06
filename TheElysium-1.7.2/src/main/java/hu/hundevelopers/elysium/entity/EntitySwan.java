@@ -1,12 +1,8 @@
 package hu.hundevelopers.elysium.entity;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.api.ElysiumApi;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIFollowParent;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -16,16 +12,15 @@ import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntitySwan extends EntityAnimal
 {
@@ -39,7 +34,7 @@ public class EntitySwan extends EntityAnimal
     public EntitySwan(World par1World)
     {
         super(par1World);
-        this.setSize(1F, 1.5F);
+        this.setSize(0.8F, 1.3F);
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIPanic(this, 1.4D));
         this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
@@ -91,7 +86,7 @@ public class EntitySwan extends EntityAnimal
         
         if(this.worldObj.getFullBlockLightValue(i, j, k) > 8)
         {
-        	for (int y = j; y >= j - 1; y--)
+        	for (int y = j; y >= j - 3; y--)
         	{
 				if(worldObj.getBlock(i, y, k).getMaterial().isLiquid())
 					return true;

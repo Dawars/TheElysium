@@ -1,10 +1,18 @@
 package hu.hundevelopers.elysium.model;
 
-import static org.lwjgl.opengl.GL11.*;
-
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import hu.hundevelopers.elysium.entity.EntityDeer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
 
 public class ModelDeer extends ModelBase
 {
@@ -228,7 +236,8 @@ public class ModelDeer extends ModelBase
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
 	{
 		super.render(entity, f, f1, f2, f3, f4, f5);
-		setRotationAngles(entity, f, f1, f2, f3, f4, f5);
+		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+		
 		body3.render(f5);
 		neck.render(f5);
 		body1.render(f5);
@@ -267,16 +276,35 @@ public class ModelDeer extends ModelBase
 		leg2BR.render(f5);
 		leg3BR.render(f5);
 	}
-
-	private void setRotation(ModelRenderer model, float x, float y, float z) {
+	private void setRotation(ModelRenderer model, float x, float y, float z)
+	{
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
+	
+	@Override
+    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity entity)
+    {
+		par2 /= 1.5F;
 
-	public void setRotationAngles(Entity e, float f, float f1, float f2,
-			float f3, float f4, float f5) {
-		super.setRotationAngles(f, f1, f2, f3, f4, f5, e);
+		EntityDeer deer = (EntityDeer)entity;
+		this.leg1BL.rotateAngleX = (float) Math.toRadians(-15) + MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
+		this.leg2BL.rotateAngleX = (float) Math.toRadians(30) + MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
+		this.leg3BL.rotateAngleX = MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
+
+		this.leg1FR.rotateAngleX = (float) Math.toRadians(15) + MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
+		this.leg2FR.rotateAngleX = (float) Math.toRadians(-15) + MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
+		this.leg3FR.rotateAngleX = (float) Math.toRadians(5) + MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
+		
+		this.leg1FL.rotateAngleX = (float) Math.toRadians(15) + MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 1.4F * par2;
+		this.leg2FL.rotateAngleX = (float) Math.toRadians(-15) + MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 1.4F * par2;
+		this.leg3FL.rotateAngleX = (float) Math.toRadians(5) + MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 1.4F * par2;
+
+		this.leg1BR.rotateAngleX = (float) Math.toRadians(-15) + MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 1.4F * par2;
+		this.leg2BR.rotateAngleX = (float) Math.toRadians(30) + MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 1.4F * par2;
+		this.leg3BR.rotateAngleX = MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 1.4F * par2;
+
+//		this.head1.rotateAngleY = this.head2.rotateAngleY = this.head3.rotateAngleY = this.head4.rotateAngleY = deer.rotationYawHead;
 	}
-
 }

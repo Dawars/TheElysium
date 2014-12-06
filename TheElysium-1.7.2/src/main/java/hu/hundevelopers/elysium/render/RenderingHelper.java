@@ -39,8 +39,8 @@ public class RenderingHelper {
 			glVertex2i(x + width, y);
 			glEnd();
 		}
-
 		public static void drawTexturedRect(int x, int y, int width, int height, float tx, float ty, float tw, float th) {
+
 			glBegin(GL_QUADS);
 			glTexCoord2f(0F, 0F);
 			glVertex2i(x, y);

@@ -7,16 +7,16 @@ import hu.hundevelopers.elysium.world.ElysiumWorldProvider;
 import java.util.HashMap;
 import java.util.Map;
 
-import me.dawars.CraftingPillars.blocks.BaseBlockContainer;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.event.world.BlockEvent;
 import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.eventhandler.Event.Result;
@@ -76,13 +76,6 @@ public class ElysiumHandler implements IFuelHandler {
                 return null;
     }
     
-//    @SubscribeEvent
-//	public void onEntityConstructing(EntityConstructing event)
-//	{
-//		if (event.entity instanceof EntityPlayer && ElysiumExtendedPlayer.get((EntityPlayer) event.entity) == null)
-//			ElysiumExtendedPlayer.register((EntityPlayer) event.entity);
-//	}
-    
     @SubscribeEvent
 	public void onBreakBlock(BlockEvent.BreakEvent event)
 	{
@@ -92,4 +85,32 @@ public class ElysiumHandler implements IFuelHandler {
 				event.setCanceled(true);
 		}
 	}
+    
+//    if(world.getBlock(x, y, z) == Blocks.dragon_egg)
+//	{
+//		world.createExplosion(player, x+0.5D, y+0.5D, z+0.5D, 2F, true);
+//		world.setBlock(x, y, z, Elysium.blockPortalCore);
+//		if(!player.capabilities.isCreativeMode)
+//			stack.stackSize--;
+//		//return true;
+//	}
+    
+    @SubscribeEvent
+    public void onInteract(PlayerInteractEvent event)
+    {
+    	if(event.action == Action.RIGHT_CLICK_BLOCK)
+    	{
+    		if(event.entityPlayer.getCurrentEquippedItem() != null && event.entityPlayer.getCurrentEquippedItem().getItem() == Items.diamond &&
+    				event.world.getBlock(event.x, event.y, event.z) == Blocks.dragon_egg)
+    		{
+    			event.world.createExplosion(event.entityPlayer, event.x+0.5D, event.y+0.5D, event.z+0.5D, 2F, true);
+    			event.world.setBlock(event.x, event.y, event.z, Elysium.blockPortalCore);
+				if(!event.entityPlayer.capabilities.isCreativeMode)
+					event.entityPlayer.getCurrentEquippedItem().stackSize--;
+				
+				event.useBlock = Result.DENY;
+    		}
+    	}
+    }
+    
 }

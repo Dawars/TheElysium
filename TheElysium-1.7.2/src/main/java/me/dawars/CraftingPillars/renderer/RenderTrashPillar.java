@@ -87,11 +87,11 @@ public class RenderTrashPillar extends TileEntitySpecialRenderer implements ISim
 	public RenderTrashPillar()
 	{
 		if (CraftingPillars.winter)
-			this.TEXTURE_TRASHPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/showoffPillarFrozen.png");
+			this.TEXTURE_TRASHPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/showoffPillarFrozen.png");
 		else
-			this.TEXTURE_TRASHPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/showoffPillar.png");
+			this.TEXTURE_TRASHPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/showoffPillar.png");
 
-		this.trash = AdvancedModelLoader.loadModel(new ResourceLocation(CraftingPillars.id + ":textures/models/trashPillar.obj"));
+		this.trash = AdvancedModelLoader.loadModel(new ResourceLocation(CraftingPillars.ID + ":textures/models/trashPillar.obj"));
 
 		this.random = new Random();
 		this.itemRenderer = new RenderingHelper.ItemRender(false, true);

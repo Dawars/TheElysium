@@ -1,10 +1,16 @@
 package me.dawars.CraftingPillars.tiles;
 
+import java.util.Random;
+
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
 
 public class TileEntityChristmasPresent extends BaseTileEntity
 {
+	public TileEntityChristmasPresent()
+	{
+		this.color = (new Random()).nextInt(colors.length/2);
+	}
+	
 	public int color;
 	//public boolean model;
 
@@ -15,15 +21,7 @@ public class TileEntityChristmasPresent extends BaseTileEntity
 		0xdbdb24
 	};
 
-	@Override
-	public void setWorldObj(World world)
-	{
-		super.setWorldObj(world);
-		this.color = this.random.nextInt(colors.length/2);
-		//if(world != null)
-		//world.setBlockMetadataWithNotify(this.xCoord, this.yCoord, this.zCoord, (this.model ? 1 : 0), 2);
-	}
-
+	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt)
 	{

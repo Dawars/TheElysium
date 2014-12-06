@@ -4,6 +4,8 @@ import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.entity.EntityCaterPillar;
 import hu.hundevelopers.elysium.entity.EntityDeer;
 import hu.hundevelopers.elysium.entity.EntityEnderMage;
+import hu.hundevelopers.elysium.entity.EntityEvolvedOyster;
+import hu.hundevelopers.elysium.entity.EntityHero;
 import hu.hundevelopers.elysium.entity.EntityPinkUnicorn;
 import hu.hundevelopers.elysium.entity.EntitySwan;
 import hu.hundevelopers.elysium.entity.EntityVoidSpecter;
@@ -12,20 +14,19 @@ import hu.hundevelopers.elysium.entity.projectile.EntityEnderRandomProjectile;
 import hu.hundevelopers.elysium.entity.projectile.EntityFireballProjectile;
 import hu.hundevelopers.elysium.entity.projectile.EntityIceProjectile;
 import hu.hundevelopers.elysium.model.ModelPinkUnicorn;
-import hu.hundevelopers.elysium.model.ModelToothArmor;
 import hu.hundevelopers.elysium.render.ElysiumTileEntityPortalRenderer;
 import hu.hundevelopers.elysium.render.RenderBlockProjectile;
 import hu.hundevelopers.elysium.render.RenderCaterPillar;
 import hu.hundevelopers.elysium.render.RenderDeer;
 import hu.hundevelopers.elysium.render.RenderEnderMage;
+import hu.hundevelopers.elysium.render.RenderEvolvedOyster;
 import hu.hundevelopers.elysium.render.RenderFireballProjectile;
+import hu.hundevelopers.elysium.render.RenderHero;
 import hu.hundevelopers.elysium.render.RenderPinkUnicorn;
 import hu.hundevelopers.elysium.render.RenderSwan;
 import hu.hundevelopers.elysium.render.RenderVoidSpecter;
 import hu.hundevelopers.elysium.render.StaffRenderer;
 import hu.hundevelopers.elysium.tile.ElysianTileEntityPortal;
-import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.particle.EntityRainFX;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.init.Items;
 import net.minecraft.network.Packet;
@@ -49,9 +50,6 @@ public class ClientProxy extends CommonProxy
 	@Override
 	public void registerRenderers()
 	{
-//	FIXME	MainMenuAPI.registerMenu("Elysian Menu", ElysianMenu.class);
-//		MainMenuAPI.registerMenu("Misc Elysian Menu", MiscElysianMenu.class);
-
 		Elysium.pipeStoneReinderingID = RenderingRegistry.getNextAvailableRenderId();
 
 		ClientRegistry.bindTileEntitySpecialRenderer(ElysianTileEntityPortal.class, new ElysiumTileEntityPortalRenderer());
@@ -64,9 +62,11 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntityCaterPillar.class, new RenderCaterPillar());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySwan.class, new RenderSwan());
 		RenderingRegistry.registerEntityRenderingHandler(EntityDeer.class, new RenderDeer());
+		RenderingRegistry.registerEntityRenderingHandler(EntityEvolvedOyster.class, new RenderEvolvedOyster());
 		RenderingRegistry.registerEntityRenderingHandler(EntityPinkUnicorn.class, new RenderPinkUnicorn(new ModelPinkUnicorn()));
 		RenderingRegistry.registerEntityRenderingHandler(EntityVoidSpecter.class, new RenderVoidSpecter());
 		RenderingRegistry.registerEntityRenderingHandler(EntityEnderMage.class, new RenderEnderMage());
+		RenderingRegistry.registerEntityRenderingHandler(EntityHero.class, new RenderHero());
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityBlockProjectile.class, new RenderBlockProjectile());
 		RenderingRegistry.registerEntityRenderingHandler(EntityIceProjectile.class, new RenderSnowball(Items.snowball));

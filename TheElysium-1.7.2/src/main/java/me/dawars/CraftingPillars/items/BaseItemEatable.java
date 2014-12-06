@@ -23,6 +23,6 @@ public class BaseItemEatable extends ItemFood
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister itemIcon)
 	{
-		this.itemIcon = itemIcon.registerIcon(CraftingPillars.id + ":" + this.getUnlocalizedName().substring(5));
+		this.itemIcon = itemIcon.registerIcon(CraftingPillars.ID + ":" + this.getUnlocalizedName().substring(5));
 	}
 }

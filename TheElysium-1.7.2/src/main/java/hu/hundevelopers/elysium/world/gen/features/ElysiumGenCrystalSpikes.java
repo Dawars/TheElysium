@@ -45,6 +45,7 @@ public class ElysiumGenCrystalSpikes extends WorldGenerator
 						Block old = world.getBlock(x + i + directionX * j, y
 								+ j, z + k + directionZ * j);
 						if (old != Blocks.quartz_block
+								&& old != Elysium.blockQuartzBlock
 								&& old != Blocks.gold_block
 								&& old != Elysium.blockPortalCore) {
 							world.setBlock(x + i + directionX * j, y + j, z + k
@@ -55,6 +56,7 @@ public class ElysiumGenCrystalSpikes extends WorldGenerator
 						old = world.getBlock(x - i - directionX * j, y - j, z
 								- k - directionZ * j);
 						if (old != Blocks.quartz_block
+								&& old != Elysium.blockQuartzBlock
 								&& old != Blocks.gold_block
 								&& old != Elysium.blockPortalCore) {
 							world.setBlock(x - i - directionX * j, y - j, z - k

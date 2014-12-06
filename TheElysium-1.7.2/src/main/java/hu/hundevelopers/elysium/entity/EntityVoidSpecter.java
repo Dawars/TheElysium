@@ -1,22 +1,20 @@
 package hu.hundevelopers.elysium.entity;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import hu.hundevelopers.elysium.Elysium;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityLargeFireball;
-import net.minecraft.stats.AchievementList;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntityVoidSpecter extends EntityFlying implements IMob
 {
@@ -205,15 +203,6 @@ public class EntityVoidSpecter extends EntityFlying implements IMob
 	}
 
 	/**
-	 * Simplifies the value of a number by adding/subtracting 180 to the point
-	 * that the number is between -180 and 180.
-	 */
-	private float simplifyAngle(double par1)
-	{
-		return (float) MathHelper.wrapAngleTo180_double(par1);
-	}
-
-	/**
 	 * Returns the sound this mob makes while it's alive.
 	 */
 	@Override
@@ -239,4 +228,25 @@ public class EntityVoidSpecter extends EntityFlying implements IMob
 	{
 		return 2.0F;
 	}
+	
+	@Override
+    protected Item getDropItem()
+    {
+        return Items.ender_eye;
+    }
+
+    /**
+     * Drop 0-2 items of this living's type. @param par1 - Whether this entity has recently been hit by a player. @param
+     * par2 - Level of Looting used to kill this mob.
+     */
+	@Override
+    protected void dropFewItems(boolean par1, int par2)
+    {
+        int j = this.rand.nextInt(3) + this.rand.nextInt(1 + par2);
+
+        for (int k = 0; k < j; ++k)
+        {
+            this.dropItem(Elysium.itemHardPaw, 1);
+        }
+    }
 }

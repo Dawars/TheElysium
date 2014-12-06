@@ -1,0 +1,46 @@
+Elysium Water - 4 Aqua, 2 Sanctus
+Energy Liquid - 2 Potentia, 2 Aqua, Sanctus
+Palestone -  2 Terra, Sanctus
+Dirt - Terra, Sanctus
+Grass - Terra, Herba, Sanctus
+Sand - Terra, Sanctus
+Rilt - Fames, Terra
+Saplings - Herba
+Logs - Arbor, Sanctus
+Corrupted Logs - Arbor, Alienis, Vitum
+Leaves - Herba
+wooden planks - Arbor
+flowers - Sensus, Victus, Herba
+Curly Grass (tallgrass) - Aer, Herba
+Ores - 2 Terra + Aspects of the item it gives
+Floating Conch and Shell - Tutamen, Sanctus, Mortuus 
+energy crystals - Terra, Vitreus, Potentia
+Grace Prism - 5 Sanctus, 2 Lucrum, 1 Viterus, 3 Sensus
+Pepper seed - Perditio, Herba
+Asphodel Petals (pink dye) - Sensus, Sanctus 
+ingots/gems:
+Beryl - 2 Vitreus, Metallum
+Iridium - 4 Metallum, 2 Sensus
+Cobalt - 4 Metallum, 2 Instrumentum
+Jade - 2 Vitreus, Lucrum, Perfodio
+Silicon - 4 Viterus, Terra
+Sulphur - 2 Ignis, Perditio, Terra
+Tourmaline - 4 Viterus, 2 Sensus
+staffs - Earth - 4 Praecantatio, 4 Terra
+	 Ender - 4 Praecantatio, 4 Alienis
+	 Fire - 4 Praecantatio, 4 Ignis
+	 Ice - 4 Praecantatio, 4 Gelum
+deer pelt - 2 Pannus, 2 Beasia
+grapes - Herba, Sano
+raspberry - Herba, Victus
+Unicorn - 2 Praecantatio, 2 Vitreus, 4 Beastia, 5 Sanctus
+Deer - 2 Praecantatio, 4 Beastia, Pannus, Sanctus
+Cater-pillar - 2 Motus, 2 Terra, 2 Victus, Sanctus
+Void Specter - 4 Tenebrae, 4 Alienis
+Ender Mage - 4 Alienis, 4 Praecantatio
+General Hero - 4 Humanus, 4 Cognitio, Sanctus
+Swan- 2 Volatus, 2 Aqua, 2 Beastia
+
+fruit bushes
+deer antler
+horn

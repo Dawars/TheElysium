@@ -63,9 +63,9 @@ public class RenderFurnacePillar extends TileEntitySpecialRenderer implements IS
 	public RenderFurnacePillar()
 	{
 		if (CraftingPillars.winter)
-			this.TEXTURE_FURNACEPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/furnacePillarFrozen.png");
+			this.TEXTURE_FURNACEPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/furnacePillarFrozen.png");
 		else
-			this.TEXTURE_FURNACEPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/furnacePillar.png");
+			this.TEXTURE_FURNACEPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/furnacePillar.png");
 
 		this.itemRenderer = new RenderingHelper.ItemRender(false, true);
 		this.resultRenderer = new RenderingHelper.ItemRender(false, false);

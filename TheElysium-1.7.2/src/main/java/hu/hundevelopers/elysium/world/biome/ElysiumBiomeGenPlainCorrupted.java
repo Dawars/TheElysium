@@ -1,7 +1,7 @@
 package hu.hundevelopers.elysium.world.biome;
 
 import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.world.gen.features.ElysiumGenDoublePlant;
+import hu.hundevelopers.elysium.world.gen.structures.ElysiumGenDefenceTowerCorrupted;
 
 import java.util.Random;
 
@@ -31,8 +31,16 @@ public class ElysiumBiomeGenPlainCorrupted extends ElysiumBiomeBase
     }
 	
     @Override
-    public void decorate(World currentWorld, Random randomGenerator, int chunk_X, int chunk_Z)
+    public void decorate(World world, Random rand, int chunk_X, int chunk_Z)
     {
-		super.decorate(currentWorld, randomGenerator, chunk_X, chunk_Z);
+    	if (rand.nextInt(10) == 0)
+        {
+            int k = chunk_X + rand.nextInt(16) + 8;
+            int l = chunk_Z + rand.nextInt(16) + 8;
+            ElysiumGenDefenceTowerCorrupted worldgenpyramid = new ElysiumGenDefenceTowerCorrupted();
+            worldgenpyramid.generate(world, rand, k, world.getHeightValue(k, l)-1, l);
+        }
+    	
+		super.decorate(world, rand, chunk_X, chunk_Z);
     }
 }

@@ -55,6 +55,7 @@ tile.quartzWall.mossy.name=Mossy Quartz Wall
 tile.quartz_mossy.default.name=Mossy Quartz Block
 tile.quartz_mossy.chiseled.name=Mossy Chiseled Quartz Block
 tile.quartz_mossy.lines.name=Mossy Pillar Quartz Block
+tile.quartzGate.name=Quartz Gate
 
 
 item.prism.name=Grace Prism
@@ -69,8 +70,13 @@ item.jade.name=Jade
 item.siliconchunk.name=Silicon Chunk
 item.elysium_sulphur.name=Sulphur
 item.tourmaline.name=Tourmaline
+item.ingotTooth.name=Tooth Ingot
 item.sturdyHide.name=Sturdy Hide
-item.elysium_bucket_water.name=Elysium Water Bucket
+item.elysium_bucket_water.name=Holy Water Bucket
+item.elysium_bucket_energy.name=Energy Fluid Bucket
+
+fluid.elysium_energy=Energy Fluid
+fluid.elysium_water=Holy Water
 
 item.deer_pelt.name=Deer Pelt
 item.grapes.white.name=White Grapes
@@ -109,6 +115,15 @@ item.toothChestplate.name=Tooth Chestplate
 item.toothLeggings.name=Tooth Leggings
 item.toothBoots.name=Tooth Boots
 
+item.Wand.pure.cap=Pure Energy Capped
+item.Wand.corrupted.cap=Corrupted Energy Capped
+
+item.Wand.horn.rod=Unicorn Horn
+
+item.WandCores.horn.name=Unicorn Horn Rod
+
+item.WandCaps.pure.name=Pure Energy Cap
+item.WandCaps.corrupted.name=Corrupted Energy Cap
 
 flute.tips.0=Hmm... looks like a musical instrument
 flute.tips.1=Its sound could be heard from a long distance...
@@ -125,8 +140,9 @@ tc.aspect.help.sanctus=Holiness
 
 entity.CaterPillar.name=Cater Pillar
 entity.Swan.name=Swan
+entity.EvolvedOyster.name=Evolved Oyster
 entity.Deer.name=Deer
 entity.Unicorn.name=Pink Unicorn
 entity.VoidSpecter.name=Void Specter
 entity.EnderMage.name=Ender Mage
-entity.Hero.name=Hero
+entity.ElysiumHero.name=Hero

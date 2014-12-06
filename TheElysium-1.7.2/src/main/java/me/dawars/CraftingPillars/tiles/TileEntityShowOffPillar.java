@@ -1,5 +1,6 @@
 package me.dawars.CraftingPillars.tiles;
 
+import baubles.api.IBauble;
 import me.dawars.CraftingPillars.CraftingPillars;
 import me.dawars.CraftingPillars.tiles.BaseTileEntity;
 import net.minecraft.entity.item.EntityItem;
@@ -30,6 +31,19 @@ public class TileEntityShowOffPillar extends BaseTileEntity implements IInventor
 		}
 
 		super.updateEntity();
+		
+		if(inventory[0] != null && inventory[0].getItem() instanceof IBauble)
+		{
+			try
+			{
+				((IBauble) inventory[0].getItem()).onWornTick(inventory[0], worldObj.getClosestPlayer(xCoord, yCoord, zCoord, 16));
+			}
+			catch (Exception e)
+			{
+				System.out.println("Baubles " + inventory[0].getItem().getUnlocalizedName() + " has a problem running in the Show-off Pillar!");
+			}
+			
+		}
 		
 //		try
 //		{

@@ -39,7 +39,7 @@ public class ElysiumItemWhistle extends ElysiumItem
     		{
 	    		lastPlay = System.currentTimeMillis();
     			
-				world.playSoundAtEntity(entity, Elysium.MODID + ":flute", 1F, 1F);
+				world.playSoundAtEntity(entity, Elysium.ID + ":flute", 1F, 1F);
 		    	if(world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd )
 		    	{
 		    		if(isDragonAlive(world) >= 1/*Elysium.MaxDragon*/)

@@ -6,6 +6,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
@@ -13,10 +14,10 @@ import me.dawars.CraftingPillars.CraftingPillars;
 
 public class WinterFood2013 extends BaseItemEatable
 {
-	private static IIcon[] iconArray = new IIcon[9];
-	public static String[] itemNames = { "Christmas Candy", "Candy Cane", "Lollipop", "Gingerbread Man", "Star Biscuit", "Tree Biscuit", "Blue Szaloncukor", "Gold Szaloncukor", "Red Szaloncukor"};
+//	public static String[] itemNames = { "Christmas Candy", "Candy Cane", "Lollipop", "Gingerbread Man", "Star Biscuit", "Tree Biscuit", "Blue Szaloncukor", "Gold Szaloncukor", "Red Szaloncukor"};
 	private static String[] iconNames = { "ChristmasCandy", "CandyCane", "Lollipop", "GingerbreadMan", "StarBiscuit", "TreeBiscuit", "BlueSzaloncukor", "GoldSzaloncukor", "RedSzaloncukor"};
-
+	private static IIcon[] iconArray = new IIcon[iconNames.length];
+	
 	public WinterFood2013(int heal, float saturation)
 	{
 		super(heal, saturation);
@@ -40,20 +41,24 @@ public class WinterFood2013 extends BaseItemEatable
 	{
 		for(int i = 0; i < iconArray.length; i++)
 		{
-			iconArray[i] = iconReg.registerIcon(CraftingPillars.id + ":" + iconNames[i]);
+			iconArray[i] = iconReg.registerIcon(CraftingPillars.ID + ":" + iconNames[i]);
 		}
 	}
-	    /*
-	@Override
+
+	/**
+     * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
+     */
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(int id, CreativeTabs tab, List list)
+	@Override
+	public void getSubItems(Item item, CreativeTabs tab, List list)
 	{
 		for (int i = 0; i < iconArray.length; i++)
 		{
 			list.add(new ItemStack(this, 1, i));
 		}
 	}
-	    */
+    
+    
 	@Override
 	public String getUnlocalizedName(ItemStack par1ItemStack)
 	{

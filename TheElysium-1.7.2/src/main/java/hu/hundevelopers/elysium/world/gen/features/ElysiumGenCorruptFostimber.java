@@ -5,7 +5,6 @@ import hu.hundevelopers.elysium.Elysium;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Facing;
@@ -34,7 +33,7 @@ public class ElysiumGenCorruptFostimber extends WorldGenerator
 	{
 
 		Block top = world.getBlock(x, y + 1, z);
-		if(top.getMaterial().isLiquid())
+		if(top.getMaterial().isLiquid() || top == Elysium.blockLeaves || top == Elysium.blockLog)
 			return false;
 		
 		int treeHeight = 5 + random.nextInt(7);

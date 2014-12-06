@@ -76,19 +76,17 @@ public class RenderShowOffPillar extends TileEntitySpecialRenderer implements IS
 	private ModelRenderer Icicle11B;
 	private ModelRenderer Icicle11C;
 
-	private Random random;
-	private RenderingHelper.ItemRender itemRenderer;
 	private RenderingHelper.ItemRender resultRenderer;
 
 	public RenderShowOffPillar()
 	{
 		if (CraftingPillars.winter)
-			this.TEXTURE_SHOWOFFPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/showoffPillarFrozen.png");
+			this.TEXTURE_SHOWOFFPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/showoffPillarFrozen.png");
 		else
-			this.TEXTURE_SHOWOFFPILLAR = new ResourceLocation(CraftingPillars.id + ":textures/models/showoffPillar.png");
+			this.TEXTURE_SHOWOFFPILLAR = new ResourceLocation(CraftingPillars.ID + ":textures/models/showoffPillar.png");
 
-		this.random = new Random();
-		this.itemRenderer = new RenderingHelper.ItemRender(false, true);
+		new Random();
+		new RenderingHelper.ItemRender(false, true);
 		this.resultRenderer = new RenderingHelper.ItemRender(true, true);
 
 		model.textureWidth = 128;

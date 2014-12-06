@@ -1,15 +1,13 @@
 package me.dawars.CraftingPillars.tiles;
 
 import me.dawars.CraftingPillars.BlockIds;
-import me.dawars.CraftingPillars.api.sentry.IBehaviorSentryItem;
+import me.dawars.CraftingPillars.api.sentry.ISentryBehaviorItem;
 import me.dawars.CraftingPillars.api.sentry.SentryBehaviors;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSourceImpl;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.monster.EntityGolem;
-import net.minecraft.entity.passive.EntityAmbientCreature;
-import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
@@ -47,7 +45,7 @@ public class TileEntitySentryPillar extends BaseTileEntity implements IInventory
 				float closest = Float.MAX_VALUE;
 				for(int i = 0; i < this.worldObj.loadedEntityList.size(); i++)
 				{
-					if(this.worldObj.loadedEntityList.get(i) instanceof EntityLiving)
+					if(this.worldObj.loadedEntityList.get(i) instanceof IMob)
 					{
 						EntityLiving currentMob = (EntityLiving)this.worldObj.loadedEntityList.get(i);
 						if(currentMob.isEntityAlive() && !currentMob.isInvisible())
@@ -70,15 +68,25 @@ public class TileEntitySentryPillar extends BaseTileEntity implements IInventory
 					if(ammo != null)
 					{
 						BlockSourceImpl blocksourceimpl = new BlockSourceImpl(this.worldObj, this.xCoord, this.yCoord, this.zCoord);
-						IBehaviorSentryItem ibehaviorsentryitem = SentryBehaviors.get(ammo.getItem());
+						ISentryBehaviorItem ibehaviorsentryitem = SentryBehaviors.get(ammo.getItem());
 
 						if(ibehaviorsentryitem != null)
 						{
 
-							ItemStack itemstack1 = ibehaviorsentryitem.dispense(blocksourceimpl, this.target, this.worldObj.getPlayerEntityByName(this.owner), ammo);
-							this.setInventorySlotContents(0, itemstack1.stackSize == 0 ? null : itemstack1);
-							this.cooldown = ibehaviorsentryitem.reloadSpeed(ammo);
-
+							ItemStack itemstack1 = null;
+							if(!this.owner.equals(""))
+							{
+								itemstack1 = ibehaviorsentryitem.dispense(blocksourceimpl, this.target, worldObj.getPlayerEntityByName(this.owner), ammo);
+							} else
+							{
+								if(worldObj.getClosestPlayer(xCoord, yCoord, zCoord, 64) != null)
+									itemstack1 = ibehaviorsentryitem.dispense(blocksourceimpl, this.target, worldObj.getClosestPlayer(xCoord, yCoord, zCoord, 64), ammo);
+							}
+							if(itemstack1 != null)
+							{
+								this.setInventorySlotContents(0, itemstack1.stackSize == 0 ? null : itemstack1);
+								this.cooldown = ibehaviorsentryitem.reloadSpeed(ammo);
+							}
 						} else {
 							this.cooldown = BlockIds.sentryCooldown;
 						}
@@ -127,8 +135,11 @@ public class TileEntitySentryPillar extends BaseTileEntity implements IInventory
 
 	private boolean collide(double i, double j, double k)
 	{
+		if(!worldObj.blockExists((int) i, (int)j, (int) k))
+			return true;
 		Block block = worldObj.getBlock((int)Math.floor(i), (int)Math.floor(j), (int)Math.floor(k));
-		if(block == null || block == Blocks.air)
+		
+		if(block == null || block == Blocks.air || block.getMaterial().isLiquid())
 			return false;
 //				System.out.println("Checking for collision at: "+(int)Math.floor(i)+" "+(int)Math.floor(j)+" "+(int)Math.floor(k));
 		i -= Math.floor(i);
@@ -340,5 +351,10 @@ public class TileEntitySentryPillar extends BaseTileEntity implements IInventory
 	public boolean isUseableByPlayer(EntityPlayer player)
 	{
 		return super.isUseableByPlayer(player);
+	}
+
+	public void setAmmo(ItemStack item)
+	{
+		this.inventory[0] = item;
 	}
 }

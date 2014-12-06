@@ -327,6 +327,12 @@ public class TileEntityCraftingPillar extends BaseTileEntity implements IInvento
 		{
 			player.addStat(AchievementList.bookcase, 1);
 		}
+		
+		if (stack.getItem() == Item.getItemFromBlock(CraftingPillars.blockCraftingPillar))
+		{
+			player.addStat(CraftingPillars.achievementRecursion, 1);
+			System.out.println("achivement recursion");
+		}
 	}
 
 	public void dropItemFromSlot(int slot, EntityPlayer player)

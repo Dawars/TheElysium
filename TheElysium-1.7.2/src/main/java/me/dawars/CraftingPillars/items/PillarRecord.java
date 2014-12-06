@@ -1,14 +1,11 @@
 package me.dawars.CraftingPillars.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import me.dawars.CraftingPillars.CraftingPillars;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemRecord;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class PillarRecord extends ItemRecord
@@ -27,7 +24,7 @@ public class PillarRecord extends ItemRecord
 		super.onItemUse(item, player, world, x, y, z, par7, par8, par9, par10);
 		if (world.getBlock(x, y, z) == Blocks.jukebox && world.getBlockMetadata(x, y, z) == 0)
 		{
-//			player.addStat(CraftingPillars.achievementDisc, 1);
+			player.addStat(CraftingPillars.achievementDisc, 1);
 			return true;
 		}
 		else
@@ -35,13 +32,16 @@ public class PillarRecord extends ItemRecord
 			return false;
 		}
 	}
-
-
-
-	@SideOnly(Side.CLIENT)
-	public String getRecordNameLocal()
-	{
-		if(this.recordName == CraftingPillars.id + ":UranusParadiseShort") return "Elysium Theme";
-		return this.recordName;
-	}
+	
+	/**
+     * Retrieves the resource location of the sound to play for this record.
+     * 
+     * @param name The name of the record to play
+     * @return The resource location for the audio, null to use default.
+     */
+    public ResourceLocation getRecordResource(String name)
+    {
+    	System.out.println("record name: " + CraftingPillars.ID + ":" + name.substring(8));
+        return new ResourceLocation(CraftingPillars.ID + ":" + name.substring(8));
+    }
 }

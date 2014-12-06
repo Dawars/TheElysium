@@ -6,6 +6,7 @@ import hu.hundevelopers.elysium.world.ElysiumPortalPosition;
 import hu.hundevelopers.elysium.world.ElysiumTeleporter;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
@@ -75,7 +76,7 @@ public class ElysianTileEntityPortal extends TileEntity
 			if(!worldObj.isRemote)
 			{
 				EntityItem item = new EntityItem(worldObj, xCoord, yCoord, zCoord);
-				item.setEntityItemStack(new ItemStack(Elysium.itemPrism));
+				item.setEntityItemStack(new ItemStack(Items.diamond));
 				
 				worldObj.spawnEntityInWorld(item);
 			}
