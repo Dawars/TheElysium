@@ -5,10 +5,8 @@ import me.dawars.CraftingPillars.api.sentry.SentryDefaultProjectile;
 import net.minecraft.block.Block;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -122,7 +120,8 @@ public class SentryBehaviorStaff extends SentryDefaultProjectile
 	 * @param item - the item placed into the pillar
 	 * @return - modified itemstack after shooting
 	 */
-	public ItemStack spawnEntity(IBlockSource sourceblock, EntityLiving target, EntityPlayer owner, ItemStack item)
+	@Override
+	public ItemStack spawnEntity(IBlockSource sourceblock, EntityLivingBase target, EntityLivingBase owner, ItemStack item)
 	{
 		IProjectile iprojectile = this.getProjectileEntity(target, owner, sourceblock, item);
 		if(iprojectile != null)

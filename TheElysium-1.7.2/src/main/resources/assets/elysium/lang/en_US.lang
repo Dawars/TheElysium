@@ -138,11 +138,11 @@ tc.aspect.sanctus=Sanctus
 tc.aspect.help.sanctus=Holiness
 
 
-entity.CaterPillar.name=Cater Pillar
-entity.Swan.name=Swan
-entity.EvolvedOyster.name=Evolved Oyster
-entity.Deer.name=Deer
-entity.Unicorn.name=Pink Unicorn
-entity.VoidSpecter.name=Void Specter
-entity.EnderMage.name=Ender Mage
+entity.ElysiumCaterPillar.name=Cater Pillar
+entity.ElysiumSwan.name=Swan
+entity.ElysiumEvolvedOyster.name=Evolved Oyster
+entity.ElysiumDeer.name=Deer
+entity.ElysiumUnicorn.name=Pink Unicorn
+entity.ElysiumVoidSpecter.name=Void Specter
+entity.ElysiumEnderMage.name=Ender Mage
 entity.ElysiumHero.name=Hero

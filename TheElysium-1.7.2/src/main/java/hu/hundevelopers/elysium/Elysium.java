@@ -175,7 +175,7 @@ public class Elysium
 	};
 
 	/** Dimension ID **/
-	public static int dimensionID = DimensionManager.getNextFreeDimId();
+	public static int dimensionID;
 	public static int maxDragon;
 	public static boolean isMenuEnabled;
 	public static boolean isMobCrystals;
@@ -406,6 +406,12 @@ public class Elysium
 
 			Property ELYSIUM_BEACH = Elysium.config.get("biomeIds", "ELYSIUM_BEACH", Configs.BIOME_BEACH);
 			biomeIdBeach = ELYSIUM_BEACH.getInt();
+			
+			
+
+			Property ELYSIUM_ID = Elysium.config.get("other", "ELYSIUM_ID", DimensionManager.getNextFreeDimId());
+			dimensionID = ELYSIUM_ID.getInt();
+			
 			
 			
 			Property MAX_DRAGON_IN_END = Elysium.config.get("other", "MAX_DRAGON_IN_END", Configs.MAX_DRAGON_IN_END, "How many dragons can be spawned to the End at the same time!");
@@ -896,39 +902,40 @@ public class Elysium
 
 		proxy.registerRenderers();
 		
+		ElysiumAspects.initAspects();
 		
 		//Entity Registering
 		int caterPillarID = EntityRegistry.findGlobalUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(EntityCaterPillar.class, "CaterPillar", caterPillarID, 0x6e6e6e, 0xcccccc);
-        EntityRegistry.registerModEntity(EntityCaterPillar.class, "CaterPillar", caterPillarID, this, 64, 2, true);
+		EntityRegistry.registerGlobalEntityID(EntityCaterPillar.class, "ElysiumCaterPillar", caterPillarID, 0x6e6e6e, 0xcccccc);
+        EntityRegistry.registerModEntity(EntityCaterPillar.class, "ElysiumCaterPillar", caterPillarID, this, 64, 2, true);
 
         int evolvedOysterID = EntityRegistry.findGlobalUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(EntityEvolvedOyster.class, "EvolvedOyster", evolvedOysterID, 0x645c6a, 0xd893d6);
-        EntityRegistry.registerModEntity(EntityEvolvedOyster.class, "EvolvedOyster", evolvedOysterID, this, 64, 2, true);
+		EntityRegistry.registerGlobalEntityID(EntityEvolvedOyster.class, "ElysiumEvolvedOyster", evolvedOysterID, 0x645c6a, 0xd893d6);
+        EntityRegistry.registerModEntity(EntityEvolvedOyster.class, "ElysiumEvolvedOyster", evolvedOysterID, this, 64, 2, true);
 
         int swanID = EntityRegistry.findGlobalUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(EntitySwan.class, "Swan", swanID, 0xfafafa, 0xff9600);
-        EntityRegistry.registerModEntity(EntitySwan.class, "Swan", swanID, this, 64, 2, true);
+		EntityRegistry.registerGlobalEntityID(EntitySwan.class, "ElysiumSwan", swanID, 0xfafafa, 0xff9600);
+        EntityRegistry.registerModEntity(EntitySwan.class, "ElysiumSwan", swanID, this, 64, 2, true);
 
         int deerID = EntityRegistry.findGlobalUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(EntityDeer.class, "Deer", deerID, 0x969690, 0xffff00);
-        EntityRegistry.registerModEntity(EntityDeer.class, "Deer", deerID, this, 64, 2, true);
+		EntityRegistry.registerGlobalEntityID(EntityDeer.class, "ElysiumDeer", deerID, 0x969690, 0xffff00);
+        EntityRegistry.registerModEntity(EntityDeer.class, "ElysiumDeer", deerID, this, 64, 2, true);
         
         int unicornID = EntityRegistry.findGlobalUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(EntityPinkUnicorn.class, "Unicorn", unicornID, 0xffa8d4, 0xebebeb);
-        EntityRegistry.registerModEntity(EntityPinkUnicorn.class, "Unicorn", unicornID, this, 64, 2, true);
+		EntityRegistry.registerGlobalEntityID(EntityPinkUnicorn.class, "ElysiumUnicorn", unicornID, 0xffa8d4, 0xebebeb);
+        EntityRegistry.registerModEntity(EntityPinkUnicorn.class, "ElysiumUnicorn", unicornID, this, 64, 2, true);
 
         int heroID = EntityRegistry.findGlobalUniqueEntityId();
 		EntityRegistry.registerGlobalEntityID(EntityHero.class, "ElysiumHero", heroID, 0xe4a9a4, 0xe4f202);
         EntityRegistry.registerModEntity(EntityHero.class, "ElysiumHero", heroID, this, 128, 3, true);
 
         int voidspecterID = EntityRegistry.findGlobalUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(EntityVoidSpecter.class, "VoidSpecter", voidspecterID, 0x623464, 0x3A2A3A);
-        EntityRegistry.registerModEntity(EntityVoidSpecter.class, "VoidSpecter", voidspecterID, this, 64, 2, true);
+		EntityRegistry.registerGlobalEntityID(EntityVoidSpecter.class, "ElysiumVoidSpecter", voidspecterID, 0x623464, 0x3A2A3A);
+        EntityRegistry.registerModEntity(EntityVoidSpecter.class, "ElysiumVoidSpecter", voidspecterID, this, 64, 2, true);
 
         int endermageID = EntityRegistry.findGlobalUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(EntityEnderMage.class, "EnderMage", endermageID, 0x000000, 0x9d8ca0);
-        EntityRegistry.registerModEntity(EntityEnderMage.class, "EnderMage", endermageID, this, 64, 2, true);
+		EntityRegistry.registerGlobalEntityID(EntityEnderMage.class, "ElysiumEnderMage", endermageID, 0x000000, 0x9d8ca0);
+        EntityRegistry.registerModEntity(EntityEnderMage.class, "ElysiumEnderMage", endermageID, this, 64, 2, true);
 
         int blockthrowableID = EntityRegistry.findGlobalUniqueEntityId();
         EntityRegistry.registerModEntity(EntityBlockProjectile.class, "BlockProjectile", blockthrowableID, this, 64, 1, true);
@@ -943,17 +950,17 @@ public class Elysium
         EntityRegistry.registerModEntity(EntityEnderRandomProjectile.class, "EnderRandomProjectile", enderrandomprojectileID, this, 64, 1, true);
       
       //Entites
-	    ThaumcraftApi.registerEntityTag("Unicorn", new AspectList().add(Aspect.MAGIC, 2).add(Aspect.CRYSTAL, 2).add(Aspect.BEAST, 4).add(ElysiumAspects.SANCTUS, 5));
-	    ThaumcraftApi.registerEntityTag("Deer", new AspectList().add(Aspect.MAGIC, 2).add(Aspect.CLOTH, 1).add(Aspect.BEAST, 4).add(ElysiumAspects.SANCTUS, 1));
-	    ThaumcraftApi.registerEntityTag("CaterPillar", new AspectList().add(Aspect.TRAVEL, 2).add(Aspect.EARTH, 2).add(Aspect.LIFE, 2).add(ElysiumAspects.SANCTUS, 1));
-	    ThaumcraftApi.registerEntityTag("Swan", new AspectList().add(Aspect.FLIGHT, 2).add(Aspect.WATER, 2).add(Aspect.BEAST, 2).add(ElysiumAspects.SANCTUS, 1));
+	    ThaumcraftApi.registerEntityTag("ElysiumUnicorn", new AspectList().add(Aspect.MAGIC, 2).add(Aspect.CRYSTAL, 2).add(Aspect.BEAST, 4).add(ElysiumAspects.SANCTUS, 5));
+	    ThaumcraftApi.registerEntityTag("ElysiumDeer", new AspectList().add(Aspect.MAGIC, 2).add(Aspect.CLOTH, 1).add(Aspect.BEAST, 4).add(ElysiumAspects.SANCTUS, 1));
+	    ThaumcraftApi.registerEntityTag("ElysiumCaterPillar", new AspectList().add(Aspect.TRAVEL, 2).add(Aspect.EARTH, 2).add(Aspect.LIFE, 2).add(ElysiumAspects.SANCTUS, 1));
+	    ThaumcraftApi.registerEntityTag("ElysiumSwan", new AspectList().add(Aspect.FLIGHT, 2).add(Aspect.WATER, 2).add(Aspect.BEAST, 2).add(ElysiumAspects.SANCTUS, 1));
 
-	    ThaumcraftApi.registerEntityTag("VoidSpecter", new AspectList().add(Aspect.DARKNESS, 4).add(Aspect.ELDRITCH, 4));
-	    ThaumcraftApi.registerEntityTag("EnderMage", new AspectList().add(Aspect.MAGIC, 4).add(Aspect.ELDRITCH, 4));
+	    ThaumcraftApi.registerEntityTag("ElysiumVoidSpecter", new AspectList().add(Aspect.DARKNESS, 4).add(Aspect.ELDRITCH, 4));
+	    ThaumcraftApi.registerEntityTag("ElysiumEnderMage", new AspectList().add(Aspect.MAGIC, 4).add(Aspect.ELDRITCH, 4));
 
 	    ThaumcraftApi.registerEntityTag("ElysiumHero", new AspectList().add(Aspect.MAN, 4).add(Aspect.MIND, 4).add(ElysiumAspects.SANCTUS, 1));
 	    
-	    ThaumcraftApi.registerEntityTag("EvolvedOyster", new AspectList().add(Aspect.TRAVEL, 2).add(Aspect.EARTH, 2).add(Aspect.LIFE, 2).add(ElysiumAspects.SANCTUS, 1));
+	    ThaumcraftApi.registerEntityTag("ElysiumEvolvedOyster", new AspectList().add(Aspect.TRAVEL, 2).add(Aspect.EARTH, 2).add(Aspect.LIFE, 2).add(ElysiumAspects.SANCTUS, 1));
 
 	    
         //Entity Spawn

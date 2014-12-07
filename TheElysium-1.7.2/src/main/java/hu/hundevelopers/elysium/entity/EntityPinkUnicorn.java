@@ -5,6 +5,8 @@ import hu.hundevelopers.elysium.Elysium;
 import java.util.Iterator;
 import java.util.List;
 
+import thaumcraft.api.ItemApi;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.command.IEntitySelector;
@@ -36,6 +38,7 @@ import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -350,6 +353,22 @@ public class EntityPinkUnicorn extends EntityHorse
         return super.getCanSpawnHere() && this.rand.nextInt(1000) == 0;
     }
     
+    /**
+     * Gets the name of this command sender (usually username, but possibly "Rcon")
+     */
+    @Override
+    public String getCommandSenderName()
+    {
+        if (this.hasCustomNameTag())
+        {
+            return this.getCustomNameTag();
+        }
+        else
+        {
+            return StatCollector.translateToLocal("entity.ElysiumUnicorn.name");
+        }
+    }
+    
     private static final IEntitySelector horseBreedingSelector = new IEntitySelector()
     {
         /**
@@ -553,6 +572,11 @@ public class EntityPinkUnicorn extends EntityHorse
     {
     	ItemStack itemstack = player.inventory.getCurrentItem();
 
+    	if(itemstack.isItemEqual(ItemApi.getItem("itemThaumometer", 0)))
+    	{
+    		return false;
+    	}
+    		
         if (itemstack != null && itemstack.getItem() == Items.spawn_egg)
         {
             return super.interact(player);
