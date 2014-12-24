@@ -21,7 +21,6 @@ import net.minecraftforge.event.world.BlockEvent;
 import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
 
 public class ElysiumHandler implements IFuelHandler {
 
@@ -40,16 +39,6 @@ public class ElysiumHandler implements IFuelHandler {
     public Map<Block, Item> buckets = new HashMap<Block, Item>();
 
     private ElysiumHandler() {
-    }
-
-    @SubscribeEvent
-    public void onWorldTick(WorldTickEvent event)
-    {
-    	if(event.world.provider instanceof ElysiumWorldProvider)
-    	{
-			event.world.setThunderStrength(1F);
-			event.world.setRainStrength(0.5F);
-    	}
     }
     
     @SubscribeEvent
@@ -81,7 +70,7 @@ public class ElysiumHandler implements IFuelHandler {
 	{
 		if(!event.getPlayer().capabilities.isCreativeMode &&  event.world.provider instanceof ElysiumWorldProvider && event.y <= Configs.labyrinthTop && event.y >= Configs.labyrinthBottom)
 		{
-			if(event.block == Blocks.quartz_block || event.block == Elysium.blockEnergyCrystal || event.block == Blocks.trapdoor)
+			if(event.block == Blocks.quartz_block || event.block == Elysium.blockQuartzBlock || event.block == Elysium.blockEnergyCrystal || event.block == Blocks.trapdoor)
 				event.setCanceled(true);
 		}
 	}

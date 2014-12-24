@@ -56,16 +56,19 @@ public class RingItemRenderer implements IItemRenderer
 			EntityItem entity = new EntityItem(world);
 			entity.setEntityItemStack(new ItemStack(CraftingPillars.itemRingDummy));
 			entity.hoverStart = 0F;
-			if(type == ItemRenderType.INVENTORY)
-				itemRenderer.doRender(entity, 0.5F, 0.5F, 0, 0, 0);
-			else
+			if(entity != null)
 			{
-				glTranslatef(0, -0.3F, 0);
-				glPushMatrix();
-					glScalef(1.7F, 1.7F, 3F);
-					itemRenderer.doRender(entity, -0.021F, 0.21F, 0, 0, 0);
-				glPopMatrix();
-
+				if(type == ItemRenderType.INVENTORY)
+					itemRenderer.doRender(entity, 0.5F, 0.5F, 0, 0, 0);
+				else
+				{
+					glTranslatef(0, -0.3F, 0);
+					glPushMatrix();
+						glScalef(1.7F, 1.7F, 3F);
+						itemRenderer.doRender(entity, -0.021F, 0.21F, 0, 0, 0);
+					glPopMatrix();
+	
+				}
 			}
 		}
     	

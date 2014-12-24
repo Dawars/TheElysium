@@ -50,10 +50,6 @@ public class SentryBehaviorStaff extends SentryDefaultProjectile
 		else
 			entityammo = new EntityFireballProjectile(world, owner);
 	
-							
-		
-		entityammo.setPosition(x + 0.5F, y + 1.5F, z + 0.5F);
-		
 		entityammo.setPosition(x + 0.5F, y + 1.5F, z + 0.5F);
 
 		entityammo.posY = y + 1.5F;
@@ -101,7 +97,7 @@ public class SentryBehaviorStaff extends SentryDefaultProjectile
 			{
 
 				world.setBlockToAir(x, y, z);
-				if(!world.isRemote)
+				if(world.isRemote)
 				{
 					//particles
 					FMLClientHandler.instance().getClient().effectRenderer.addBlockDestroyEffects(x, y, z, block, world.getBlockMetadata(x, y, z));

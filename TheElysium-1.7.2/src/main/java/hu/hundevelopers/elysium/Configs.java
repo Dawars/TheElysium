@@ -7,14 +7,14 @@ public class Configs {
 
 	public static final int MAX_DRAGON_IN_END = 1;
 
-	public static final int BIOME_PLAIN = 25;
-	public static final int BIOME_FOREST = 26;
-	public static final int BIOME_PLAIN_CORRUPT = 27;
-	public static final int ELYSIUM_DEEP_OCEAN = 28;
-	public static final int BIOME_OCEAN = 29;
-	public static final int BIOME_RIVER = 30;
-	public static final int BIOME_BEACH = 31;
-	public static final int BIOME_DESERT = 32;
+	public static final int BIOME_PLAIN = 125;
+	public static final int BIOME_FOREST = 126;
+	public static final int BIOME_PLAIN_CORRUPT = 127;
+	public static final int ELYSIUM_DEEP_OCEAN = 128;
+	public static final int BIOME_OCEAN = 129;
+	public static final int BIOME_RIVER = 130;
+	public static final int BIOME_BEACH = 131;
+	public static final int BIOME_DESERT = 132;
 
 	//Settings
 	public static final int maxportaldistance = 64;

@@ -210,7 +210,7 @@ public class EntityHero extends EntityAgeable implements IRangedAttackMob
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.5D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.25D);
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(100.0D);
     }
 	

@@ -1,8 +1,12 @@
 package hu.hundevelopers.elysium.model;
 
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+
+import org.lwjgl.opengl.GL11;
 
 public class ModelVoidSpecter extends ModelBase
 {
@@ -225,33 +229,39 @@ public class ModelVoidSpecter extends ModelBase
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
 	{
-		leg2R.render(f5);
-		leg1R.render(f5);
-		leg1L.render(f5);
-		leg2L.render(f5);
-		eye.render(f5);
-		eyelidBottom.render(f5);
-		eyelidTop.render(f5);
-		body7.render(f5);
-		body3.render(f5);
-		body6.render(f5);
-		body5.render(f5);
-		body8.render(f5);
-		body4.render(f5);
-		body1.render(f5);
-		body2.render(f5);
-		handL1.render(f5);
-		handL2.render(f5);
-		handL3.render(f5);
-		handL4.render(f5);
-		handL5.render(f5);
-		wingL.render(f5);
-		handR1.render(f5);
-		handR2.render(f5);
-		handR3.render(f5);
-		handR4.render(f5);
-		handR5.render(f5);
-		wingR.render(f5);
+		glPushMatrix();
+		
+			GL11.glTranslatef(0, -1, 0);
+			
+			leg2R.render(f5);
+			leg1R.render(f5);
+			leg1L.render(f5);
+			leg2L.render(f5);
+			eye.render(f5);
+			eyelidBottom.render(f5);
+			eyelidTop.render(f5);
+			body7.render(f5);
+			body3.render(f5);
+			body6.render(f5);
+			body5.render(f5);
+			body8.render(f5);
+			body4.render(f5);
+			body1.render(f5);
+			body2.render(f5);
+			handL1.render(f5);
+			handL2.render(f5);
+			handL3.render(f5);
+			handL4.render(f5);
+			handL5.render(f5);
+			wingL.render(f5);
+			handR1.render(f5);
+			handR2.render(f5);
+			handR3.render(f5);
+			handR4.render(f5);
+			handR5.render(f5);
+			wingR.render(f5);
+
+		glPopMatrix();
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z)

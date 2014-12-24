@@ -9,6 +9,7 @@ import thaumcraft.common.items.wands.ItemWandCasting;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 
+
 public class ElysiumRecipes 
 {
 	public static void addRecipes()

@@ -36,6 +36,7 @@ import net.minecraftforge.client.event.sound.PlaySoundEvent17;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -49,6 +50,16 @@ public class ElysiumClientHandler
 		}
 	}
 	
+    @SubscribeEvent
+    public void onWorldTick(WorldTickEvent event)
+    {
+    	if(event.world.provider instanceof ElysiumWorldProvider)
+    	{
+			event.world.setThunderStrength(1F);
+			event.world.setRainStrength(0.5F);
+    	}
+    }
+    
 	@SideOnly(Side.CLIENT)
 	private RenderingHelper.ItemRender itemRenderer;
 	

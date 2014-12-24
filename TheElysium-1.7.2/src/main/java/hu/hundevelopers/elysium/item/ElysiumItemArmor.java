@@ -24,7 +24,7 @@ public class ElysiumItemArmor extends ItemArmor
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
 	{
-		return Elysium.ID + ":textures/models/tooth_armor_energized.png";
+		return Elysium.ID + ":textures/models/tooth_armor.png";
 	}
 
 	@Override

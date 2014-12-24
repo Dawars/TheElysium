@@ -39,7 +39,6 @@ public class EntityEnderMage extends EntityMob implements IRangedAttackMob
     {
         super(par1World);
 
-        this.isImmuneToFire = true;
         this.setSize(1.2F, 2.8F);
         
         this.getNavigator().setAvoidsWater(true);
@@ -68,7 +67,7 @@ public class EntityEnderMage extends EntityMob implements IRangedAttackMob
     {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.25D);
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(50.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(70.0D);
     }
 
     protected void entityInit()

@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.IBlockAccess;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -22,7 +23,7 @@ public class BaseLeavesBlock extends BaseBlock
 	@Override
 	public boolean isOpaqueCube()
 	{
-		return !Minecraft.isFancyGraphicsEnabled();
+		return FMLCommonHandler.instance().getSide().isServer() || !Minecraft.isFancyGraphicsEnabled();
 	}
 
 	/**

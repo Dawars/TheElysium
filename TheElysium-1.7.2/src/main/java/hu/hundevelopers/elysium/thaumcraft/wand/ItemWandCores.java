@@ -12,10 +12,9 @@ import net.minecraft.util.IIcon;
 import thaumcraft.api.ItemApi;
 import thaumcraft.api.wands.WandCap;
 import thaumcraft.api.wands.WandRod;
+import thaumcraft.common.items.wands.ItemWandCasting;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
-import thaumcraft.common.items.wands.ItemWandCasting;
 
 public class ItemWandCores extends Item {
 

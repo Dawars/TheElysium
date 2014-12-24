@@ -81,34 +81,34 @@ public class EntityEnderRandomProjectile extends EntityThrowable
 		                    {
 		                    	entityplayermp.mountEntity((Entity)null);
 		                    }
-		                    double d0 = event.entityLiving.posX + (this.rand.nextDouble() - 0.5D) * 64.0D;
-		    		        double d1 = event.entityLiving.posY + (double)(this.rand.nextInt(64) - 32);
-		    		        double d2 = event.entityLiving.posZ + (this.rand.nextDouble() - 0.5D) * 64.0D;
-		    		        teleportTo(entityplayermp, d0, d1, d2);
-		    		        
-		                    entityplayermp.fallDistance = 0.0F;
-		                    entityplayermp.attackEntityFrom(DamageSource.fall, event.attackDamage);
+		                    for (int i = 0; i < 64; ++i)
+		                    {
+		                        if (this.teleportRandomly(entityplayermp))
+		                        {
+		                            return;
+		                        }
+		                    }
 	                    }
 	                }
 	            } else if(par1MovingObjectPosition.entityHit instanceof EntityLivingBase)
 	            {
-	            	EntityLivingBase entityplayermp = (EntityLivingBase)par1MovingObjectPosition.entityHit;
+	            	EntityLivingBase entityliving = (EntityLivingBase)par1MovingObjectPosition.entityHit;
 	
-	                EnderTeleportEvent event = new EnderTeleportEvent(entityplayermp, this.posX, this.posY, this.posZ, 5.0F);
+	                EnderTeleportEvent event = new EnderTeleportEvent(entityliving, this.posX, this.posY, this.posZ, 5.0F);
 	                if (!MinecraftForge.EVENT_BUS.post(event))
 	                { // Don't indent to lower patch size
-	                    if (entityplayermp.isRiding())
+	                    if (entityliving.isRiding())
 	                    {
-	                    	entityplayermp.mountEntity((Entity)null);
+	                    	entityliving.mountEntity((Entity)null);
 	                    }
 	                    
-	                    double d0 = event.entityLiving.posX + (this.rand.nextDouble() - 0.5D) * 64.0D;
-	    		        double d1 = event.entityLiving.posY + (double)(this.rand.nextInt(64) - 32);
-	    		        double d2 = event.entityLiving.posZ + (this.rand.nextDouble() - 0.5D) * 64.0D;
-	    		        teleportTo(entityplayermp, d0, d1, d2);
-	    		        
-	                    entityplayermp.fallDistance = 0.0F;
-	                    entityplayermp.attackEntityFrom(DamageSource.fall, event.attackDamage);
+	    		        for (int i = 0; i < 64; ++i)
+	                    {
+	                        if (this.teleportRandomly(entityliving))
+	                        {
+	                            return;
+	                        }
+	                    }
 	                }
 	            }
 	            this.setDead();
@@ -117,75 +117,90 @@ public class EntityEnderRandomProjectile extends EntityThrowable
     }
 	
 	/**
-    * Teleport the enderman
-    */
-   protected boolean teleportTo(EntityLivingBase entity, double targetX, double targetY, double targetZ)
-   {
-       double d3 = entity.posX;
-       double d4 = entity.posY;
-       double d5 = entity.posZ;
-       entity.posX = targetX;
-       entity.posY = targetY;
-       entity.posZ = targetZ;
-       boolean flag = false;
-       int i = MathHelper.floor_double(entity.posX);
-       int j = MathHelper.floor_double(entity.posY);
-       int k = MathHelper.floor_double(entity.posZ);
+     * Teleport the enderman to a random nearby position
+     */
+    protected boolean teleportRandomly(EntityLivingBase entity)
+    {
+        double d0 = this.posX + (this.rand.nextDouble() - 0.5D) * 64.0D;
+        double d1 = this.posY + (double)(this.rand.nextInt(64) - 32);
+        double d2 = this.posZ + (this.rand.nextDouble() - 0.5D) * 64.0D;
+        return this.teleportTo(entity, d0, d1, d2);
+    }
 
-       if (entity.worldObj.blockExists(i, j, k))
-       {
-           boolean flag1 = false;
+    /**
+     * Teleport the enderman
+     */
+    protected boolean teleportTo(EntityLivingBase entity, double par1, double par3, double par5)
+    {
+        EnderTeleportEvent event = new EnderTeleportEvent(entity, par1, par3, par5, 0);
+        if (MinecraftForge.EVENT_BUS.post(event)){
+            return false;
+        }
+        double d3 = this.posX;
+        double d4 = this.posY;
+        double d5 = this.posZ;
+        this.posX = event.targetX;
+        this.posY = event.targetY;
+        this.posZ = event.targetZ;
+        boolean flag = false;
+        int i = MathHelper.floor_double(this.posX);
+        int j = MathHelper.floor_double(this.posY);
+        int k = MathHelper.floor_double(this.posZ);
 
-           while (!flag1 && j > 0)
-           {
-               Block block = entity.worldObj.getBlock(i, j - 1, k);
+        if (this.worldObj.blockExists(i, j, k))
+        {
+            boolean flag1 = false;
 
-               if (block.getMaterial().blocksMovement())
-               {
-                   flag1 = true;
-               }
-               else
-               {
-                   --entity.posY;
-                   --j;
-               }
-           }
+            while (!flag1 && j > 0)
+            {
+                Block block = this.worldObj.getBlock(i, j - 1, k);
 
-           if (flag1)
-           {
-        	   entity.setPositionAndUpdate(entity.posX, entity.posY, entity.posZ);
+                if (block.getMaterial().blocksMovement())
+                {
+                    flag1 = true;
+                }
+                else
+                {
+                    --this.posY;
+                    --j;
+                }
+            }
 
-               if (entity.worldObj.getCollidingBoundingBoxes(entity, entity.boundingBox).isEmpty() && !entity.worldObj.isAnyLiquid(entity.boundingBox))
-               {
-                   flag = true;
-               }
-           }
-       }
+            if (flag1)
+            {
+                this.setPosition(this.posX, this.posY, this.posZ);
 
-       if (!flag)
-       {
-       	entity.setPositionAndUpdate(d3, d4, d5);
-           return false;
-       }
-       else
-       {
-           short short1 = 128;
+                if (this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).isEmpty() && !this.worldObj.isAnyLiquid(this.boundingBox))
+                {
+                    flag = true;
+                }
+            }
+        }
 
-           for (int l = 0; l < short1; ++l)
-           {
-               double d6 = (double)l / ((double)short1 - 1.0D);
-               float f = (this.rand.nextFloat() - 0.5F) * 0.2F;
-               float f1 = (this.rand.nextFloat() - 0.5F) * 0.2F;
-               float f2 = (this.rand.nextFloat() - 0.5F) * 0.2F;
-               double d7 = d3 + (entity.posX - d3) * d6 + (this.rand.nextDouble() - 0.5D) * (double)entity.width * 2.0D;
-               double d8 = d4 + (entity.posY - d4) * d6 + this.rand.nextDouble() * (double)entity.height;
-               double d9 = d5 + (entity.posZ - d5) * d6 + (this.rand.nextDouble() - 0.5D) * (double)entity.width * 2.0D;
-               entity.worldObj.spawnParticle("portal", d7, d8, d9, (double)f, (double)f1, (double)f2);
-           }
+        if (!flag)
+        {
+            this.setPosition(d3, d4, d5);
+            return false;
+        }
+        else
+        {
+            short short1 = 128;
 
-           entity.worldObj.playSoundEffect(d3, d4, d5, "mob.endermen.portal", 1.0F, 1.0F);
-           entity.playSound("mob.endermen.portal", 1.0F, 1.0F);
-           return true;
-       }
-   }
+            for (int l = 0; l < short1; ++l)
+            {
+                double d6 = (double)l / ((double)short1 - 1.0D);
+                float f = (this.rand.nextFloat() - 0.5F) * 0.2F;
+                float f1 = (this.rand.nextFloat() - 0.5F) * 0.2F;
+                float f2 = (this.rand.nextFloat() - 0.5F) * 0.2F;
+                double d7 = d3 + (this.posX - d3) * d6 + (this.rand.nextDouble() - 0.5D) * (double)this.width * 2.0D;
+                double d8 = d4 + (this.posY - d4) * d6 + this.rand.nextDouble() * (double)this.height;
+                double d9 = d5 + (this.posZ - d5) * d6 + (this.rand.nextDouble() - 0.5D) * (double)this.width * 2.0D;
+                this.worldObj.spawnParticle("portal", d7, d8, d9, (double)f, (double)f1, (double)f2);
+            }
+
+            this.worldObj.playSoundEffect(d3, d4, d5, "mob.endermen.portal", 1.0F, 1.0F);
+            this.playSound("mob.endermen.portal", 1.0F, 1.0F);
+            return true;
+        }
+    }
 }

@@ -51,10 +51,10 @@ public class ElysiumBlockCactus extends ElysiumBlockBush
     	
     	if(entity instanceof EntityLiving)
     	{
-    		((EntityLiving) entity).addPotionEffect(new PotionEffect(Potion.heal.getId(), 200, 2));
+    		((EntityLiving) entity).addPotionEffect(new PotionEffect(Potion.regeneration.getId(), 200, 4));
     	} else if(entity instanceof EntityPlayer)
     	{
-    		((EntityPlayer) entity).addPotionEffect(new PotionEffect(Potion.heal.getId(), 200, 2));
+    		((EntityPlayer) entity).addPotionEffect(new PotionEffect(Potion.regeneration.getId(), 200, 2));
     	}
     }
 

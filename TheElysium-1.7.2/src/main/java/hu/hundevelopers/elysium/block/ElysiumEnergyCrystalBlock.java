@@ -5,6 +5,8 @@ import hu.hundevelopers.elysium.Elysium;
 import java.util.List;
 import java.util.Random;
 
+import coloredlightscore.src.api.CLApi;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.block.material.Material;
@@ -14,7 +16,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
-import coloredlightscore.src.api.CLApi;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

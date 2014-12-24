@@ -34,8 +34,8 @@ public class ElysiumGuiMainMenu extends ElysiumGui
 {
 	public ResourceLocation imgBackground = new ResourceLocation(Elysium.ID + ":textures/gui/menu/menu.png");
 	public ResourceLocation imgTitle = new ResourceLocation(Elysium.ID + ":textures/gui/menu/title.png");
-	public ResourceLocation imgPatreon = new ResourceLocation(Elysium.ID + ":textures/gui/menu/patreon.png");
-	public ResourceLocation imgPatreonHover = new ResourceLocation(Elysium.ID + ":textures/gui/menu/patreon_hover.png");
+//	public ResourceLocation imgPatreon = new ResourceLocation(Elysium.ID + ":textures/gui/menu/patreon.png");
+//	public ResourceLocation imgPatreonHover = new ResourceLocation(Elysium.ID + ":textures/gui/menu/patreon_hover.png");
 	public ElysiumGuiButton btnSingle, btnMulti, btnMods, btnOptions, btnQuit;
 	public ElysiumGui subGui;
 
@@ -45,7 +45,7 @@ public class ElysiumGuiMainMenu extends ElysiumGui
 	public int subX, subY, subWidth, subHeight;
 	public int btnHeight;
 	
-	private boolean hoverPatreon = false;
+//	private boolean hoverPatreon = false;
 
     
 	public ElysiumGuiMainMenu(ElysiumGui parent)
@@ -65,17 +65,17 @@ public class ElysiumGuiMainMenu extends ElysiumGui
 		if (this.subGui != null)
 			this.subGui.onMouseClicked(x, y, btn);
 		
-		if(hoverPatreon && Elysium.isPatreonButton)
-		{
-			Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-		    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-		        try {
-		            desktop.browse(URI.create("http://www.patreon.com/dawars"));
-		        } catch (Exception e) {
-		            e.printStackTrace();
-		        }
-		    }
-		}
+//		if(hoverPatreon && Elysium.isPatreonButton)
+//		{
+//			Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+//		    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+//		        try {
+//		            desktop.browse(URI.create("http://www.patreon.com/dawars"));
+//		        } catch (Exception e) {
+//		            e.printStackTrace();
+//		        }
+//		    }
+//		}
 	}
 
 	@Override
@@ -155,10 +155,10 @@ public class ElysiumGuiMainMenu extends ElysiumGui
 		if (this.btnQuit.wasClicked())
 			Minecraft.getMinecraft().shutdown();
 		
-		if(mouseX >= 10 && mouseX <= 10 + this.width/7 && mouseY >= 3 * this.height / 5 && mouseY <= 3 * this.height / 5 + this.width/7)
-			this.hoverPatreon = true;
-		else
-			this.hoverPatreon = false;
+//		if(mouseX >= 10 && mouseX <= 10 + this.width/7 && mouseY >= 3 * this.height / 5 && mouseY <= 3 * this.height / 5 + this.width/7)
+//			this.hoverPatreon = true;
+//		else
+//			this.hoverPatreon = false;
 	}
 
 	FontRenderer fontRendererObj = FMLClientHandler.instance().getClient().fontRenderer;
@@ -185,14 +185,14 @@ public class ElysiumGuiMainMenu extends ElysiumGui
 		if (this.subGui != null)
 			this.subGui.render(partialTick);
 		
-		if(!hoverPatreon)
-		{
-			RenderingHelper.bindTexture(this.imgPatreon);
-		} else {
-			RenderingHelper.bindTexture(this.imgPatreonHover);
-		}
-		if(Elysium.isPatreonButton)
-			RenderingHelper.Gui.drawTexturedRect(10, (int) (3 * this.height / 5), (int) (this.width / 8), (int) (this.width / 8), 0F, 0F, 1F, 1F);
+//		if(!hoverPatreon)
+//		{
+//			RenderingHelper.bindTexture(this.imgPatreon);
+//		} else {
+//			RenderingHelper.bindTexture(this.imgPatreonHover);
+//		}
+//		if(Elysium.isPatreonButton)
+//			RenderingHelper.Gui.drawTexturedRect(10, (int) (3 * this.height / 5), (int) (this.width / 8), (int) (this.width / 8), 0F, 0F, 1F, 1F);
 
         List<String> brandings = Lists.reverse(FMLCommonHandler.instance().getBrandings(true));
         for (int i = 0; i < brandings.size(); i++)

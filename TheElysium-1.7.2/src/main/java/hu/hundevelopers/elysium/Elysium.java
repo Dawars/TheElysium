@@ -87,6 +87,10 @@ import hu.hundevelopers.elysium.world.gen.WorldGenElysium;
 
 import java.io.File;
 
+import coloredlightscore.src.api.CLApi;
+
+import clickme.nocubes.NoCubes;
+
 import me.dawars.CraftingPillars.CraftingPillars;
 import me.dawars.CraftingPillars.api.FreezerRecipes;
 import me.dawars.CraftingPillars.api.sentry.SentryBehaviors;
@@ -124,8 +128,6 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.wands.WandCap;
 import thaumcraft.api.wands.WandRod;
-import clickme.nocubes.NoCubes;
-import coloredlightscore.src.api.CLApi;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -202,7 +204,7 @@ public class Elysium
 	public static Block blockRilt;
 	public static Block blockLog;
 	public static Block blockLeaves;
-	public static Block blockGastroShell;
+//	public static Block blockGastroShell;
 	public static Block blockSapling;
 	public static Block blockPlanks;
 	public static Block blockFlower;
@@ -420,11 +422,11 @@ public class Elysium
 			Property MENU_ENABLED = Elysium.config.get("other", "isMenuEnabled", Configs.customGui, "If you want to see the custom The Elysium menu instead of the regular Minecraft menu");
 			isMenuEnabled = MENU_ENABLED.getBoolean();
 
-			Property PATREON_BUTTON = Elysium.config.get("other", "isPatreonButtonEnabled", true);
-			isPatreonButton = PATREON_BUTTON.getBoolean();
+//			Property PATREON_BUTTON = Elysium.config.get("other", "isPatreonButtonEnabled", true);
+//			isPatreonButton = PATREON_BUTTON.getBoolean();
 			
-			Property MOB_CRYSTAL_RENDERING = Elysium.config.get("other", "isMobCrystals", Configs.isMobCrystals, "If you want to see corrupted crystals on endermen and other mobs");
-			isMobCrystals = MOB_CRYSTAL_RENDERING.getBoolean();
+//			Property MOB_CRYSTAL_RENDERING = Elysium.config.get("other", "isMobCrystals", Configs.isMobCrystals, "If you want to see corrupted crystals on endermen and other mobs");
+//			isMobCrystals = MOB_CRYSTAL_RENDERING.getBoolean();
 			
 //			Property updateCheck = Elysium.config.get(Configuration.CATEGORY_GENERAL, "update.check", true);
 //			updateCheck.comment = "set to true for version check on startup";
@@ -886,17 +888,17 @@ public class Elysium
 		biomeDesert = new ElysiumBiomeGenDesert(biomeIdDesert).setHeight(new Height(0.3F, 0.1F)).setTemperatureRainfall(2.0F, 0.2F).setColor(0xc9c8ce).setBiomeName("Elysium Desert");
 		biomeBeach = new ElysiumBiomeGenBeach(biomeIdBeach).setHeight(new Height(0.0F, 0.025F)).setColor(16440917).setTemperatureRainfall(0.8F, 0.4F).setBiomeName("Elysium Beach");
 
-		if(CraftingPillars.winter)
-		{
-			biomePlain.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
-			biomeForest.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
-			biomeCorruption.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
-			
-			biomeOcean.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
-			biomeRiver.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
-			biomeDesert.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
-			biomeBeach.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
-		}
+//		if(CraftingPillars.winter)
+//		{
+//			biomePlain.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
+//			biomeForest.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
+//			biomeCorruption.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
+//			
+//			biomeOcean.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
+//			biomeRiver.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
+//			biomeDesert.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
+//			biomeBeach.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
+//		}
 		
 		GameRegistry.registerWorldGenerator(new WorldGenElysium(), 0);
 
@@ -968,8 +970,8 @@ public class Elysium
         EntityRegistry.addSpawn(EntitySwan.class, 10, 3, 5, EnumCreatureType.creature, biomePlain);
         EntityRegistry.addSpawn(EntityDeer.class, 1, 1, 1, EnumCreatureType.creature, biomeForest);
         EntityRegistry.addSpawn(EntityPinkUnicorn.class, 1, 1, 1, EnumCreatureType.creature, biomeForest);
-        EntityRegistry.addSpawn(EntityEnderMage.class, 10, 1, 1, EnumCreatureType.monster, biomeCorruption, biomeDesert);
-        EntityRegistry.addSpawn(EntityEnderMage.class, 5, 1, 1, EnumCreatureType.monster, biomeCorruption, biomeDesert);
+        EntityRegistry.addSpawn(EntityEnderMage.class, 7, 1, 1, EnumCreatureType.monster, biomeCorruption, biomeDesert);
+        EntityRegistry.addSpawn(EntityVoidSpecter.class, 5, 1, 1, EnumCreatureType.monster, biomeCorruption, biomeDesert);
         EntityRegistry.addSpawn(EntityEnderman.class, 10, 2, 2, EnumCreatureType.monster, biomeCorruption, biomeDesert);
         EntityRegistry.addSpawn(EntityEvolvedOyster.class, 8, 2, 4, EnumCreatureType.creature, biomePlain);
         EntityRegistry.addSpawn(EntityHero.class, 10, 2, 5, EnumCreatureType.creature, biomePlain, biomeForest);
@@ -1044,13 +1046,14 @@ public class Elysium
 		Staff.registerThrowableBlock(Blocks.ice, 4F);
 		Staff.registerThrowableBlock(Blocks.packed_ice, 6F);
 		Staff.registerThrowableBlock(Blocks.obsidian, 8F);
-		
+
 		//Elysium
 		Staff.registerThrowableBlock(Elysium.blockDirt, 2F);
 		Staff.registerThrowableBlock(Elysium.blockGrass, 2F);
 		Staff.registerThrowableBlock(Elysium.blockRilt, 3F);
 		Staff.registerThrowableBlock(Elysium.blockSand, 2F);
 		Staff.registerThrowableBlock(Elysium.blockPalestone, 4F);
+		Staff.registerThrowableBlock(Elysium.blockEnergyCrystal, 10F);
 		
 		SentryBehaviors.add(itemStaff, new SentryBehaviorStaff());
 		
@@ -1083,19 +1086,37 @@ public class Elysium
 		
 		if(Loader.isModLoaded("noCubes"))
 		{
-			NoCubes.renderBlockSoft(blockDirt);
-			NoCubes.renderBlockSoft(blockGrass);
-			NoCubes.renderBlockSoft(blockSand);
-			NoCubes.renderBlockSoft(blockPalestone);
-			NoCubes.renderBlockSoft(blockRilt);
+			if(Elysium.proxy.getMinecraftVersion() == "1.7.2")
+			{
+				NoCubes.renderBlockSoft(blockDirt);
+				NoCubes.renderBlockSoft(blockGrass);
+				NoCubes.renderBlockSoft(blockSand);
+				NoCubes.renderBlockSoft(blockPalestone);
+				NoCubes.renderBlockSoft(blockRilt);
+	
+				NoCubes.renderBlockSoft(oreBeryl);
+				NoCubes.renderBlockSoft(oreCobalt);
+				NoCubes.renderBlockSoft(oreIridium);
+				NoCubes.renderBlockSoft(oreJade);
+				NoCubes.renderBlockSoft(oreSilicon);
+				NoCubes.renderBlockSoft(oreSulphure);
+				NoCubes.renderBlockSoft(oreTourmaline);
+			} else {
 
-			NoCubes.renderBlockSoft(oreBeryl);
-			NoCubes.renderBlockSoft(oreCobalt);
-			NoCubes.renderBlockSoft(oreIridium);
-			NoCubes.renderBlockSoft(oreJade);
-			NoCubes.renderBlockSoft(oreSilicon);
-			NoCubes.renderBlockSoft(oreSulphure);
-			NoCubes.renderBlockSoft(oreTourmaline);
+				NoCubes.registerAsNatural(blockDirt);
+				NoCubes.registerAsNatural(blockGrass);
+				NoCubes.registerAsNatural(blockSand);
+				NoCubes.registerAsNatural(blockPalestone);
+				NoCubes.registerAsNatural(blockRilt);
+	
+				NoCubes.registerAsNatural(oreBeryl);
+				NoCubes.registerAsNatural(oreCobalt);
+				NoCubes.registerAsNatural(oreIridium);
+				NoCubes.registerAsNatural(oreJade);
+				NoCubes.registerAsNatural(oreSilicon);
+				NoCubes.registerAsNatural(oreSulphure);
+				NoCubes.registerAsNatural(oreTourmaline);
+			}
 			
 			NoCubes.registerAsLiquid(blockElysiumWater);
 			NoCubes.registerAsLiquid(blockElysiumEnergyLiquid);

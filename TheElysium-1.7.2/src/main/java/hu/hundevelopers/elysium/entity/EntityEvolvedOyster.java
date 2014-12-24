@@ -59,12 +59,9 @@ public class EntityEvolvedOyster extends EntityAnimal
     @Override
     protected void dropFewItems(boolean par1, int par2)
     {
-        int j = this.rand.nextInt(3) + this.rand.nextInt(1 + par2);
 
-        for (int k = 0; k < j; ++k)
-        {        
-        	this.dropItem(Item.getItemFromBlock(Elysium.blockEnergyCrystal), 0);
-        }
+    	this.dropItem(Item.getItemFromBlock(Elysium.blockEnergyCrystal), 3);
+        this.dropItem(Item.getItemFromBlock(this.rand.nextBoolean() ? Elysium.blockFloatingShell : Elysium.blockFloatingConch), 1);
     }
     
     /**
