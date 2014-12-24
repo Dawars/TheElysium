@@ -231,7 +231,7 @@ public class ModelVoidSpecter extends ModelBase
 	{
 		glPushMatrix();
 		
-			GL11.glTranslatef(0, -1, 0);
+			GL11.glTranslatef(0, 1, 0);
 			
 			leg2R.render(f5);
 			leg1R.render(f5);

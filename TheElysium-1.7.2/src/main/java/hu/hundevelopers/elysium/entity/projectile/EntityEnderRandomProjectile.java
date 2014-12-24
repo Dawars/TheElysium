@@ -121,9 +121,10 @@ public class EntityEnderRandomProjectile extends EntityThrowable
      */
     protected boolean teleportRandomly(EntityLivingBase entity)
     {
-        double d0 = this.posX + (this.rand.nextDouble() - 0.5D) * 64.0D;
-        double d1 = this.posY + (double)(this.rand.nextInt(64) - 32);
-        double d2 = this.posZ + (this.rand.nextDouble() - 0.5D) * 64.0D;
+        double d0 = entity.posX + (this.rand.nextDouble() - 0.5D) * 64.0D;
+        double d2 = entity.posZ + (this.rand.nextDouble() - 0.5D) * 64.0D;
+        double d1 = entity.worldObj.getTopSolidOrLiquidBlock((int)d0, (int)d2) + 2;
+
         return this.teleportTo(entity, d0, d1, d2);
     }
 
@@ -136,16 +137,16 @@ public class EntityEnderRandomProjectile extends EntityThrowable
         if (MinecraftForge.EVENT_BUS.post(event)){
             return false;
         }
-        double d3 = this.posX;
-        double d4 = this.posY;
-        double d5 = this.posZ;
+        double d3 = entity.posX;
+        double d4 = entity.posY;
+        double d5 = entity.posZ;
         this.posX = event.targetX;
         this.posY = event.targetY;
         this.posZ = event.targetZ;
         boolean flag = false;
-        int i = MathHelper.floor_double(this.posX);
-        int j = MathHelper.floor_double(this.posY);
-        int k = MathHelper.floor_double(this.posZ);
+        int i = MathHelper.floor_double(entity.posX);
+        int j = MathHelper.floor_double(entity.posY);
+        int k = MathHelper.floor_double(entity.posZ);
 
         if (this.worldObj.blockExists(i, j, k))
         {
@@ -168,9 +169,9 @@ public class EntityEnderRandomProjectile extends EntityThrowable
 
             if (flag1)
             {
-                this.setPosition(this.posX, this.posY, this.posZ);
+            	entity.setPosition(this.posX, this.posY, this.posZ);
 
-                if (this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).isEmpty() && !this.worldObj.isAnyLiquid(this.boundingBox))
+                if (this.worldObj.getCollidingBoundingBoxes(entity, entity.boundingBox).isEmpty() && !this.worldObj.isAnyLiquid(entity.boundingBox))
                 {
                     flag = true;
                 }
@@ -179,7 +180,7 @@ public class EntityEnderRandomProjectile extends EntityThrowable
 
         if (!flag)
         {
-            this.setPosition(d3, d4, d5);
+        	entity.setPosition(d3, d4, d5);
             return false;
         }
         else
@@ -192,14 +193,14 @@ public class EntityEnderRandomProjectile extends EntityThrowable
                 float f = (this.rand.nextFloat() - 0.5F) * 0.2F;
                 float f1 = (this.rand.nextFloat() - 0.5F) * 0.2F;
                 float f2 = (this.rand.nextFloat() - 0.5F) * 0.2F;
-                double d7 = d3 + (this.posX - d3) * d6 + (this.rand.nextDouble() - 0.5D) * (double)this.width * 2.0D;
-                double d8 = d4 + (this.posY - d4) * d6 + this.rand.nextDouble() * (double)this.height;
-                double d9 = d5 + (this.posZ - d5) * d6 + (this.rand.nextDouble() - 0.5D) * (double)this.width * 2.0D;
+                double d7 = d3 + (entity.posX - d3) * d6 + (this.rand.nextDouble() - 0.5D) * (double)entity.width * 2.0D;
+                double d8 = d4 + (entity.posY - d4) * d6 + this.rand.nextDouble() * (double)entity.height;
+                double d9 = d5 + (entity.posZ - d5) * d6 + (this.rand.nextDouble() - 0.5D) * (double)entity.width * 2.0D;
                 this.worldObj.spawnParticle("portal", d7, d8, d9, (double)f, (double)f1, (double)f2);
             }
 
-            this.worldObj.playSoundEffect(d3, d4, d5, "mob.endermen.portal", 1.0F, 1.0F);
-            this.playSound("mob.endermen.portal", 1.0F, 1.0F);
+            entity.worldObj.playSoundEffect(d3, d4, d5, "mob.endermen.portal", 1.0F, 1.0F);
+            entity.playSound("mob.endermen.portal", 1.0F, 1.0F);
             return true;
         }
     }

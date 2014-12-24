@@ -971,8 +971,8 @@ public class Elysium
         EntityRegistry.addSpawn(EntityDeer.class, 1, 1, 1, EnumCreatureType.creature, biomeForest);
         EntityRegistry.addSpawn(EntityPinkUnicorn.class, 1, 1, 1, EnumCreatureType.creature, biomeForest);
         EntityRegistry.addSpawn(EntityEnderMage.class, 7, 1, 1, EnumCreatureType.monster, biomeCorruption, biomeDesert);
-        EntityRegistry.addSpawn(EntityVoidSpecter.class, 5, 1, 1, EnumCreatureType.monster, biomeCorruption, biomeDesert);
-        EntityRegistry.addSpawn(EntityEnderman.class, 10, 2, 2, EnumCreatureType.monster, biomeCorruption, biomeDesert);
+        EntityRegistry.addSpawn(EntityVoidSpecter.class, 10, 2, 3, EnumCreatureType.monster, biomeCorruption, biomeDesert);
+        EntityRegistry.addSpawn(EntityEnderman.class, 10, 2, 3, EnumCreatureType.monster, biomeCorruption, biomeDesert);
         EntityRegistry.addSpawn(EntityEvolvedOyster.class, 8, 2, 4, EnumCreatureType.creature, biomePlain);
         EntityRegistry.addSpawn(EntityHero.class, 10, 2, 5, EnumCreatureType.creature, biomePlain, biomeForest);
 //        EntityRegistry.addSpawn(EntityHero.class, 1, 1, 1, EnumCreatureType.monster, biomePlain, biomeForest, biomeCorruption, biomeDesert, biomeOcean);
@@ -1086,7 +1086,7 @@ public class Elysium
 		
 		if(Loader.isModLoaded("noCubes"))
 		{
-			if(Elysium.proxy.getMinecraftVersion() == "1.7.2")
+			if(Elysium.proxy.getMinecraftVersion().equals("1.7.2"))
 			{
 				NoCubes.renderBlockSoft(blockDirt);
 				NoCubes.renderBlockSoft(blockGrass);

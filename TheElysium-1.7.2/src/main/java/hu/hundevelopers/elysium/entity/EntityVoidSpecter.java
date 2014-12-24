@@ -123,25 +123,14 @@ public class EntityVoidSpecter extends EntityGhast {
                 	this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1008, (int)this.posX, (int)this.posY, (int)this.posZ, 0);
                     EntityEnderRandomProjectile entityammo = new EntityEnderRandomProjectile(this.worldObj, this);
 
-            		entityammo.setPosition(posX + 0.5F, posY + 1.5F, posZ + 0.5F);
-
-            		entityammo.posY = posY + 1.5F;
-            		d0 = this.targetedEntity.posX - posX - 0.5F;
-            		d1 = this.targetedEntity.boundingBox.minY + this.targetedEntity.height / 3.0F - entityammo.posY;
-            		d2 = this.targetedEntity.posZ - posZ - 0.5F;
-            		d3 = MathHelper.sqrt_double(d0 * d0 + d2 * d2);
-
-            		if (d3 >= 1.0E-7D)
-            		{
-            			float f2 = (float)(Math.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
-            			float f3 = (float)(-(Math.atan2(d1, d3) * 180.0D / Math.PI));
-            			d4 = d0 / d3;
-            			d5 = d2 / d3;
-            			entityammo.setLocationAndAngles(posX + 0.5F + d4, entityammo.posY, posZ + 0.5F + d5, f2, f3);
-            			entityammo.yOffset = 0.0F;
-            			float f4 = (float)d3 * 0.2F;
-            			entityammo.setThrowableHeading(d0, d1 + f4, d2, 1.5F, 3F);
-            		}
+                    entityammo.setPosition(this.posX, this.posY + getEyeHeight(), this.posZ);
+            		d0 = this.targetedEntity.posX - this.posX - 0.5F;
+            		d1 = this.targetedEntity.posY + this.targetedEntity.getEyeHeight() - 1.100000023841858D - entityammo.posY;
+            		d2 = this.targetedEntity.posZ - this.posZ - 0.5F;
+            		float f1 = MathHelper.sqrt_double(d0 * d0 + d2 * d2) * 0.2F;
+            		entityammo.setThrowableHeading(d0, d1 + f1, d2, 1.6F, 1);
+            		
+            		
                     this.worldObj.spawnEntityInWorld(entityammo);
                     this.attackCounter = -40;
                 }

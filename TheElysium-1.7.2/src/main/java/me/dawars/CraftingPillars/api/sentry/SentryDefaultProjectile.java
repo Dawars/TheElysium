@@ -13,7 +13,7 @@ public abstract class SentryDefaultProjectile implements ISentryBehaviorItem
 	 * Returns the specified ItemStack remaining in the Sentry.
 	 * @param sourceblock - position info for the block
 	 * @param target - the target the Sentry is shooting at
-	 * @param owner - owner of the Sentry - use {@link FakeSentryPlayer} instead
+	 * @param owner - owner of the Sentry - use {@link FakeSentryPlayer} instead - not 1.7.10 compatibile
 	 * @param item - the item placed into the pillar
 	 * @return itemstack remaining in the Sentry after a shoot
 	 */

@@ -678,14 +678,16 @@ public class ChunkProviderElysium implements IChunkProvider
                         {
                             ChestGenHooks loot = ChestGenHooks.getInfo(DUNGEON_CHEST);
                             WeightedRandomChestContent.generateChestContents(rand, loot.getItems(rand), tileentitychest, loot.getCount(this.rand));
+                            
                         }
-                        
-                        worldObj.setTileEntity(k + i, y, l + j, tileentitychest);
+                        if(worldObj.blockExists(k + i, y, l + j))
+                        	worldObj.setTileEntity(k + i, y, l + j, tileentitychest);
 					} else if(worldObj.getBiomeGenForCoords(chunkX * 16, chunkZ * 16) instanceof ElysiumBiomeGenCorruption || worldObj.getBiomeGenForCoords(chunkX * 16, chunkZ * 16) instanceof ElysiumBiomeGenDesert)
 					{
 						if(temp == Elysium.blockEnergyCrystal)
 						{
-							this.worldObj.setBlockMetadataWithNotify(k + i, y, l + j, 1, 2);
+	                        if(worldObj.blockExists(k + i, y, l + j))
+	                        	this.worldObj.setBlockMetadataWithNotify(k + i, y, l + j, 1, 2);
 						}
 					}
 				}
