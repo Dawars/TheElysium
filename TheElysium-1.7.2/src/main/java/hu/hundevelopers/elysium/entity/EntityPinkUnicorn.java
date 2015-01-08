@@ -572,7 +572,7 @@ public class EntityPinkUnicorn extends EntityHorse
     {
     	ItemStack itemstack = player.inventory.getCurrentItem();
 
-    	if(itemstack.isItemEqual(ItemApi.getItem("itemThaumometer", 0)))
+    	if(itemstack != null && itemstack.isItemEqual(ItemApi.getItem("itemThaumometer", 0)))
     	{
     		return false;
     	}
