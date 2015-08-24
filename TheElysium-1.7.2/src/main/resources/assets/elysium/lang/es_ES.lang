@@ -12,7 +12,7 @@ tile.elysium_sapling.fostimber.name=Brote de Fostimber
 tile.elysium_sapling.silver.name=Brote de Gildensilv
 tile.elysium_log.fostimber.name=Tronco de Fostimber
 tile.elysium_log.silver.name=Tronco de Gildensilv
-tile.elysium_log.corrupt.name=Tonco Corrupto
+tile.elysium_log.corrupt.name=Tronco Corrupto
 tile.elysium_leaves.fostimber.name=Hojas de Fostimber
 tile.elysium_leaves.silver.name=Hojas Plateadas
 tile.elysium_planks.fostimber.name=Tablones de Fostimber
@@ -21,11 +21,11 @@ tile.elysium_flower.asphodel.name=Flor de Asfódelo
 tile.elysium_flower.midas.name=Flor de Midas
 tile.elysium_tallgrass.curlgrass.name=Césped Rizado
 
-tile.oreSulphur.name=Mena de Sulfuro
-tile.oreBeryl.name=Mena de Berilo
+tile.oreSulphur.name=Mena de Azufre
+tile.oreBeryl.name=Mena de Berilio
 tile.oreCobalt.name=Mena de Cobalto
 tile.oreIridium.name=Mena de Iridio
-tile.oreSilicon.name=Mena de Silicona
+tile.oreSilicon.name=Mena de Silicio
 tile.oreJade.name=Mena de Jade
 tile.oreTourmaline.name=Mena de Turmalina
 
@@ -33,20 +33,20 @@ tile.elysium_water.name=Agua Elísea
 tile.elysium_energy.name=Energía Líquida
 tile.energy_crystal.pure.name=Cristal de Energía
 tile.energy_crystal.corrupted.name=Cristal de Energía Corrompido
-tile.floating_block_conch.name=Concha Flotante
-tile.floating_block_shell.name=Cascarón Flotante
+tile.floating_block_conch.name=Caracola Flotante
+tile.floating_block_shell.name=Concha Flotante
 
-tile.blockSulphur.name=Bloque de Sulfuro
-tile.blockBeryl.name=Bloque de Berilo
+tile.blockSulphur.name=Bloque de Azufre
+tile.blockBeryl.name=Bloque de Berilio
 tile.blockCobalt.name=Bloque de Cobalto
 tile.blockIridium.name=Bloque de Iridio
-tile.blockSilicon.name=Bloque de Silicona
+tile.blockSilicon.name=Bloque de Silicio
 tile.blockJade.name=Bloque de Jade
 tile.blockTourmaline.name=Bloque de Turmalina
 
 tile.blockCactus.name=Cactus Sagrado
 tile.blockRaspberryBush.name=Frambueso
-tile.blockGrapes.name=Viña
+tile.blockGrapes.name=Vid
 
 tile.quartzFence.clean.name=Valla de Cuarzo
 tile.quartzFence.mossy.name=Valla de Cuarzo Musgosa
@@ -63,30 +63,30 @@ item.seeds_pepper.name=Semillas de Pimientos
 item.overkill.name=Arma Excesiva - ¡QUÉ 'INYUSTISIA'!
 item.asphodelpetal.name=Pétalo de Asfódelo
 item.debug.name=Teletransportador (Shift + Clic derecho)
-item.beryl.name=Berilo
+item.beryl.name=Berilio
 item.ingotCobalt.name=Lingote de Cobalto
 item.ingotIridium.name=Lingote de Iridio
 item.jade.name=Jade
-item.siliconchunk.name=Pedazo de Silicona
-item.elysium_sulphur.name=Sulfuro
+item.siliconchunk.name=Pedazo de Silicio
+item.elysium_sulphur.name=Azufre
 item.tourmaline.name=Turmalina
 item.ingotTooth.name=Lingote Dental
 item.sturdyHide.name=Pellejo Robusto
-item.elysium_bucket_water.name=Cubo de Agua Sagrada
+item.elysium_bucket_water.name=Cubo de Agua Bendita
 item.elysium_bucket_energy.name=Cubo de Energía Líquida
 
 fluid.elysium_energy=Energía Líquida
-fluid.elysium_water=Agua Sagrada
+fluid.elysium_water=Agua Bendita
 
 item.deer_pelt.name=Piel de Ciervo
 item.grapes.white.name=Uvas Blancas
 item.grapes.blue.name=Uvas Tintas
 item.raspberry.name=Frambuesa
 
-item.staff.earth.name=Vara de la Tierra
-item.staff.ice.name=Vara de Hielo
-item.staff.ender.name=Vara de Ender
-item.staff.fire.name=Vara de Fuego
+item.staff.earth.name=Bastón de Tierra
+item.staff.ice.name=Bastón de Hielo
+item.staff.ender.name=Bastón del Fin
+item.staff.fire.name=Bastón de Fuego
 
 item.horn.name=Cuerno
 item.antler.name=Asta
@@ -107,42 +107,42 @@ item.axePalestone.name=Hacha de Piedra Pálida
 item.shovelPalestone.name=Pala de Piedra Pálida
 item.hoePalestone.name=Azada de Piedra Pálida
 
-item.enderflute.name=Flauta de Ender
+item.enderflute.name=Flauta del Fin
 
 item.toothIngot.name=Lingote Dental
-item.toothHelmet.name=Yelmo Dental
-item.toothChestplate.name=Pechera Dental
-item.toothLeggings.name=Mallas Dentales
+item.toothHelmet.name=Casco Dental 
+item.toothChestplate.name=Peto Dental
+item.toothLeggings.name=Grebas Dentales
 item.toothBoots.name=Botas Dentales
 
-item.Wand.pure.cap=Energía Pura Encapuchada
-item.Wand.corrupted.cap=Energía Corrupta Encapuchada
+item.Wand.pure.cap=Cubierta de Energía Pura
+item.Wand.corrupted.cap=Cubierta de Energía Corrupta
 
 item.Wand.horn.rod=Cuerno de Unicornio
 
-item.WandCores.horn.name=Vara de Cuerno de Unicornio
+item.WandCores.horn.name=Varita de Cuerno de Unicornio
 
-item.WandCaps.pure.name=Capuchón de Energía Pura
-item.WandCaps.corrupted.name=Capuchón de Energía Corrupta
+item.WandCaps.pure.name=Cubiertas de Energía Pura en
+item.WandCaps.corrupted.name=Cubiertas de Energía Corrupta en
 
 flute.tips.0=Hmm... parece un instrumento musical.
 flute.tips.1=Su sonido podría escucharse desde una larga distancia...
-flute.tips.2=¡Lo siento, no puedo usarla aquí!
+flute.tips.2=Lo siento, ¡no puedo usarla aquí!
 
 flute.dragonExist.0=Parece que aquí hay un dragón...
-flute.dragonExist.1=¡Oh! Es el Dragón del Fin!
+flute.dragonExist.1=¡Oh! ¡Es el Dragón del Fin!
 flute.dragonExist.2=No puede haber más dragones en esta dimensión...
-flute.dragonExist.3=Debería haber un dragón en algún otro lugar...
+flute.dragonExist.3=Debería haber un dragón en algún sitio de por aquí...
 
 tc.aspect.sanctus=Santo
 tc.aspect.help.sanctus=Santidad
 
 
-entity.ElysiumCaterPillar.name=Pilar de Abastecimiento
+entity.ElysiumCaterPillar.name=Ogura Pilar
 entity.ElysiumSwan.name=Cisne
 entity.ElysiumEvolvedOyster.name=Ostra Evolucionada
 entity.ElysiumDeer.name=Ciervo
 entity.ElysiumUnicorn.name=Unicornio Rosa
 entity.ElysiumVoidSpecter.name=Espectro del Vacío
-entity.ElysiumEnderMage.name=Mago de Ender
+entity.ElysiumEnderMage.name=Mago del Fin
 entity.ElysiumHero.name=Héroe
